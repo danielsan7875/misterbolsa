@@ -1,0 +1,23 @@
+.activo {
+    background-color:#1cc88a;
+    color: #ffffff;
+    padding: 5px;
+    width: 100%;
+    border-radius: 15px; 
+    text-align: center;
+    display: inline-block;
+  }
+  
+  .no-activo {
+    background-color: gray;
+    color: #ffffff;
+    padding: 5px;
+    width: 100%;
+    border-radius: 15px; 
+    text-align: center;
+    display: inline-block;
+  }
+
+.encabezado-modal{
+    background-color:#8D99AE;
+}  

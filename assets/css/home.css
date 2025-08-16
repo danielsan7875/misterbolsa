@@ -1,0 +1,75 @@
+.carousel {
+    overflow: hidden;
+    width: 100%;
+    }
+    .wrap {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 250px;
+    justify-items: stretch;
+    animation: slide 30s linear infinite;
+    }
+    .wrap img {
+    width: 200px;
+    height: 200px;
+    border-radius: 15px;
+    object-fit: cover;
+    }
+    @keyframes slide {
+    to {
+    translate: calc(-8 * 250px);
+    }
+}
+
+
+.card-home {
+    transition: transform 0.3s, box-shadow 0.3s; /* Efecto de transición */
+    margin: 1px; /* Espaciado alrededor del card */
+  }
+  
+  .card-home:hover {
+    transform: scale(1.05); /* Aumenta el tamaño del card al pasar el mouse */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6); /* Sombra al pasar el mouse */
+  }
+  
+  .card-body-home  {
+    padding: 20px; /* Espaciado interno del card */
+  }
+  
+  .card-title-home  {
+    margin-top: 10px; /* Espaciado arriba del título */
+    margin-bottom: 1000px; /* Espaciado abajo del título */
+  }
+  
+  .card-text-home  {
+    margin-bottom: 20px; /* Espaciado abajo del texto */
+  }
+  
+  .btn-home  {
+    margin-top: 10px; /* Espaciado arriba del botón */
+  }
+  
+  .card-body-home  i {
+    font-size: 2rem; /* Ajusta el tamaño del icono si no usas clases de Font Awesome */
+    color:#ffffff;
+  }
+  
+  .card-body-home  h5 {
+    font-size: 1.5rem; /* Ajusta el tamaño del texto del título */
+    color:#fff;
+  }
+
+  .card-body-home  h4 {
+    font-size: 1.2rem; /* Ajusta el tamaño del texto del título */
+    color:#fff;
+  }
+
+  .c1{
+    background-color: #EF233C;
+    color: rgb(10, 6, 6);
+  }
+
+  .c2{
+    background-color: #8D99AE;
+    color: rgb(0, 0, 0);
+  }

@@ -1,0 +1,37 @@
+
+.select2-container .select2-selection--single {
+    height: 38px !important; /* Altura del input de Bootstrap */
+    line-height: 1!important; /* Line-height de Bootstrap */
+    padding: 4px 12px !important; /* Padding del input de Bootstrap */
+  }
+  
+  .select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #000000 !important; /* Color del texto del input de Bootstrap */
+  }
+  
+  .select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 100% !important; /* Altura del icono */
+  }
+  
+  /* Estilo para los elementos de la lista desplegable */
+  .select2-container--default .select2-results__option {
+    color: #000000 !important; /* Color del texto de las opciones */
+  }
+  
+  /* Estilo para las opciones cuando se pasa el cursor por encima */
+  .select2-container--default .select2-results__option--highlighted {
+    background-color: #cae8f7 !important; /* Color de fondo en hover (dorado) */
+    color: #000000 !important; /* Color del texto en hover */
+  }
+  
+  /* Estilo para las opciones seleccionadas */
+  .select2-container--default .select2-results__option--selected {
+    background-color: #c9c9c9 !important; /* Color de fondo en opción seleccionada */
+    color: #000000 !important; /* Color del texto en opción seleccionada */
+  }
+  
+  
+  
+  
+    
+    

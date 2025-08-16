@@ -1,0 +1,35 @@
+.header-container {
+    display: flex;
+    justify-content: space-between; /* Espacia los elementos a los extremos */
+    align-items: center; /* Alinea verticalmente el contenido */
+}
+
+.left-section {
+    display: flex; /* Utiliza flexbox para alinear el h5 y el botón "Cambiar" */
+    align-items: center; /* Alinea verticalmente el contenido */
+}
+
+.left-section h5 {
+    margin-right: 10px; /* Espacio entre el h5 y el botón "Cambiar" */
+}
+
+.button-group {
+    display: flex; /* Utiliza flexbox para los botones */
+    gap: 10px; /* Espacio entre los botones */
+}
+
+.stock-container, .precio-container { 
+    display: flex; align-items: center;
+ } 
+.label-letras { 
+    margin-right: 10px; /* Ajusta el espacio entre el label y el input según sea necesario */ 
+}
+
+.fecha-container {
+    margin-left: auto; /* Empuja el div hacia la derecha */
+}
+
+.label-fondo{
+ background-color:#457B9D;
+
+}
