@@ -6,14 +6,18 @@
             <a href="?pagina=home" class="text-nowrap logo-img ms-0 ms-md-1">
               <img src="assets/images/mister-logo.png" width="200" alt="">
             </a>
+            
             <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
               <i class="ti ti-x fs-8"></i> 
             </div>
         </div>
         <!-- Sidebar navigation-->
         <nav class="sidebar-nav">
+<input type="hidden" id="dolares">
           <ul id="sidebarnav" class="mb-4 pb-2">
+            
             <li class="nav-small-cap">
+              <p class="text-dark">Tasas del dolar BCV <b id="bcv"></b> Bs</p>
               <i class="ti ti-dots nav-small-cap-icon fs-5"></i>
               <span class="hide-menu color-2">Home</span> <!--- titulo-->
             </li>

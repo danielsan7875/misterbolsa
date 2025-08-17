@@ -114,57 +114,13 @@
     <i class="fa-solid fa-money-bill-transfer"></i>
       <h4 class="mb-3">Precio del Dolar</h4>
       <?php foreach ($dolar as $dolar){  ?>
-    Tasa de cambio
+    Tasa de cambio (BD-SIN)
       <h5 class="mb-2"><b>Bs <?php echo $dolar['precios']?></b> </h5>
       <?php } ?>
-      <a href="#" class="btn btn-light btn-home" type="button" data-bs-toggle="offcanvas"
-      data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Cambiar Tasa</a>
+      <a href="#" class="btn btn-light btn-home" id="bcvc" type="button"></a>
     </div>
   </div>
 </div>
-</div>
- 
-
-<!-- |||||||||||||||||||||||||   TASA DOLAR   |||||||||||||||||||||||||||||||||| -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasRightLabel"><i class="fa-solid fa-money-bill-transfer"></i> Actualizar Tasa del Dolar</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-  </div>
-  <div class="offcanvas-body">
-  <form action="?pagina=home" id="t" autocomplete="off">
-
-<label class="form-label text-dark">Precio $ A Bs</label>
-<input type="text" class="form-control text-dark" name="precios" id="inputtasadolar" placeholder="0.00 "  required>
-<span id="textotasadolar"  class="vali-span"></span> 
-<input type="hidden" name="id_dolar" value="1"> <br>
-
-<button type="button" class="btn btn-success text-dark" id="tasadolarre">
-<i class="fa-solid fa-money-bill-transfer"></i> Actualizar Tasa</button>
-<button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas" aria-label="Close">Cerrar</button>
-</form>
-  </div>
-</div>
-
-<!--|||||||||||||||| MODAL DE AVISO ||||||||||||||||||||| -->
-<div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-     
-      <div class="modal-body">
-        <div class="d-flex justify-content-center">
-     
-       <img src="assets/images/aviso.png" alt="" width="100%">
-
-       </div>
-       <div class="d-flex justify-content-center">
-       <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
-       </div>
-      </div>
-      
- 
-    </div>
-  </div>
 </div>
 
 
@@ -172,20 +128,6 @@
   <!--|||||||||||||||  Footer y JS  |||||||||||||||||||||||||||-->
   <?php require_once 'complementos/footer.php'; ?>
   <script src="assets/js/home.js"></script>
-
   <!--|||||||||||||||  FIN Footer y JS  |||||||||||||||||||||||||||--> 
-  
-  <?php if(isset($_SESSION['message'])): ?> <!-- Mensaje de Registro y Modificacion y eliminacion --> 
-    <script>
-        Swal.fire({
-            title:'<?php echo $_SESSION['message']['title']; ?>',
-            text: '<?php echo $_SESSION['message']['text']; ?>',
-            icon: '<?php echo $_SESSION['message']['icon']; ?>',
-            confirmButtonColor: '#457B9D',
-            confirmButtonText: 'Aceptar'    
-        });
-    </script>
-    <?php unset($_SESSION['message']); ?> <!-- Eliminar el mensajes de la sesion -->
-<?php endif; ?> 
 </body>
 </html>

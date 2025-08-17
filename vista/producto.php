@@ -52,8 +52,6 @@
            <div class="left-section">
               <h5><i class="fa-solid fa-money-bill-transfer"></i> Tasa del Dolar (Bs <?php echo $dolar['precios']?> ) </h5>
               <?php } ?>
-              <button class="btn btn-info btn-sm" type="button" data-bs-toggle="offcanvas"
-               data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="fas fa-pencil-alt m-1"></i> Cambiar</button>
           </div>
           <div class="button-group">
               <a href="#" class="btn btn-primary"><i class="fa-regular fa-file-pdf"></i> Reportes</a>
@@ -81,7 +79,6 @@
 <table id="myTable" class="table table-striped table-hover" style="width:100%">
 <thead>
       <tr class="table-primary">
-        <th>#</th>
         <th>NOMBRE</th>
         <th>MARCA</th>
         <th>PRESENTACION</th>
@@ -110,19 +107,26 @@ foreach ($registro as $dato){
 ?>
   <tr data-precio-unitario="<?php echo $dato['precio_unitario']; ?>" data-precio-mayor="<?php echo $dato['precio_mayor']; ?>" data-stock-minimo="<?php echo $dato['stock_minimo']; ?>">
     
-    <td><?php echo $dato['id_producto']; ?></td>
     <td><?php echo $dato['nombre']; ?></td>
+
     <td><?php echo $dato['nombre_marca']; ?></td>
+
     <td><?php echo $dato['nombre_presentacion']; ?></td>
+    
     <td id="precioBs" class="fw-bold">  </td>
+
     <td id="precioBss" class="fw-bold">  </td>
+
     <td class="text-center"><i class="fas fa-boxes"></i> <?php echo $dato['stock']; ?></td>
+
     <td class="text-center">
       <!-- Botón de detalle -->
       <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#detalleModal-<?php echo $dato['id_producto']; ?>">
         <i class="fas fa-info-circle m-1"></i> Detalle
       </button>
     </td>
+
+
     <?php if ($tipo_usuario == 1) { ?> 
     <td>  <!-- ACCION -->
       <form method="POST" action="?pagina=producto">

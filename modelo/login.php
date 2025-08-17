@@ -11,6 +11,7 @@ class Login extends Conexion {
     private $nombres;
     private $apellidos;
     private $tipo_usuario;
+    private $dolar;
 
     function __construct(){ // Metodo para BD
         $this->conex = new Conexion();
@@ -35,6 +36,23 @@ class Login extends Conexion {
         }
         return $resultado;
     }
+
+
+    public function tasa(){
+		$registro = "UPDATE dolar SET id_dolar = 1, precios = :dolar WHERE id_dolar = 1";
+
+		$strExec = $this->conex->prepare($registro);  
+        $strExec->bindParam(':dolar', $this->dolar);
+
+		$resul= $strExec->execute();
+			if ($resul) {
+                $res= "1";
+			}else{
+                $res= "0";
+			 }
+		return $res;
+	}
+
    
     public function get_IdUsuario() {
         return $this->id_usuario;
@@ -82,5 +100,13 @@ class Login extends Conexion {
 
     public function set_TipoUsuario($tipo_usuario) {
         $this->tipo_usuario = $tipo_usuario;
+    }
+
+    public function set_Dolar($dolar) {
+        $this->dolar = $dolar;
+    }
+
+    public function get_Dolar() {
+        return $this->dolar;
     }
 }

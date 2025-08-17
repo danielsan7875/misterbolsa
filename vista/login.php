@@ -3,56 +3,55 @@
   <head>
     <meta charset="UTF-8" />
     <title>Login | Mister Bolsa C.A</title>
-    <link rel="stylesheet" href="assets/css/login.css" />
-    <link rel="stylesheet" href="assets/libs/fontawesome/css/all.min.css" />
-    <link rel="shortcut icon" type="image/png" href="assets/images/logos/mister-ico.png" />
-    <script src="assets/libs/jquery/jquery.min.js"></script>
-    <script src="assets/js/sweetalert2.js"></script>
+  <?php require_once 'complementos/head.php'; ?>
+    <!-- Style -->
+    <link rel="stylesheet" href="assets/css/style.css">
+
   </head>
   <body>
-    <div class="form-section">
-      <span class="logo"><i class="fas fa-shopping-bag" style="color: #E63946;"></i></span>
-      <h2>Inicio de Sessión</h2>
-      <span class="sub-heading">Ingrese su usuario y clave para acceder al sistema</span>
-     
-      <form action="?pagina=login" method="POST" autocomplete="off">
-        
-        <label for="name"><i class="fa-solid fa-user"></i> Usuario</label>
-        <input class="form-control" type="text" name="usuario" id="usuario" placeholder="Usuario:" />
-        <span id="textousuario" class="vali-span"></span>
+    <div class="d-lg-flex half">
+    <div class="bg order-1 order-md-2" style="background-image: url('assets/images/fondo1.avif');"></div>
+    <div class="contents order-2 order-md-1">
 
-        <label for="password"><i class="fa-solid fa-lock"></i> Constraseña</label>
-        <div class="password-input">
-                <input type="password" name="clave" id="password"  class="form-control" placeholder="Contraseña:">
+      <div class="container">
+        <div class="row align-items-center justify-content-center">
+          <div class="col-md-7 text-dark">
+            <h1><strong>Inicio de Sesión</strong></h1>
+            <p class="mb-2 text-dark" style="font-size: 18px !important;"><strong class="text-mister">MISTER BOLSA, C.A RIF: J-29979563-1</strong> - Inventario / Venta Productos</p>
+            <p class="mb-4 text-dark" style="font-size: 16px !important;">Ingrese su usuario y clave para acceder el sistema</p>
+            
+            <form action="?pagina=login" method="POST" autocomplete="off" id="credenciales">
+              <div class="form-group first mb-3">
+                <label for="username" style="font-size: 15px !important;" ><i class="fa-solid fa-user me-2 mb-2"></i>Usuario</label>
+                <input type="text" class="form-control text-dark border border-dark" name="usuario" id="usuario" placeholder="Usuario:" />
+                <span id="textousuario" class="text-error"></span>
+              </div>
+            
+              <div class="form-group last mb-3">
+                <label for="password" style="font-size: 15px !important;"> <i class="fa-solid fa-lock me-2 mb-2"></i> Contraseña</label>
+                 <div class="password-input">
+                <input type="password" name="clave" id="password"  class="form-control text-dark border border-dark" placeholder="Contraseña:">
                 <span id="show-password" class="fa fa-eye"></span>
-         </div>
-        <span id="textopassword" class="vali-span"></span>
-        
+              </div>
+               <span id="textopassword" class="text-error"></span>
 
-        <button type="submit" name="ingresar" class="btn-primary mt">Iniciar Session</button>
-      </form>
-      <!--
-      <div class="footer-group">
-        <span>Already Registered? <a href="">Sign In</a></span>
-        <a href="">Forgot password?</a>
+               <input type="hidden" name="dolar" id="bcvfor">
+              </div>
+              <hr>
+               <button type="submit" name="ingresar" class="btn btn-primary lg-btn" width="100%" id="ingresar">Iniciar Session</button>
+            </form>
+              
+          </div>
+        </div>
       </div>
-      -->
     </div>
 
-    <div class="hero-section">
-      <h2>
-        SISTEMA DE COMPRA Y VENTA
-        DE PRODUCTOS 
-      </h2>
-      <span class="sub-heading">
-      <b>MISTER BOLSA, C.A RIF: J-29979563-1</b>
-    </span>
-      <img src="assets/images/q6.svg" alt="" />
-    </div>
-
-
-
-
+    
+  </div>
+  <script src="assets/js/sweetalert2.js"></script>
+  <script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    
  <!-- MENSAJES Y JS-->    
 
 <script src="assets/js/login.js"></script>

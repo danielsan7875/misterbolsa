@@ -7,7 +7,8 @@
   <link rel="stylesheet" href="assets/css/estatus.css">
   <script src="assets/libs/jquery/jquery.min.js"></script>
 
-  <script src="assets/js/loader.js"></script> 
+  <script src="assets/js/loader.js"></script>
+    <script src="assets/js/tasa.js"></script> 
 
   <link href="assets/libs/DataTables/datatables.min.css" rel="stylesheet">
   <script src="assets/libs/DataTables/datatables.min.js"></script>
