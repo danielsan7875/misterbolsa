@@ -191,7 +191,7 @@ function muestraMensajetost(icono, titulo, mensaje, tiempo) {
   
           if (lee.accion == 'ingresar') {
             if (lee.respuesta == 1) {
-              muestraMensajetost("success","Inicio de Session", "Exitosamente", "1000");
+            
               desactivarLoaderBoton('#ingresar'); 
               setTimeout(function () {
                 location = '?pagina=home';

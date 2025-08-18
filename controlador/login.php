@@ -18,35 +18,31 @@ if (isset($_POST['ingresar'])) {
         $resultado = $objlogin->verificarUsuario();
         if ($resultado) {
             if ($resultado->estatus == 1) { 
-                
+                $_SESSION["id"] = $resultado->id_usuario;
+                $_SESSION["nombre"] = $resultado->nombre;
+                $_SESSION["apellido"] = $resultado->apellido;
+                $_SESSION['id_tipo'] = $resultado->id_tipo;
+                $_SESSION['nombre_tipo'] = $resultado->nombre_tipo;
+                $_SESSION['nivel'] = $resultado->nivel;
+
+
                 if(floatval($dolar) != 0.00){
                     $objlogin->set_Dolar($dolar);
                     $resul = $objlogin->Tasa();
 
                     if($resul == 1){
-                           $_SESSION["id"] = $resultado->id_usuario;
-                            $_SESSION["nombre"] = $resultado->nombre;
-                            $_SESSION["apellido"] = $resultado->apellido;
-                            $_SESSION['id_tipo'] = $resultado->id_tipo;
-                            $_SESSION['nombre_tipo'] = $resultado->nombre_tipo;
-                            $_SESSION['nivel'] = $resultado->nivel;
-
                         echo json_encode(['respuesta' => 2, 'accion' => 'ingresar']);
                         exit;
                     }else{
-                         $_SESSION["id"] = $resultado->id_usuario;
-                         $_SESSION["nombre"] = $resultado->nombre;
-                         $_SESSION["apellido"] = $resultado->apellido;
-                         $_SESSION['id_tipo'] = $resultado->id_tipo;
-                         $_SESSION['nombre_tipo'] = $resultado->nombre_tipo;
-                         $_SESSION['nivel'] = $resultado->nivel;
-
                         echo json_encode(['respuesta' => 1, 'accion' => 'ingresar']);
                         exit;
                     }
                 }
 
-            } else if (isset($resultado->noactiva)) {
+                 echo json_encode(['respuesta' => 1, 'accion' => 'ingresar']);
+                 exit;
+
+            }else if (isset($resultado->noactiva)) {
                     echo json_encode([
                     'respuesta' => 0,
                     'accion' => 'ingresar',
