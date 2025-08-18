@@ -24,7 +24,70 @@ deleteButtons.forEach(function (button) {
     });
   });
 });
+function formatearDecimalAutomatico(input) {
+    input.on("keyup", function () {
+        let valor = $(this).val().replace(/\D/g, ""); // Elimina todo lo que no sea dígito
 
+        if (valor.length === 0) {
+            $(this).val("");
+            return;
+        }
+
+        // Asegura al menos dos dígitos para los decimales
+        while (valor.length < 3) {
+            valor = "0" + valor;
+        }
+
+        const parteEntera = valor.slice(0, valor.length - 2);
+        const parteDecimal = valor.slice(-2);
+
+        const resultado = `${parseInt(parteEntera)}.${parteDecimal}`;
+        $(this).val(resultado);
+    });
+}
+
+
+
+function activarLoaderBoton(idBoton, texto) {
+    const $boton = $(idBoton);
+    const textoActual = $boton.html();
+    $boton.data('texto-original', textoActual); // Guarda el texto original
+    $boton.prop('disabled', true);
+    $boton.html(`<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>${texto}`);
+}
+
+function desactivarLoaderBoton(idBoton) {
+    const $boton = $(idBoton);
+    const textoOriginal = $boton.data('texto-original');
+    $boton.prop('disabled', false);
+    $boton.html(textoOriginal);
+}
+
+function validarCampo(campo, regex, textoError, mensaje) {
+  const valor = campo.val();
+
+  if (campo.is("select")) {
+    if (valor === "") {
+      campo.removeClass("is-validd").addClass("is-invalidd");
+      textoError.text(mensaje);
+      return false;
+    } else {
+      campo.removeClass("is-invalidd").addClass("is-validd");
+      textoError.text("");
+      return true;
+    }
+  } else {
+    if (regex.test(valor)) {
+      campo.removeClass("is-invalidd").addClass("is-validd");
+      textoError.text("");
+      return true;
+    } else {
+      campo.removeClass("is-validd").addClass("is-invalidd");
+      textoError.text(mensaje);
+      return false;
+    }
+  }
+}
 
 //Función para validar por Keypress
 function validarkeypress(er,e){
@@ -75,7 +138,7 @@ $(".table tbody tr").each(function() {
     var stockActual = parseInt($(this).find("td:nth-child(7)").text());
     var stockMinimo = parseInt($(this).data('stock-minimo')); // Obtener el stock mínimo desde el data attribute
     var productoNombre = $(this).find("td:nth-child(2)").text(); // Obtener el nombre del producto
-    var productoId = $(this).find("td:nth-child(1)").text(); // Obtener el ID del producto
+    var productoId = $(this).find("td:nth-child(1)").text(); 
 
     if (stockActual < stockMinimo) {
         $(this).find('td:eq(6)').append(' <i class="fas fa-exclamation-triangle" style="color:rgb(230, 38, 54);"></i>');
@@ -86,69 +149,111 @@ $(".table tbody tr").each(function() {
 
 // Si hay mensajes de alerta, mostrarlos en el div
 if (alertMessages.length > 0) {
+  console.log("alertMessages");
     $("#alerta").append('<div class="alert alert-warning" role="alert"><b><i class="fas fa-exclamation-triangle" style="color:rgb(12, 10, 10);"></i> ¡Alerta de Stock!</b> Se ha detectado un nivel de inventario bajo en los siguientes productos:<br>' + alertMessages.join('<br>') + '</div>');
 }
 
-    
+              // Aplica a ambos campos
+        formatearDecimalAutomatico($("#precio"));
+        formatearDecimalAutomatico($("#preciomayor"));
+
         // VALIDACION DE DATOS  
         $("#nombre").on("keypress", function(e) {
-        // Permitir letras (mayúsculas y minúsculas), números, espacios y los caracteres especiales - # /
-        validarkeypress(/^[a-zA-Z0-9\-#\/\s\b]*$/, e);
+         validarkeypress(/^[a-zA-Z0-9\-#\/\s\b]*$/, e);
         });
 
-        $("#nombre").on("keyup", function() {
-        // Validar que el contenido tenga entre 4 y 100 caracteres y que contenga solo letras, números, espacios y los caracteres especiales - # /
-        validarkeyup(/^[a-zA-Z0-9\-#\/\s]{4,100}$/, $(this),
-         $("#textonombre"), "Debe haber como mínimo 4 caracteres"); 
-        });
+         $("#nombre").on("keyup", function() {
+            validarCampo($(this),/^[a-zA-Z0-9\-#\/\s]{4,100}$/, 
+            $("#textonombre"), "Debe haber como mínimo 4 caracteres");
+         });
 
         $("#precio").on("keypress", function(e) {
-            // Permitir solo números y la tecla de retroceso
             validarkeypress(/^[0-9\.\b]*$/, e);
         });
-        
-        $("#precio").on("keyup", function() {
-            // Validar que el contenido tenga entre 4 y 100 caracteres y que contenga solo números
-            validarkeyup(/^[0-9\.]{4,7}$/, $(this),
-             $("#textoprecio"), "Debe haber como mínimo 0.01");
-        });
-
-    
+      
+         $("#precio").on("keyup", function() {
+            validarCampo($(this),/^[0-9\.]{4,7}$/, 
+            $("#textoprecio"), "Debe haber como mínimo 0.01");
+         });
 
         $("#stock").on("keypress", function(e) {
-            // Permitir solo números y la tecla de retroceso
             validarkeypress(/^[0-9\b]*$/, e);
         });
-        
-        $("#stock").on("keyup", function() {
-            // Validar que el contenido tenga entre 4 y 100 caracteres y que contenga solo números
-            validarkeyup(/^[0-9]{1,4}$/, $(this),
-             $("#textostock"), "Debe haber como mínimo 1 caracter");
-        });
 
-        $("#inputtasadolar").on("keypress", function(e) {
-            // Permitir solo números y la tecla de retroceso
+         $("#stock").on("keyup", function() {
+            validarCampo($(this),/^[0-9]{1,4}$/, 
+            $("#textostock"), "Debe haber como mínimo 1 caracter");
+         });
+
+         $("#preciomayor").on("keypress", function(e) {
             validarkeypress(/^[0-9\.\b]*$/, e);
         });
-        
-        $("#inputtasadolar").on("keyup", function() {
-            // Validar que el contenido tenga entre 4 y 100 caracteres y que contenga solo números
-            validarkeyup(/^[0-9\.]{4,7}$/, $(this),
-             $("#textotasadolar"), "Debe haber como mínimo 0.01");
+      
+         $("#preciomayor").on("keyup", function() {
+            validarCampo($(this),/^[0-9\.]{4,7}$/, 
+            $("#textopreciomayor"), "Debe haber como mínimo 0.01");
+         });
+
+         $("#cantidadmayor").on("keypress", function(e) {
+            validarkeypress(/^[0-9\b]*$/, e);
         });
 
-        $('#registrar').on("click", function () {
-            var datos = new FormData($('#u')[0]);
-            datos.append('registrar', 'registrar');
-            enviaAjax(datos);
+         $("#cantidadmayor").on("keyup", function() {
+            validarCampo($(this),/^[0-9]{1,4}$/, 
+            $("#textocantidadmayor"), "Debe haber como mínimo 1 caracter");
+         });
+
+        $("#marcaselect").on("change", function () {
+            validarCampo($(this), null, $("#textomarca"), "Por favor, seleccione una marca válida.");
+        });
+
+          $("#presenselect").on("change", function () {
+          validarCampo($(this), null, $("#textopresentacion"), "Por favor, seleccione una presentanción válida.");
         });
         
-        $('#tasadolar').on("click", function () {
-            var datos = new FormData($('#t')[0]);
-            datos.append('tasadolar', 'tasadolar');
-            enviaAjax(datos);
+        $("#preciomayor").on("keyup", function () {
+          const precio = parseFloat($("#precio").val());
+          const preciomayor = parseFloat($(this).val());
+
+          validarCampo($(this), /^[0-9\.]{4,7}$/, $("#textopreciomayor"), "Debe haber como mínimo 0.01");
+
+          if (!isNaN(precio) && !isNaN(preciomayor)) {
+              if (preciomayor > precio) {
+                  $(this).val(""); // Borra el valor
+                  $("#textopreciomayor").text("El precio mayor no puede ser mayor al precio detal.");
+                  $(this).removeClass("is-validd").addClass("is-invalidd");
+              }
+          }
       });
+
+      $('#registrar').on("click", function () {
+          if (!validarFormulario()) {
+                muestraMensaje("error", 2000, "Campos inválidos O Vacios", "Por favor, corrige los errores antes de continuar.");
+              return;
+          }
+
+          activarLoaderBoton('#registrar', "Guardando...");
+          var datos = new FormData($('#u')[0]);
+          datos.append('registrar', 'registrar');
+          enviaAjax(datos);
+      });
+
 });
+
+function validarFormulario() {
+    const resultados = [
+        validarCampo($("#nombre"), /^[a-zA-Z0-9\-#\/\s]{4,100}$/, $("#textonombre"), "Debe haber como mínimo 4 caracteres"),
+        validarCampo($("#precio"), /^[0-9\.]{4,7}$/, $("#textoprecio"), "Debe haber como mínimo 0.01"),
+        validarCampo($("#stock"), /^[0-9]{1,4}$/, $("#textostock"), "Debe haber como mínimo 1 caracter"),
+        validarCampo($("#preciomayor"), /^[0-9\.]{4,7}$/, $("#textopreciomayor"), "Debe haber como mínimo 0.01"),
+        validarCampo($("#cantidadmayor"), /^[0-9]{1,4}$/, $("#textocantidadmayor"), "Debe haber como mínimo 1 caracter"),
+        validarCampo($("#marcaselect"), null, $("#textomarca"), "Por favor, seleccione un rol válido."),
+        validarCampo($("#presenselect"), null, $("#textopresentacion"), "Por favor, seleccione un rol válido.")
+    ];
+
+    return resultados.every(r => r === true);
+}
+
 
 $('#actualizar').on("click", function () {
   Swal.fire({
@@ -171,6 +276,9 @@ $('#actualizar').on("click", function () {
 
 
 });
+
+
+
 
 function muestraMensaje(icono, tiempo, titulo, mensaje) {
     Swal.fire({
@@ -201,11 +309,13 @@ function muestraMensaje(icono, tiempo, titulo, mensaje) {
           if (lee.accion == 'registrar') {
             if (lee.respuesta == 1) {
               muestraMensaje("success", 1000, "Se ha registrado con éxito", "Su registro se ha completado exitosamente");
+              desactivarLoaderBoton('#registrar'); 
               setTimeout(function () {
                 location = '?pagina=producto';
               }, 1000);
             } else {
               muestraMensaje("error", 2000, "ERROR", "ERROR");
+              desactivarLoaderBoton('#registrar'); 
             }
           } else if (lee.accion == 'actualizar') { // falta
             if (lee.respuesta == 1) {

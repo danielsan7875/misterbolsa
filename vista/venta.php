@@ -35,11 +35,11 @@
         Venta</h1>
            
        <!-- Button que abre el Modal N1 Registro -->
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-          <span class="icon text-white-100">
-            <i class="fas fa-file-medical"></i>
+          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <span class="icon text-dark">
+            <i class="fas fa-file-medical me-2"></i>
             </span>
-            <span class="text ext-white-100">Registrar Venta</span>
+            <span class="text-dark">Registrar Venta</span>
       </button>
       </div>
 

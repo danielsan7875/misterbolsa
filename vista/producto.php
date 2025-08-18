@@ -37,11 +37,11 @@
         Producto</h1>
            
        <!-- Button que abre el Modal N1 Registro -->
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-          <span class="icon text-white-100">
-            <i class="fas fa-file-medical"></i>
+          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <span class="icon text-dark">
+            <i class="fas fa-file-medical me-2"></i>
             </span>
-            <span class="text ext-white-100">Nuevo Producto</span>
+            <span class="text text-dark">Nuevo Producto</span>
       </button>
       </div>
 
@@ -79,6 +79,7 @@
 <table id="myTable" class="table table-striped table-hover" style="width:100%">
 <thead>
       <tr class="table-primary">
+        <th>#</th>
         <th>NOMBRE</th>
         <th>MARCA</th>
         <th>PRESENTACION</th>
@@ -106,7 +107,8 @@ $estatus_classes = array(
 foreach ($registro as $dato){
 ?>
   <tr data-precio-unitario="<?php echo $dato['precio_unitario']; ?>" data-precio-mayor="<?php echo $dato['precio_mayor']; ?>" data-stock-minimo="<?php echo $dato['stock_minimo']; ?>">
-    
+    <td class="text-center"> <?php echo $dato['id_producto']; ?></td>
+
     <td><?php echo $dato['nombre']; ?></td>
 
     <td><?php echo $dato['nombre_marca']; ?></td>
@@ -121,7 +123,7 @@ foreach ($registro as $dato){
 
     <td class="text-center">
       <!-- Botón de detalle -->
-      <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#detalleModal-<?php echo $dato['id_producto']; ?>">
+      <button class="btn btn-info btn-sm text-dark" data-bs-toggle="modal" data-bs-target="#detalleModal-<?php echo $dato['id_producto']; ?>">
         <i class="fas fa-info-circle m-1"></i> Detalle
       </button>
     </td>
@@ -130,9 +132,10 @@ foreach ($registro as $dato){
     <?php if ($tipo_usuario == 1) { ?> 
     <td>  <!-- ACCION -->
       <form method="POST" action="?pagina=producto">
-        <button name="modificar" class="btn btn-primary btn-sm modificar"
+          <button name="modificar" class="btn btn-primary btn-sm modificar"
           value="<?php echo $dato['id_producto']; ?>"><i class="fas fa-pencil-alt m-1" title="Editar"></i> Editar</button>
-        <button name="eliminar" class="btn btn-danger btn-sm eliminar"
+       
+          <button name="eliminar" class="btn btn-danger btn-sm eliminar"
           value="<?php echo $dato['id_producto']; ?>"><i class="fas fa-trash-alt m-1" title="Eliminar"></i> Eliminar</button>
         <input type="hidden" name="eliminar" value="<?php echo $dato['id_producto']; ?>">
         <input type="hidden" name="stock" value="<?php echo $dato['stock']; ?>">
@@ -143,18 +146,23 @@ foreach ($registro as $dato){
 
   <!-- Modal de detalle -->
   <div class="modal fade" id="detalleModal-<?php echo $dato['id_producto']; ?>" tabindex="-1" aria-labelledby="detalleModalLabel-<?php echo $dato['id_producto']; ?>" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content modal-producto">
         <div class="modal-header">
-          <h5 class="modal-title" id="detalleModalLabel-<?php echo $dato['id_producto']; ?>">Detalles del producto</h5>
+          <h5 class="modal-title"  style="color:rgb(255, 255, 255);" id="detalleModalLabel-<?php echo $dato['id_producto']; ?>">Detalles del producto</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
+        
+        <div class="seccion-formulario">
+         <h4><strong>Precio Detal ($):</strong> <?php echo $dato['precio_unitario']; ?></h4>
+          <h4><strong>Precio Mayor ($)</strong> <?php echo $dato['precio_mayor']; ?></4h>
+          </div>
+        <div class="seccion-formulario">
           <h4><strong>Stock Mínimo:</strong> <?php echo $dato['stock_minimo']; ?></h4>
           <h4><strong>Cantidad Mayor:</strong> <?php echo $dato['cantidad_mayor']; ?></4h>
-          <h4><strong>Precio Detal ($):</strong> <?php echo $dato['precio_unitario']; ?></h4>
-          <h4><strong>Precio Mayor ($)</strong> <?php echo $dato['precio_mayor']; ?></4h>
          
+        </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -199,25 +207,26 @@ foreach ($registro as $dato){
 <!-- |||||||||||||||||||||||||   MODAL DE REGISTRO PRODUCTO   |||||||||||||||||||||||||||||||||| -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content">
+    <div class="modal-content modal-producto">
     <div class="modal-header encabezado-modal">
         <h1 class="modal-title fs-5" id="exampleModalToggleLabel"  style="color:rgb(255, 255, 255);">
-        Registro de Producto
+       <i class="fas fa-boxes" style="color:rgb(255, 255, 255);"></i> Registro de Producto Nuevo
         </h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color:rgb(255, 255, 255);"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
       <div class="modal-body">
       <form action="?pagina=producto" id="u" autocomplete="off"> <!--comienzo Formulario-->
-        
+        <div class="seccion-formulario">
         <div class="row ">
+          <h6><i class="fas fa-boxes"></i> Datos del Producto Nuevo </h6>
           <div class="col-sm">
           <label class="form-label text-dark">Nombre</label>
             <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1"> <i class="fa-solid fa-bag-shopping" style="color:#007bff;"></i> </span>
-            <input type="text" class="form-control text-dark" name="nombre" id="nombre" placeholder="Ejemplo: Bister Bolsa "  required>     
+            <span class="input-group-text border border-info" id="basic-addon1"> <i class="fa-solid fa-bag-shopping" style="color:#007bff;"></i> </span>
+            <input type="text" class="form-control text-dark border border-info" name="nombre" id="nombre" placeholder="Ejemplo: Bister Bolsa "  required>     
           </div>
-          <span id="textonombre"  class="vali-span"></span>
+          <span id="textonombre"  class="text-error mt-0"></span>
           </div>
         </div>
 
@@ -226,78 +235,89 @@ foreach ($registro as $dato){
           <label class="form-label text-dark">Marca</label>
           <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-tag " style="color:#007bff;"></i></span>
-          <select class="form-select text-dark" aria-label="Default select example"  name="marca" required>
+          <select class="form-select text-dark" aria-label="Default select example"  name="marca" id="marcaselect" required>
               <option value="">Seleccione una Marca:</option>
                  <?php foreach($marca as $marca) {?>
                      <option value="<?php echo $marca['id_marca'];?>"> <?php echo $marca['nombre'];?> </option>
                <?php } ?>
            </select> 
+           
            </div>
+           <span id="textomarca"  class="text-error mt-0"></span> 
           </div>
 
           <div class="col-sm">
           <label class="form-label text-dark">Presentacion</label>
           <div class="input-group mb-3">
           <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-shapes" style="color:#007bff;"></i></span>
-          <select class="form-select text-dark" aria-label="Default select example" name="presentacion" required>
+          <select class="form-select text-dark" aria-label="Default select example" name="presentacion" id="presenselect" required>
               <option value="">Seleccione una Presentacion:</option>
                  <?php foreach($presentacion as $presentacion) {?>
                      <option value="<?php echo $presentacion['id_presentacion'];?>"> <?php echo $presentacion['nombre'];?> </option>
                <?php } ?>
            </select> 
+       
            </div>  
+               <span id="textopresentacion"  class="text-error mt-0"></span> 
           </div>
-          
+               </div>                      
         </div>
-
+        
+        <div class="seccion-formulario">
         <div class="row ">
+          <h6><i class="fas fa-boxes"></i> Precio del Producto en $ </h6>
           <div class="col-sm">
           <label class="form-label text-dark">Precio Al Detal ($)</label>
             <div class="input-group mb-3">
-               <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-dollar-sign" style="color:#007bff;"></i></span>
-               <input type="text" class="form-control text-dark" name="precio" id="precio" placeholder="Ejemplo: 5 "  required>  
+               <span class="input-group-text border border-info" id="basic-addon1"><i class="fa-solid fa-dollar-sign" style="color:#007bff;"></i></span>
+               <input type="text" class="form-control text-dark border border-info " name="precio" id="precio" placeholder="Ejemplo: 5.00 "  required>  
             </div>
-            <span id="textoprecio"  class="vali-span"></span> 
+            <span id="textoprecio"  class="text-error mt-0"></span> 
           </div>
 
-          <div class="col-sm">
-          <label class="form-label text-dark">Stock Minimo</label>
-            <div class="input-group mb-3">
-               <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-box" style="color:#007bff;"></i></span>
-                <input type="text" class="form-control text-dark"  name="stock_min" id="stock" placeholder="Ejemplo: 2 "  required>  
-            </div>
-        <span id="textostock"  class="vali-span"></span>
-          </div>
-          
-        </div>
-
-        <div class="row">
-          <div class="col-sm">
+            <div class="col-sm">
           <label class="form-label text-dark">Precio al Mayor($)</label>
             <div class="input-group mb-3">
-               <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-dollar-sign" style="color:#007bff;"></i></span>
-               <input type="text" class="form-control text-dark" name="preciomayor" id="preciomayor" placeholder="Ejemplo: 5 "  required>  
+               <span class="input-group-text border border-info" id="basic-addon1"><i class="fa-solid fa-dollar-sign" style="color:#007bff;"></i></span>
+               <input type="text" class="form-control text-dark border border-info" name="preciomayor" id="preciomayor" placeholder="Ejemplo: 4.00 " required>  
             </div>
-            <span id="textopreciomayor"  class="vali-span"></span> 
+            <span id="textopreciomayor"  class="text-error mt-0"></span> 
+          </div>
+        </div>
+         </div>
+
+            <div class="seccion-formulario">
+        <div class="row">
+        <h6><i class="fas fa-boxes"></i> Otros datos </h6>
+           <div class="col-sm">
+              <label class="form-label text-dark">Stock Minimo</label>
+              <div class="input-group mb-3">
+                <span class="input-group-text border border-info" id="basic-addon1"><i class="fa-solid fa-box" style="color:#007bff;"></i></span>
+                  <input type="text" class="form-control text-dark border border-info"  name="stock_min" id="stock" placeholder="Ejemplo: 2 "  required>  
+              </div>
+             <span id="textostock"  class="text-error mt-0"></span>
           </div>
 
           <div class="col-sm">
-          <label class="form-label text-dark">Cantidad Al Mayor</label>
-            <div class="input-group mb-3">
-               <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-box" style="color:#007bff;"></i></span>
-                <input type="text" class="form-control text-dark"  name="cantidadmayor" id="cantidadmayor" placeholder="Ejemplo: 2 "  required>  
-            </div>
-        <span id="textocantidadmayor"  class="vali-span"></span> 
+              <label class="form-label text-dark">Cantidad Al Mayor</label>
+                <div class="input-group mb-3">
+                  <span class="input-group-text border border-info" id="basic-addon1"><i class="fa-solid fa-box" style="color:#007bff;"></i></span>
+                    <input type="text" class="form-control text-dark border border-info"  name="cantidadmayor" id="cantidadmayor" placeholder="Ejemplo: 2 "  required>  
+                </div>
+            <span id="textocantidadmayor"  class="text-error mt-0"></span> 
           </div>
-          
+
+  </div>
+  </div>
+  <div class="button-container">
+    <button type="button" class="btn btn-guardar" id="registrar">Registrar Producto</button>
+    <button type="reset" class="btn btn-limpiar" name="limpiar">Limpiar Datos</button>
+</div>
         </div>
 
 
-<hr>
-<div class="button-container">
-    <button type="button" class="btn btn-success" id="registrar">Registrar</button>
-    <button type="reset" class="btn btn-secondary" name="limpiar">Limpiar</button>
-</div>
+<br>
+
         </form> <!--fin del formulario-->
       </div>
     
