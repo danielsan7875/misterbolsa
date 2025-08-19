@@ -4,6 +4,7 @@
 <head>
     <?php require_once 'complementos/head.php'; ?>
     <title>Marca | Mister Bolsa C.A</title>
+     <link rel="stylesheet" href="assets/css/for.css" />
 </head>
 
 <body>
@@ -34,9 +35,9 @@
         Marca</h1>
            
        <!-- Button que abre el Modal N1 Registro -->
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <button type="button" class="btn btn-success text-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
           <span class="icon ">
-            <i class="fas fa-file-medical"></i>
+            <i class="fas fa-file-medical me-2"></i>
             </span>
             <span class="text ">Registrar Marca</span>
       </button>
@@ -65,18 +66,18 @@
 <!-- |||||||||||||||||||||||||   Modal   |||||||||||||||||||||||||||||||||| -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
+    <div class="modal-content modal-producto">
     <div class="modal-header encabezado-modal">
         <h1 class="modal-title fs-5" id="exampleModalToggleLabel"  style="color:rgb(255, 255, 255);">
         Registro de Marca
         </h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"  style="background-color:rgb(255, 255, 255);"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
       <div class="modal-body">
       <form action="?pagina=marca" id="u" autocomplete="off"> <!--comienzo Formulario-->
         
-
+   <div class="seccion-formulario">
         <div class="row">
 
           <div class="col-sm">
@@ -90,12 +91,13 @@
 
           
         </div>
+                </div>
 
 
 <hr>
 <div class="button-container">
-    <button type="button" class="btn btn-success" id="registrar">Registrar</button>
-    <button type="reset" class="btn btn-secondary" name="limpiar">Limpiar</button>
+    <button type="button" class="btn btn-guardar" id="registrar">Registrar</button>
+    <button type="reset" class="btn btn-limpiar" name="limpiar">Limpiar</button>
 </div>
         </form> <!--fin del formulario-->
       </div>

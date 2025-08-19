@@ -5,6 +5,7 @@
     <?php require_once 'complementos/head.php'; ?>
     <title>Producto | Mister Bolsa C.A</title>
     <link rel="stylesheet" href="assets/css/producto.css" />
+     <link rel="stylesheet" href="assets/css/for.css" />
 </head>
 
 <body>

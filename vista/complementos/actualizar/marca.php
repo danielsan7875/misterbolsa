@@ -4,6 +4,7 @@
 <head>
     <?php require_once 'vista/complementos/head.php'; ?>
     <title>Modificar Marca | Mister Bolsa C.A</title>
+      <link rel="stylesheet" href="assets/css/for.css" />
 </head>
 
 <body>
@@ -35,12 +36,12 @@
         Modificar</h1>
            
        <!-- Button que abre el Modal N1 Registro -->
-          <a class="btn btn-primary" href="?pagina=marca">
-            <span class="icon ">
-            <i class="fas fa-file-medical"></i>
+          <a href="?pagina=marca" class="btn btn-primary">
+          <span class="icon text-white-100">
+          <i class="fa-solid fa-reply me-2"></i>
             </span>
-            <span class="text">Volver</span>
-        </a>
+            <span class="text ext-white-100">Volver</span>
+      </a>
       </div>
 
 
@@ -49,7 +50,7 @@
  
       <form action="?pagina=marca" id="m" autocomplete="off"> <!--comienzo Formulario-->
         
-
+<div class="seccion-formulario">
         <div class="row">
 
         <div class="col-sm-2">
@@ -85,12 +86,13 @@
             </div>
           </div>
         </div>
+          </div> 
 
 
       <hr>
       <div class="button-container">
-          <button type="button" class="btn btn-success" id="actualizar">Actualizar</button>
-          <button type="reset" class="btn btn-secondary" name="limpiar">Limpiar</button>
+          <button type="button" class="btn btn-guardar" id="actualizar">Actualizar</button>
+          <button type="reset" class="btn btn-limpiar" name="limpiar">Limpiar</button>
       </div>
         </form> <!--fin del formulario-->
 

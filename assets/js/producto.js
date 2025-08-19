@@ -267,7 +267,12 @@ $('#actualizar').on("click", function () {
     confirmButtonText: ' SI ',
     cancelButtonText: 'NO'
   }).then((result) => {
-    if (result.isConfirmed) {
+    if (!validarFormulario()) {
+        muestraMensaje("error", 2000, "Campos inválidos O Vacios", "Por favor, corrige los errores antes de continuar.");
+        return;
+    }
+    else if (result.isConfirmed) {
+      activarLoaderBoton('#actualizar', "Guardando...");
       var datos = new FormData($('#m')[0]);
       datos.append('actualizar', 'actualizar');
       enviaAjax(datos);
@@ -320,11 +325,13 @@ function muestraMensaje(icono, tiempo, titulo, mensaje) {
           } else if (lee.accion == 'actualizar') { // falta
             if (lee.respuesta == 1) {
               muestraMensaje("success", 1000, "Se ha Modificado con éxito", "Su registro se ha Actualizado exitosamente");
+              desactivarLoaderBoton('#actualizar');
               setTimeout(function () {
                 location = '?pagina=producto';
               }, 1000);
             } else {
               muestraMensaje("error", 2000, "ERROR", "Intente Nuevamente O Mas Tarde");
+              desactivarLoaderBoton('#actualizar');
             }
           }else if (lee.accion == 'tasadolar') {
             if (lee.respuesta == 1) {

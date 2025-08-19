@@ -14,6 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("load", () => {
         setTimeout(() => {
             hideLoader(); // Oculta el loader después de 500 ms
-        }, 800);
+        }, 500);
     });
 });

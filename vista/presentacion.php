@@ -4,6 +4,7 @@
 <head>
     <?php require_once 'complementos/head.php'; ?>
     <title>Presentación | Mister Bolsa C.A</title>
+    <link rel="stylesheet" href="assets/css/for.css" />
 </head>
 
 <body>
@@ -34,9 +35,9 @@
        Presentación</h1>
            
        <!-- Button que abre el Modal N1 Registro -->
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-          <span class="icon text-white-100">
-            <i class="fas fa-file-medical"></i>
+          <button type="button" class="btn btn-success text-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <span class="icon text-dark">
+            <i class="fas fa-file-medical me-2"></i>
             </span>
             <span class="text ext-white-100">Registrar Presentación</span>
       </button>
@@ -67,18 +68,18 @@
 <!-- |||||||||||||||||||||||||   Modal   |||||||||||||||||||||||||||||||||| -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
+    <div class="modal-content modal-producto">
     <div class="modal-header encabezado-modal">
         <h1 class="modal-title fs-5" id="exampleModalToggleLabel" style="color:rgb(255, 255, 255);">
         Registro de Presentación
         </h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color:rgb(255, 255, 255);"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
       </div>
 
       <div class="modal-body">
       <form action="?pagina=presentacion" id="u" autocomplete="off"> <!--comienzo Formulario-->
         
-
+<div class="seccion-formulario">
         <div class="row">
 
           <div class="col-sm">
@@ -88,17 +89,17 @@
                <input type="text" class="form-control text-dark" name="nombre" id="nombre_prese" placeholder="Nombre: "  required>  
          
           </div>
-          <span id="textopresentacion" class="vali-span"></span> <br>
+          <span id="textopresentacion" class="text-error mt-0"></span> <br>
           </div>
 
           
         </div>
-
+  </div>
 
 <hr>
 <div class="button-container">
-    <button type="button" class="btn btn-success" id="registrar">Registrar</button>
-    <button type="reset" class="btn btn-secondary" name="limpiar">Limpiar</button>
+    <button type="button" class="btn btn-guardar" id="registrar">Registrar</button>
+    <button type="reset" class="btn btn-limpiar" name="limpiar">Limpiar</button>
 </div>
         </form> <!--fin del formulario-->
       </div>
