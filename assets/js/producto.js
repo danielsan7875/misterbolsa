@@ -11,7 +11,7 @@ deleteButtons.forEach(function (button) {
       icon: 'question',
       showCancelButton: true,
       color: "#00000",
-      confirmButtonColor: '#457B9D',
+      confirmButtonColor: '#1d994dff',
       cancelButtonColor: '#EF233C',
       confirmButtonText: ' SI ',
       cancelButtonText: 'NO'
@@ -259,10 +259,10 @@ $('#actualizar').on("click", function () {
   Swal.fire({
     title: '¿Desea actualizar los datos?',
     text: '',
-    icon: 'question',
+    icon: 'question', 
     showCancelButton: true,
     color: "#00000",
-    confirmButtonColor: '#457B9D',
+    confirmButtonColor: '#1d994dff',
     cancelButtonColor: '#EF233C',
     confirmButtonText: ' SI ',
     cancelButtonText: 'NO'

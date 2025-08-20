@@ -4,6 +4,7 @@
 <head>
     <?php require_once 'complementos/head.php'; ?>
     <title>Usuario | Mister Bolsa C.A</title>
+     <link rel="stylesheet" href="assets/css/for.css" />
 </head>
 
 <body>
@@ -33,11 +34,11 @@
         Usuario</h1>
            
        <!-- Button que abre el Modal N1 Registro -->
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-          <span class="icon">
-            <i class="fas fa-file-medical"></i>
+          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <span class="icon text-dark">
+            <i class="fas fa-file-medical me-2"></i>
             </span>
-            <span class="text ext-white-100">Registrar Usuario</span>
+            <span class="text text-dark">Registrar Usuario</span>
       </button>
       </div>
 
@@ -48,14 +49,14 @@
 <table id="myTable" class="table table-striped table-hover" style="width:100%">
     <thead>
       <tr class="table-primary">
-        <th>#</th>
-        <th>NOMBRE</th>
-        <th>APELLIDO</th>
-        <th>USUARIO</th>
-        <th>CLAVE</th>
-        <th>ESTATUS</th>
-        <th>TIPO</th>
-        <th>ACCION</th>
+        <th class="text-center">#</th>
+        <th class="text-center">NOMBRE Y APELLIDO</th>
+     
+        <th class="text-center">USUARIO</th>
+        <th class="text-center">CLAVE</th>
+        <th class="text-center">ESTATUS</th>
+        <th class="text-center">TIPO</th>
+        <th class="text-center">ACCION</th>
       </tr>
     </thead>
     <tbody>
@@ -66,23 +67,26 @@
         );
   
         $estatus_classes = array(// para el estido CSS
-          1 => 'activo', 
-          2 => 'no-activo', 
+          1=> 'badge rounded-pill bg-success text-dark', // Activo
+          2=>'badge rounded-pill bg-warning text-dark', // No activo
+          3=> 'badge rounded-pill bg-danger' // Inactivo
         );
         foreach ($registro as $dato){
         ?>
                 <tr>
                   <td class="text-center"> <?php echo $dato['id_usuario']?> </td>
-                  <td> <?php echo $dato['nombre']?> </td>
-                  <td> <?php echo $dato['apellido']?> </td>
+                  <td class="text-center"> <?php echo $dato['nombre']." ".$dato['apellido']?> </td>
+                 
                   <td class="text-center"> <?php echo $dato['usuario']?> </td>
                   <td class="text-center"> <?php echo $dato['clave']?> </td>
-                  <td>
+                  <td class="text-center">
                     <span class="<?= $estatus_classes[$dato['estatus']] ?>">
+                      <b>
                        <?php echo $estatus_texto[$dato['estatus']] ?>
+                       </b>
                     </span>
                   </td>
-                  <td> <?php echo $dato['nombre_tipo']?> </td>
+                  <td class="text-center"> <?php echo $dato['nombre_tipo']?> </td>
       
                   <td>
                       <form action="?pagina=usuario" method="POST" >
@@ -110,7 +114,7 @@
 <!-- |||||||||||||||||||||||||   Modal   |||||||||||||||||||||||||||||||||| -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog  modal-lg">
-    <div class="modal-content">
+    <div class="modal-content modal-producto">
     <div class="modal-header encabezado-modal">
         <h1 class="modal-title fs-5" id="exampleModalToggleLabel" style="color:rgb(255, 255, 255);">
         Registro de Usuario
@@ -127,8 +131,9 @@
         </div>
 
       <form action="?pagina=usuario" id="u" autocomplete="off"> <!--comienzo Formulario-->
-        
+         <div class="seccion-formulario">
         <div class="row ">
+          <h6><i class="fa-solid fa-user"></i> Datos de la Persona </h6>
           <div class="col-sm">
           <label class="form-label text-dark">Nombre</label>
      
@@ -136,7 +141,7 @@
               <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-address-book" style="color:#007bff;"></i></span>
               <input type="text" class="form-control text-dark" name="nombres" id="nombre" placeholder="Ejemplo: Pedro "  required> 
             </div> 
-          <span id="textonombre" class="vali-span"></span> <br>
+          <span id="textonombre" class="text-error mt-0"></span> <br>
           </div>
       
           <div class="col-sm">
@@ -147,32 +152,35 @@
               <input type="text" class="form-control text-dark" name="apellidos" id="apellido" placeholder="Ejemplo: Perez "  required>  
             </div> 
           
-          <span id="textoapellido" class="vali-span"></span> <br>
+          <span id="textoapellido" class="text-error mt-0"></span> <br>
           </div>
 
           <div class="col-sm">
           <label class="form-label text-dark">Cargo (Tipo de Usuario)</label>
             <div class="input-group mb-3">
               <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user-tag" style="color:#007bff;"></i></span>
-                <select class="form-select text-dark" aria-label="Default select example" name="tipo_usuario" required>
+                <select class="form-select text-dark" aria-label="Default select example" name="tipo_usuario" id="tiposelect" required>
                    <option value="">Seleccione una Tipo de Usuario:</option>
                       <?php foreach($tipos as $tipos) {?>
                     <option value="<?php echo $tipos['id_tipo'];?>"> <?php echo $tipos['nombre'].' - Nivel '.$tipos['nivel'];?> </option>
                       <?php } ?>
                 </select>
-            </div>    
+            </div>   
+            <span id="textotipo" class="text-error mt-0"> </span> 
           </div>
-          
+          </div>
         </div>
-
+      
+        <div class="seccion-formulario">
         <div class="row ">
+          <h6><i class="fa-solid fa-user"></i> Datos Para acceder al sistema</h6>
           <div class="col-sm">
           <label class="form-label text-dark">Usuario</label>
             <div class="input-group mb-3">
               <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user" style="color:#007bff;"></i></span>
               <input type="text" class="form-control text-dark" name="usuario" id="usuario" placeholder="Ejemplo: misterbolsa123 "  required>  
             </div> 
-          <span id="textousuario" class="vali-span"></span> <br>
+          <span id="textousuario" class="text-error mt-0"></span> <br>
           </div>
 
           <div class="col-sm">
@@ -181,16 +189,15 @@
               <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-lock" style="color:#007bff;"></i></span>
               <input type="text" class="form-control text-dark"  name="clave" id="clave" placeholder="Ejemplo: misterbolsa2024 "  required>    
             </div>
-          <span id="textoclave" class="vali-span"></span> <br>
+          <span id="textoclave" class="text-error mt-0"></span> <br>
           </div>
-          
+           </div>
         </div>
         
-
 <hr>
 <div class="button-container">
-    <button type="button" class="btn btn-success" id="registrar">Registrar</button>
-    <button type="reset" class="btn btn-secondary" name="limpiar">Limpiar</button>
+    <button type="button" class="btn btn-guardar" id="registrar">Registrar</button>
+    <button type="reset" class="btn btn-limpiar" name="limpiar">Limpiar</button>
 </div>
         </form> <!--fin del formulario-->
       </div>

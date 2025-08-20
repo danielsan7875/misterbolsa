@@ -13,9 +13,9 @@
     <div class="bg order-1 order-md-2" style="background-image: url('assets/images/fondo1.avif');"></div>
     <div class="contents order-2 order-md-1">
 
-      <div class="container">
-        <div class="row align-items-center justify-content-center">
-          <div class="col-md-7 text-dark">
+      <div class="container ">
+        <div class="row align-items-center justify-content-center ">
+          <div class="col-md-7 text-dark bl">
             <h1><strong>Inicio de Sesión</strong></h1>
             <p class="mb-2 text-dark" style="font-size: 18px !important;"><strong class="text-mister">MISTER BOLSA, C.A RIF: J-29979563-1</strong> - Inventario / Venta Productos</p>
             <p class="mb-4 text-dark" style="font-size: 16px !important;">Ingrese su usuario y clave para acceder el sistema</p>

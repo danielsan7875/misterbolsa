@@ -11,6 +11,13 @@ body {
   font-family: "Roboto", sans-serif;
   background-color: #fff; }
 
+.bl{
+   background-color: #fff;
+   padding: 40px 20px 40px 20px;
+   box-shadow: 5px 5px 10px rgba(0,0,0,0.3);
+   border-radius: 10px;
+}
+
 p {
   color: #b3b3b3;
   font-weight: 300; }
@@ -41,7 +48,8 @@ h2 {
     height: 200px; } }
 
 .half .contents {
-  background: #f6f7fc; }
+  background: #f3e2d5; 
+}
 
 .half .contents, .half .bg {
   width: 50%; }

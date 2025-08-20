@@ -47,33 +47,27 @@
       </div>
 
 <div>
-      <?php foreach ($dolar as $dolar){  ?>
-        <input type="hidden" id="dolar" value="<?php echo $dolar['precios']?>">
-        <div class="header-container mb-4">
-           <div class="left-section">
-              <h5><i class="fa-solid fa-money-bill-transfer"></i> Tasa del Dolar (Bs <?php echo $dolar['precios']?> ) </h5>
-              <?php } ?>
-          </div>
-          <div class="button-group">
-              <a href="#" class="btn btn-primary"><i class="fa-regular fa-file-pdf"></i> Reportes</a>
-              
-              <div class="btn-group">
-              <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+
+<div class="d-flex justify-content-between mb-4">
+ <a href="#" class="btn btn-primary"><i class="fa-regular fa-file-pdf"></i> Reportes</a>
+
+  <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
              Mas Opciones
             </button>
-  <ul class="dropdown-menu">
-    <li> <a href="?pagina=perdidas" class="dropdown-item text-dark"><i class="fas fa-chart-line m-2" style="color: #E63946;"></i> Ver Perdidas</a></li>
-    <li> <a href="?pagina=detalle" class="dropdown-item text-dark"><i class="fas fa-file-alt m-2" style="color: #E63946;"></i> Ver Detalles</a></li>
-  </ul>
+                <ul class="dropdown-menu">
+                  <li> <a href="?pagina=perdidas" class="dropdown-item text-dark"><i class="fas fa-chart-line m-2" style="color: #E63946;"></i> Ver Perdidas</a></li>
+                  <li> <a href="?pagina=detalle" class="dropdown-item text-dark"><i class="fas fa-file-alt m-2" style="color: #E63946;"></i> Ver Detalles</a></li>
+                </ul>
 </div>
-            </div>
-        </div>
-    
 
-</div>
+  
+
 <div id="alerta">
 
 </div>
+    <?php foreach ($dolar as $dolar){  ?>
+        <input type="hidden" id="dolar" value="<?php echo $dolar['precios']?>">
+        <?php } ?>
 <div class="card shadow mb-4"> <!-- comienzo del Cuadro blanco-->
 <div class="table-margen">    <!-- comienzo del Cuadro blanco body-->
 <div class="table-responsive">

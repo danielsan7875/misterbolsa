@@ -5,7 +5,7 @@ function eliminar(boton){
       icon: 'question',
       showCancelButton: true,
       color: "#00000",
-      confirmButtonColor: '#457B9D',
+      confirmButtonColor: '#1d994dff',
       cancelButtonColor: '#EF233C',
       confirmButtonText: ' SI ',
       cancelButtonText: 'NO'
@@ -41,6 +41,57 @@ mensaje){
 	}
 }
 
+function activarLoaderBoton(idBoton, texto) {
+    const $boton = $(idBoton);
+    const textoActual = $boton.html();
+    $boton.data('texto-original', textoActual); // Guarda el texto original
+    $boton.prop('disabled', true);
+    $boton.html(`<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>${texto}`);
+}
+
+function desactivarLoaderBoton(idBoton) {
+    const $boton = $(idBoton);
+    const textoOriginal = $boton.data('texto-original');
+    $boton.prop('disabled', false);
+    $boton.html(textoOriginal);
+}
+
+function validarCampo(campo, regex, textoError, mensaje) {
+  const valor = campo.val();
+
+  if (campo.is("select")) {
+    if (valor === "") {
+      campo.removeClass("is-validd").addClass("is-invalidd");
+      textoError.text(mensaje);
+      return false;
+    } else {
+      campo.removeClass("is-invalidd").addClass("is-validd");
+      textoError.text("");
+      return true;
+    }
+  } else {
+    if (regex.test(valor)) {
+      campo.removeClass("is-invalidd").addClass("is-validd");
+      textoError.text("");
+      return true;
+    } else {
+      campo.removeClass("is-validd").addClass("is-invalidd");
+      textoError.text(mensaje);
+      return false;
+    }
+  }
+}
+
+ function validarFormulario() {
+    const resultados = [
+        validarCampo($("#nombre"), /^[a-zA-Z]{4,100}$/, $("#textonombre"), "Debe haber como mínimo 4 caracteres"),
+        validarCampo($("#selectnivel"), null, $("#textonivel"), "Por favor, seleccione un nivel válido.")
+    ];
+
+    return resultados.every(r => r === true);
+}
+
+
 function consulta() {
     var datos = new FormData();
     datos.append('consultar', 'consultar');
@@ -52,44 +103,48 @@ $(document).ready(function() {
 
    // VALIDACION DE DATOS  
    $("#nombre").on("keypress", function(e) {
-    // Permitir solo letras (mayúsculas y minúsculas) y la tecla de retroceso
     validarkeypress(/^[a-zA-Z\b]*$/, e);
     });
 
     $("#nombre").on("keyup", function() {
-    // Validar que el contenido tenga entre 4 y 100 caracteres y que contenga solo letras
-    validarkeyup(/^[a-zA-Z]{4,100}$/, $(this),
-     $("#textonombre"), "Debe haber como mínimo 4 caracteres y solo letras");
+      validarCampo($(this),/^[a-zA-Z]{4,100}$/, 
+      $("#textonombre"), "Debe haber como mínimo 4 caracteres");
     });
+
+    $("#selectnivel").on("change", function () {
+       validarCampo($(this), null, $("#textonivel"), "Por favor, seleccione un nivel válido.");
+    });
+
     
     $('#registrar').on("click", function () {
-         
-            var datos = new FormData($('#u')[0]);
-            datos.append('registrar', 'registrar');
-            enviaAjax(datos);
+        if (!validarFormulario()) {
+          muestraMensaje("error", 2000, "Campos inválidos O Vacios", "Por favor, corrige los errores antes de continuar.");
+          return;
+       }
+        activarLoaderBoton('#registrar', "Guardando...");
+        var datos = new FormData($('#u')[0]);
+        datos.append('registrar', 'registrar');
+        enviaAjax(datos);
          
     });
  
   });
 
   $('#actualizar').on("click", function () {
-    // Mostrar el mensaje de confirmación
+    
     Swal.fire({
       title: '¿Desea actualizar los datos?',
       text: '',
       icon: 'question',
       showCancelButton: true,
       color: "#00000",
-      confirmButtonColor: '#457B9D',
+      confirmButtonColor: '#1d994dff',
       cancelButtonColor: '#EF233C',
       confirmButtonText: ' SI ',
       cancelButtonText: 'NO'
     }).then((result) => {
       if (result.isConfirmed) {
-        // Obtener el valor del input oculto
-        var idUsuario = $('#id_tipo').val(); // Asegúrate de que el ID del input oculto sea correcto
-  
-        // Verificar si el id_usuario es igual a 1
+        var idUsuario = $('#id_tipo').val();
         if (idUsuario == 1) {
           Swal.fire({
             title: 'No puede editar',
@@ -99,7 +154,12 @@ $(document).ready(function() {
             confirmButtonText: 'Aceptar'
           });
 
+        } else  if (!validarFormulario()) {
+          muestraMensaje("error", 2000, "Campos inválidos O Vacios", "Por favor, corrige los errores antes de continuar.");
+          return;
+       
         } else {
+           activarLoaderBoton('#actualizar', "Guardando...");
              var datos = new FormData($('#m')[0]);
              datos.append('actualizar', 'actualizar');
              enviaAjax(datos);
@@ -107,18 +167,6 @@ $(document).ready(function() {
       }
     });
   });
-
-function validarenvio() {
-	if (validarkeyup(/^[a-zA-Z\s]{1,50}$/,
-		$("#nombre"), $("#textonombre"), "Debe haber como mínimo 4 caracteres y solo letras")) {
-		muestraMensaje("error", 2000, "Error", "Tiene que ingresar un nombre valido");
-		return false;
-	}
-
-	return true;
-}
-
-
 
   function muestraMensaje(icono, tiempo, titulo, mensaje) {
     Swal.fire({
@@ -142,7 +190,7 @@ function validarenvio() {
             '<td>' + dato.nivel + '</td>' +
             '<td>' +
             '<form method="POST" action="?pagina=tipousuario">' +
-            '<button name="modificar" class="btn btn-primary btn-sm modificar" value="' + dato.id_tipo + '"><i class="fas fa-pencil-alt" title="Editar"></i> Modificar </button>' +
+            '<button name="modificar" class="btn btn-primary btn-sm modificar me-2" value="' + dato.id_tipo + '"><i class="fas fa-pencil-alt" title="Editar"></i> Modificar </button>' +
             '<button type="button" onclick="eliminar(this)" class="btn btn-danger btn-sm eliminar" value="' + dato.id_tipo + '"><i class="fas fa-trash-alt" title="Eliminar"> </i> Eliminar </button>' +
             '</form>' +
             '</td>' +
@@ -178,20 +226,24 @@ function validarenvio() {
                      $('#selectnivel').prop('selectedIndex', 0); 
                      $('#nombre').val('');  
                   muestraMensaje("success", 1000, "Se ha registrado con éxito", "Su registro se ha completado exitosamente");
+                    desactivarLoaderBoton('#registrar');
                   setTimeout(function () {
                     consulta();
                   }, 1000);
                 } else {
                   muestraMensaje("error", 1000, "ERROR", "ERROR");
+                    desactivarLoaderBoton('#registrar');
                 }
               } else if (lee.accion == 'actualizar') {
                 if (lee.respuesta == 1) {
                   muestraMensaje("success", 1000, "Se ha Modificado con éxito", "Su registro se ha Actualizado exitosamente");
+                       desactivarLoaderBoton('#actualizar');
                   setTimeout(function () {
                     location = '?pagina=tipousuario';
                   }, 1000);
                 } else {
                   muestraMensaje("error", 2000, "ERROR", lee.text);
+                   desactivarLoaderBoton('#actualizar');
                 }
               } else if (lee.accion == 'eliminar') {
                 if (lee.respuesta == 1) {

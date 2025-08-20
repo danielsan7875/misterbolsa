@@ -253,8 +253,8 @@ $('#agregar').on('click', function() {
               title: 'Selecciona el tipo de precio',
               input: 'select',
               inputOptions: {
-                  'mayor': 'MAYOR',
-                  'detal': 'DETAL'
+                  'MAYOR': 'MAYOR',
+                  'DETAL': 'DETAL'
               },
               inputPlaceholder: 'Selecciona una opción',
               showCancelButton: true,

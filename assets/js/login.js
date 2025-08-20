@@ -191,13 +191,13 @@ function muestraMensajetost(icono, titulo, mensaje, tiempo) {
   
           if (lee.accion == 'ingresar') {
             if (lee.respuesta == 1) {
-            
+              muestraMensajetost("success","Inicio de Session", "Exitosamente", "1000")
               desactivarLoaderBoton('#ingresar'); 
               setTimeout(function () {
                 location = '?pagina=home';
               }, 1000);
-            } if (lee.respuesta == 2) {
-              muestraMensajetost("success","Inicio de Session", "Exitosamente | Dolar Actualizado", "1000");
+            } else if (lee.respuesta == 2) {
+              muestraMensajetost("success","Inicio de Session Exitosamente", "Dolar Actualizado", "1000");
               desactivarLoaderBoton('#ingresar'); 
               setTimeout(function () {
                 location = '?pagina=home';

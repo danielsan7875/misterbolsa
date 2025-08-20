@@ -5,7 +5,7 @@
     <?php require_once 'complementos/head.php'; ?>
     <title>Compra | Mister Bolsa C.A</title>
     <link rel="stylesheet" href="assets/css/compra.css" />
-
+<link rel="stylesheet" href="assets/css/for.css" />
 </head>
 
 <body>
@@ -36,11 +36,11 @@
         Compra</h1>
            
        <!-- Button que abre el Modal N1 Registro -->
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-          <span class="icon text-white-100">
-            <i class="fas fa-file-medical"></i>
+          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <span class="icon text-dark">
+            <i class="fas fa-file-medical me-2"></i>
             </span>
-            <span class="text ext-white-100">Registrar Compra</span>
+            <span class="text text-dark">Registrar Compra</span>
       </button>
       </div>
 
@@ -90,7 +90,7 @@
 <!-- |||||||||||||||||||||||||   Modal   |||||||||||||||||||||||||||||||||| -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content">
+    <div class="modal-content modal-producto">
     <div class="modal-header encabezado-modal">
         <h1 class="modal-title fs-5" id="exampleModalToggleLabel" style="color:rgb(255, 255, 255);">
         Registro de Compra
@@ -100,8 +100,9 @@
 
       <div class="modal-body">
       <form action="?pagina=compra" id="u" autocomplete="off"> <!--comienzo Formulario-->
-  
+  <div class="seccion-formulario">
         <div class="row ">
+          <h6>Seleccionar un producto</h6>
           <div class="col-sm">
           <label class="form-label text-dark">Producto</label>
           <div class="input-group mb-3">
@@ -113,18 +114,20 @@
                <?php } ?>
             </select>
            </div>
+           <span class="text-error mt-0" id="textoproducto"></span>
+          </div>
           </div>
         </div>
-
+  <div class="seccion-formulario">
         <div class="row ">
-          
+           <h6>Fecha y la cantidad de la compra</h6>
           <div class="col-sm">
           <label class="form-label text-dark">Fecha</label>
           <div class="input-group mb-3">
               <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-calendar-days" style="color:#007bff;"></i></span>
               <input type="date" class="form-control text-dark" name="fecha" id="fecha" required>    
           </div> 
-          <span id="textofecha" class="vali-span"></span> 
+          <span id="textofecha" class="text-error mt-0"></span> 
         </div>
 
         <div class="col-sm"> 
@@ -133,16 +136,16 @@
                  <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-box" style="color:#007bff;"></i></span>
                 <input type="text" class="form-control text-dark" name="cantidad" id="cantidad" placeholder="Ejemplo: 1 "  required>  
                 </div>
-                <span id="textocantidad" class="vali-span"></span> 
+                <span id="textocantidad" class="text-error mt-0"></span> 
           </div> 
-         
+           </div>
         </div>
 
 
 <hr>
 <div class="button-container">
-    <button type="button" class="btn btn-success" id="registrar"><i class="fa-solid fa-receipt"></i> Registrar</button>
-    <button type="button" class="btn btn-secondary" id="limpiardatos" name="limpiar">Limpiar</button>
+    <button type="button" class="btn btn-guardar" id="registrar"><i class="fa-solid fa-receipt me-2"></i> Registrar</button>
+    <button type="button" class="btn btn-limpiar" id="limpiardatos" name="limpiar">Limpiar</button>
 </div>
         </form> <!--fin del formulario-->
       </div>

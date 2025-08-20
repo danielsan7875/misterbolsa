@@ -39,9 +39,10 @@
             
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                   <div class="message-body">
-                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                    <i class="fa-solid fa-lock-open"></i>
-                      <p class="mb-0 fs-3">Cambiar Constraseña</p>
+                    
+                    <a href="?pagina=tasa" class="d-flex align-items-center gap-2 dropdown-item text-dark">
+                    <i class="fa-solid fa-money-bill-trend-up me-2"></i>
+                      <p class="mb-0 fs-3">Cambiar Tasa Dolar</p>
                     </a>
                     <button type="button" name="cerrar" class="btn btn-outline-danger mx-3 mt-2 d-block shadow-none"
                     data-bs-toggle="modal" data-bs-target="#modalcerrar">Cerrar Session</button>

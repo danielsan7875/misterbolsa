@@ -6,6 +6,7 @@
     <title> Venta | Mister Bolsa C.A</title>
     <link rel="stylesheet" href="assets/css/producto.css" /> 
     <link rel="stylesheet" href="assets/css/venta.css" />
+      <link rel="stylesheet" href="assets/css/for.css" />
 </head>
 
 <body>
@@ -45,23 +46,16 @@
 
       <div>
       <?php foreach ($dolar as $dolar){  ?>
-        <input type="hidden" id="dolar" value="<?php echo $dolar['precios']?>">
-        <div class="header-container mb-4">
-           <div class="left-section">
-              <h5><i class="fa-solid fa-money-bill-transfer"></i> Tasa del Dolar (Bs <?php echo $dolar['precios']?> ) </h5>
-              <input type="hidden" value="<?php echo $dolar['precios']?>" id="tasadolar">
-              <?php } ?>
-              <button class="btn btn-info btn-sm" type="button" data-bs-toggle="offcanvas"
-               data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="fas fa-pencil-alt m-1"></i> Cambiar</button>
-          </div>
+        <input type="hidden" id="tasadolar" value="<?php echo $dolar['precios']?>">
+        <?php } ?>
+      
           
-          <div class="button-group">
+          <div class="button-group mb-4">
               <a href="#" class="btn btn-primary"><i class="fa-regular fa-file-pdf"></i> Reportes</a>
             </div>
         </div>
     
 
-</div>
       <div class="card shadow mb-4"> <!-- comienzo del Cuadro blanco-->
 <div class="table-margen">    <!-- comienzo del Cuadro blanco body-->
       <div class="table-responsive">
@@ -157,31 +151,11 @@ foreach ($ventas as $id_venta => $info) {
 </div>
 </div>
 
-<!-- |||||||||||||||||||||||||   TASA DOLAR   |||||||||||||||||||||||||||||||||| -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasRightLabel"><i class="fa-solid fa-money-bill-transfer"></i> Actualizar Tasa del Dolar</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-  </div>
-  <div class="offcanvas-body">
-    <form action="?pagina=venta" id="t" autocomplete="off">
-
-      <label class="form-label text-dark">Precio $ A Bs</label>
-      <input type="text" class="form-control text-dark" name="precios" id="inputtasadolar" placeholder="0.00 "  required>
-      <span id="textotasadolar"  class="vali-span"></span> 
-      <input type="hidden" name="id_dolar" value="1"> <br>
-
-      <button type="button" class="btn btn-success text-dark" id="tasadolarre">
-      <i class="fa-solid fa-money-bill-transfer"></i> Actualizar Tasa</button>
-      <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas" aria-label="Close">Cerrar</button>
-    </form>
-  </div>
-</div>
 
 
 <!-- |||||||||||||||||||||||||   MODAL DE REGISTRO  |||||||||||||||||||||||||||||||||| -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+  <div class="modal-dialog modal-xl">
     <div class="modal-content">
     <div class="modal-header encabezado-modal">
         <h1 class="modal-title fs-5" id="exampleModalToggleLabel"  style="color:rgb(255, 255, 255);">

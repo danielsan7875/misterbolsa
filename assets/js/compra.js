@@ -22,13 +22,63 @@ mensaje){
 	}
 }
 
+function activarLoaderBoton(idBoton, texto) {
+    const $boton = $(idBoton);
+    const textoActual = $boton.html();
+    $boton.data('texto-original', textoActual); // Guarda el texto original
+    $boton.prop('disabled', true);
+    $boton.html(`<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>${texto}`);
+}
+
+function desactivarLoaderBoton(idBoton) {
+    const $boton = $(idBoton);
+    const textoOriginal = $boton.data('texto-original');
+    $boton.prop('disabled', false);
+    $boton.html(textoOriginal);
+}
+
+function validarCampo(campo, regex, textoError, mensaje) {
+  const valor = campo.val();
+
+  if (campo.is("select")) {
+    if (valor === "") {
+      campo.removeClass("is-validd").addClass("is-invalidd");
+      textoError.text(mensaje);
+      return false;
+    } else {
+      campo.removeClass("is-invalidd").addClass("is-validd");
+      textoError.text("");
+      return true;
+    }
+  } else {
+    if (regex.test(valor)) {
+      campo.removeClass("is-invalidd").addClass("is-validd");
+      textoError.text("");
+      return true;
+    } else {
+      campo.removeClass("is-validd").addClass("is-invalidd");
+      textoError.text(mensaje);
+      return false;
+    }
+  }
+}
+
+function validarFormulario() {
+    const resultados = [
+        validarCampo($("#cantidad"), /^[0-9]{1,4}$/, $("#textocantidad"), "Debe haber como mínimo 1 caracter hasta 9999"),
+     validarCampo($("#fecha"),/^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/, $("#textofecha"), "Debe ingresar una fecha válida en formato dd/mm/yyyy"),
+        validarCampo($("#idproducto"), null, $("#textoproducto"), "Por favor, seleccione un producto válido.")
+    ];
+
+    return resultados.every(r => r === true);
+}
 
 $(document).ready(function() {
 
     $('#exampleModal').on('shown.bs.modal', function () {
         $('#idproducto').select2({
             dropdownParent: $('#exampleModal'),
-            width: '93%',
+            width: '85%',
             language: {
                  noResults: function() {
                  return "No se encontraron resultados, intenta con otro término.";
@@ -41,39 +91,56 @@ $(document).ready(function() {
     });
 
     $("#cantidad").on("keypresss", function(e) {
-    // Permitir solo números y la tecla de retroceso
      validarkeypress(/^[0-9\b]*$/, e);
     });
         
-    $("#cantidad").on("keyup", function() {
-    // Validar que el contenido tenga entre 4 y 100 caracteres y que contenga solo números
-    validarkeyup(/^[0-9]{1,4}$/, $(this),
-    $("#textocantidad"), "Debe haber como mínimo 1 caracter hasta 9999");
+     $("#idproducto").on("change", function () {
+       validarCampo($(this), null, $("#textoproducto"), "Por favor, seleccione un producto válido.");
     });
 
+    $("#cantidad").on("keyup", function() {
+       validarCampo($(this),/^[0-9]{1,4}$/, 
+       $("#textocantidad"), "Debe haber como mínimo 1 caracter hasta 9999");
+    });
 
+     $("#fecha").on("keypresss", function(e) {
+     validarkeypress(/^[0-9\b]*$/, e);
+    });
 
+$("#fecha").on("keyup", function() {
+    validarCampo($(this), /^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/, 
+        $("#textofecha"), "Debe ingresar una fecha válida en formato dd/mm/yyyy");
+});
 
-  $('#fecha').on('change', function() {
-    // Obtiene la fecha seleccionada
-    var selectedDate = moment($(this).val());
-    // Obtiene la fecha de hoy
-    var today = moment();
-    // Calcula la fecha límite (hace 6 días)
-    var limitDate = today.clone().subtract(6, 'days');
+$("#fecha").on("change", function() {
+    const valor = $(this).val(); // yyyy-mm-dd
+    const partes = valor.split("-");
+    const fechaFormateada = partes[2] + "/" + partes[1] + "/" + partes[0]; // dd/mm/yyyy
 
-    // Compara las fechas
+    // Simula un input temporal con el valor transformado
+    const inputSimulado = $("<input>").val(fechaFormateada);
+
+    validarCampo(inputSimulado, /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$/, 
+        $("#textofecha"), "Debe ingresar una fecha válida en formato dd/mm/yyyy");
+
+    // Validación de rango con Moment.js
+    const selectedDate = moment(valor);
+    const today = moment();
+    const limitDate = today.clone().subtract(6, 'days');
+
     if (selectedDate.isBefore(limitDate, 'day') || selectedDate.isAfter(today, 'day')) {
         Swal.fire({
             icon: 'error',
             title: 'Fecha no válida',
-            text: 'La fecha seleccionada debe estar entre Hoy O Hace 6 días atras.',
+            text: 'La fecha seleccionada debe estar entre Hoy o hace 6 días atrás.',
             confirmButtonColor: '#457B9D',
             confirmButtonText: 'Aceptar'
         });
-        $(this).val(''); // Limpia el campo de fecha
+        $(this).val('');
     }
 });
+
+
 
 
 $('#limpiardatos').on('click', function() {
@@ -87,6 +154,12 @@ $('#limpiardatos').on('click', function() {
 });
 
 $('#registrar').on("click", function () {
+    if (!validarFormulario()) {
+                muestraMensaje("error", 2000, "Campos inválidos O Vacios", "Por favor, corrige los errores antes de continuar.");
+              return;
+          }
+
+          activarLoaderBoton('#registrar', "Guardando...");
     var datos = new FormData($('#u')[0]);
     datos.append('registrar', 'registrar');
     enviaAjax(datos);
@@ -102,7 +175,7 @@ function eliminar(boton){
       icon: 'question',
       showCancelButton: true,
       color: "#00000",
-      confirmButtonColor: '#457B9D',
+      confirmButtonColor: '#1d994dff',
       cancelButtonColor: '#EF233C',
       confirmButtonText: ' SI ',
       cancelButtonText: 'NO'
@@ -144,11 +217,13 @@ function muestraMensaje(icono, tiempo, titulo, mensaje) {
           if (lee.accion == 'registrar') {
             if (lee.respuesta == 1) {
               muestraMensaje("success", 1000, "Se ha registrado con éxito", "Su registro se ha completado exitosamente");
+                desactivarLoaderBoton('#registrar'); 
               setTimeout(function () {
                 location = '?pagina=compra';
               }, 1000);
             } else {
               muestraMensaje("error", 2000, "ERROR", "ERROR");
+                desactivarLoaderBoton('#registrar'); 
             }
           } else if (lee.accion == 'actualizar') {
             if (lee.respuesta == 1) {

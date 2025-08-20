@@ -4,6 +4,7 @@
 <head>
     <?php require_once 'vista/complementos/head.php'; ?>
     <title>Modificar Tipo Usuario | Mister Bolsa C.A</title>
+       <link rel="stylesheet" href="assets/css/for.css" />
 </head>
 
 <body>
@@ -36,9 +37,9 @@
        <!-- Button que abre el Modal N1 Registro -->
           <a href="?pagina=tipousuario" class="btn btn-primary">
           <span class="icon text-white-100">
-            <i class="fas fa-file-medical"></i>
+             <i class="fa-solid fa-reply me-2"></i>
             </span>
-            <span class="text ext-white-100">Volver</span>
+            <span class="text text-white-100">Volver</span>
       </a>
       </div>
 
@@ -46,26 +47,29 @@
       <div class="table-margen">    <!-- comienzo del Cuadro blanco body-->
       <form action="?pagina=tipousuario" id="m" autocomplete="off"> <!--comienzo Formulario-->
         
-
         <div class="row">
-
-        <div class="col-sm-2">
-          <label class="form-label text-dark">#</label>        
-              <input type="text" class="form-control text-dark" value ="<?php echo $modificar ['id_tipo']?>" disabled>  
+           <div class="col-sm-2">
+          <label class="form-label text-dark"># <?php echo $modificar ['id_tipo']?></label>        
+             
               <input type="hidden"  name="id_tipo" id="id_tipo" value ="<?php echo $modificar ['id_tipo']?>">  
           </div>
+        </div>
+        <div class="seccion-formulario">
+
+      
+        <div class="row">
 
           <div class="col-sm-4">
           <label class="form-label text-dark">Nombre</label>
           <div class="input-group mb-3">
               <span class="input-group-text" id="basic-addon1"><i class="fa-regular fa-file-lines" style="color:#007bff;"></i></span>
-               <input type="text" class="form-control text-dark" name="nombre" id="nombre_prese" value ="<?php echo $modificar ['nombre']?>" required>  
+               <input type="text" class="form-control text-dark" name="nombre" id="nombre" value ="<?php echo $modificar ['nombre']?>" required>  
          
           </div>
-          <span id="textopresentacion" class="vali-span"></span> <br>
+            <span id="textonombre" class="text-error mt-0"></span> <br>
           </div>
 
-          <div class="col-sm-3">
+          <div class="col-sm-4">
           <label class="form-label text-dark">Nivel</label>
           <div class="input-group mb-3">
               <span class="input-group-text" id="basic-addon1"><i class="fa-regular fa-file-lines" style="color:#007bff;"></i></span>
@@ -76,10 +80,10 @@
                   <option value="3">Nivel 3</option>          
                 </select>
           </div>
-          <span id="textopresentacion" class="vali-span"></span> <br>
+          <span id="textonivel" class="text-error mt-0"></span> 
           </div>
 
-          <div class="col-sm-3">
+          <div class="col-sm-4">
           <label class="form-label text-dark">Estatus</label>
             <div class="input-group mb-3">
               <span class="input-group-text" id="basic-addon1"><i class="fa-regular fa-file-lines" style="color:#007bff;"></i></span>
@@ -97,14 +101,14 @@
             </div>
           </div>
 
-          
+            </div>
         </div>
 
        
 <hr>
 <div class="button-container">
-    <button type="button" class="btn btn-success" id="actualizar">Actualizar</button>
-    <button type="reset" class="btn btn-secondary" name="limpiar">Limpiar</button>
+    <button type="button" class="btn btn-guardar" id="actualizar">Actualizar datos</button>
+    <button type="reset" class="btn btn-limpiar" name="limpiar">Limpiar</button>
 </div>
         </form> <!--fin del formulario-->
       </div>

@@ -27,6 +27,7 @@ if (isset($_POST['ingresar'])) {
 
 
                 if(floatval($dolar) != 0.00){
+                                      
                     $objlogin->set_Dolar($dolar);
                     $resul = $objlogin->Tasa();
 
@@ -43,6 +44,7 @@ if (isset($_POST['ingresar'])) {
                  exit;
 
             }else if (isset($resultado->noactiva)) {
+                
                     echo json_encode([
                     'respuesta' => 0,
                     'accion' => 'ingresar',
@@ -51,6 +53,7 @@ if (isset($_POST['ingresar'])) {
                 exit;
             }
         } else {
+                              
             echo json_encode([
                     'respuesta' => 0,
                     'accion' => 'ingresar',

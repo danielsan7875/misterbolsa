@@ -4,6 +4,7 @@
 <head>
     <?php require_once 'vista/complementos/head.php'; ?>
     <title>Modificar Usuario | Mister Bolsa C.A</title>
+    <link rel="stylesheet" href="assets/css/for.css" />
 </head>
 
 <body>
@@ -36,7 +37,7 @@
        <!-- Button que abre el Modal N1 Registro -->
           <a href="?pagina=usuario" class="btn btn-primary">
           <span class="icon text-white-100">
-            <i class="fas fa-file-medical"></i>
+              <i class="fa-solid fa-reply me-2"></i>
             </span>
             <span class="text ext-white-100">Volver</span>
       </a>
@@ -54,8 +55,9 @@
               <input type="hidden"  value ="<?php echo $modificar ['id_usuario']?>" name="id_usuario" id="id_usuario">
             </div>
         </div>
-
+  <div class="seccion-formulario">
         <div class="row ">
+             <h6><i class="fa-solid fa-user"></i> Datos de la Persona </h6>
           <div class="col-sm">
           <label class="form-label text-dark">Nombre</label>
      
@@ -81,18 +83,21 @@
           <label class="form-label text-dark">Cargo (Tipo de Usuario)</label>
             <div class="input-group mb-3">
               <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user-tag" style="color:#007bff;"></i></span>
-                <select class="form-select text-dark" aria-label="Default select example" name="tipo_usuario" required>
+                <select class="form-select text-dark" aria-label="Default select example" name="tipo_usuario" id="tiposelect" required>
                 <option value="<?php echo $modificar['id_tipo']; ?>"><?php echo $modificar['nombre_tipo']." - actual"; ?></option>
                       <?php foreach($tipos as $tipos) {?>
                     <option value="<?php echo $tipos['id_tipo'];?>"> <?php echo $tipos['nombre'].' - Nivel '.$tipos['nivel'];?> </option>
                       <?php } ?>
                 </select>
             </div>    
+             <span id="textotipo" class="text-error mt-0"> </span> 
           </div>
-          
+              </div>
         </div>
 
+      <div class="seccion-formulario">
         <div class="row ">
+          <h6><i class="fa-solid fa-user"></i> Datos Para Acceder al Sistema </h6>
           <div class="col-sm">
           <label class="form-label text-dark">Usuario</label>
             <div class="input-group mb-3">
@@ -127,13 +132,13 @@
                      <option value="2">No Activo</option>
                      </select>
             </div>
-          
+           </div>
         </div>
         </div>
 <hr>
 <div class="button-container">
-    <button type="button" class="btn btn-success" id="actualizar">Actualizar</button>
-    <button type="reset" class="btn btn-secondary" name="limpiar">Limpiar</button>
+    <button type="button" class="btn btn-guardar" id="actualizar">Actualizar Datos</button>
+    <button type="reset" class="btn btn-limpiar" name="limpiar">Limpiar</button>
 </div>
         </form> <!--fin del formulario-->
       </div>

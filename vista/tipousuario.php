@@ -4,6 +4,7 @@
 <head>
     <?php require_once 'complementos/head.php'; ?>
     <title>Tipo de Usuario | Mister Bolsa C.A</title>
+     <link rel="stylesheet" href="assets/css/for.css" />
 </head>
 
 <body>
@@ -33,9 +34,9 @@
         Tipo de Usuario</h1>
            
        <!-- Button que abre el Modal N1 Registro -->
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-          <span class="icon">
-            <i class="fas fa-file-medical"></i>
+          <button type="button" class="btn btn-success text-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <span class="icon text-dark">
+            <i class="fas fa-file-medical me-2"></i>
             </span>
             <span class="text">Registrar</span>
       </button>
@@ -67,9 +68,9 @@
 <!-- |||||||||||||||||||||||||   Modal   |||||||||||||||||||||||||||||||||| -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content">
+    <div class="modal-content modal-producto">
     <div class="modal-header encabezado-modal">
-        <h1 class="modal-title fs-5" id="exampleModalToggleLabel"  style="color:rgb(255, 255, 255);">
+        <h1 class="modal-title fs-5 text-white" id="exampleModalToggleLabel">
         Registro de Tipo de Usuario
         </h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color:rgb(255, 255, 255);"></button>
@@ -78,16 +79,17 @@
       <div class="modal-body">
       <form action="?pagina=tipousuario" id="u" autocomplete="off"> <!--comienzo Formulario-->
         
-      
+      <div class="seccion-formulario">
         <div class="row ">
+          <h6><i class="fa-solid fa-user"></i> Datos del cargo </h6>
           <div class="col-sm">
           <label class="form-label text-dark">Nombre</label>
           <div class="input-group mb-3">
               <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user-tag" style="color:#007bff;"></i></span>
               <input type="text" class="form-control text-dark" name="nombre" id="nombre" placeholder="Nombre: "  required>  
-              <span id="textonombre" class="vali-span"></span> <br>
+         
             </div> 
-        
+         <span id="textonombre" class="vali-span"></span>
         </div>
 
           <div class="col-sm">
@@ -101,8 +103,9 @@
                   <option value="3">Nivel 3</option>          
                 </select>
             </div> 
+            <span class="text-error mt-0" id="textonivel"> </span>
            </div>
-          
+          </div>
         </div>
         <div class="alert alert-info" role="alert">
         Tipo de Usuario <br>
@@ -113,8 +116,8 @@
 
 <hr>
 <div class="button-container">
-    <button type="button" class="btn btn-success" id="registrar">Registrar</button>
-    <button type="reset" class="btn btn-secondary" name="limpiar">Limpiar</button>
+    <button type="button" class="btn btn-guardar" id="registrar">Registrar</button>
+    <button type="reset" class="btn btn-limpiar" name="limpiar">Limpiar</button>
 </div>
         </form> <!--fin del formulario-->
       </div>

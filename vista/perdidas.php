@@ -5,6 +5,7 @@
     <?php require_once 'complementos/head.php'; ?>
     <title>Perdidas | Mister Bolsa C.A</title>
     <link rel="stylesheet" href="assets/css/perdida.css" />
+    <link rel="stylesheet" href="assets/css/for.css" />
 </head>
 
 <body>
@@ -37,17 +38,17 @@
         Perdidas</h1>
            
        <!-- Button que abre el Modal N1 Registro -->
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-          <span class="icon text-white-100">
-            <i class="fas fa-file-medical"></i>
+          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <span class="icon text-dark">
+            <i class="fas fa-file-medical me-2"></i>
             </span>
-            <span class="text ext-white-100">Registrar Perdida</span>
+            <span class="text text-dark">Registrar Perdida</span>
       </button>
     
       </div>
 
       <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-  <a href="?pagina=producto" class="btn btn-info me-md-2" type="button">Ir a Producto</a>
+  <a href="?pagina=producto" class="btn btn-info me-md-2 text-dark" type="button">       <i class="fa-solid fa-reply me-2"></i>Ir a Producto</a>
   <button class="btn btn-primary" type="button"><i class="fa-regular fa-file-pdf"></i>Reportes</button>
 </div>      
 <div class="card shadow mb-4"> <!-- comienzo del Cuadro blanco-->
@@ -97,41 +98,46 @@
 <!-- |||||||||||||||||||||||||   MODAL DE REGISTRO  |||||||||||||||||||||||||||||||||| -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content">
+    <div class="modal-content modal-producto">
     <div class="modal-header encabezado-modal">
         <h1 class="modal-title fs-5" id="exampleModalToggleLabel" style="color:rgb(255, 255, 255);">
         Registro de Perdida de Producto
         </h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color:rgb(255, 255, 255);"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
       <div class="modal-body">
       <form action="?pagina=perdidas" id="u" autocomplete="off"> <!--comienzo Formulario-->
         
+      <div class="seccion-formulario">
         <div class="row ">
+            <h6><i class="fas fa-chart-line "></i> Selecionar el producto </h6>
           <div class="col-sm">
              <label class="form-label text-dark">Producto</label>
                 <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-boxes-stacked" style="color:#007bff;"></i></span>
-                <select class="form-select text-dark" aria-label="Default select example" name="id_producto" id="idproducto" required>
+                <select class="form-select text-dark" aria-label="Default select example" name="id_producto" id="idproducto"   width="10px" required>
                   <option value="">Seleccione un Producto:</option>
                        <?php foreach($producto as $producto) {?>
                   <option value="<?php echo $producto['id_producto'];?>"> <?php echo $producto['nombre']." - ".$producto['nombre_marca']." - ".$producto['nombre_presentacion']?> </option>
                      <?php } ?>
                 </select> 
               </div>
+                 <span id="textoproducto" class="text-error mt-0"></span>
           </div>
-
+</div>
         </div>
 
+         <div class="seccion-formulario">
         <div class="row ">
+          <h6><i class="fas fa-chart-line "></i> Cantidad y Nota </h6>
           <div class="col-sm">
           <label class="form-label text-dark">cantidad</label>
             <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-box" style="color:#007bff;"></i></span>
                 <input type="text" class="form-control text-dark" name="cantidad" id="cantidad" placeholder="Ejemplo: 5 "  required>  
               </div>
-              <span id="textocantidad" class="vali-span"></span> 
+              <span id="textocantidad" class="text-error mt-0"></span> 
           </div>
 
           <div class="col-sm">
@@ -140,17 +146,19 @@
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-comment" style="color:#007bff;"></i></span>
                 <input type="text" class="form-control text-dark"  name="nota" id="nota" placeholder="Ejemplo: gasto "  required>  
           </div>
-          <span id="textonota" class="vali-span"></span>
+          <span id="textonota" class="text-error mt-0"></span>
+          </div>
         </div>
 
         <input type="hidden" name="fecha" id="fechaperdida">  
-<hr>
+    </div>
+        <hr>
 <div class="button-container">
-    <button type="button" class="btn btn-success" id="registrar">Registrar</button>
-    <button type="button" class="btn btn-secondary" id="limpiardatos" name="limpiar">Limpiar</button>
+    <button type="button" class="btn btn-guardar" id="registrar">Registrar</button>
+    <button type="button" class="btn btn-limpiar" id="limpiardatos" name="limpiar">Limpiar</button>
 </div>
         </form> <!--fin del formulario-->
-      </div>
+  
     
       
     </div>
