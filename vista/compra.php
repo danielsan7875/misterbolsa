@@ -45,7 +45,7 @@
       </div>
 
 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-  <button class="btn btn-primary mb-3" type="button"><i class="fa-regular fa-file-pdf"></i>Reportes</button>
+  <button class="btn btn-primary mb-3" type="button" disabled><i class="fa-regular fa-file-pdf"></i>Reportes</button>
 </div>
       <div class="card shadow mb-4"> <!-- comienzo del Cuadro blanco-->
 <div class="table-margen">    <!-- comienzo del Cuadro blanco body-->

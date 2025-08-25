@@ -51,7 +51,7 @@
       
           
           <div class="button-group mb-4">
-              <a href="#" class="btn btn-primary"><i class="fa-regular fa-file-pdf"></i> Reportes</a>
+              <button class="btn btn-primary" disabled><i class="fa-regular fa-file-pdf"></i> Reportes</button>
             </div>
         </div>
     

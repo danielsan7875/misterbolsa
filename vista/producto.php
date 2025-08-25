@@ -38,18 +38,21 @@
         Producto</h1>
            
        <!-- Button que abre el Modal N1 Registro -->
-          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
           <span class="icon text-dark">
             <i class="fas fa-file-medical me-2"></i>
             </span>
             <span class="text text-dark">Nuevo Producto</span>
-      </button>
+        </button>
       </div>
 
 <div>
 
 <div class="d-flex justify-content-between mb-4">
- <a href="#" class="btn btn-primary"><i class="fa-regular fa-file-pdf"></i> Reportes</a>
+ <a href="assets/pdf/reporteproducto.php" target="_blank" class="btn btn-primary">
+  <i class="fa-regular fa-file-pdf"></i> Reportes
+</a>
+
 
   <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
              Mas Opciones
@@ -70,20 +73,19 @@
         <?php } ?>
 <div class="card shadow mb-4"> <!-- comienzo del Cuadro blanco-->
 <div class="table-margen">    <!-- comienzo del Cuadro blanco body-->
-<div class="table-responsive">
+<div class="table-responsive text-dark" >
 <table id="myTable" class="table table-striped table-hover" style="width:100%">
 <thead>
       <tr class="table-primary">
         <th>#</th>
-        <th>NOMBRE</th>
-        <th>MARCA</th>
-        <th>PRESENTACION</th>
-        <th>PRECIO DETAL BS </th>
-        <th>PRECIO MAYOR BS </th>
-        <th>STOCK</th>
-        <th>DETALLES</th>
+        <th>Nombre</th>
+        <th>Marca y Presentación</th>
+        <th>Precio DETAL</th>
+        <th>Precio MAYOR</th>
+        <th>Stock</th>
+        <th>Detalles</th>
         <?php if( $tipo_usuario == 1) { ?> 
-        <th>ACCION</th>
+        <th>Acciones</th>
         <?php } ?>
       </tr>
     </thead>
@@ -106,20 +108,22 @@ foreach ($registro as $dato){
 
     <td><?php echo $dato['nombre']; ?></td>
 
-    <td><?php echo $dato['nombre_marca']; ?></td>
+    <td>
+      <div class="mt-0">Marca: <?php echo $dato['nombre_marca']; ?> </div>
+      <div class="mt-0"> • <?php echo $dato['nombre_presentacion']; ?> </div>
+    </td>
 
-    <td><?php echo $dato['nombre_presentacion']; ?></td>
     
-    <td id="precioBs" class="fw-bold">  </td>
+    <td class="fw-bold "><div id="precioBs"> </div>  </td>
 
-    <td id="precioBss" class="fw-bold">  </td>
+    <td class="fw-bold"> <div id="precioBss" > </div>  </td>
 
-    <td class="text-center"><i class="fas fa-boxes"></i> <?php echo $dato['stock']; ?></td>
+    <td class="text-center"> <strong class="me-2"> <?php echo $dato['stock']; ?> </strong> </td>
 
     <td class="text-center">
       <!-- Botón de detalle -->
-      <button class="btn btn-info btn-sm text-dark" data-bs-toggle="modal" data-bs-target="#detalleModal-<?php echo $dato['id_producto']; ?>">
-        <i class="fas fa-info-circle m-1"></i> Detalle
+      <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#detalleModal-<?php echo $dato['id_producto']; ?>">
+        <i class="fas fa-info-circle me-2"></i> Detalle
       </button>
     </td>
 
@@ -127,44 +131,109 @@ foreach ($registro as $dato){
     <?php if ($tipo_usuario == 1) { ?> 
     <td>  <!-- ACCION -->
       <form method="POST" action="?pagina=producto">
-          <button name="modificar" class="btn btn-primary btn-sm modificar"
-          value="<?php echo $dato['id_producto']; ?>"><i class="fas fa-pencil-alt m-1" title="Editar"></i> Editar</button>
-       
-          <button name="eliminar" class="btn btn-danger btn-sm eliminar"
-          value="<?php echo $dato['id_producto']; ?>"><i class="fas fa-trash-alt m-1" title="Eliminar"></i> Eliminar</button>
-        <input type="hidden" name="eliminar" value="<?php echo $dato['id_producto']; ?>">
-        <input type="hidden" name="stock" value="<?php echo $dato['stock']; ?>">
-      </form>
+  <div class="dropdown">
+    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      Opciones
+    </button>
+    <ul class="dropdown-menu">
+      <li>
+        <button name="modificar" class="dropdown-item modificar text-dark" value="<?php echo $dato['id_producto']; ?>">
+          <i class="fas fa-pencil-alt me-2 text-primary"></i> Editar
+        </button>
+      </li>
+      <li>
+        <button name="eliminar" class="dropdown-item eliminar text-dark" value="<?php echo $dato['id_producto']; ?>">
+          <i class="fas fa-trash-alt me-2 text-danger"></i> Eliminar
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Hidden inputs outside the dropdown -->
+  <input type="hidden" name="eliminar" value="<?php echo $dato['id_producto']; ?>">
+  <input type="hidden" name="stock" value="<?php echo $dato['stock']; ?>">
+</form>
+
     </td>
     <?php } ?>
   </tr>
 
-  <!-- Modal de detalle -->
-  <div class="modal fade" id="detalleModal-<?php echo $dato['id_producto']; ?>" tabindex="-1" aria-labelledby="detalleModalLabel-<?php echo $dato['id_producto']; ?>" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content modal-producto">
-        <div class="modal-header">
-          <h5 class="modal-title"  style="color:rgb(255, 255, 255);" id="detalleModalLabel-<?php echo $dato['id_producto']; ?>">Detalles del producto</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-        
-        <div class="seccion-formulario">
-         <h4><strong>Precio Detal ($):</strong> <?php echo $dato['precio_unitario']; ?></h4>
-          <h4><strong>Precio Mayor ($)</strong> <?php echo $dato['precio_mayor']; ?></4h>
+ <!-- Modal de detalle -->
+<div class="modal fade" id="detalleModal-<?php echo $dato['id_producto']; ?>" tabindex="-1" aria-labelledby="detalleModalLabel-<?php echo $dato['id_producto']; ?>" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content modal-producto">
+      <div class="modal-header">
+        <h5 class="modal-title text-white" id="detalleModalLabel-<?php echo $dato['id_producto']; ?>">Detalles del producto</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+
+        <!-- Primera Card: Nombre, Marca, Presentación -->
+       
+          <div class="seccion-formulario">
+          <h6><i class="fas fa-boxes"></i> Nombre del Producto </h6>
+             <div class="row">
+              <div class="col"> <h5 class="card-title"><strong><?php echo $dato['nombre']; ?></strong></h5> </div>
+              <div class="col ">
+                <h5 class="mt-0">Marca: <?php echo $dato['nombre_marca']; ?></h5>
+                <h5 class="mt-0">Presentación: <?php echo $dato['nombre_presentacion']; ?></h5>
+            </div>
+    
           </div>
-        <div class="seccion-formulario">
-          <h4><strong>Stock Mínimo:</strong> <?php echo $dato['stock_minimo']; ?></h4>
-          <h4><strong>Cantidad Mayor:</strong> <?php echo $dato['cantidad_mayor']; ?></4h>
-         
-        </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        </div>
+          </div>
+        
+
+        <!-- Segunda Card: Precio Detal -->
+      
+       <div class="seccion-formulario">
+           <h6><i class="fas fa-boxes"></i> Precio al Detal </h6>
+            <div class="row">
+              <div class="col"><h5><strong>$:</strong> <?php echo $dato['precio_unitario']; ?></h5></div>
+              <div class="col"><h5><strong>Bs:</strong> <span class="precio-bs-detal" data-precio="<?php echo $dato['precio_unitario']; ?>"></h5></span></div>
+            </div>
+          </div>
+  
+
+        <!-- Tercera Card: Precio Mayor -->
+       <div class="seccion-formulario">
+          <h6><i class="fas fa-boxes"></i> Precio al Mayor </h6>
+            <div class="row">
+              <div class="col"><h5><strong>$:</strong> <?php echo $dato['precio_mayor']; ?></h5></div>
+              <div class="col"><h5><strong>Bs:</strong> <span class="precio-bs-mayor" data-precio="<?php echo $dato['precio_mayor']; ?>"></span></h5></div>
+              <div class="col"><h5><strong>Cantidad Mayor:</strong> <?php echo $dato['cantidad_mayor']; ?></h5></div>
+            </div>
+          </div>
+      
+
+        <!-- Cuarta Card: Stock -->
+         <div class="seccion-formulario">
+              <h6><i class="fas fa-boxes"></i> Otros datos </h6>
+            <div class="row">
+              <div class="col"> <h5><strong>Stock mínimo:</strong> <?php echo $dato['stock_minimo']; ?> </h5></div>
+              <div class="col"> <h5><strong>Stock Disponible:</strong> <?php echo $dato['stock']; ?></h5> </div>
+              <div class="col"> <h5>
+                <strong>Estado:</strong>
+                <?php
+                  if ($dato['stock'] >= $dato['stock_minimo']) {
+                    echo '<span class="badge bg-success">Perfecto</span>';
+                  } else {
+                    echo '<span class="badge bg-danger text-dark">Bajo stock</span>';
+                  }
+                ?>
+                </h5>
+              </div>
+            </div>
+          </div>
+   
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>
+</div>
+
 <?php
 }
 ?>
@@ -173,27 +242,6 @@ foreach ($registro as $dato){
   </table>
 </div>
 </div>
-</div>
-
-<!-- |||||||||||||||||||||||||   TASA DOLAR   |||||||||||||||||||||||||||||||||| -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasRightLabel"><i class="fa-solid fa-money-bill-transfer"></i> Actualizar Tasa del Dolar</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-  </div>
-  <div class="offcanvas-body">
-    <form action="?pagina=producto" id="t" autocomplete="off">
-
-      <label class="form-label text-dark">Precio $ A Bs</label>
-      <input type="text" class="form-control text-dark" name="precios" id="inputtasadolar" placeholder="0.00 "  required>
-      <span id="textotasadolar"  class="vali-span"></span> 
-      <input type="hidden" name="id_dolar" value="1"> <br>
-
-      <button type="button" class="btn btn-success text-dark" id="tasadolar">
-      <i class="fa-solid fa-money-bill-transfer"></i> Actualizar Tasa</button>
-      <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas" aria-label="Close">Cerrar</button>
-    </form>
-  </div>
 </div>
 
 
@@ -331,3 +379,13 @@ foreach ($registro as $dato){
 
 </body>
 </html>
+
+
+
+<!-- 
+ <td><?php /* echo $dato['nombre_marca']; ?></td>
+
+    <td><?php echo $dato['nombre_presentacion']; */ ?></td>
+    
+
+                 -->

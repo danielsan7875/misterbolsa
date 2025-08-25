@@ -13,7 +13,7 @@ async function obtenerTasaDolarApi() {
         document.getElementById("inputdolar").textContent = tasaBCV + " Bs";
         document.getElementById("preciobcv").value = tasaBCV;
     } catch (error) {
-         document.getElementById("inputdolar").textContent = "Error al cargar la tasa";
+         document.getElementById("inputdolar").textContent = "0.00";
          document.getElementById("preciobcv").value = "0.00";
     }
 }
@@ -203,7 +203,7 @@ function muestraMensaje(icono, tiempo, titulo, mensaje) {
                 location = '?pagina=tasa';
               }, 1000);
             } else {
-              muestraMensaje("error", 2000, "ERROR", "Intente Nuevamente O Mas Tarde");
+              muestraMensaje("error", 2000, "ERROR", lee.text);
               desactivarLoaderBoton('#sincronizar'); 
               desactivarLoaderBoton('#actualizar'); 
             }

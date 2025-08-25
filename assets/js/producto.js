@@ -1,29 +1,40 @@
 // Seleccionar todos los botones de eliminar con la clase "eliminar"
 var deleteButtons = document.querySelectorAll('.eliminar');
-// Recorre los botones de eliminar y añade un receptor de eventos a cada uno de ellos
+
 deleteButtons.forEach(function (button) {
   button.addEventListener('click', function (e) {
-    e.preventDefault(); // Evita que se envíe el formulario
-    // Muestra la alerta de confirmación
+    e.preventDefault();
+
+    // Obtener el formulario y la fila (tr) correspondiente
+    var form = this.closest('form');
+    var row = this.closest('tr');
+
+    // Extraer el ID y el nombre del producto desde las celdas
+    var idProducto = row.querySelector('td:nth-child(1)').textContent.trim();
+    var nombreProducto = row.querySelector('td:nth-child(2)').textContent.trim();
+
+    // Mostrar la alerta con los datos del producto
     Swal.fire({
-      title: '¿Desea eliminar los datos?',
-      text: '',
+      title: '¿Desea eliminar este producto?',
+      html: `<strong>ID:</strong> ${idProducto}<br><strong>Nombre:</strong> ${nombreProducto}`,
       icon: 'question',
       showCancelButton: true,
-      color: "#00000",
-      confirmButtonColor: '#1d994dff',
+      color: "#000000",
+      confirmButtonColor: '#1d994d',
       cancelButtonColor: '#EF233C',
-      confirmButtonText: ' SI ',
-      cancelButtonText: 'NO'
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        var form = this.closest('form');
         var datos = new FormData(form);
         enviaAjax(datos);
       }
     });
   });
 });
+
+
+
 function formatearDecimalAutomatico(input) {
     input.on("keyup", function () {
         let valor = $(this).val().replace(/\D/g, ""); // Elimina todo lo que no sea dígito
@@ -112,6 +123,8 @@ mensaje){
 	}
 }
 
+
+
 $(document).ready(function() {
 
     // Obtener el valor del dólar y convertirlo a número
@@ -131,27 +144,89 @@ $(".table tbody tr").each(function() {
     $(this).find("#precioBss").text("Bs " + precioBsM.toFixed(2));
 });
 
+// ✅ Actualizar precios en el modal
+$(".precio-bs-detal").each(function() {
+    var precio = parseFloat($(this).data("precio"));
+    if (!isNaN(precio)) {
+        var precioBs = dolar * precio;
+        $(this).text("" + precioBs.toFixed(2));
+    }
+});
+
+$(".precio-bs-mayor").each(function() {
+    var precio = parseFloat($(this).data("precio"));
+    if (!isNaN(precio)) {
+        var precioBsM = dolar * precio;
+        $(this).text("" + precioBsM.toFixed(2));
+    }
+});
+
+
 var alertMessages = [];
 
 // Iterar sobre cada fila de la tabla para verificar el stock
 $(".table tbody tr").each(function() {
-    var stockActual = parseInt($(this).find("td:nth-child(7)").text());
-    var stockMinimo = parseInt($(this).data('stock-minimo')); // Obtener el stock mínimo desde el data attribute
-    var productoNombre = $(this).find("td:nth-child(2)").text(); // Obtener el nombre del producto
-    var productoId = $(this).find("td:nth-child(1)").text(); 
+    var stockActual = parseInt($(this).find("td:nth-child(6)").text());
+    var stockMinimo = parseInt($(this).data('stock-minimo'));
+    var productoNombre = $(this).find("td:nth-child(2)").text();
+    var productoId = $(this).find("td:nth-child(1)").text();
 
     if (stockActual < stockMinimo) {
-        $(this).find('td:eq(6)').append(' <i class="fas fa-exclamation-triangle" style="color:rgb(230, 38, 54);"></i>');
-        // Agregar mensaje a la lista de alertas
-        alertMessages.push(" • #: " + productoId + " - " + productoNombre);
+        $(this).find('td:eq(5)').append(' <i class="fas fa-exclamation-triangle" style="color:rgb(230, 38, 54);"></i>');
+        alertMessages.push(`
+            <tr>
+                <td class="text-center text-dark fw-bold">#${productoId}</td>
+                <td class="text-dark">${productoNombre}</td>
+            </tr>
+        `);
     }
 });
 
-// Si hay mensajes de alerta, mostrarlos en el div
 if (alertMessages.length > 0) {
-  console.log("alertMessages");
-    $("#alerta").append('<div class="alert alert-warning" role="alert"><b><i class="fas fa-exclamation-triangle" style="color:rgb(12, 10, 10);"></i> ¡Alerta de Stock!</b> Se ha detectado un nivel de inventario bajo en los siguientes productos:<br>' + alertMessages.join('<br>') + '</div>');
+    $("#alerta").html(`
+        <div class="alert alert-warning d-flex justify-content-between align-items-center" role="alert">
+            <div class="text-dark">
+                <i class="fas fa-exclamation-triangle me-2" style="color:#ff0015ff;"></i>
+                <strong>¡Alerta de Stock!</strong> Algunos productos tienen inventario bajo. (Haz clic en "ver detalles")
+            </div>
+            <button type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#stockModal">
+                Ver detalles
+            </button>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="stockModal" tabindex="-1" aria-labelledby="stockModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+              <div class="modal-header bg-warning text-dark">
+                <h5 class="modal-title" id="stockModalLabel"><i class="fas fa-box-open me-2"></i>Productos con bajo stock</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+              </div>
+              <div class="modal-body">
+                <p>Se han detectado los siguientes productos con niveles de inventario por debajo del mínimo:</p>
+                <div class="table-responsive">
+                  <table class="table table-bordered table-sm table-hover">
+                    <thead class="table-dark">
+                      <tr>
+                        <th class="text-center">#</th>
+                        <th>Nombre del producto</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      ${alertMessages.join('')}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    `);
 }
+
 
               // Aplica a ambos campos
         formatearDecimalAutomatico($("#precio"));

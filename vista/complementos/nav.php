@@ -9,13 +9,15 @@
             </li>
             <li class="nav-item">
               <a class="nav-link nav-icon-hover" href="vista/complementos/manueldeusuario.pdf" target="_blank">
-              <i class="fa-solid fa-circle-info color-1"></i>
+              <i class="fa-solid fa-circle-info color-1" title="ayuda - Manual de usuario"></i>
             
                 <div class="notification bg-danger rounded-circle color-1"></div>
               </a>
             </li>
              <li class="nav-item">
-             
+              <a class="nav-link nav-icon-hover" href="#">
+              <i class="fa-solid fa-cash-register color-1"></i>
+              </a>
               
             </li>
           </ul>
