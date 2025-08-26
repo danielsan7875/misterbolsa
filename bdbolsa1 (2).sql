@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-12-2024 a las 03:22:01
--- Versión del servidor: 10.4.28-MariaDB
--- Versión de PHP: 8.2.4
+-- Tiempo de generación: 26-08-2025 a las 15:57:26
+-- Versión del servidor: 10.4.18-MariaDB
+-- Versión de PHP: 8.0.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `bdbolsa`
+-- Base de datos: `bdbolsa1`
 --
 
 -- --------------------------------------------------------
@@ -45,7 +45,8 @@ CREATE TABLE `detalle_venta` (
   `id_venta` int(100) NOT NULL,
   `id_producto` int(100) NOT NULL,
   `cantidad` int(100) NOT NULL,
-  `precio_unitario` varchar(100) NOT NULL
+  `precio_unitario` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
+  `maode` varchar(50) COLLATE utf8_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -56,8 +57,15 @@ CREATE TABLE `detalle_venta` (
 
 CREATE TABLE `dolar` (
   `id_dolar` int(1) NOT NULL,
-  `precios` varchar(100) NOT NULL
+  `precios` varchar(100) COLLATE utf8_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `dolar`
+--
+
+INSERT INTO `dolar` (`id_dolar`, `precios`) VALUES
+(1, '0.00');
 
 -- --------------------------------------------------------
 
@@ -67,9 +75,16 @@ CREATE TABLE `dolar` (
 
 CREATE TABLE `marca` (
   `id_marca` int(100) NOT NULL,
-  `nombre` varchar(100) NOT NULL,
+  `nombre` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
   `estatus` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `marca`
+--
+
+INSERT INTO `marca` (`id_marca`, `nombre`, `estatus`) VALUES
+(1, 'Sin Marca', 1);
 
 -- --------------------------------------------------------
 
@@ -82,7 +97,7 @@ CREATE TABLE `perdida` (
   `fecha` date NOT NULL,
   `id_producto` int(100) NOT NULL,
   `cantidad` int(100) NOT NULL,
-  `nota` varchar(100) NOT NULL
+  `nota` varchar(100) COLLATE utf8_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -93,9 +108,19 @@ CREATE TABLE `perdida` (
 
 CREATE TABLE `presentacion` (
   `id_presentacion` int(100) NOT NULL,
-  `nombre` varchar(100) NOT NULL,
+  `nombre` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
   `estatus` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `presentacion`
+--
+
+INSERT INTO `presentacion` (`id_presentacion`, `nombre`, `estatus`) VALUES
+(1, 'Unidad', 1),
+(2, 'Paquete de 100 unidades', 1),
+(3, 'Paquete de 50 unidad', 1),
+(4, 'Paquete de 25 unidades', 1);
 
 -- --------------------------------------------------------
 
@@ -105,12 +130,14 @@ CREATE TABLE `presentacion` (
 
 CREATE TABLE `producto` (
   `id_producto` int(100) NOT NULL,
-  `nombre` varchar(100) NOT NULL,
+  `nombre` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
   `id_marca` int(100) NOT NULL,
   `id_presentacion` int(100) NOT NULL,
   `stock` int(100) NOT NULL,
   `stock_minimo` int(100) NOT NULL,
-  `precio_unitario` varchar(100) NOT NULL,
+  `precio_unitario` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
+  `precio_mayor` float NOT NULL,
+  `cantidad_mayor` int(50) NOT NULL,
   `estatus` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
@@ -122,10 +149,19 @@ CREATE TABLE `producto` (
 
 CREATE TABLE `tipo_usuario` (
   `id_tipo` int(100) NOT NULL,
-  `nombre` varchar(100) NOT NULL,
+  `nombre` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
   `nivel` int(100) NOT NULL,
   `estatus` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `tipo_usuario`
+--
+
+INSERT INTO `tipo_usuario` (`id_tipo`, `nombre`, `nivel`, `estatus`) VALUES
+(1, 'Administrador', 1, 1),
+(2, 'Cajero', 3, 1),
+(3, 'Supervisora', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -135,13 +171,21 @@ CREATE TABLE `tipo_usuario` (
 
 CREATE TABLE `usuario` (
   `id_usuario` int(100) NOT NULL,
-  `nombre` varchar(100) NOT NULL,
-  `apellido` varchar(100) NOT NULL,
-  `usuario` varchar(100) NOT NULL,
-  `clave` varchar(100) NOT NULL,
+  `nombre` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
+  `apellido` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
+  `usuario` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
+  `clave` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
   `estatus` int(10) NOT NULL,
   `id_tipo` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`id_usuario`, `nombre`, `apellido`, `usuario`, `clave`, `estatus`, `id_tipo`) VALUES
+(1, 'Jefe', 'Misterbolsaca', 'admin2025', 'lara1234', 1, 1),
+(2, 'Daniel', 'Dev', 'daniel7875', 'lara1234', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -152,7 +196,7 @@ CREATE TABLE `usuario` (
 CREATE TABLE `venta` (
   `id_venta` int(100) NOT NULL,
   `fecha` date NOT NULL,
-  `total` varchar(100) NOT NULL
+  `total` varchar(100) COLLATE utf8_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
@@ -228,55 +272,55 @@ ALTER TABLE `venta`
 -- AUTO_INCREMENT de la tabla `compra`
 --
 ALTER TABLE `compra`
-  MODIFY `id_compra` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_compra` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_venta`
 --
 ALTER TABLE `detalle_venta`
-  MODIFY `id_detalle` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_detalle` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de la tabla `marca`
 --
 ALTER TABLE `marca`
-  MODIFY `id_marca` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_marca` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `perdida`
 --
 ALTER TABLE `perdida`
-  MODIFY `id_perdida` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_perdida` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `presentacion`
 --
 ALTER TABLE `presentacion`
-  MODIFY `id_presentacion` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_presentacion` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `id_producto` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_producto` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_usuario`
 --
 ALTER TABLE `tipo_usuario`
-  MODIFY `id_tipo` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_tipo` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_usuario` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `venta`
 --
 ALTER TABLE `venta`
-  MODIFY `id_venta` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_venta` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- Restricciones para tablas volcadas
