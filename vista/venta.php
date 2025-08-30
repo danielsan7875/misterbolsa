@@ -19,7 +19,7 @@
     data-sidebar-position="fixed" data-header-position="fixed">
   <?php require_once 'complementos/sidebar.php'; ?>
  
-    <div class="body-wrapper">
+    <div class="body-wrapper body-oscuro">
     <?php require_once 'complementos/nav.php'; ?>
     <div class="container-fluid">
   <!--|||||||||||||||   Fin de Sidebar y Nav  |||||||||||||||||||||||||||-->
@@ -30,7 +30,9 @@
     <li class="breadcrumb-item active color-text1" aria-current="page">Venta</li>
   </ol>
 </nav>
-
+<?php foreach ($dolar as $dolar){  ?>
+        <input type="hidden" id="tasadolar" value="<?php echo $dolar['precios']?>">
+        <?php } ?>
 <div class="d-sm-flex align-items-center justify-content-between mb-5">
        <h1 class="h3 mb-0 text-gray-900"> <i class="fa-solid fa-cash-register mr-3" style="color: #E63946;"></i>
         Venta</h1>
@@ -43,40 +45,36 @@
             <span class="text-dark">Registrar Venta</span>
       </button>
       </div>
-
-      <div>
-      <?php foreach ($dolar as $dolar){  ?>
-        <input type="hidden" id="tasadolar" value="<?php echo $dolar['precios']?>">
-        <?php } ?>
-      
+   
+    
           
-          <div class="button-group mb-4">
-              <button class="btn btn-primary" disabled><i class="fa-regular fa-file-pdf"></i> Reportes</button>
-            </div>
-        </div>
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+  <button class="btn btn-primary mb-3" type="button" disabled><i class="fa-regular fa-file-pdf"></i>Reportes</button>
+</div>
+      
     
 
       <div class="card shadow mb-4"> <!-- comienzo del Cuadro blanco-->
 <div class="table-margen">    <!-- comienzo del Cuadro blanco body-->
-      <div class="table-responsive">
+      <div class="table-responsive text-dark">
       <table id="myTable" class="table table-striped table-hover" style="width:100%">
     <thead>
       <tr class="table-primary">
         <th>#</th>
-        <th>FECHA</th>
-        <th>PRODUCTO</th>
-        <th>CANTIDAD</th>
+        <th>Fecha</th>
+        <th>Producto</th>
+        <th>Cantidad</th>
         <th>M o D</th>
-        <th>PRECIO UNI. $</th>
+        <th>Precio Uni. $</th>
         <th>TOTAL $</th>
         <?php if( $tipo_usuario == 1) { ?>
-        <th>ACCION</th>
+        <th>Accion</th>
         <?php } ?>
       </tr>
     </thead>
     <tbody>
-<?php
-// Agrupamos los datos por id_venta
+      <?php
+
 $ventas = [];
 foreach ($registro as $dato) {
     $id_venta = $dato['id_venta'];
@@ -87,70 +85,124 @@ foreach ($registro as $dato) {
             'detalles' => []
         ];
     }
-    // Agregamos los detalles en un formato más estructurado
     $ventas[$id_venta]['detalles'][] = [
         'nombre' => $dato['nombre'],
         'cantidad' => $dato['cantidad'],
-        'marca'=>$dato['nombre_marca'],
-        'presentacion'=>$dato['nombre_presentacion'],
+        'marca' => $dato['nombre_marca'],
+        'presentacion' => $dato['nombre_presentacion'],
         'precio_unitario' => $dato['precio_unitario'],
-        'maode' =>$dato['maode']
+        'maode' => $dato['maode']
     ];
 }
 
-// Ahora mostramos los resultados agrupados
-foreach ($ventas as $id_venta => $info) {
+
 ?>
+<?php foreach ($ventas as $id_venta => $info): ?>
 <tr>
     <td class="text-center"><?php echo $id_venta; ?></td>
     <td class="text-center"><?php echo $info['fecha']; ?></td>
-   
+
     <td>
-        <ul>
-            <?php foreach ($info['detalles'] as $detalle) { ?>
-                <li><?php echo ' <i class="fa-solid fa-boxes-stacked" style="color: #457B9D;"></i> '
-                .$detalle['nombre'].' - '.$detalle['marca'].' - '.$detalle['presentacion']; ?></li>
-            <?php } ?>
+        <ul class="mb-0">
+            <?php 
+            $detalles = $info['detalles'];
+            $mostrar = array_slice($detalles, 0, 2);
+            foreach ($mostrar as $detalle): ?>
+                <li>
+                    <i class="fa-solid fa-boxes-stacked me-2" style="color: #457B9D;"></i>
+                    <?php echo $detalle['nombre'].' - '.$detalle['marca'].' - '.$detalle['presentacion']; ?>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+        <?php if (count($detalles) > 2): ?>
+            <button type="button" class="btn badge bg-primary mt-2" data-bs-toggle="modal" data-bs-target="#modal-<?php echo $id_venta; ?>">
+                <i class="fa-solid fa-eye me-2"></i> Ver más
+            </button>
+        <?php endif; ?>
+    </td>
+
+    <td>
+        <ul> 
+          <?php foreach ($mostrar as $detalle) { ?>
+             <li><?php echo $detalle['cantidad']?></li> 
+             <?php } ?> 
         </ul>
     </td>
+
+    <td> <ul> 
+      <?php foreach ($mostrar as $detalle) { ?>
+         <li><?php echo $detalle['maode']; ?></li> <?php } ?> 
+        </ul>
+       </td>
+
     <td>
-        <ul>
-            <?php foreach ($info['detalles'] as $detalle) { ?>
-                <li><?php echo $detalle['cantidad']?></li>
-            <?php } ?>
+        <ul class="mb-0">
+            <?php foreach ($mostrar as $detalle): ?>
+                <li><?php echo $detalle['precio_unitario'] . ' $'; ?></li>
+            <?php endforeach; ?>
         </ul>
     </td>
+
+    <td class="text-center"><?php echo $info['total'] . ' $'; ?></td>
+
+    <?php if ($tipo_usuario == 1): ?>
     <td>
-        <ul>
-            <?php foreach ($info['detalles'] as $detalle) { ?>
-                <li><?php echo $detalle['maode']; ?></li>
-            <?php } ?>
-        </ul>
+        <form action="?pagina=venta" method="POST" >
+            <button type="button" onclick="eliminar(this)" class="btn btn-danger btn-sm eliminar mb-2" value="<?php echo $id_venta; ?>">
+                <i class="fas fa-trash-alt me-2" title="Eliminar"></i> Eliminar
+            </button>
+            <button type="submit"  class="btn btn-dark btn-sm" name="pdf" value="<?php echo $id_venta; ?>"> <i class="fa-regular fa-file-pdf me-2"></i>Descargar</button>
+        </form>
     </td>
-    <td>
-        <ul>
-            <?php foreach ($info['detalles'] as $detalle) { ?>
-                <li><?php echo $detalle['precio_unitario'].' $ '; ?></li>
-            <?php } ?>
-        </ul>
-    </td>
-    
-    <td class="text-center" ><?php echo $info['total'].' $ '; ?></td>
-    <?php if( $tipo_usuario == 1) { ?>
-    <td>
-        <form action="?pagina=venta">
-                <button type="button" onclick="eliminar(this)" class="btn btn-danger btn-sm eliminar" value="<?php echo $id_venta; ?>"> <i class="fas fa-trash-alt" title="Eliminar"> </i> Eliminar </button>
-       </form>
-    </td>
-    <?php } ?>
+    <?php endif; ?>
 </tr>
-<?php } ?>
+<?php endforeach; ?>
 </tbody>
+
     </table>
 </div>
 </div>
 </div>
 
+<?php foreach ($ventas as $id_venta => $info): ?>
+<div class="modal fade" id="modal-<?php echo $id_venta; ?>" tabindex="-1" aria-labelledby="modalLabel-<?php echo $id_venta; ?>" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content modal-producto">
+      <div class="modal-header">
+        <h5 class="modal-title text-white" id="modalLabel-<?php echo $id_venta; ?>">Detalles de la venta #<?php echo $id_venta; ?></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <p class="text-dark">Fecha: <?php echo $info['fecha']; ?></p>
+        <table class="table table-bordered table-hover">
+          <thead class="table-dark">
+            <tr>
+              <th>Producto</th>
+              <th>Cantidad</th>
+              <th>Modo</th>
+              <th>Precio Unitario</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($info['detalles'] as $detalle): ?>
+            <tr>
+              <td><?php echo $detalle['nombre'].' - '.$detalle['marca'].' - '.$detalle['presentacion']; ?></td>
+              <td class="text-center"><?php echo $detalle['cantidad']; ?></td>
+              <td class="text-center"><?php echo strtoupper($detalle['maode']); ?></td>
+              <td class="text-center"><?php echo $detalle['precio_unitario'] . ' $'; ?></td>
+            </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+        <h4 class="text-dark">Total: <?php echo $info['total'] . ' $'; ?></h4>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info text-dark" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<?php endforeach; ?>
 
 
 <!-- |||||||||||||||||||||||||   MODAL DE REGISTRO  |||||||||||||||||||||||||||||||||| -->

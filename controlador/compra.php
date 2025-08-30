@@ -14,11 +14,12 @@ $producto = $objcompra->obtenerProducto();
 if(isset($_POST['registrar'])){
   if( !empty($_POST['id_producto'] && !empty($_POST['cantidad']) && !empty($_POST['fecha'])) ){
 
-      $objcompra->set_Id_producto($_POST['id_producto']);
-      $objcompra->set_Cantidad($_POST['cantidad']);
       $objcompra->set_Fecha($_POST['fecha']);
 
-      $result=$objcompra->registrar();
+      $id_producto=$_POST['id_producto'];
+      $cantidad=$_POST['cantidad'];
+
+      $result=$objcompra->registrar($id_producto,$cantidad);
       echo json_encode($result);
      
   }

@@ -17,3 +17,7 @@
   <link href="assets/libs/select2/select2.min.css" rel="stylesheet">
   <script src="assets/libs/select2/select2.min.js"></script>
 
+
+  <script src="assets/js/modo.js"></script>
+  <link href="assets/css/modo.css" rel="stylesheet"></link>
+

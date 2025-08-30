@@ -8,7 +8,7 @@
      <link rel="stylesheet" href="assets/css/for.css" />
 </head>
 
-<body>
+<body class="">
   <!-- LOADER-->
   <div id="loaderPagina" class="section_loader">
   <span class="loader"></span>
@@ -18,7 +18,7 @@
     data-sidebar-position="fixed" data-header-position="fixed">
   <?php require_once 'complementos/sidebar.php'; ?>
  
-    <div class="body-wrapper">
+    <div class="body-wrapper body-oscuro">
     <?php require_once 'complementos/nav.php'; ?>
     <div class="container-fluid">
   <!--|||||||||||||||   Fin de Sidebar y Nav  |||||||||||||||||||||||||||-->
@@ -73,7 +73,7 @@
         <?php } ?>
 <div class="card shadow mb-4"> <!-- comienzo del Cuadro blanco-->
 <div class="table-margen">    <!-- comienzo del Cuadro blanco body-->
-<div class="table-responsive text-dark" >
+<div class="table-responsive text-dark texto-principal" >
 <table id="myTable" class="table table-striped table-hover" style="width:100%">
 <thead>
       <tr class="table-primary">

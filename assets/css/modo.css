@@ -1,0 +1,112 @@
+/*MODO OSCURO*/
+/* Fondo general */
+.modo-oscuro {
+  background-color: #cacacaff !important;
+  color: #F5E8D8 !important;
+}
+
+.modo-oscuro .body-oscuro{
+   background-color: #151A28 !important;
+  color: #F5E8D8 !important;
+}
+
+/* Sidebar */
+.modo-oscuro .sidebar {
+  background-color: #1d253d !important;
+  color: #E0E0E0 !important;
+  border-right: 1px solid #444444;
+}
+
+/* Navbar */
+.modo-oscuro .navv {
+  background-color: #303e6d !important;
+  color: #F5E8D8 !important;
+  border-bottom: 1px solid #444444;
+}
+
+/* Texto principal */
+.modo-oscuro .texto-principal {
+  color: #2b87ff !important;
+}
+
+/* Texto secundario */
+.modo-oscuro .texto-secundario {
+  color: #f3f3f3 !important;
+}
+
+
+.modo-oscuro .texto-cuarto {
+  color: #06a4ff !important;
+}
+              
+.modo-oscuro .bg-s{
+  background-color: #262830 !important;
+  color: #ffffff !important;
+}
+
+.modo-oscuro .texto-tercidario {
+  color: #ff3d3d !important;
+}
+
+/* Cards */
+.modo-oscuro .card {
+  background-color: #1e1e1e !important;
+  border: 1px solid #444444 !important;
+  color: #E0E0E0 !important;
+}
+
+
+/* Inputs y formularios */
+.modo-oscuro .form-control{
+  background-color: #b8b8b8 !important;
+  color: #050505 !important;
+  border: 1px solid #1c72c4;
+}
+
+.modo-oscuro .form-select {
+  background-color: #b8b8b8 !important;
+  color: #000000 !important;
+  border: 1px solid #1c72c4;
+}
+
+.modo-oscuro .div-icono{
+  background-color: #b8b8b8 !important;
+  color: #1c72c4 !important;
+   border: 1px solid #1c72c4;
+}
+
+.modo-oscuro .dropdown-menu .dropdown-item:hover {
+  background-color: #0058af !important ; /* Color de fondo al hacer hover */
+  color: #f8f8f8 !important;            /* Color del texto al hacer hover */
+}
+
+
+.modo-oscuro .div-oscuro-1 {
+  background-color: #383838 !important;
+  color: #ffffff !important;
+  border: none;
+}
+
+.modo-oscuro .div-oscuro-2 {
+  background-color: #1d253d !important;
+  color: #ffffff !important;
+  border: none;
+}
+
+
+.modo-oscuro .seccion-formulario{
+  background-color: #383838 !important;
+  color: #ffffff !important;
+  border: none;
+}
+
+
+.modo-oscuro .section_loader{
+  background-color: #151A28 !important;
+}
+
+.modo-oscuro  .loader{
+    border-bottom: 5px solid #e0e0e0 !important;
+    border-top: 5px solid #f7f7f7 !important;
+  
+  }

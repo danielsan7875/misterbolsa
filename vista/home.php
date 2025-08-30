@@ -5,9 +5,11 @@
     <?php require_once 'complementos/head.php'; ?>
     <title>Inicio | Mister Bolsa C.A</title>
     <link rel="stylesheet" href="assets/css/home.css">
+  
+  
 </head> 
 
-<body>
+<body id="body">
 <!-- LOADER-->
 <div id="loaderPagina" class="section_loader">
   <span class="loader"></span>
@@ -18,7 +20,7 @@
     data-sidebar-position="fixed" data-header-position="fixed">
   <?php require_once 'complementos/sidebar.php'; ?>
  
-    <div class="body-wrapper">
+    <div class="body-wrapper body-oscuro">
     <?php require_once 'complementos/nav.php'; ?>
     <div class="container-fluid">
   <!--|||||||||||||||   Fin de Sidebar y Nav  |||||||||||||||||||||||||||-->

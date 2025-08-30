@@ -1,5 +1,9 @@
 <!--  Header Start -->
-<header class="app-header color-nav">
+  <script>
+  const idUsuario = <?php echo json_encode($_SESSION['id']); ?>;
+</script>
+
+<header class="app-header color-nav  navv">
         <nav class="navbar navbar-expand-lg navbar-light">
           <ul class="navbar-nav">
             <li class="nav-item d-block d-xl-none">
@@ -39,13 +43,21 @@
                   <img src="assets/images/profile/user8.png" alt="" width="35" height="35" class="rounded-circle">
                 </a>
             
-                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
-                  <div class="message-body">
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up div-oscuro-1" aria-labelledby="drop2">
+                  <div class="message-body div-oscuro-1">
                     
-                    <a href="?pagina=tasa" class="d-flex align-items-center gap-2 dropdown-item text-dark">
-                    <i class="fa-solid fa-money-bill-trend-up me-2"></i>
-                      <p class="mb-0 fs-3">Cambiar Tasa Dolar</p>
+                    <button type="button" id="toggleModo" class="texto-secondario d-flex align-items-center gap-2 dropdown-item text-dark">
+                      <i class="fa-solid fa-moon me-2"></i> 
+                      <p class="mb-0 fs-3">Modo Oscuro</p>
+                    </button> 
+
+                    <a href="?pagina=tasa" class="texto-secondario d-flex align-items-center gap-2 dropdown-item text-dark">
+                    <i class="fa-solid fa-money-bill-trend-up me-2 texto-secundario"></i>
+                      <p class="mb-0 fs-3 texto-secundario">Cambiar Tasa Dolar</p>
                     </a>
+
+
+
                     <button type="button" name="cerrar" class="btn btn-outline-danger mx-3 mt-2 d-block shadow-none"
                     data-bs-toggle="modal" data-bs-target="#modalcerrar">Cerrar Session</button>
                   </div>

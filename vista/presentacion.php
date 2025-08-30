@@ -18,7 +18,7 @@
     data-sidebar-position="fixed" data-header-position="fixed">
   <?php require_once 'complementos/sidebar.php'; ?>
  
-    <div class="body-wrapper">
+    <div class="body-wrapper body-oscuro">
     <?php require_once 'complementos/nav.php'; ?>
     <div class="container-fluid">
   <!--|||||||||||||||   Fin de Sidebar y Nav  |||||||||||||||||||||||||||-->

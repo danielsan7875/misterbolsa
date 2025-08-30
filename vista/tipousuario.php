@@ -17,7 +17,7 @@
     data-sidebar-position="fixed" data-header-position="fixed">
   <?php require_once 'complementos/sidebar.php'; ?>
  
-    <div class="body-wrapper">
+    <div class="body-wrapper body-oscuro">
     <?php require_once 'complementos/nav.php'; ?>
     <div class="container-fluid">
   <!--|||||||||||||||   Fin de Sidebar y Nav  |||||||||||||||||||||||||||-->
@@ -25,12 +25,12 @@
   <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="?pagina=home">Inicio</a></li>
-    <li class="breadcrumb-item active color-text1" aria-current="page">Tipo de Usuario</li>
+    <li class="breadcrumb-item active color-text1 texto-secundario" aria-current="page">Tipo de Usuario</li>
   </ol>
 </nav>
 
 <div class="d-sm-flex align-items-center justify-content-between mb-5">
-       <h1 class="h3 mb-0 text-gray-900"> <i class="fa-solid fa-user-tag mr-3" style="color: #E63946;"></i>
+       <h1 class="h3 mb-0 texto-principal"> <i class="fa-solid fa-user-tag me-2" style="color: #E63946;"></i>
         Tipo de Usuario</h1>
            
        <!-- Button que abre el Modal N1 Registro -->
@@ -46,16 +46,16 @@
 <div class="card shadow mb-4">
 <div class="table-margen">   
       <div class="table-responsive">
-<table class="table table-striped table-hover" style="width:100%">
+<table class="table table-striped table-hover bg-s" style="width:100%">
     <thead>
-      <tr class="table-primary">
+      <tr class="table-primary bg-s">
         <th class="text-center">#</th>
         <th>NOMBRE</th>
         <th>NIVEL</th>
         <th>ACCION</th>
       </tr>
     </thead>
-    <tbody id="tablatipousuario">
+    <tbody id="tablatipousuario" class="bg-s">
       
     
     </tbody>

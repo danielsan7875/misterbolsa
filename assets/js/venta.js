@@ -177,7 +177,7 @@ $('#limpiarregistro').on('click', function() {
             while (listaVenta[0].rows.length > 0) {
                 listaVenta[0].deleteRow(0); // Eliminar todas las filas de la tabla
             }
-
+ 
             // Actualizar totales
             $('#totalUSD').val(''); // Limpiar el input de precio (si existe)
             $('#totalBs').val(''); // Limpiar el input de precio (si existe)

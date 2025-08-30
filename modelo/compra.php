@@ -17,66 +17,69 @@
 
 
 
-    public function registrar() {
-        try {
-            // Iniciar transacción
-            $this->conex->beginTransaction();
-    
-            // Insertar registro en la tabla compra
-            $registro = "INSERT INTO compra(id_producto, cantidad, fecha)
-            VALUES(:id_producto, :cantidad, :fecha)";
-            $strExec = $this->conex->prepare($registro);
-            $strExec->bindParam(':id_producto', $this->id_producto);
-            $strExec->bindParam(':cantidad', $this->cantidad);
-            $strExec->bindParam(':fecha', $this->fecha);
-            
-            // Ejecutar la inserción
-            $resul = $strExec->execute();
-            
-            if ($resul) {
-                // Actualizar stock en la tabla producto
-                $this->actualizarStockProducto($this->id_producto, $this->cantidad);
-                
-                // Confirmar transacción
-                $this->conex->commit();
-                $res = array('respuesta' => 1, 'accion' => 'registrar');
-            } else {
-                // Revertir transacción si la inserción falla
-                $this->conex->rollBack();
-                $res = array('respuesta' => 0, 'accion' => 'registrar');
+   public function registrar($id_producto, $cantidad) {
+    try {
+        // Iniciar transacción
+        $this->conex->beginTransaction();
+
+        if (!empty($id_producto) && !empty($cantidad)) {
+            // Insertar en tabla compra (solo fecha)
+            $registro_compra = "INSERT INTO compra (fecha) VALUES (:fecha)";
+            $strExec_compra = $this->conex->prepare($registro_compra);
+            $strExec_compra->bindParam(':fecha', $this->fecha);
+            $strExec_compra->execute();
+
+            // Obtener el ID de la compra recién creada
+            $id_compra = $this->conex->lastInsertId();
+
+            // Preparar inserción en detalle_compra
+            $registro_detalle = "INSERT INTO detalle_compra (id_compra, id_producto, cantidad)
+                                 VALUES (:id_compra, :id_producto, :cantidad)";
+            $strExec_detalle = $this->conex->prepare($registro_detalle);
+
+            // Preparar actualización de stock
+            $actualizar_stock = "UPDATE producto SET stock = stock + :cantidad
+                                 WHERE id_producto = :id_producto";
+            $strExec_stock = $this->conex->prepare($actualizar_stock);
+
+            foreach ($id_producto as $i => $producto) {
+                // Insertar detalle
+                $strExec_detalle->bindParam(':id_compra', $id_compra);
+                $strExec_detalle->bindParam(':id_producto', $producto);
+                $strExec_detalle->bindParam(':cantidad', $cantidad[$i]);
+                $strExec_detalle->execute();
+
+                // Actualizar stock
+                $strExec_stock->bindParam(':cantidad', $cantidad[$i]);
+                $strExec_stock->bindParam(':id_producto', $producto);
+                $strExec_stock->execute();
             }
-        } catch (Exception $e) {
-            // Revertir transacción si ocurre un error
+
+            // Confirmar transacción
+            $this->conex->commit();
+            $res = array('respuesta' => 1, 'accion' => 'registrar');
+        } else {
+            // Datos incompletos
             $this->conex->rollBack();
-            echo "Error: " . $e->getMessage() . "<br>";
             $res = array('respuesta' => 0, 'accion' => 'registrar');
         }
-    
-        return $res;
+    } catch (Exception $e) {
+        // Revertir transacción si ocurre un error
+        $this->conex->rollBack();
+        echo "Error: " . $e->getMessage() . "<br>";
+        $res = array('respuesta' => 0, 'accion' => 'registrar');
     }
-    
-    private function actualizarStockProducto($id_producto, $cantidad_comprada) {
-        // Obtener el stock actual del producto
-        $stmt = $this->conex->prepare("SELECT stock FROM producto WHERE id_producto = :id_producto");
-        $stmt->bindParam(":id_producto", $id_producto);
-        $stmt->execute();
-        $stock_actual = $stmt->fetchColumn();
-    
-        // Actualizar el stock disponible
-        $nuevo_stock = $stock_actual + $cantidad_comprada;
-    
-        // Guardar el nuevo stock en la base de datos
-        $stmt = $this->conex->prepare("UPDATE producto SET stock = :stock WHERE id_producto = :id_producto");
-        $stmt->bindParam(":stock", $nuevo_stock);
-        $stmt->bindParam(":id_producto", $id_producto);
-        $stmt->execute();
-    }
+
+    return $res;
+}
+
 
     public function consultar(){
 
-        $registro ="SELECT c.*, m.nombre AS nombre_marca, p.nombre AS nombre_presentacion, pro.nombre
+        $registro ="SELECT c.*, dc.*, m.nombre AS nombre_marca, p.nombre AS nombre_presentacion, pro.nombre
         FROM compra c
-        INNER JOIN producto pro ON c.id_producto = pro.id_producto
+        INNER JOIN detalle_compra dc ON c.id_compra = dc.id_compra
+        INNER JOIN producto pro ON dc.id_producto = pro.id_producto
         INNER JOIN marca m ON pro.id_marca = m.id_marca
         INNER JOIN presentacion p ON pro.id_presentacion = p.id_presentacion";
         $consulta = $this->conex->prepare($registro);

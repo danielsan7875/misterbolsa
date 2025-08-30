@@ -17,20 +17,20 @@
     data-sidebar-position="fixed" data-header-position="fixed">
   <?php require_once 'complementos/sidebar.php'; ?>
  
-    <div class="body-wrapper">
+    <div class="body-wrapper body-oscuro">
     <?php require_once 'complementos/nav.php'; ?>
     <div class="container-fluid">
   <!--|||||||||||||||   Fin de Sidebar y Nav  |||||||||||||||||||||||||||-->
 
   <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="?pagina=home">Inicio</a></li>
-    <li class="breadcrumb-item active color-text1" aria-current="page">Usuario</li>
+    <li class="breadcrumb-item texto-principal"><a href="?pagina=home">Inicio</a></li>
+    <li class="breadcrumb-item active color-text1 texto-secundario" aria-current="page">Usuario</li>
   </ol>
 </nav>
 
 <div class="d-sm-flex align-items-center justify-content-between mb-5">
-       <h1 class="h3 mb-0 text-gray-900"> <i class="fa-solid fa-users mr-3" style="color: #E63946;"></i>
+       <h1 class="h3 mb-0 texto-principal"> <i class="fa-solid fa-users me-2" style="color: #E63946;"></i>
         Usuario</h1>
            
        <!-- Button que abre el Modal N1 Registro -->
@@ -45,8 +45,8 @@
 
 <div class="card shadow mb-4"> <!-- comienzo del Cuadro blanco-->
 <div class="table-margen">    <!-- comienzo del Cuadro blanco body-->
-<div class="table-responsive">
-<table id="myTable" class="table table-striped table-hover" style="width:100%">
+<div class="table-responsive texto-secundario">
+<table id="myTable" class="table table-hover" style="width:100%">
     <thead>
       <tr class="table-primary">
         <th class="text-center">#</th>
@@ -74,21 +74,21 @@
         foreach ($registro as $dato){
         ?>
                 <tr>
-                  <td class="text-center"> <?php echo $dato['id_usuario']?> </td>
-                  <td class="text-center"> <?php echo $dato['nombre']." ".$dato['apellido']?> </td>
+                  <td class="text-center bg-s"> <?php echo $dato['id_usuario']?> </td>
+                  <td class="text-center bg-s"> <?php echo $dato['nombre']." ".$dato['apellido']?> </td>
                  
-                  <td class="text-center"> <?php echo $dato['usuario']?> </td>
-                  <td class="text-center"> <?php echo $dato['clave']?> </td>
-                  <td class="text-center">
+                  <td class="text-center bg-s"> <?php echo $dato['usuario']?> </td>
+                  <td class="text-center bg-s"> <?php echo $dato['clave']?> </td>
+                  <td class="text-center bg-s">
                     <span class="<?= $estatus_classes[$dato['estatus']] ?>">
                       <b>
                        <?php echo $estatus_texto[$dato['estatus']] ?>
                        </b>
                     </span>
                   </td>
-                  <td class="text-center"> <?php echo $dato['nombre_tipo']?> </td>
+                  <td class="text-center bg-s"> <?php echo $dato['nombre_tipo']?> </td>
       
-                  <td>
+                  <td class="bg-s">
                       <form action="?pagina=usuario" method="POST" >
                         <button name="modificar" class="btn btn-primary btn-sm modificar"
                         value="<?php echo $dato['id_usuario'] ?>"><i class="fas fa-pencil-alt" title="Editar"></i> Editar</button>
@@ -122,7 +122,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color:rgb(255, 255, 255);"></button>
       </div>
 
-      <div class="modal-body">
+      <div class="modal-body div-oscuro-2 ">
       <div class="alert alert-info" role="alert">
         Tipo de Usuario <br>
         Nivel 1 : Acceso completo al sistema <br>
@@ -133,22 +133,22 @@
       <form action="?pagina=usuario" id="u" autocomplete="off"> <!--comienzo Formulario-->
          <div class="seccion-formulario">
         <div class="row ">
-          <h6><i class="fa-solid fa-user"></i> Datos de la Persona </h6>
+          <h6 class="texto-principal"><i class="fa-solid fa-user"></i> Datos de la Persona </h6>
           <div class="col-sm">
-          <label class="form-label text-dark">Nombre</label>
+          <label class="form-label text-dark texto-secundario">Nombre</label>
      
             <div class="input-group mb-3">
-              <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-address-book" style="color:#007bff;"></i></span>
+              <span class="input-group-text div-icono" id="basic-addon1"><i class="fa-solid fa-address-book" style="color:#007bff;"></i></span>
               <input type="text" class="form-control text-dark" name="nombres" id="nombre" placeholder="Ejemplo: Pedro "  required> 
             </div> 
           <span id="textonombre" class="text-error mt-0"></span> <br>
           </div>
       
           <div class="col-sm">
-          <label class="form-label text-dark">Apellido</label>
+          <label class="form-label text-dark texto-secundario">Apellido</label>
         
             <div class="input-group mb-3">
-              <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-address-book" style="color:#007bff;"></i></span>
+              <span class="input-group-text div-icono" id="basic-addon1"><i class="fa-solid fa-address-book" style="color:#007bff;"></i></span>
               <input type="text" class="form-control text-dark" name="apellidos" id="apellido" placeholder="Ejemplo: Perez "  required>  
             </div> 
           
@@ -156,9 +156,9 @@
           </div>
 
           <div class="col-sm">
-          <label class="form-label text-dark">Cargo (Tipo de Usuario)</label>
+          <label class="form-label text-dark texto-secundario">Cargo (Tipo de Usuario)</label>
             <div class="input-group mb-3">
-              <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user-tag" style="color:#007bff;"></i></span>
+              <span class="input-group-text div-icono" id="basic-addon1"><i class="fa-solid fa-user-tag" style="color:#007bff;"></i></span>
                 <select class="form-select text-dark" aria-label="Default select example" name="tipo_usuario" id="tiposelect" required>
                    <option value="">Seleccione una Tipo de Usuario:</option>
                       <?php foreach($tipos as $tipos) {?>
@@ -173,20 +173,20 @@
       
         <div class="seccion-formulario">
         <div class="row ">
-          <h6><i class="fa-solid fa-user"></i> Datos Para acceder al sistema</h6>
+          <h6 class="texto-principal"><i class="fa-solid fa-user"></i> Datos Para acceder al sistema</h6>
           <div class="col-sm">
-          <label class="form-label text-dark">Usuario</label>
+          <label class="form-label text-dark texto-secundario">Usuario</label>
             <div class="input-group mb-3">
-              <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user" style="color:#007bff;"></i></span>
+              <span class="input-group-text div-icono"  id="basic-addon1"><i class="fa-solid fa-user" style="color:#007bff;"></i></span>
               <input type="text" class="form-control text-dark" name="usuario" id="usuario" placeholder="Ejemplo: misterbolsa123 "  required>  
             </div> 
           <span id="textousuario" class="text-error mt-0"></span> <br>
           </div>
 
           <div class="col-sm">
-          <label class="form-label text-dark">Constraseña</label>
+          <label class="form-label text-dark texto-secundario">Constraseña</label>
             <div class="input-group mb-3">
-              <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-lock" style="color:#007bff;"></i></span>
+              <span class="input-group-text div-icono" id="basic-addon1"><i class="fa-solid fa-lock" style="color:#007bff;"></i></span>
               <input type="text" class="form-control text-dark"  name="clave" id="clave" placeholder="Ejemplo: misterbolsa2024 "  required>    
             </div>
           <span id="textoclave" class="text-error mt-0"></span> <br>

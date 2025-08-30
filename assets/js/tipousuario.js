@@ -184,7 +184,7 @@ $(document).ready(function() {
     tablaBody.empty();
   
     datos.forEach(function (dato) {
-        var fila = '<tr>' +
+        var fila = '<tr class="bg-s">' +
             '<td class="text-center">' + dato.id_tipo + '</td>' +
             '<td>' + dato.nombre + '</td>' +
             '<td>' + dato.nivel + '</td>' +

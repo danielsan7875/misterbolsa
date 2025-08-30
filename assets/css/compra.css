@@ -1,6 +1,6 @@
 
 .select2-container .select2-selection--single {
-  height: 38px !important; /* Altura del input de Bootstrap */
+  height: 47px !important; /* Altura del input de Bootstrap */
   line-height: 1.5 !important; /* Line-height de Bootstrap */
   padding: 4px 12px !important; /* Padding del input de Bootstrap */
 }

@@ -37,18 +37,14 @@ if(isset($_POST['registrar'])){
   $result = $objventa->eliminar();
   echo json_encode($result);
 
-}else if(isset($_POST['tasadolar'])){
-  if(!empty($_POST['id_dolar']) && !empty($_POST['precios'])){
-
-      $objventa->set_Id_dolar($_POST['id_dolar']); 
-      $objventa->set_precios($_POST['precios']); 
-
-      $result = $objventa->tasadolar();
-      echo json_encode($result);
-  }else{
-    $result = array('respuesta' => 0, 'accion' => 'tasadolar');
-    echo json_encode($result);
-  }
+}else if(isset($_POST['pdf'])){
+  if (!empty($_POST['pdf'])) {
+    $id_venta = $_POST['pdf'];
+    if(!$id_venta){
+  header('Location: ?pagina=venta');
+}
+    require_once 'assets/pdf/reporteventa.php';
+}
 
 } else {
   require_once 'vista/venta.php';

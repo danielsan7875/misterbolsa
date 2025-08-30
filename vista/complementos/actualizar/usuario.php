@@ -17,7 +17,7 @@
     data-sidebar-position="fixed" data-header-position="fixed">
   <?php require_once 'vista/complementos/sidebar.php'; ?>
  
-    <div class="body-wrapper">
+    <div class="body-wrapper body-oscuro">
     <?php require_once 'vista/complementos/nav.php'; ?>
     <div class="container-fluid">
   <!--|||||||||||||||   Fin de Sidebar y Nav  |||||||||||||||||||||||||||-->
@@ -31,7 +31,7 @@
 </nav>
 
 <div class="d-sm-flex align-items-center justify-content-between mb-5">
-       <h1 class="h3 mb-0 text-gray-900"> <i class="fa-solid fa-users mr-3" style="color: #E63946;"></i>
+       <h1 class="h3 mb-0 texto-principal"> <i class="fa-solid fa-users mr-3" style="color: #E63946;"></i>
        Modificar</h1>
            
        <!-- Button que abre el Modal N1 Registro -->
@@ -50,29 +50,29 @@
         <div class="row ">
             
 
-          <div class="col-sm-2">
-            <h5>Usuario: # <?php echo $modificar['id_usuario']?></h5>
+          <div class="col-sm-2 ">
+            <h5 class="texto-cuarto">Usuario: # <?php echo $modificar['id_usuario']?></h5>
               <input type="hidden"  value ="<?php echo $modificar ['id_usuario']?>" name="id_usuario" id="id_usuario">
             </div>
         </div>
   <div class="seccion-formulario">
         <div class="row ">
-             <h6><i class="fa-solid fa-user"></i> Datos de la Persona </h6>
+             <h6 class="texto-principal"><i class="fa-solid fa-user"></i> Datos de la Persona </h6>
           <div class="col-sm">
-          <label class="form-label text-dark">Nombre</label>
+          <label class="form-label text-dark texto-secundario">Nombre</label>
      
             <div class="input-group mb-3">
-              <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-address-book" style="color:#007bff;"></i></span>
+              <span class="input-group-text div-icono" id="basic-addon1"><i class="fa-solid fa-address-book" style="color:#007bff;"></i></span>
               <input type="text" class="form-control text-dark" name="nombres" id="nombre" value="<?php echo $modificar['nombre']?>"  required> 
             </div> 
           <span id="textonombre" class="vali-span"></span> <br>
           </div>
       
           <div class="col-sm">
-          <label class="form-label text-dark">Apellido</label>
+          <label class="form-label text-dark texto-secundario">Apellido</label>
         
             <div class="input-group mb-3">
-              <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-address-book" style="color:#007bff;"></i></span>
+              <span class="input-group-text div-icono" id="basic-addon1"><i class="fa-solid fa-address-book" style="color:#007bff;"></i></span>
               <input type="text" class="form-control text-dark" name="apellidos" id="apellido" value="<?php echo $modificar['apellido']?>"  required>  
             </div> 
           
@@ -80,9 +80,9 @@
           </div>
 
           <div class="col-sm">
-          <label class="form-label text-dark">Cargo (Tipo de Usuario)</label>
+          <label class="form-label text-dark texto-secundario">Cargo (Tipo de Usuario)</label>
             <div class="input-group mb-3">
-              <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user-tag" style="color:#007bff;"></i></span>
+              <span class="input-group-text div-icono" id="basic-addon1"><i class="fa-solid fa-user-tag" style="color:#007bff;"></i></span>
                 <select class="form-select text-dark" aria-label="Default select example" name="tipo_usuario" id="tiposelect" required>
                 <option value="<?php echo $modificar['id_tipo']; ?>"><?php echo $modificar['nombre_tipo']." - actual"; ?></option>
                       <?php foreach($tipos as $tipos) {?>
@@ -97,29 +97,29 @@
 
       <div class="seccion-formulario">
         <div class="row ">
-          <h6><i class="fa-solid fa-user"></i> Datos Para Acceder al Sistema </h6>
+          <h6 class="texto-principal"><i class="fa-solid fa-user"></i> Datos Para Acceder al Sistema </h6>
           <div class="col-sm">
-          <label class="form-label text-dark">Usuario</label>
+          <label class="form-label text-dark texto-secundario">Usuario</label>
             <div class="input-group mb-3">
-              <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user" style="color:#007bff;"></i></span>
+              <span class="input-group-text div-icono" id="basic-addon1"><i class="fa-solid fa-user" style="color:#007bff;"></i></span>
               <input type="text" class="form-control text-dark" name="usuario" id="usuario" value="<?php echo $modificar['usuario']?>" required>  
             </div> 
           <span id="textousuario" class="vali-span"></span> <br>
           </div>
 
           <div class="col-sm">
-          <label class="form-label text-dark">Constraseña</label>
+          <label class="form-label text-dark texto-secundario">Constraseña</label>
             <div class="input-group mb-3">
-              <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-lock" style="color:#007bff;"></i></span>
+              <span class="input-group-text div-icono" id="basic-addon1"><i class="fa-solid fa-lock" style="color:#007bff;"></i></span>
               <input type="text" class="form-control text-dark"  name="clave" id="clave" value="<?php echo $modificar['clave']?>"required>    
             </div>
           <span id="textoclave" class="vali-span"></span> <br>
           </div>
 
           <div class="col-sm-3">
-          <label class="form-label text-dark">Estatus</label>
+          <label class="form-label text-dark texto-secundario">Estatus</label>
             <div class="input-group mb-3">
-              <span class="input-group-text" id="basic-addon1"><i class="fa-regular fa-file-lines" style="color:#007bff;"></i></span>
+              <span class="input-group-text div-icono" id="basic-addon1"><i class="fa-regular fa-file-lines" style="color:#007bff;"></i></span>
                    <select class="form-select text-dark" name="estatus" required>
                      <?php
                        $estatus_texto = array(

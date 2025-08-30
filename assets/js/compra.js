@@ -75,10 +75,22 @@ function validarFormulario() {
 
 $(document).ready(function() {
 
+    var hoy = moment().format('YYYY-MM-DD'); // Formato de fecha para el input tipo date
+    $('#fecha').val(hoy);
+
+const modalCantidad = document.getElementById('modalCantidad');
+modalCantidad.addEventListener('shown.bs.modal', function () {
+  setTimeout(() => {
+    document.getElementById('inputCantidad').focus();
+  }, 100); // pequeño delay para evitar conflicto
+});
+
+
+
     $('#exampleModal').on('shown.bs.modal', function () {
         $('#idproducto').select2({
             dropdownParent: $('#exampleModal'),
-            width: '85%',
+            width: '90%',
             language: {
                  noResults: function() {
                  return "No se encontraron resultados, intenta con otro término.";
@@ -90,76 +102,155 @@ $(document).ready(function() {
         });
     });
 
-    $("#cantidad").on("keypresss", function(e) {
+
+
+
+
+  let productoSeleccionado = {};
+
+// Al hacer clic en el botón agregar
+$('#btn-agregar-producto').click(function () {
+  const productoSelect = $('#idproducto');
+  const productoValue = productoSelect.val();
+  const productoText = productoSelect.find('option:selected').text();
+  const cantidadInput = $('#cantidadpro');
+  const cantidadValue = parseInt(cantidadInput.val());
+
+  let valid = true;
+
+  // Validar selección de producto
+  if (!productoValue) {
+    $('#textoproducto').text('Por favor seleccione un producto.');
+    valid = false;
+  } else {
+    $('#textoproducto').text('');
+  }
+
+  // Validar cantidad
+  if (!cantidadValue || cantidadValue < 1 || cantidadValue > 200) {
+    $('#textocantidad').text('entre 1 y 200.');
+    valid = false;
+  } else {
+    $('#textocantidad').text('');
+  }
+
+  if (!valid) return;
+
+  // Verificar si ya existe el producto en la tabla
+  const yaExiste = $('input[name="id_producto[]"]').filter(function () {
+    return $(this).val() === productoValue;
+  }).length > 0;
+
+  if (yaExiste) {
+    $('#textoproducto').text('Este producto ya fue agregado.');
+     Swal.fire({
+      icon: 'warning',
+      title: 'Este producto ya fue agregado.',
+      text: '',
+      confirmButtonColor: '#007bff'
+    });
+    return;
+  }
+
+  // Agregar fila a la tabla
+  const nuevaFila = `
+    <tr>
+      <td class="mb-2">
+        <input type="hidden" name="id_producto[]" value="${productoValue}">
+        ${productoText}
+      </td>
+      <td class="mb-2">
+        <input type="hidden" name="cantidad[]" value="${cantidadValue}">
+        ${cantidadValue}
+      </td>
+      <td class="mb-2">
+        <button type="button" class="btn btn-sm btn-danger text-dark eliminar-fila"> - Quitar </button>
+      </td>
+    </tr>
+  `;
+
+    $('#tbody-productos').append(nuevaFila);
+    $('#idproducto').val('');
+    $('#cantidadpro').val('');
+    $('#idproducto').val(null).trigger('change');
+});
+
+
+  // Eliminar fila
+  $('#tabla-productos').on('click', '.eliminar-fila', function() {
+    $(this).closest('tr').remove();
+  });
+
+
+
+    $("#cantidadpro").on("keypresss", function(e) {
      validarkeypress(/^[0-9\b]*$/, e);
     });
         
-     $("#idproducto").on("change", function () {
-       validarCampo($(this), null, $("#textoproducto"), "Por favor, seleccione un producto válido.");
-    });
-
-    $("#cantidad").on("keyup", function() {
+    $("#cantidadpro").on("keyup", function() {
        validarCampo($(this),/^[0-9]{1,4}$/, 
-       $("#textocantidad"), "Debe haber como mínimo 1 caracter hasta 9999");
+       $("#textocantidad"), "1 Al 200");
     });
-
-     $("#fecha").on("keypresss", function(e) {
-     validarkeypress(/^[0-9\b]*$/, e);
-    });
-
-$("#fecha").on("keyup", function() {
-    validarCampo($(this), /^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/, 
-        $("#textofecha"), "Debe ingresar una fecha válida en formato dd/mm/yyyy");
-});
-
-$("#fecha").on("change", function() {
-    const valor = $(this).val(); // yyyy-mm-dd
-    const partes = valor.split("-");
-    const fechaFormateada = partes[2] + "/" + partes[1] + "/" + partes[0]; // dd/mm/yyyy
-
-    // Simula un input temporal con el valor transformado
-    const inputSimulado = $("<input>").val(fechaFormateada);
-
-    validarCampo(inputSimulado, /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$/, 
-        $("#textofecha"), "Debe ingresar una fecha válida en formato dd/mm/yyyy");
-
-    // Validación de rango con Moment.js
-    const selectedDate = moment(valor);
-    const today = moment();
-    const limitDate = today.clone().subtract(6, 'days');
-
-    if (selectedDate.isBefore(limitDate, 'day') || selectedDate.isAfter(today, 'day')) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Fecha no válida',
-            text: 'La fecha seleccionada debe estar entre Hoy o hace 6 días atrás.',
-            confirmButtonColor: '#457B9D',
-            confirmButtonText: 'Aceptar'
-        });
-        $(this).val('');
-    }
-});
-
-
 
 
 $('#limpiardatos').on('click', function() {
-    // Limpiar los inputs
     $('#idproducto').prop('selectedIndex', 0); 
-    $('#cantidad').val(''); 
-    $('#fecha').val('');
- 
+    $('#cantidadpro').val(''); 
     // Actualizar Select2
     $('#idproducto').val(null).trigger('change');
 });
 
-$('#registrar').on("click", function () {
-    if (!validarFormulario()) {
-                muestraMensaje("error", 2000, "Campos inválidos O Vacios", "Por favor, corrige los errores antes de continuar.");
-              return;
-          }
+$('#btn-limpiar-lista').click(function () {
+  const filas = $('#tbody-productos tr').length;
 
-          activarLoaderBoton('#registrar', "Guardando...");
+  if (filas === 0) {
+    Swal.fire({
+      icon: 'info',
+      title: 'Lista vacía',
+      text: 'No hay productos para eliminar.',
+      confirmButtonColor: '#007bff'
+    });
+    return;
+  }
+
+  Swal.fire({
+    title: '¿Estás seguro?',
+    text: 'Se eliminarán todos los productos de la lista.',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#2b8f28ff',
+    cancelButtonColor: '#c9280cff',
+    confirmButtonText: 'Sí, limpiar',
+    cancelButtonText: 'Cancelar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $('#tbody-productos').empty();
+      Swal.fire({
+        icon: 'success',
+        title: 'Lista limpiada',
+        text: 'Todos los productos fueron eliminados.',
+        confirmButtonColor: '#007bff'
+      });
+    }
+  });
+});
+
+
+$('#registrar').on("click", function () {
+ // Validar que haya al menos una fila en el tbody
+  const filas = $('#tbody-productos tr').length;
+
+  if (filas === 0) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Lista vacía',
+      text: 'Debes agregar al menos un producto antes de registrar la compra.',
+      confirmButtonColor: '#007bff'
+    });
+    return; // Detener el envío
+  }
+
+    activarLoaderBoton('#registrar', "Guardando...");
     var datos = new FormData($('#u')[0]);
     datos.append('registrar', 'registrar');
     enviaAjax(datos);
@@ -225,15 +316,6 @@ function muestraMensaje(icono, tiempo, titulo, mensaje) {
               muestraMensaje("error", 2000, "ERROR", "ERROR");
                 desactivarLoaderBoton('#registrar'); 
             }
-          } else if (lee.accion == 'actualizar') {
-            if (lee.respuesta == 1) {
-              muestraMensaje("success", 1000, "MODIFICADO", "Recetas Modificada");
-              setTimeout(function () {
-                location = '?pagina=compra';
-              }, 1000);
-            } else {
-              muestraMensaje("error", 2000, "ERROR", "Intente Nuevamente O Mas Tarde");
-            }
           } else if (lee.accion == 'eliminar') {
             if (lee.respuesta == 1) {
               muestraMensaje("success", 1000, "Se ha eliminado con éxito", "Los datos se han borrado correctamente ");
@@ -253,8 +335,10 @@ function muestraMensaje(icono, tiempo, titulo, mensaje) {
         Swal.close();
         if (status == "timeout") {
           muestraMensaje("error", 2000, "Error", "Servidor ocupado, intente de nuevo");
+          desactivarLoaderBoton('#registrar'); 
         } else {
           muestraMensaje("error", 2000, "Error", "ERROR: <br/>" + request + status + err);
+          desactivarLoaderBoton('#registrar'); 
         }
       },
       complete: function () {
