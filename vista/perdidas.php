@@ -29,12 +29,12 @@
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="?pagina=home">Inicio</a></li>
     <li class="breadcrumb-item"><a href="?pagina=producto">Producto</a></li>
-    <li class="breadcrumb-item active color-text1" aria-current="page">Perdidas</li>
+    <li class="breadcrumb-item active color-text1 texto-secundario" aria-current="page">Perdidas</li>
   </ol>
 </nav>
 
 <div class="d-sm-flex align-items-center justify-content-between mb-5">
-       <h1 class="h3 mb-0 text-gray-900"> <i class="fas fa-chart-line  mr-3" style="color: #E63946;"></i>
+       <h1 class="h3 mb-0 text-gray-900 texto-principal"> <i class="fas fa-chart-line me-2" style="color: #E63946;"></i>
         Perdidas</h1>
            
        <!-- Button que abre el Modal N1 Registro -->
@@ -49,12 +49,12 @@
 
       <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
   <a href="?pagina=producto" class="btn btn-info me-md-2 text-dark" type="button">       <i class="fa-solid fa-reply me-2"></i>Ir a Producto</a>
-  <button class="btn btn-primary" type="button"><i class="fa-regular fa-file-pdf"></i>Reportes</button>
+  <button class="btn btn-primary" type="button" disabled><i class="fa-regular fa-file-pdf"></i>Reportes</button>
 </div>      
 <div class="card shadow mb-4"> <!-- comienzo del Cuadro blanco-->
 <div class="table-margen">    <!-- comienzo del Cuadro blanco body-->
-      <div class="table-responsive">
-  <table id="myTable" class="table table-striped table-hover" style="width:100%">
+      <div class="table-responsive text-dark texto-secundario">
+  <table id="myTable" class="table table-hover" style="width:100%">
     <thead>
       <tr class="table-primary">
         <th>#</th>
@@ -72,14 +72,14 @@
         foreach ($registro as $dato){
         ?>
                 <tr>
-                  <td class="text-center"> <?php echo $dato['id_perdida']?> </td>
-                  <td class="text-center"> <?php echo $dato['fecha']?> </td>
-                  <td> <?php echo $dato['nombre']." - ".$dato['nombre_marca']." - ".$dato['nombre_presentacion'] ?> </td>
-                  <td class="text-center"> <?php echo $dato['cantidad']?> </td>
-                  <td> <?php echo $dato['nota']?> </td>
+                  <td class="text-center bg-s"> <?php echo $dato['id_perdida']?> </td>
+                  <td class="text-center bg-s"> <?php echo $dato['fecha']?> </td>
+                  <td class="bg-s"> <?php echo $dato['nombre']." - ".$dato['nombre_marca']." - ".$dato['nombre_presentacion'] ?> </td>
+                  <td class="text-center bg-s"> <?php echo $dato['cantidad']?> </td>
+                  <td class="bg-s"> <?php echo $dato['nota']?> </td>
 
                   <?php if( $tipo_usuario == 1) { ?> 
-                  <td>
+                  <td class="bg-s">
                   <form action="?pagina=perdidas">
                          <button type="button" onclick="eliminar(this)" class="btn btn-danger btn-sm eliminar" value="<?php echo $dato['id_perdida'] ?>"> <i class="fas fa-trash-alt" title="Eliminar"> </i> Eliminar </button>
                     </form>
@@ -106,7 +106,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
-      <div class="modal-body">
+      <div class="modal-body div-oscuro-2">
       <form action="?pagina=perdidas" id="u" autocomplete="off"> <!--comienzo Formulario-->
         
       <div class="seccion-formulario">
@@ -160,7 +160,7 @@
         </form> <!--fin del formulario-->
   
     
-      
+    </div>    
     </div>
   </div>
 </div>           

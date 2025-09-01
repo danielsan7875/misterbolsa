@@ -46,16 +46,16 @@
 <div class="card shadow mb-4">
 <div class="table-margen">   
       <div class="table-responsive">
-<table class="table table-striped table-hover bg-s" style="width:100%">
+<table class="table table-hover" style="width:100%">
     <thead>
-      <tr class="table-primary bg-s">
+      <tr class="table-primary">
         <th class="text-center">#</th>
         <th>NOMBRE</th>
         <th>NIVEL</th>
         <th>ACCION</th>
       </tr>
     </thead>
-    <tbody id="tablatipousuario" class="bg-s">
+    <tbody id="tablatipousuario" class="">
       
     
     </tbody>
@@ -76,7 +76,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color:rgb(255, 255, 255);"></button>
       </div>
 
-      <div class="modal-body">
+      <div class="modal-body div-oscuro-2">
       <form action="?pagina=tipousuario" id="u" autocomplete="off"> <!--comienzo Formulario-->
         
       <div class="seccion-formulario">

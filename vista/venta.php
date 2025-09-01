@@ -27,14 +27,14 @@
   <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="?pagina=home">Inicio</a></li>
-    <li class="breadcrumb-item active color-text1" aria-current="page">Venta</li>
+    <li class="breadcrumb-item active color-text1 texto-secundario" aria-current="page">Venta</li>
   </ol>
 </nav>
 <?php foreach ($dolar as $dolar){  ?>
         <input type="hidden" id="tasadolar" value="<?php echo $dolar['precios']?>">
         <?php } ?>
 <div class="d-sm-flex align-items-center justify-content-between mb-5">
-       <h1 class="h3 mb-0 text-gray-900"> <i class="fa-solid fa-cash-register mr-3" style="color: #E63946;"></i>
+       <h1 class="h3 mb-0 text-gray-900 texto-principal"> <i class="fa-solid fa-cash-register mr-3" style="color: #E63946;"></i>
         Venta</h1>
            
        <!-- Button que abre el Modal N1 Registro -->
@@ -56,8 +56,8 @@
 
       <div class="card shadow mb-4"> <!-- comienzo del Cuadro blanco-->
 <div class="table-margen">    <!-- comienzo del Cuadro blanco body-->
-      <div class="table-responsive text-dark">
-      <table id="myTable" class="table table-striped table-hover" style="width:100%">
+      <div class="table-responsive text-dark texto-secundario">
+      <table id="myTable" class="table table-hover" style="width:100%">
     <thead>
       <tr class="table-primary">
         <th>#</th>
@@ -99,10 +99,10 @@ foreach ($registro as $dato) {
 ?>
 <?php foreach ($ventas as $id_venta => $info): ?>
 <tr>
-    <td class="text-center"><?php echo $id_venta; ?></td>
-    <td class="text-center"><?php echo $info['fecha']; ?></td>
+    <td class="text-center bg-s"><?php echo $id_venta; ?></td>
+    <td class="text-center bg-s"><?php echo $info['fecha']; ?></td>
 
-    <td>
+    <td class="bg-s">
         <ul class="mb-0">
             <?php 
             $detalles = $info['detalles'];
@@ -121,7 +121,7 @@ foreach ($registro as $dato) {
         <?php endif; ?>
     </td>
 
-    <td>
+    <td class="bg-s">
         <ul> 
           <?php foreach ($mostrar as $detalle) { ?>
              <li><?php echo $detalle['cantidad']?></li> 
@@ -129,13 +129,13 @@ foreach ($registro as $dato) {
         </ul>
     </td>
 
-    <td> <ul> 
+    <td class="bg-s"> <ul> 
       <?php foreach ($mostrar as $detalle) { ?>
          <li><?php echo $detalle['maode']; ?></li> <?php } ?> 
         </ul>
        </td>
 
-    <td>
+    <td class="bg-s">
         <ul class="mb-0">
             <?php foreach ($mostrar as $detalle): ?>
                 <li><?php echo $detalle['precio_unitario'] . ' $'; ?></li>
@@ -143,15 +143,15 @@ foreach ($registro as $dato) {
         </ul>
     </td>
 
-    <td class="text-center"><?php echo $info['total'] . ' $'; ?></td>
+    <td class="text-center bg-s"><?php echo $info['total'] . ' $'; ?></td>
 
     <?php if ($tipo_usuario == 1): ?>
-    <td>
+    <td class="bg-s">
         <form action="?pagina=venta" method="POST" >
             <button type="button" onclick="eliminar(this)" class="btn btn-danger btn-sm eliminar mb-2" value="<?php echo $id_venta; ?>">
                 <i class="fas fa-trash-alt me-2" title="Eliminar"></i> Eliminar
             </button>
-            <button type="submit"  class="btn btn-dark btn-sm" name="pdf" value="<?php echo $id_venta; ?>"> <i class="fa-regular fa-file-pdf me-2"></i>Descargar</button>
+            <button type="submit"  class="btn btn-primary btn-sm" name="pdf" value="<?php echo $id_venta; ?>"> <i class="fa-regular fa-file-pdf me-2"></i>Descargar</button>
         </form>
     </td>
     <?php endif; ?>
@@ -172,10 +172,10 @@ foreach ($registro as $dato) {
         <h5 class="modal-title text-white" id="modalLabel-<?php echo $id_venta; ?>">Detalles de la venta #<?php echo $id_venta; ?></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
       </div>
-      <div class="modal-body">
-        <p class="text-dark">Fecha: <?php echo $info['fecha']; ?></p>
+      <div class="modal-body div-oscuro-2">
+        <p class="text-dark texto-secundario">Fecha: <?php echo $info['fecha']; ?></p>
         <table class="table table-bordered table-hover">
-          <thead class="table-dark">
+          <thead class="table-primary">
             <tr>
               <th>Producto</th>
               <th>Cantidad</th>
@@ -186,17 +186,17 @@ foreach ($registro as $dato) {
           <tbody>
             <?php foreach ($info['detalles'] as $detalle): ?>
             <tr>
-              <td><?php echo $detalle['nombre'].' - '.$detalle['marca'].' - '.$detalle['presentacion']; ?></td>
-              <td class="text-center"><?php echo $detalle['cantidad']; ?></td>
-              <td class="text-center"><?php echo strtoupper($detalle['maode']); ?></td>
-              <td class="text-center"><?php echo $detalle['precio_unitario'] . ' $'; ?></td>
+              <td class="bg-s"><?php echo $detalle['nombre'].' - '.$detalle['marca'].' - '.$detalle['presentacion']; ?></td>
+              <td class="text-center bg-s"><?php echo $detalle['cantidad']; ?></td>
+              <td class="text-center bg-s"><?php echo strtoupper($detalle['maode']); ?></td>
+              <td class="text-center bg-s"><?php echo $detalle['precio_unitario'] . ' $'; ?></td>
             </tr>
             <?php endforeach; ?>
           </tbody>
         </table>
-        <h4 class="text-dark">Total: <?php echo $info['total'] . ' $'; ?></h4>
+        <h4 class="text-dark texto-secundario">Total: <?php echo $info['total'] . ' $'; ?></h4>
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer div-oscuro-2">
         <button type="button" class="btn btn-info text-dark" data-bs-dismiss="modal">Cerrar</button>
       </div>
     </div>
@@ -208,7 +208,7 @@ foreach ($registro as $dato) {
 <!-- |||||||||||||||||||||||||   MODAL DE REGISTRO  |||||||||||||||||||||||||||||||||| -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl">
-    <div class="modal-content">
+    <div class="modal-content modal-producto">
     <div class="modal-header encabezado-modal">
         <h1 class="modal-title fs-5" id="exampleModalToggleLabel"  style="color:rgb(255, 255, 255);">
         <i class="fa-solid fa-cash-register m-2" style="color:rgb(255, 255, 255);"> </i> Registro de Venta
@@ -216,7 +216,7 @@ foreach ($registro as $dato) {
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color:rgb(255, 255, 255);"></button>
       </div>
 
-      <div class="modal-body">
+      <div class="modal-body div-oscuro-2">
       <form action="?pagina=venta" autocomplete="off" id="formularioventa"> <!--comienzo Formulario-->
 <!-- ||||||||||||||||||  F1||||||||||||||||||||||||-->             
       <div class="row ">
@@ -282,7 +282,7 @@ foreach ($registro as $dato) {
   <div class="col-sm-4 precio-container">
   <div class="input-group input-group-sm mb-3">
         <span class="input-group-text" id="inputGroup-sizing-sm "><i class="fa-solid fa-delete-left"style="color:rgb(0, 0, 0);"></i></span>
-        <button type="button" class="btn btn-outline-secondary" id="limpiardatos">Limpiar Los Datos</button>
+        <button type="button" class="btn btn-secondary" id="limpiardatos">Limpiar Los Datos</button>
       </div>
   </div>
 

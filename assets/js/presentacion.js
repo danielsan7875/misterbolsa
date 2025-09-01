@@ -191,10 +191,10 @@ $('#actualizar').on("click", function () {
       
   
       var fila = '<tr>' +
-        '<td class="text-center">' + dato.id_presentacion + '</td>' +
-        '<td>' + dato.nombre + '</td>' +
-        '<td><span class="' + estatus_classes[dato.estatus] + '">' + estatus_texto[dato.estatus] + '</span></td>' +
-        '<td>' +
+        '<td class="text-center bg-s">' + dato.id_presentacion + '</td>' +
+        '<td class="bg-s">' + dato.nombre + '</td>' +
+        '<td class="bg-s"><span class="'+ estatus_classes[dato.estatus] + '">' + estatus_texto[dato.estatus] + '</span></td>' +
+        '<td class="bg-s">' +
         '<form method="POST" action="?pagina=presentacion">' +
             '<button name="modificar" class="btn btn-primary btn-sm modificar me-3" value="' + dato.id_presentacion + '"><i class="fas fa-pencil-alt" title="Editar"></i> Modificar </button>' +
             '<button type="button" onclick="eliminar(this)" class="btn btn-danger btn-sm eliminar" value="' + dato.id_presentacion + '"><i class="fas fa-trash-alt" title="Eliminar"> </i> Eliminar </button>' +

@@ -26,12 +26,12 @@
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="?pagina=home">Inicio</a></li>
     <li class="breadcrumb-item"><a href="?pagina=producto">Producto</a></li>
-    <li class="breadcrumb-item active color-text1" aria-current="page">Modificar</li>
+    <li class="breadcrumb-item active color-text1 texto-secundario" aria-current="page">Modificar</li>
   </ol>
 </nav>
 
 <div class="d-sm-flex align-items-center justify-content-between mb-5">
-       <h1 class="h3 mb-0 text-gray-900"> <i class="fa-solid fa-boxes-stacked mr-3" style="color: #E63946;"></i>
+       <h1 class="h3 mb-0 text-gray-900 texto-principal"> <i class="fa-solid fa-boxes-stacked mr-3" style="color: #E63946;"></i>
        Modificar</h1>
            
        <!-- Button que abre el Modal N1 Registro -->

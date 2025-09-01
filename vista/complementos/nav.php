@@ -19,7 +19,7 @@
               </a>
             </li>
              <li class="nav-item">
-              <a class="nav-link nav-icon-hover" href="#">
+              <a class="nav-link nav-icon-hover" href="?pagina=registroventa">
               <i class="fa-solid fa-cash-register color-1"></i>
               </a>
               

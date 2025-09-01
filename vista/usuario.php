@@ -45,8 +45,8 @@
 
 <div class="card shadow mb-4"> <!-- comienzo del Cuadro blanco-->
 <div class="table-margen">    <!-- comienzo del Cuadro blanco body-->
-<div class="table-responsive texto-secundario">
-<table id="myTable" class="table table-hover" style="width:100%">
+<div class="table-responsive  texto-secundario">
+<table id="myTable" class="table table-m table-hover" style="width:100%">
     <thead>
       <tr class="table-primary">
         <th class="text-center">#</th>

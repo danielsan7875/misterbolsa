@@ -302,14 +302,14 @@ function agregarProductoALista(productoValue, productoText, cantidad, tasadolar,
 
   // Crear una nueva fila en la tabla
   var newRow = $('<tr>').html(`
-      <td><input type="hidden" name='id_producto[]' id='producto_id' value='${productoValue}' >${productoText}</td>
-      <td><input type="hidden" name='cantidad[]' value='${cantidad}'>${cantidad}</td>
-      <td><input type="hidden" name='maode[]' value='${tipoPrecio}' readonly>${tipoPrecio}</td>
-      <td><input type="hidden" name='precio[]' value='${precio}' readonly>${precio}</td>
-      <td><input type="hidden" name='montoBs[]' value='${montoBs}' readonly>${montoBs}</td>
-      <td><input type="hidden" name='subtotaldorales[]' value='${subtotaldorales}' readonly>${subtotaldorales}</td>
-      <td><input type="hidden" name='subtotalbs[]' value='${subtotalbs}' readonly>${subtotalbs}</td>
-      <td><button type="button" class="btn btn-danger btn-sm" onclick="eliminarFila(this)">Eliminar</button></td>
+      <td class="bg-s"><input type="hidden" name='id_producto[]' id='producto_id' value='${productoValue}' >${productoText}</td>
+      <td class="bg-s"><input type="hidden" name='cantidad[]' value='${cantidad}'>${cantidad}</td>
+      <td class="bg-s"><input type="hidden" name='maode[]' value='${tipoPrecio}' readonly>${tipoPrecio}</td>
+      <td class="bg-s"><input type="hidden" name='precio[]' value='${precio}' readonly>${precio}</td>
+      <td class="bg-s"><input type="hidden" name='montoBs[]' value='${montoBs}' readonly>${montoBs}</td>
+      <td class="bg-s"><input type="hidden" name='subtotaldorales[]' value='${subtotaldorales}' readonly>${subtotaldorales}</td>
+      <td class="bg-s"><input type="hidden" name='subtotalbs[]' value='${subtotalbs}' readonly>${subtotalbs}</td>
+      <td class="bg-s"><button type="button" class="btn btn-danger btn-sm" onclick="eliminarFila(this)">Eliminar</button></td>
   `);
   $('#listadeventa').append(newRow);
 

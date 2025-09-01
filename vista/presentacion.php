@@ -26,12 +26,12 @@
   <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="?pagina=home">Inicio</a></li>
-    <li class="breadcrumb-item active color-text1" aria-current="page">Presentación</li>
+    <li class="breadcrumb-item active color-text1 texto-secundario" aria-current="page">Presentación</li>
   </ol>
 </nav>
 
 <div class="d-sm-flex align-items-center justify-content-between mb-5">
-       <h1 class="h3 mb-0 text-gray-900"> <i class="fa-solid fa-shapes  mr-3" style="color: #E63946;"></i>
+       <h1 class="h3 mb-0 text-gray-900 texto-principal"> <i class="fa-solid fa-shapes  mr-3" style="color: #E63946;"></i>
        Presentación</h1>
            
        <!-- Button que abre el Modal N1 Registro -->
@@ -47,7 +47,7 @@
 <div class="card shadow mb-4"> <!-- comienzo del Cuadro blanco-->
 <div class="table-margen">    <!-- comienzo del Cuadro blanco body-->
 <div class="table-responsive">
-<table class="table table-striped table-hover" style="width:100%">
+<table class="table table-hover" style="width:100%">
     <thead class="table-color">
       <tr class="table-primary">
         <th>#</th>
@@ -76,7 +76,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
       </div>
 
-      <div class="modal-body">
+      <div class="modal-body div-oscuro-2">
       <form action="?pagina=presentacion" id="u" autocomplete="off"> <!--comienzo Formulario-->
         
 <div class="seccion-formulario">

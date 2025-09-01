@@ -132,7 +132,7 @@ var dolar = parseFloat($("#dolar").val());
 
 // Iterar sobre cada fila de la tabla
 $(".table tbody tr").each(function() {
-    // Obtener el precio en dólares y convertirlo a número desde el data attribute
+  
     var precioDolar = parseFloat($(this).data('precio-unitario'));
     var precioDolarM = parseFloat($(this).data('precio-mayor'));
 
@@ -144,7 +144,6 @@ $(".table tbody tr").each(function() {
     $(this).find("#precioBss").text("Bs " + precioBsM.toFixed(2));
 });
 
-// ✅ Actualizar precios en el modal
 $(".precio-bs-detal").each(function() {
     var precio = parseFloat($(this).data("precio"));
     if (!isNaN(precio)) {
@@ -175,8 +174,8 @@ $(".table tbody tr").each(function() {
         $(this).find('td:eq(5)').append(' <i class="fas fa-exclamation-triangle" style="color:rgb(230, 38, 54);"></i>');
         alertMessages.push(`
             <tr>
-                <td class="text-center text-dark fw-bold">#${productoId}</td>
-                <td class="text-dark">${productoNombre}</td>
+                <td class="text-center text-dark fw-bold bg-s">#${productoId}</td>
+                <td class="text-dark bg-s">${productoNombre}</td>
             </tr>
         `);
     }
@@ -202,11 +201,11 @@ if (alertMessages.length > 0) {
                 <h5 class="modal-title" id="stockModalLabel"><i class="fas fa-box-open me-2"></i>Productos con bajo stock</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
               </div>
-              <div class="modal-body">
+              <div class="modal-body div-oscuro-2">
                 <p>Se han detectado los siguientes productos con niveles de inventario por debajo del mínimo:</p>
                 <div class="table-responsive">
-                  <table class="table table-bordered table-sm table-hover">
-                    <thead class="table-dark">
+                  <table class="table table-sm table-hover">
+                    <thead class="table-primary">
                       <tr>
                         <th class="text-center">#</th>
                         <th>Nombre del producto</th>
@@ -218,7 +217,7 @@ if (alertMessages.length > 0) {
                   </table>
                 </div>
               </div>
-              <div class="modal-footer">
+              <div class="modal-footer div-oscuro-2">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
               </div>
             </div>

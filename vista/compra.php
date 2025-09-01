@@ -33,12 +33,12 @@
   <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="?pagina=home">Inicio</a></li>
-    <li class="breadcrumb-item active color-text1" aria-current="page">Compra</li>
+    <li class="breadcrumb-item active color-text1 texto-secundario" aria-current="page">Compra</li>
   </ol>
 </nav>
 
 <div class="d-sm-flex align-items-center justify-content-between mb-5">
-       <h1 class="h3 mb-0 text-gray-900"> <i class="fa-solid fa-receipt mr-3" style="color: #E63946;"></i>
+       <h1 class="h3 mb-0 text-gray-900 texto-principal"> <i class="fa-solid fa-receipt mr-3" style="color: #E63946;"></i>
         Compra</h1>
            
        <!-- Button que abre el Modal N1 Registro -->
@@ -55,8 +55,8 @@
 </div>
       <div class="card shadow mb-4"> <!-- comienzo del Cuadro blanco-->
 <div class="table-margen">    <!-- comienzo del Cuadro blanco body-->
-      <div class="table-responsive text-dark">
-      <table id="myTable" class="table table-striped table-hover" style="width:100%">
+      <div class="table-responsive text-dark texto-secundario">
+      <table id="myTable" class="table table-hover" style="width:100%">
     <thead class="table-color">
       <tr class="table-primary">
         <th >#</th>
@@ -96,17 +96,17 @@ foreach ($registro as $dato) {
 <?php foreach ($compras as $id_compra => $info): ?>
   
 <tr>
-    <td class="text-center"><?php echo $id_compra; ?></td>
-    <td class="text-center"><?php echo $info['fecha']; ?></td>
+    <td class="text-center bg-s"><?php echo $id_compra; ?></td>
+    <td class="text-center bg-s"><?php echo $info['fecha']; ?></td>
 
-    <td>
+    <td class="bg-s">
         <ul class="mb-0">
             <?php 
             $detalles = $info['detalles'];
             $mostrar = array_slice($detalles, 0, 2);
             foreach ($mostrar as $detalle): ?>
                 <li>
-                    <i class="fa-solid fa-boxes-stacked me-2" style="color: #457B9D;"></i>
+                    <i class="fa-solid fa-boxes-stacked texto-principal me-2" style="color: #457B9D;"></i>
                     <?php echo $detalle['nombre'].' - '.$detalle['marca'].' - '.$detalle['presentacion']; ?>
                 </li>
             <?php endforeach; ?>
@@ -118,7 +118,7 @@ foreach ($registro as $dato) {
         <?php endif; ?>
     </td>
 
-    <td>
+    <td class="bg-s">
         <ul class="mb-0">
             <?php foreach ($mostrar as $detalle): ?>
                 <li><?php echo $detalle['cantidad']; ?></li>
@@ -127,7 +127,7 @@ foreach ($registro as $dato) {
     </td>
 
     <?php if ($tipo_usuario == 1): ?>
-    <td class="text-center">
+    <td class="text-center bg-s">
         <form action="?pagina=compra">
             <button type="button" onclick="eliminar(this)" class="btn btn-danger btn-sm eliminar" value="<?php echo $id_compra; ?>">
                 <i class="fas fa-trash-alt" title="Eliminar"></i> Eliminar
@@ -150,7 +150,7 @@ foreach ($registro as $dato) {
           <h5 class="modal-title text-white" id="modalLabel-<?php echo $id_compra; ?>">Detalles de la compra #<?php echo $id_compra; ?></h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body div-oscuro-2">
           
           <p> Fecha de la compra: <b><?php echo $info['fecha']; ?></b></p>
           <table class="table table-hover">
@@ -163,14 +163,14 @@ foreach ($registro as $dato) {
             <tbody>
               <?php foreach ($info['detalles'] as $detalle): ?>
               <tr>
-                <td><?php echo $detalle['nombre'].' - '.$detalle['marca'].' - '.$detalle['presentacion']; ?></td>
-                <td class="text-center"><?php echo $detalle['cantidad']; ?></td>
+                <td class="bg-s"><?php echo $detalle['nombre'].' - '.$detalle['marca'].' - '.$detalle['presentacion']; ?></td>
+                <td class="text-center bg-s"><?php echo $detalle['cantidad']; ?></td>
               </tr>
               <?php endforeach; ?>
             </tbody>
           </table>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer div-oscuro-2">
           <button type="button" class="btn btn-info text-dark" data-bs-dismiss="modal">Cerrar</button>
         </div>
       </div>
@@ -193,7 +193,7 @@ foreach ($registro as $dato) {
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color:rgb(255, 255, 255);"></button>
       </div>
 
-      <div class="modal-body">
+      <div class="modal-body div-oscuro-2">
       <form action="?pagina=compra" id="u" autocomplete="off"> <!--comienzo Formulario-->
       
       <div class="seccion-formulario">
@@ -214,7 +214,7 @@ foreach ($registro as $dato) {
           </div>
           <div class="col-sm-2">
                 <label class="form-label text-dark">Cantidad</label> <br>
-                <input type="text" class="form-control text-dark border border-dark mb-2" id="cantidadpro">
+                <input type="text" class="form-control text-dark border border-info mb-2" id="cantidadpro">
                 <span class="text-error mt-0" id="textocantidad"></span>
             </div>
           </div>

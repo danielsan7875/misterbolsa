@@ -11,6 +11,7 @@
 <div id="loaderPagina" class="section_loader">
 <div class="loader-3"></div>
 </div>
+
   <!-- ||||||||||||||  Comienzo de Sidebar y Nav |||||||||||||||||||||||-->
   <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
     data-sidebar-position="fixed" data-header-position="fixed">
@@ -33,11 +34,11 @@
             <i class="fas fa-box fa-2x text-primary"></i>
           </div>
           <div>
-            <h6 class="card-title mb-1">Productos</h6>
+            <h6 class="card-title mb-1 texto-principal">Productos</h6>
               <?php 
               $total = $totalProductos['total']; 
               ?>
-            <h4 class="fw-bold mb-0"> <?php echo $total; ?></h4>
+            <h4 class="fw-bold mb-0 texto-secundario"> <?php echo $total; ?></h4>
           
           </div>
         </div>
@@ -55,8 +56,8 @@
               <?php 
               $totalstock = $totalbajo['total']; 
               ?>
-            <h6 class="card-title mb-1">Bajo Stock</h6>
-            <h4 class="fw-bold mb-0"><?php echo $totalstock; ?></h4>
+            <h6 class="card-title mb-1 texto-principal">Bajo Stock</h6>
+            <h4 class="fw-bold mb-0 texto-secundario"><?php echo $totalstock; ?></h4>
           </div>
         </div>
       </div>
@@ -73,8 +74,8 @@
              <?php 
               $totalven = number_format($totalventas['total'], 2, '.', '');
               ?>
-            <h6 class="card-title mb-1">Ventas Totales</h6>
-            <h4 class="fw-bold mb-0">$ <?php echo $totalven; ?></h4>
+            <h6 class="card-title mb-1 texto-principal">Ventas Totales</h6>
+            <h4 class="fw-bold mb-0 texto-secundario">$ <?php echo $totalven; ?></h4>
           </div>
         </div>
       </div>
@@ -92,8 +93,8 @@
             <?php 
               $totalper = $totalperdidas['total']; 
               ?>
-            <h6 class="card-title mb-1">Perdidas</h6>
-            <h4 class="fw-bold mb-0"><?php echo $totalper; ?></h4>
+            <h6 class="card-title mb-1 texto-principal">Perdidas</h6>
+            <h4 class="fw-bold mb-0 texto-secundario"><?php echo $totalper; ?></h4>
           </div>
         </div>
       </div>
@@ -124,17 +125,17 @@
         <tbody>
           <?php foreach ($topProductos as $index => $producto): ?>
             <tr>
-              <td><span class="badge bg-secondary"><?= $index + 1 ?></span></td>
-              <td>
+              <td class="bg-s"><span class="badge bg-secondary"><?= $index + 1 ?></span></td>
+              <td class="bg-s">
                 <strong><?= htmlspecialchars($producto['producto']) ?></strong><br>
                 <small class="text-muted">ID: <?= $producto['id_producto'] ?></small>
               </td>
-              <td><?= htmlspecialchars($producto['marca']) ?></td>
-              <td><?= htmlspecialchars($producto['presentacion']) ?></td>
-              <td class="text-end">
-                <span class="text-dark"><?= number_format($producto['total_vendido'], 0) ?></span>
+              <td class="bg-s"><?= htmlspecialchars($producto['marca']) ?></td>
+              <td class="bg-s"><?= htmlspecialchars($producto['presentacion']) ?></td>
+              <td class="text-end bg-s">
+                <span class="text-dark texto-secundario"><?= number_format($producto['total_vendido'], 0) ?></span>
               </td>
-              <td class="text-end">
+              <td class="text-end bg-s">
                 <span class="badge rounded-pill bg-success text-dark fw-bold">$ <?= number_format($producto['total_dinero'], 2) ?></span>
               </td>
             </tr>

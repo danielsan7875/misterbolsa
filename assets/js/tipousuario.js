@@ -184,11 +184,11 @@ $(document).ready(function() {
     tablaBody.empty();
   
     datos.forEach(function (dato) {
-        var fila = '<tr class="bg-s">' +
-            '<td class="text-center">' + dato.id_tipo + '</td>' +
-            '<td>' + dato.nombre + '</td>' +
-            '<td>' + dato.nivel + '</td>' +
-            '<td>' +
+        var fila = '<tr>' +
+            '<td class="text-center bg-s">' + dato.id_tipo + '</td>' +
+            '<td class="bg-s">' + dato.nombre + '</td>' +
+            '<td class="bg-s">' + dato.nivel + '</td>' +
+            '<td class="bg-s">' +
             '<form method="POST" action="?pagina=tipousuario">' +
             '<button name="modificar" class="btn btn-primary btn-sm modificar me-2" value="' + dato.id_tipo + '"><i class="fas fa-pencil-alt" title="Editar"></i> Modificar </button>' +
             '<button type="button" onclick="eliminar(this)" class="btn btn-danger btn-sm eliminar" value="' + dato.id_tipo + '"><i class="fas fa-trash-alt" title="Eliminar"> </i> Eliminar </button>' +
