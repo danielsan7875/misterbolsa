@@ -100,7 +100,7 @@ foreach ($registro as $dato) {
 <?php foreach ($ventas as $id_venta => $info): ?>
 <tr>
     <td class="text-center bg-s"><?php echo $id_venta; ?></td>
-    <td class="text-center bg-s"><?php echo $info['fecha']; ?></td>
+    <td class="text-center bg-s"><?php echo date("d/m/Y", strtotime($info['fecha'])); ?></td>
 
     <td class="bg-s">
         <ul class="mb-0">
@@ -148,9 +148,6 @@ foreach ($registro as $dato) {
     <?php if ($tipo_usuario == 1): ?>
     <td class="bg-s">
         <form action="?pagina=venta" method="POST" >
-            <button type="button" onclick="eliminar(this)" class="btn btn-danger btn-sm eliminar mb-2" value="<?php echo $id_venta; ?>">
-                <i class="fas fa-trash-alt me-2" title="Eliminar"></i> Eliminar
-            </button>
             <button type="submit"  class="btn btn-primary btn-sm" name="pdf" value="<?php echo $id_venta; ?>"> <i class="fa-regular fa-file-pdf me-2"></i>Descargar</button>
         </form>
     </td>

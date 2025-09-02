@@ -98,6 +98,24 @@
         return $consulta->fetchAll(PDO::FETCH_ASSOC);
     }
 
+
+    public function consultar() {
+    $registro = "SELECT v.*, dv.*, m.nombre AS nombre_marca, p.nombre AS nombre_presentacion, pro.nombre
+        FROM venta v
+        INNER JOIN detalle_venta dv ON v.id_venta = dv.id_venta
+        INNER JOIN producto pro ON dv.id_producto = pro.id_producto
+        INNER JOIN marca m ON pro.id_marca = m.id_marca
+        INNER JOIN presentacion p ON pro.id_presentacion = p.id_presentacion
+        WHERE DATE(v.fecha) = CURDATE()
+        ORDER BY v.id_venta DESC";
+
+    $consulta = $this->conex->prepare($registro);
+    $resul = $consulta->execute();
+
+    $datos = $consulta->fetchAll(PDO::FETCH_ASSOC);
+    return $resul ? $datos : 0;
+}
+
     
     public function get_Id_venta(){
         return $this->id_venta;

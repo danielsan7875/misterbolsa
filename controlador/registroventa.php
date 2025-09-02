@@ -8,9 +8,10 @@ $tipo_usuario = $_SESSION['nivel'];
 require_once 'modelo/registroventa.php';
 $objventa = new Registroventa();
 
-
+$registro = $objventa->consultar();
 $producto = $objventa->obtenerProducto();
 $dolar = $objventa->obtenerDolar();  
+
 if(isset($_POST['registrar'])){
   if( !empty($_POST['fecha']) && !empty($_POST['total'])){
 

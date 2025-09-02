@@ -88,6 +88,19 @@ $(document).ready(function () {
   const tasa = parseFloat($('#tasadolar').val());
 
   $('.btn-agregar').on('click', function () {
+
+     // Validar si el switch está activado
+  const ventaConfirmada = $('#switchCheckChecked').is(':checked');
+  if (ventaConfirmada) {
+    Swal.fire({
+      icon: 'info',
+      title: 'Venta bloqueada',
+      text: 'Ya has confirmado la venta. No puedes agregar más productos.',
+      confirmButtonColor: '#0337c4ff'
+    });
+    return;
+  }
+
   const btn = $(this);
   const productoValue = btn.data('id');
   const productoText = btn.data('text');
@@ -126,7 +139,7 @@ $(document).ready(function () {
         <input type="hidden" name='id_producto[]' value='${productoValue}'>${productoText}
       </td>
       <td class="bg-s">
-        <input type="number" name='cantidad[]' class="form-control border border-info cantidad" value='${cantidad}' min="1" max="${stock}">
+        <input type="number" name='cantidad[]' class="form-control border border-info text-dark cantidad" value='${cantidad}' min="1" max="${stock}">
       </td>
       <td class="bg-s">
         <span class="precio-bs">${montoBs} Bs</span>
@@ -154,6 +167,15 @@ function verificarFilaVacia() {
   $('.fila-vacia').toggle(!hayProductos);
 }
 
+$('#switchCheckChecked').on('change', function () {
+  const activo = $(this).is(':checked');
+
+  if (activo) {
+    $('.cantidad').attr('readonly', true);
+  } else {
+    $('.cantidad').removeAttr('readonly');
+  }
+});
 
   // Actualizar subtotales al cambiar cantidad
 $('#bodyventa').on('input', '.cantidad', function () {
@@ -193,6 +215,16 @@ $('#bodyventa').on('input', '.cantidad', function () {
 
   // Eliminar fila
   window.eliminarFila = function (btn) {
+     const ventaConfirmada = $('#switchCheckChecked').is(':checked');
+  if (ventaConfirmada) {
+    Swal.fire({
+      icon: 'info',
+      title: 'Venta bloqueada',
+      text: 'Ya has confirmado la venta. No puedes agregar más productos.',
+      confirmButtonColor: '#0337c4ff'
+    });
+    return;
+  }
     $(btn).closest('tr').remove();
     verificarFilaVacia();
     actualizarTotales();
@@ -229,6 +261,18 @@ $('#registrarventa').on("click", function (e) {
       icon: 'warning',
       title: 'Sin productos',
       text: 'No hay productos en la lista de venta',
+      confirmButtonColor: '#0337c4ff'
+    });
+    return;
+  }
+
+  const ventaConfirmada = $('#switchCheckChecked').is(':checked');
+
+  if (!ventaConfirmada) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Confirmación requerida',
+      text: 'Debes activar el switch para completar la venta',
       confirmButtonColor: '#0337c4ff'
     });
     return;

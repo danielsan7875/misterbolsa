@@ -26,33 +26,36 @@
   <!--|||||||||||||||   Fin de Sidebar y Nav  |||||||||||||||||||||||||||-->
   <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item active color-text1" aria-current="page">Bienvenido@ </li>
+    <li class="breadcrumb-item active color-text1 texto-secundario" aria-current="page">Bienvenido@ </li>
     <li class="breadcrumb-item"><a href="?pagina=home">Inicio</a></li>
   </ol>
 </nav>
 
 <div class="row">
   
-  <div class="carousel">
-<div class="wrap">
-<img src="assets/images/carrusel/C01.png" alt="" />
-<img src="assets/images/carrusel/C02.png" alt="" />
-<img src="assets/images/carrusel/C03.png" alt="" />
-<img src="assets/images/carrusel/C07.png" alt="" />
-<img src="assets/images/carrusel/C04.png" alt="" />
-<img src="assets/images/carrusel/C05.png" alt="" />
-<img src="assets/images/carrusel/C06.png" alt="" />
-
-<img src="assets/images/carrusel/C01.png" alt="" />
-<img src="assets/images/carrusel/C02.png" alt="" />
-<img src="assets/images/carrusel/C03.png" alt="" />
-<img src="assets/images/carrusel/C07.png" alt="" />
-<img src="assets/images/carrusel/C04.png" alt="" />
-<img src="assets/images/carrusel/C05.png" alt="" />
-<img src="assets/images/carrusel/C06.png" alt="" />
  
+<div id="carouselExample" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="assets/images/carrusel/b1.jpg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="assets/images/carrusel/b2.jpg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="assets/images/carrusel/b3.jpg" class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
 </div>
-</div>
+
   
 </div>
  <br>

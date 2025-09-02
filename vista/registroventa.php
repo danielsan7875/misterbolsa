@@ -19,17 +19,22 @@
     <div class="container-fluid">
   <!--|||||||||||||||   Fin de Sidebar y Nav  |||||||||||||||||||||||||||-->
 
-  <div class="d-sm-flex align-items-center justify-content-between mb-2">
-       <h1 class="h3 mb-0 texto-principal"> <i class="fa-solid fa-cash-register me-3" style="color: #E63946;"></i>
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+       <h1 class="h3 mb-0 texto-principal"> <i class="fa-solid fa-cash-register me-2" style="color: #E63946;"></i>
         Registro de Venta</h1>
            
        <!-- Button que abre el Modal N1 Registro -->
+          <button type="button" class="btn btn-info text-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+           <i class="fa-solid fa-folder me-2"></i> Consulta de Venta Hoy
+          </button>
+
           <a href="?pagina=venta" class="btn btn-primary">
           <span class="icon ">
             <i class="fa-solid fa-reply me-2"></i>
             </span>
             <span class="text ">Salir de Venta</span>
         </a>
+      
       </div>
 
   
@@ -43,12 +48,12 @@
           <table class="table table-bordered" id="listadeventa">
             <thead class="table-primary">
               <tr>
-                <th>-</th>
-                <th>Producto</th>
-                <th>Cantidad</th>
-                <th>Precio</th>
-                <th>Tipo</th>
-                <th>Subtotal</th>
+                <th class="text-center">-</th>
+                <th class="text-center">Producto</th>
+                <th class="text-center">Cantidad</th>
+                <th class="text-center">Precio</th>
+                <th class="text-center">Tipo</th>
+                <th class="text-center">Subtotal</th>
               </tr>
             </thead>
             <tbody id="bodyventa">
@@ -76,9 +81,19 @@
                 <input type="hidden" name="fecha" id="ventafecha">
 
           </div>
+          
+          <div class="mt-3">
+            
+            <div class="form-check form-switch ">
+             
+              <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked">
+              <label class="form-check-label text-dark texto-secundario" for="switchCheckChecked">Click para confirmar la venta <span class="text-danger">*</span></label>
+            </div>
+          </div>
 
           <div class="mt-3 text-center">
-            <button type="button" class="btn btn-success" name="registrar" id="registrarventa">Registrar venta</button>
+            
+            <button type="button" class="btn btn-guardar text-dark" name="registrar" id="registrarventa">Registrar venta</button>
           
           </div>
           </form>
@@ -94,10 +109,10 @@
         <table id="tabla-inventario" class="table table-bordered">
           <thead class="table-info">
             <tr>
-              <th>+</th>
-              <th>Nombre del Producto</th>
-              <th>Stock</th>
-              <th>Precio Bs.D</th>
+              <th class="text-center">+</th>
+              <th class="text-center">Nombre del Producto</th>
+              <th class="text-center">Stock</th>
+              <th class="text-center">Precio Bs.D</th>
             </tr>
           </thead>
      
@@ -149,7 +164,7 @@
           </tbody>
         </table>
           <nav aria-label="Page navigation example">
-          <ul class="pagination justify-content-end ">
+          <ul class="pagination justify-content-end" id="paginacion-productos">
             <li class="page-item disabled ">
               <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Atras</a>
             </li>
@@ -164,6 +179,135 @@
       </div>
     </div>
 
+
+
+
+    <!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content modal-producto">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5 text-white" id="staticBackdropLabel">Consulta de Venta (HOY)</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body div-oscuro-2">
+                      <div class="card shadow mb-4"> <!-- comienzo del Cuadro blanco-->
+<div class="table-margen">    <!-- comienzo del Cuadro blanco body-->
+      <div class="table-responsive text-dark texto-secundario">
+      <table id="myTable" class="table table-hover" style="width:100%">
+    <thead>
+      <tr class="table-primary">
+        <th>#</th>
+        <th>Fecha</th>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>M o D</th>
+        <th>Precio Uni. $</th>
+        <th>TOTAL $</th>
+  
+        <th>Accion</th>
+  
+      </tr>
+    </thead>
+    <tbody>
+      <?php
+
+$ventas = [];
+foreach ($registro as $dato) {
+    $id_venta = $dato['id_venta'];
+    if (!isset($ventas[$id_venta])) {
+        $ventas[$id_venta] = [
+            'fecha' => $dato['fecha'],
+            'total' => $dato['total'],
+            'detalles' => []
+        ];
+    }
+    $ventas[$id_venta]['detalles'][] = [
+        'nombre' => $dato['nombre'],
+        'cantidad' => $dato['cantidad'],
+        'marca' => $dato['nombre_marca'],
+        'presentacion' => $dato['nombre_presentacion'],
+        'precio_unitario' => $dato['precio_unitario'],
+        'maode' => $dato['maode']
+    ];
+}
+
+
+?>
+<?php foreach ($ventas as $id_venta => $info): ?>
+<tr>
+    <td class="text-center bg-s"><?php echo $id_venta; ?></td>
+    <td class="text-center bg-s"><?php echo date("d/m/Y", strtotime($info['fecha'])); ?></td>
+
+    <td class="bg-s">
+        <ul class="mb-0">
+            <?php 
+            $detalles = $info['detalles'];
+            $mostrar = array_slice($detalles, 0, 2);
+            foreach ($mostrar as $detalle): ?>
+                <li>
+                    <i class="fa-solid fa-boxes-stacked me-2" style="color: #457B9D;"></i>
+                    <?php echo $detalle['nombre'].' - '.$detalle['marca'].' - '.$detalle['presentacion']; ?>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+        <?php if (count($detalles) > 2): ?>
+            <button type="button" class="btn badge bg-primary mt-2">
+                <i class="fa-solid fa-eye me-2"></i> Descargar el PDF para ver detallado
+            </button>
+        <?php endif; ?>
+    </td>
+
+    <td class="bg-s">
+        <ul> 
+          <?php foreach ($mostrar as $detalle) { ?>
+             <li><?php echo $detalle['cantidad']?></li> 
+             <?php } ?> 
+        </ul>
+    </td>
+
+    <td class="bg-s"> <ul> 
+      <?php foreach ($mostrar as $detalle) { ?>
+         <li><?php echo $detalle['maode']; ?></li> <?php } ?> 
+        </ul>
+       </td>
+
+    <td class="bg-s">
+        <ul class="mb-0">
+            <?php foreach ($mostrar as $detalle): ?>
+                <li><?php echo $detalle['precio_unitario'] . ' $'; ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </td>
+
+    <td class="text-center bg-s"><?php echo $info['total'] . ' $'; ?></td>
+
+    
+    <td class="bg-s">
+        <form action="?pagina=venta" method="POST" >
+
+            <button type="submit"  class="btn btn-primary btn-sm" name="pdf" value="<?php echo $id_venta; ?>"> <i class="fa-regular fa-file-pdf me-2"></i>Descargar</button>
+        </form>
+    </td>
+  
+</tr>
+<?php endforeach; ?>
+</tbody>
+
+    </table>
+</div>
+</div>
+</div>
+
+
+
+      </div>
+      <div class="modal-footer div-oscuro-2">
+        <button type="button" class="btn btn-limpiar" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
   <!--|||||||||||||||  Footer y JS  |||||||||||||||||||||||||||-->

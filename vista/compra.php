@@ -97,7 +97,7 @@ foreach ($registro as $dato) {
   
 <tr>
     <td class="text-center bg-s"><?php echo $id_compra; ?></td>
-    <td class="text-center bg-s"><?php echo $info['fecha']; ?></td>
+    <td class="text-center bg-s"><?php echo date("d/m/Y", strtotime($info['fecha'])); ?></td>
 
     <td class="bg-s">
         <ul class="mb-0">
@@ -129,8 +129,8 @@ foreach ($registro as $dato) {
     <?php if ($tipo_usuario == 1): ?>
     <td class="text-center bg-s">
         <form action="?pagina=compra">
-            <button type="button" onclick="eliminar(this)" class="btn btn-danger btn-sm eliminar" value="<?php echo $id_compra; ?>">
-                <i class="fas fa-trash-alt" title="Eliminar"></i> Eliminar
+            <button type="button" class="btn btn-primary btn-sm" disabled>
+               Descargar
             </button>
         </form>
     </td>
@@ -276,28 +276,7 @@ foreach ($registro as $dato) {
 
 </style>
 
-<!-- Modal para ingresar cantidad -->
-<div class="modal fade" id="modalCantidad" tabindex="-1" aria-labelledby="modalCantidadLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content border-dark">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalCantidadLabel">Cantidad del Producto</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-      <div class="modal-body">
-      <input type="number" id="inputCantidad" class="form-control" min="1" max="200" placeholder="Ingrese cantidad (1–200)" autocomplete="off">
 
-
-        
-        <span class="text-danger small" id="errorCantidad"></span>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary btn-sm" id="btnConfirmarCantidad">Agregar</button>
-      </div>
-    </div>
-  </div>
-</div>
 
  
   <!--|||||||||||||||  Footer y JS  |||||||||||||||||||||||||||-->

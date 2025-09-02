@@ -64,7 +64,8 @@ class Usuario extends Conexion{
     
         $registro="SELECT u.*,tu.id_tipo, tu.nombre AS nombre_tipo
         FROM usuario u 
-        INNER JOIN  tipo_usuario tu ON u.id_tipo = tu.id_tipo";
+        INNER JOIN  tipo_usuario tu ON u.id_tipo = tu.id_tipo
+        ORDER BY u.id_usuario DESC";
         $consulta = $this->conex->prepare($registro);
         $resul = $consulta->execute();
 

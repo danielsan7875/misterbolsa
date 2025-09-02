@@ -54,7 +54,8 @@
 
     public function consultar(){
 
-        $registro ="SELECT * FROM tipo_usuario WHERE estatus <5";
+        $registro ="SELECT * FROM tipo_usuario WHERE estatus <5
+        ORDER BY id_tipo DESC";
         $consulta = $this->conex->prepare($registro);
         $resul = $consulta->execute();
 

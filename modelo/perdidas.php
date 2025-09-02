@@ -74,7 +74,8 @@
         FROM perdida per
         INNER JOIN producto pro ON per.id_producto = pro.id_producto
         INNER JOIN marca m ON pro.id_marca = m.id_marca
-        INNER JOIN presentacion p ON pro.id_presentacion = p.id_presentacion";
+        INNER JOIN presentacion p ON pro.id_presentacion = p.id_presentacion
+        ORDER BY per.id_perdida DESC";
         $consulta = $this->conex->prepare($registro);
         $resul = $consulta->execute();
 
