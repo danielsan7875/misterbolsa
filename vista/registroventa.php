@@ -27,14 +27,14 @@
           <button type="button" class="btn btn-info text-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
            <i class="fa-solid fa-folder me-2"></i> Consulta de Venta Hoy
           </button>
-
+<?php if($_SESSION['nivel'] < 2){?>
           <a href="?pagina=venta" class="btn btn-primary">
           <span class="icon ">
             <i class="fa-solid fa-reply me-2"></i>
             </span>
             <span class="text ">Salir de Venta</span>
         </a>
-      
+      <?php } ?>
       </div>
 
   

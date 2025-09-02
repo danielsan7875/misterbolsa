@@ -5,6 +5,11 @@ if (empty($_SESSION["id"])){
 }
 $tipo_usuario = $_SESSION['nivel'];
 
+if ($_SESSION["nivel"] == 3){
+  header("location:?pagina=registroventa");
+}
+
+
 require_once 'modelo/presentacion.php';
 
     $objpresentacion = new Presentacion();

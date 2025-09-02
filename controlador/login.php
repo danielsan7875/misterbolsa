@@ -38,7 +38,7 @@ if (isset($_POST['ingresar'])) {
                         echo json_encode(['respuesta' => 1, 'accion' => 'ingresar']);
                         exit;
                     }
-                }
+                }              
 
                  echo json_encode(['respuesta' => 1, 'accion' => 'ingresar']);
                  exit;

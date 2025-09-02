@@ -181,6 +181,10 @@ $('#switchCheckChecked').on('change', function () {
 $('#bodyventa').on('input', '.cantidad', function () {
   const $fila = $(this).closest('tr');
   const cantidad = parseInt($(this).val());
+  if (isNaN(cantidad) || cantidad <= 0) {
+    cantidad = 1;
+    $(this).val(cantidad);
+  }
   const stock = parseInt($(this).attr('max'));
   const productoId = $fila.find("input[name='id_producto[]']").val();
   const btnRef = $('.btn-agregar[data-id="' + productoId + '"]');
@@ -301,6 +305,16 @@ $('#registrarventa').on("click", function (e) {
 
 
   });
+
+$('#bodyventa').on('blur', '.cantidad', function () {
+  let cantidad = parseInt($(this).val());
+  if (isNaN(cantidad) || cantidad <= 0) {
+    cantidad = 1;
+    $(this).val(cantidad);
+  }
+
+  $(this).trigger('input'); // 👈 Esto reactiva tu cálculo de precios
+});
 
 
 function activarLoaderBoton(idBoton, texto) {

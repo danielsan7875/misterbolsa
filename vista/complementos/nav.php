@@ -50,13 +50,13 @@
                       <i class="fa-solid fa-moon me-2"></i> 
                       <p class="mb-0 fs-3">Modo Oscuro</p>
                     </button> 
-
+            <?php if($_SESSION['nivel'] < 2){?>
                     <a href="?pagina=tasa" class="texto-secondario d-flex align-items-center gap-2 dropdown-item text-dark">
                     <i class="fa-solid fa-money-bill-trend-up me-2 texto-secundario"></i>
                       <p class="mb-0 fs-3 texto-secundario">Cambiar Tasa Dolar</p>
                     </a>
 
-
+            <?php } ?>
 
                     <button type="button" name="cerrar" class="btn btn-outline-danger mx-3 mt-2 d-block shadow-none"
                     data-bs-toggle="modal" data-bs-target="#modalcerrar">Cerrar Session</button>

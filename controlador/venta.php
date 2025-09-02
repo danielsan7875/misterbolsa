@@ -3,6 +3,7 @@ session_start();
 if (empty($_SESSION["id"])){
   header("location:?pagina=login");
 }
+
 $tipo_usuario = $_SESSION['nivel'];
 require_once 'modelo/venta.php';
 $objventa = new Venta();
@@ -47,6 +48,11 @@ if(isset($_POST['registrar'])){
 }
 
 } else {
+  
+if ($_SESSION["nivel"] == 3){
+  header("location:?pagina=registroventa");
+}
+
   require_once 'vista/venta.php';
 }
 
