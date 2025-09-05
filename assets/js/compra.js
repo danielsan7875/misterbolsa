@@ -78,15 +78,6 @@ $(document).ready(function() {
     var hoy = moment().format('YYYY-MM-DD'); // Formato de fecha para el input tipo date
     $('#fecha').val(hoy);
 
-const modalCantidad = document.getElementById('modalCantidad');
-modalCantidad.addEventListener('shown.bs.modal', function () {
-  setTimeout(() => {
-    document.getElementById('inputCantidad').focus();
-  }, 100); // pequeño delay para evitar conflicto
-});
-
-
-
     $('#exampleModal').on('shown.bs.modal', function () {
         $('#idproducto').select2({
             dropdownParent: $('#exampleModal'),
