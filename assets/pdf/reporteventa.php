@@ -11,8 +11,7 @@ $options->set('isRemoteEnabled', true); // Para cargar imágenes externas si es 
 $dompdf = new Dompdf($options);
 
 // Conexión PDO
-$pdo = new PDO("mysql:host=localhost;dbname=bdbolsa1", "root", "");
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+require_once '../../config/reporte.php';
 
 // Consulta principal de la venta
 $sqlVenta = "SELECT fecha, total FROM venta WHERE id_venta = ?";

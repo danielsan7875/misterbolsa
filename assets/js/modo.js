@@ -41,11 +41,11 @@ function actualizarBotonModo(activo) {
   if (activo) {
     boton.classList.remove('text-dark');
     boton.classList.add('texto-secundario');
-    boton.innerHTML = '<i class="fa-solid fa-sun me-2"></i> Modo Claro';
+    boton.innerHTML = '<i class="fa-solid fa-sun fs-7 me-2"></i> Modo Claro';
   } else {
     boton.classList.remove('text-light');
     boton.classList.add('text-dark');
-    boton.innerHTML = '<i class="fa-solid fa-moon me-2"></i> Modo Oscuro';
+    boton.innerHTML = '<i class="fa-solid fa-moon fs-7 me-2"></i> Modo Oscuro';
   }
 }
 

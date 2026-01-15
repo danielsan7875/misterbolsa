@@ -1,9 +1,11 @@
 <?php
+
 session_start();
 if (empty($_SESSION["id"])){
   header("location:?pagina=login");
 }
 $tipo_usuario = $_SESSION['nivel'];
+ $vista="Usuario"; $activo="12";
 
 if ($_SESSION["nivel"] == 3){
   header("location:?pagina=registroventa");

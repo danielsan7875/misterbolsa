@@ -1,4 +1,7 @@
 <?php
+ $vista="Venta";
+ $activo="4";
+
 session_start();
 if (empty($_SESSION["id"])){
   header("location:?pagina=login");

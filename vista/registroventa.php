@@ -5,6 +5,24 @@
     <?php require_once 'vista/complementos/head.php'; ?>
     <title>Resgistro de Venta | Mister Bolsa C.A</title>
      <link rel="stylesheet" href="assets/css/for.css" />
+     <style>
+.metodo-card {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  min-height: 70px;
+}
+
+.metodo-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 10px rgba(0,0,0,0.15);
+}
+
+.metodo-card.selected {
+  border: 2px solid #00ff40ff !important;
+  background-color: #e9f5ff;
+}
+
+     </style>
 </head>
 
 <body>
@@ -40,11 +58,15 @@
   
     <div class="row">
       <!-- Sección Ventas -->
-      <div class="col-md-6">
+      <div class="col-md-7">
+        
         <h5 class="section-title texto-secundario">Informacion de la Venta</h5>
         <div class="card p-3">
     
         <form action="?pagina=registroventa" method="POST" autocomplete="off" id="formularioventa">
+        <!-- ||||||||||||||| PASO 1 ||||||||||||||||||||||||||-->    
+        <div id="paso1"> 
+          <p class="text-center text-dark texto-secundario">PASO 1 DE 2</p>
           <table class="table table-bordered" id="listadeventa">
             <thead class="table-primary">
               <tr>
@@ -70,7 +92,7 @@
              <h5 class="text-dark texto-secundario " ><strong> 0.00 $</strong></h5> </div>
              <div class="col-md-4 text-dark texto-secundario">Tasa de Cambio: <br>
              <?php foreach ($dolar as $dolar){  ?>
-               <h5 class="text-dark texto-secundario badge rounded-pill bg-warning text-dark" > <strong><?php echo $dolar['precios']?> Bs</strong> </h5></div>
+               <h5 class="badge rounded-pill bg-warning text-dark" > <strong><?php echo $dolar['precios']?> Bs</strong> </h5></div>
                 <input type="hidden" id="tasadolar" value="<?php echo $dolar['precios']?>">
                 <?php } ?>
              
@@ -78,35 +100,66 @@
               <h5 class="text-dark texto-secundario" > <strong>0.00 Bs</strong> </h5> </div>
 
                 <input type="hidden" name="total" id="totaldolaresfor">
+                <input type="hidden" name="totalbs" id="totalbsfor">
                 <input type="hidden" name="fecha" id="ventafecha">
 
           </div>
-          
-          <div class="mt-3">
-            
-            <div class="form-check form-switch ">
-             
-              <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked">
-              <label class="form-check-label text-dark texto-secundario" for="switchCheckChecked">Click para confirmar la venta <span class="text-danger">*</span></label>
-            </div>
-          </div>
 
-          <div class="mt-3 text-center">
-            
-            <button type="button" class="btn btn-guardar text-dark" name="registrar" id="registrarventa">Registrar venta</button>
-          
+            <div class="mt-3">
+              <div class="form-check form-switch ">
+                <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked">
+                <label class="form-check-label text-dark texto-secundario" for="switchCheckChecked">Click para confirmar la venta <span class="text-danger">*</span></label>
+              </div>
+            </div>
+
+          <div class="text-center mt-3 mb-3">
+  <button type="button" class="btn btn-success text-dark" id="btn-avanzar">Siguiente paso</button>
+</div>
+</div><!-- ||||||||||||||| FIN PASO 1 ||||||||||||||||||||||||||-->    
+
+         <!-- ||||||||||||||| PASO 2 ||||||||||||||||||||||||||-->    
+        <div id="paso2" style="display:none;">
+          <p class="text-center text-dark texto-secundario">PASO 2 DE 2</p>
+          <div class="row">
+            <div class="col-sm-12">
+              <label class="form-label text-dark">Seleccionar un metodo pago</label>
+                  <select class="form-select text-dark" aria-label="Default select example" name="presentacion" id="presenselect" required>
+              <option value="">Seleccione una Presentacion:</option>
+                 <?php foreach($metodo as $metodo) {?>
+                     <option value="<?php echo $metodo['id_metodopago'];?>"> •  <?php echo $metodo['nombre'];?> </option>
+               <?php } ?>
+           </select> 
           </div>
+        </div>
+         
+
+         <!-- Tabla de métodos de pago -->
+
+
+
+
+
+
+           
+
+            <div class="text-center mt-3 mb-4">
+  <button type="button" class="btn btn-secondary me-4" id="btn-retroceder">Volver al paso anterior</button>
+   <button type="button" class="btn btn-guardar text-dark" name="registrar" id="registrarventa">Registrar venta</button>
+</div>
+</div><!-- ||||||||||||||| FIN PASO 2 ||||||||||||||||||||||||||-->    
+
+        
+
           </form>
         </div>
       </div>
 
 
       <!-- Sección Inventario -->
-      <div class="col-md-6">
-        <h5 class="section-title">Agrega un artículo</h5>
-        <input type="text" id="buscador" class="form-control text-dark mb-2 border border-info" placeholder="Buscar productos...">
+      <div class="col-md-5 text-dark texto-secundario">
+        <h5 class="section-title texto-secundario">Agrega un artículo</h5>
 
-        <table id="tabla-inventario" class="table table-bordered">
+        <table id="tabla-inventari" class="table table-bordered">
           <thead class="table-info">
             <tr>
               <th class="text-center">+</th>
@@ -163,19 +216,7 @@
                <?php } ?>
           </tbody>
         </table>
-          <nav aria-label="Page navigation example">
-          <ul class="pagination justify-content-end" id="paginacion-productos">
-            <li class="page-item disabled ">
-              <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Atras</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#">Siguiente</a>
-            </li>
-          </ul>
-        </nav>
+        
       </div>
     </div>
 
@@ -308,6 +349,56 @@ foreach ($registro as $dato) {
     </div>
   </div>
 </div>
+
+<script>
+  $(document).ready(function() {
+  $('#btn-avanzar').on('click', function() {
+    const filasVenta = $('#bodyventa tr').not('.fila-vacia');
+
+  if (filasVenta.length === 0) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Sin productos',
+      text: 'No hay productos en la lista de venta',
+      confirmButtonColor: '#0337c4ff'
+    });
+    return;
+  }
+
+  const ventaConfirmada = $('#switchCheckChecked').is(':checked');
+
+  if (!ventaConfirmada) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Confirmación requerida',
+      text: 'Debes activar el switch para completar la venta',
+      confirmButtonColor: '#0337c4ff'
+    });
+    return;
+  }
+    $('#paso1').fadeOut(300, function() {
+      $('#paso2').fadeIn(300);
+    });
+  });
+
+  $('#btn-retroceder').on('click', function() {
+    $('#paso2').fadeOut(300, function() {
+      $('#paso1').fadeIn(300);
+    });
+  });
+
+
+  $('.metodo-card').on('click', function() {
+    $('.metodo-card').removeClass('selected');
+    $(this).addClass('selected');
+
+  });
+});
+
+</script>
+
+
+
 
 
   <!--|||||||||||||||  Footer y JS  |||||||||||||||||||||||||||-->

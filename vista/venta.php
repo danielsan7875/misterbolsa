@@ -2,166 +2,145 @@
 <html lang="en">
 
 <head>
-    <?php require_once 'complementos/head.php'; ?>
+    <?php require_once 'complementos/head2.php'; ?>
     <title> Venta | Mister Bolsa C.A</title>
+    <!--
     <link rel="stylesheet" href="assets/css/producto.css" /> 
     <link rel="stylesheet" href="assets/css/venta.css" />
       <link rel="stylesheet" href="assets/css/for.css" />
+-->
 </head>
 
 <body>
-  <!-- LOADER-->
-  <div id="loaderPagina" class="section_loader">
-  <span class="loader"></span>
-</div>
-  <!-- ||||||||||||||  Comienzo de Sidebar y Nav |||||||||||||||||||||||-->
-  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
-    data-sidebar-position="fixed" data-header-position="fixed">
-  <?php require_once 'complementos/sidebar.php'; ?>
- 
-    <div class="body-wrapper body-oscuro">
-    <?php require_once 'complementos/nav.php'; ?>
-    <div class="container-fluid">
-  <!--|||||||||||||||   Fin de Sidebar y Nav  |||||||||||||||||||||||||||-->
+  <?php require_once 'complementos/nav2.php'; ?>
+    <?php require_once 'complementos/sidebar2.php'; ?>
 
-  <nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="?pagina=home">Inicio</a></li>
-    <li class="breadcrumb-item active color-text1 texto-secundario" aria-current="page">Venta</li>
-  </ol>
-</nav>
-<?php foreach ($dolar as $dolar){  ?>
-        <input type="hidden" id="tasadolar" value="<?php echo $dolar['precios']?>">
+    
+  <div class="row">
+      <div class="col">
+        <?php foreach ($dolar as $dolar){  ?>
+            <input type="hidden" id="tasadolar" value="<?php echo $dolar['precios']?>">
         <?php } ?>
-<div class="d-sm-flex align-items-center justify-content-between mb-5">
-       <h1 class="h3 mb-0 text-gray-900 texto-principal"> <i class="fa-solid fa-cash-register mr-3" style="color: #E63946;"></i>
-        Venta</h1>
-           
-       <!-- Button que abre el Modal N1 Registro -->
-          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
-          <span class="icon text-dark">
-            <i class="fas fa-file-medical me-2"></i>
-            </span>
-            <span class="text-dark">Registrar Venta</span>
-      </button>
+        <div class="d-sm-flex align-items-center justify-content-between mb-5">
+              <h1 class="h3 mb-0 text-gray-900 texto-principal"> <i class="fa-solid fa-cash-register mr-3" style="color: #E63946;"></i>
+                Venta</h1>
+              
+          <!-- Button que abre el Modal N1 Registro -->
+              <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <i class="fas fa-file-medical me-2"></i>
+                <span class="">Registrar Venta</span>
+          </button>
+
+          <a href="?pagina=registroventa" class="btn btn-success">Registrar Venta (V2)</a>
+          </div>
       </div>
-   
-    
-          
-<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-  <button class="btn btn-primary mb-3" type="button" disabled><i class="fa-regular fa-file-pdf"></i>Reportes</button>
-</div>
-      
-    
+    </div>
 
-      <div class="card shadow mb-4"> <!-- comienzo del Cuadro blanco-->
-<div class="table-margen">    <!-- comienzo del Cuadro blanco body-->
+    <div class="transaction-list shadow-sm border-0">
+
       <div class="table-responsive text-dark texto-secundario">
-      <table id="myTable" class="table table-hover" style="width:100%">
-    <thead>
-      <tr class="table-primary">
-        <th>#</th>
-        <th>Fecha</th>
-        <th>Producto</th>
-        <th>Cantidad</th>
-        <th>M o D</th>
-        <th>Precio Uni. $</th>
-        <th>TOTAL $</th>
-        <?php if( $tipo_usuario == 1) { ?>
-        <th>Accion</th>
-        <?php } ?>
-      </tr>
-    </thead>
-    <tbody>
-      <?php
+        <table id="myTable" class="table table-hover" style="width:100%">
+          <thead class="table-color">
+            <tr>
+              <th>NRO</th>
+              <th>Fecha</th>
+              <th>Producto</th>
+              <th>Cantidad</th>
+              <th>M o D</th>
+              <th>Precio Uni. $</th>
+              <th>TOTAL $</th>
+              <?php if( $tipo_usuario == 1) { ?>
+              <th>Accion</th>
+              <?php } ?>
+            </tr>
+          </thead>
+            <tbody>
+              <?php
+                $ventas = [];
+                foreach ($registro as $dato) {
+                    $id_venta = $dato['id_venta'];
+                    if (!isset($ventas[$id_venta])) {
+                        $ventas[$id_venta] = [
+                            'fecha' => $dato['fecha'],
+                            'total' => $dato['total_dl'],
+                            'detalles' => []
+                        ];
+                    }
+                    $ventas[$id_venta]['detalles'][] = [
+                        'nombre' => $dato['nombre'],
+                        'cantidad' => $dato['cantidad'],
+                        'marca' => $dato['nombre_marca'],
+                        'presentacion' => $dato['nombre_presentacion'],
+                        'precio_unitario' => $dato['precio_unitario'],
+                        'maode' => $dato['maode']
+                    ];
+                }
+              ?>
+              <?php foreach ($ventas as $id_venta => $info): ?>
+              <tr>
+                  <td class="text-center bg-s"><?php echo $id_venta; ?></td>
+                  <td class="text-center bg-s"><?php echo date("d/m/Y", strtotime($info['fecha'])); ?></td>
 
-$ventas = [];
-foreach ($registro as $dato) {
-    $id_venta = $dato['id_venta'];
-    if (!isset($ventas[$id_venta])) {
-        $ventas[$id_venta] = [
-            'fecha' => $dato['fecha'],
-            'total' => $dato['total'],
-            'detalles' => []
-        ];
-    }
-    $ventas[$id_venta]['detalles'][] = [
-        'nombre' => $dato['nombre'],
-        'cantidad' => $dato['cantidad'],
-        'marca' => $dato['nombre_marca'],
-        'presentacion' => $dato['nombre_presentacion'],
-        'precio_unitario' => $dato['precio_unitario'],
-        'maode' => $dato['maode']
-    ];
-}
+                  <td class="bg-s">
+                      <ul class="mb-0">
+                          <?php 
+                          $detalles = $info['detalles'];
+                          $mostrar = array_slice($detalles, 0, 2);
+                          foreach ($mostrar as $detalle): ?>
+                              <li>
+                                  <i class="fa-solid fa-boxes-stacked me-2" style="color: #457B9D;"></i>
+                                  <?php echo $detalle['nombre'].' - '.$detalle['marca'].' - '.$detalle['presentacion']; ?>
+                              </li>
+                          <?php endforeach; ?>
+                      </ul>
+                      <?php if (count($detalles) > 2): ?>
+                          <button type="button" class="btn badge bg-primary mt-2" data-bs-toggle="modal" data-bs-target="#modal-<?php echo $id_venta; ?>">
+                              <i class="fa-solid fa-eye me-2"></i> Ver más
+                          </button>
+                      <?php endif; ?>
+                  </td>
 
+                  <td class="bg-s">
+                      <ul> 
+                        <?php foreach ($mostrar as $detalle) { ?>
+                          <li><?php echo $detalle['cantidad']?></li> 
+                          <?php } ?> 
+                      </ul>
+                  </td>
 
-?>
-<?php foreach ($ventas as $id_venta => $info): ?>
-<tr>
-    <td class="text-center bg-s"><?php echo $id_venta; ?></td>
-    <td class="text-center bg-s"><?php echo date("d/m/Y", strtotime($info['fecha'])); ?></td>
+                  <td class="bg-s"> <ul> 
+                    <?php foreach ($mostrar as $detalle) { ?>
+                      <li><?php echo $detalle['maode']; ?></li> <?php } ?> 
+                      </ul>
+                    </td>
 
-    <td class="bg-s">
-        <ul class="mb-0">
-            <?php 
-            $detalles = $info['detalles'];
-            $mostrar = array_slice($detalles, 0, 2);
-            foreach ($mostrar as $detalle): ?>
-                <li>
-                    <i class="fa-solid fa-boxes-stacked me-2" style="color: #457B9D;"></i>
-                    <?php echo $detalle['nombre'].' - '.$detalle['marca'].' - '.$detalle['presentacion']; ?>
-                </li>
-            <?php endforeach; ?>
-        </ul>
-        <?php if (count($detalles) > 2): ?>
-            <button type="button" class="btn badge bg-primary mt-2" data-bs-toggle="modal" data-bs-target="#modal-<?php echo $id_venta; ?>">
-                <i class="fa-solid fa-eye me-2"></i> Ver más
-            </button>
-        <?php endif; ?>
-    </td>
+                  <td class="bg-s">
+                      <ul class="mb-0">
+                          <?php foreach ($mostrar as $detalle): ?>
+                              <li><?php echo $detalle['precio_unitario'] . ' $'; ?></li>
+                          <?php endforeach; ?>
+                      </ul>
+                  </td>
 
-    <td class="bg-s">
-        <ul> 
-          <?php foreach ($mostrar as $detalle) { ?>
-             <li><?php echo $detalle['cantidad']?></li> 
-             <?php } ?> 
-        </ul>
-    </td>
+                  <td class="text-center bg-s"><?php echo $info['total'] . ' $'; ?></td>
 
-    <td class="bg-s"> <ul> 
-      <?php foreach ($mostrar as $detalle) { ?>
-         <li><?php echo $detalle['maode']; ?></li> <?php } ?> 
-        </ul>
-       </td>
+                  <?php if ($tipo_usuario == 1): ?>
+                  <td class="bg-s">
+                      <form action="?pagina=venta" method="POST" >
+                          <button type="submit"  class="btn btn-primary btn-sm" name="pdf" value="<?php echo $id_venta; ?>"> <i class="fa-regular fa-file-pdf me-2"></i>Descargar</button>
+                      </form>
+                  </td>
+                  <?php endif; ?>
+              </tr>
+              <?php endforeach; ?>
+            </tbody>
+        </table>
+      </div>
 
-    <td class="bg-s">
-        <ul class="mb-0">
-            <?php foreach ($mostrar as $detalle): ?>
-                <li><?php echo $detalle['precio_unitario'] . ' $'; ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </td>
+    </div>
 
-    <td class="text-center bg-s"><?php echo $info['total'] . ' $'; ?></td>
-
-    <?php if ($tipo_usuario == 1): ?>
-    <td class="bg-s">
-        <form action="?pagina=venta" method="POST" >
-            <button type="submit"  class="btn btn-primary btn-sm" name="pdf" value="<?php echo $id_venta; ?>"> <i class="fa-regular fa-file-pdf me-2"></i>Descargar</button>
-        </form>
-    </td>
-    <?php endif; ?>
-</tr>
-<?php endforeach; ?>
-</tbody>
-
-    </table>
-</div>
-</div>
-</div>
-
-<?php foreach ($ventas as $id_venta => $info): ?>
+ <!--|||||||||||||||  MODAL INFO VENTA |||||||||||||||||||||||||||-->
+ <?php foreach ($ventas as $id_venta => $info): ?>
 <div class="modal fade" id="modal-<?php echo $id_venta; ?>" tabindex="-1" aria-labelledby="modalLabel-<?php echo $id_venta; ?>" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-scrollable">
     <div class="modal-content modal-producto">
@@ -358,11 +337,16 @@ foreach ($registro as $dato) {
 </div>
 
 
+   
+
+
+
+
 
   <!--|||||||||||||||  Footer y JS  |||||||||||||||||||||||||||-->
   <script src="assets/js/moment.js"></script>
   <script src="assets/js/venta.js"></script>
-  <?php require_once 'complementos/footer.php'; ?>  
+  <?php require_once 'complementos/footer2.php'; ?>  
   <!--|||||||||||||||  FIN Footer y JS  |||||||||||||||||||||||||||-->
   
 

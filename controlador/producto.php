@@ -1,8 +1,12 @@
 <?php
+
 session_start();
 if (empty($_SESSION["id"])){
   header("location:?pagina=login");
 }
+
+$vista="Producto - Inventario"; $activo="6";
+
 $tipo_usuario = $_SESSION['nivel'];
 
 if ($_SESSION["nivel"] == 3){

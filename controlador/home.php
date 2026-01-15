@@ -1,4 +1,7 @@
 <?php
+ $vista="Inicio - Dashboard";
+ $activo="1";
+ 
 session_start();
 if (empty($_SESSION["id"])){
   header("location:?pagina=login");

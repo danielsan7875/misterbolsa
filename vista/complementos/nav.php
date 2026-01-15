@@ -47,17 +47,26 @@
                   <div class="message-body div-oscuro-1">
                     
                     <button type="button" id="toggleModo" class="texto-secondario d-flex align-items-center gap-2 dropdown-item text-dark">
-                      <i class="fa-solid fa-moon me-2"></i> 
+                      <i class="fa-solid fa-moon fs-7 me-2"></i> 
                       <p class="mb-0 fs-3">Modo Oscuro</p>
                     </button> 
+
+                    
             <?php if($_SESSION['nivel'] < 2){?>
                     <a href="?pagina=tasa" class="texto-secondario d-flex align-items-center gap-2 dropdown-item text-dark">
-                    <i class="fa-solid fa-money-bill-trend-up me-2 texto-secundario"></i>
+                    <i class="fa-solid fa-money-bill-trend-up fs-7 me-2 texto-secundario"></i>
                       <p class="mb-0 fs-3 texto-secundario">Cambiar Tasa Dolar</p>
+                    </a>
+
+                    <a href="?pagina=cierre" class="texto-secondario d-flex align-items-center gap-2 dropdown-item text-dark">
+                        
+                        <i class="fa-solid fa-file-invoice-dollar fs-7 me-2 texto-secundario"></i>
+                          <p class="mb-0 fs-3 texto-secundario">Cierre Diario</p>  
                     </a>
 
             <?php } ?>
 
+                   
                     <button type="button" name="cerrar" class="btn btn-outline-danger mx-3 mt-2 d-block shadow-none"
                     data-bs-toggle="modal" data-bs-target="#modalcerrar">Cerrar Session</button>
                   </div>

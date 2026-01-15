@@ -1,19 +1,22 @@
+// Esperamos a que el DOM esté disponible para manipular el body
 document.addEventListener("DOMContentLoaded", () => {
-    const loader = document.getElementById("loaderPagina"); // Mueve la declaración aquí
+    document.body.classList.add('loading-active');
+});
 
-    const showLoader = () => {
-        loader.classList.add("show_loader");
-    }
+// Cuando TODO (imágenes, estilos, etc) termine de cargar
+window.addEventListener('load', () => {
+    const loader = document.getElementById('loading-screen');
+    
+    if (loader) {
+      
+        loader.classList.add('fade-out');
+        
+        // Quitamos el bloqueo de scroll
+        document.body.classList.remove('loading-active');
 
-    const hideLoader = () => {
-        loader.classList.remove("show_loader");
-    }
-
-    showLoader(); // Muestra el loader al cargar el DOM
-
-    window.addEventListener("load", () => {
+    
         setTimeout(() => {
-            hideLoader(); // Oculta el loader después de 500 ms
+            loader.style.display = 'none';
         }, 500);
-    });
+    }
 });

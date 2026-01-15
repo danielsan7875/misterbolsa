@@ -29,8 +29,22 @@
                 <span class="aside-icon p-2 bg-light-primary text-principal rounded-3">
                   <i class="fa-solid fa-house fs-7 text-primary "></i>
                
-                </span>
+                </span> 
                 <span class="hide-menu ms-2 ps-1 texto-cuarto"><b>Inicio</b></span>
+              </a>
+            </li>
+            <li class="sidebar-item text-principal">
+              <a
+                class="sidebar-link sidebar-link primary-hover-bg "
+                href="?pagina=detalle"
+                aria-expanded="false"
+              > <!--- VISTA-->
+                <span class="aside-icon p-2 bg-light-primary text-principal rounded-3">
+                  
+                  <i class="fa-solid fa-chart-pie fs-7  text-primary"></i>
+               
+                </span>
+                <span class="hide-menu ms-2 ps-1 texto-cuarto"><b>Finanzas</b></span>
               </a>
             </li>
             <li class="nav-small-cap">
@@ -95,10 +109,12 @@
               >
                 <span class="aside-icon p-2 bg-light-primary rounded-3">
                   <i class="fa-solid fa-tag fs-7 text-primary"></i>
+                 
                 </span>
-                <span class="hide-menu ms-2 ps-1 texto-cuarto"><b>Marca</b></span>
+                <span class="hide-menu ms-2 ps-1 texto-cuarto"><b>marca</b></span>
               </a>
             </li>
+            
             <li class="sidebar-item">
               <a
                 class="sidebar-link sidebar-link primary-hover-bg"
@@ -110,6 +126,20 @@
                 
                 </span>
                 <span class="hide-menu ms-2 ps-1 texto-cuarto"><b>Presentación</b></span>
+              </a>
+            </li>
+              
+            <li class="sidebar-item">
+              <a
+                class="sidebar-link sidebar-link primary-hover-bg"
+                href="?pagina=metodopago"
+                aria-expanded="false"
+              >
+                <span class="aside-icon p-2 bg-light-primary rounded-3">
+                
+                 <i class="fa-solid fa-credit-card fs-7 text-primary"></i>
+                </span>
+                <span class="hide-menu ms-2 ps-1 texto-cuarto"><b>Metódo Pago</b></span>
               </a>
             </li>
             <?php } ?>

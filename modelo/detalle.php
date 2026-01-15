@@ -55,7 +55,7 @@
 
 
    public function sumarVentas() {
-    $query = "SELECT SUM(total) as total FROM venta";
+    $query = "SELECT SUM(total_dl) as total FROM venta";
     $consulta = $this->conex->prepare($query);
     $consulta->execute();
     return $consulta->fetch(PDO::FETCH_ASSOC);

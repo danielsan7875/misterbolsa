@@ -6,9 +6,9 @@ function eliminar(boton){
       icon: 'question',
       showCancelButton: true,
       color: "#00000",
-      confirmButtonColor: '#457B9D',
+      confirmButtonColor: '#1a7538',
       cancelButtonColor: '#EF233C',
-      confirmButtonText: ' SI ',
+      confirmButtonText: ' SI, ELIMINAR ',
       cancelButtonText: 'NO'
     }).then((result) => {
       if (result.isConfirmed) {
@@ -137,9 +137,9 @@ $('#actualizar').on("click", function () {
     icon: 'question',
     showCancelButton: true,
     color: "#00000",
-    confirmButtonColor: '#457B9D',
+    confirmButtonColor: '#1a7538',
     cancelButtonColor: '#EF233C',
-    confirmButtonText: ' SI ',
+    confirmButtonText: ' SI; ACTUALIZAR ',
     cancelButtonText: 'NO'
   }).then((result) => {
     if (!validarFormulario()) {
@@ -184,8 +184,8 @@ $('#actualizar').on("click", function () {
             3: 'Inactivo'
           };
           var estatus_classes = {
-            1: 'badge rounded-pill bg-success text-dark', // Activo
-            2: 'badge rounded-pill bg-warning text-dark', // No activo
+            1: 'badge rounded-pill bg-success', // Activo
+            2: 'badge rounded-pill bg-warning', // No activo
             3: 'badge rounded-pill bg-danger' // Inactivo
           };
       

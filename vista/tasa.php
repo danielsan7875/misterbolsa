@@ -2,39 +2,26 @@
 <html lang="en">
 
 <head>
-    <?php require_once 'vista/complementos/head.php'; ?>
+    <?php require_once 'vista/complementos/head2.php'; ?>
     <title>Tasa Dolar | Mister Bolsa C.A</title>
-    <link rel="stylesheet" href="assets/css/for.css" />
+   <!-- <link rel="stylesheet" href="assets/css/for.css" /> -->
 </head>
 
 <body>
-  <!-- LOADER-->
-<div id="loaderPagina" class="section_loader">
-<div class="loader-3"></div>
-</div>
-  <!-- ||||||||||||||  Comienzo de Sidebar y Nav |||||||||||||||||||||||-->
-  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
-    data-sidebar-position="fixed" data-header-position="fixed">
-  <?php require_once 'vista/complementos/sidebar.php'; ?>
  
-    <div class="body-wrapper body-oscuro">
-    <?php require_once 'vista/complementos/nav.php'; ?>
-    <div class="container-fluid">
-  <!--|||||||||||||||   Fin de Sidebar y Nav  |||||||||||||||||||||||||||-->
-
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item texto-principal"><a href="?pagina=home">Inicio</a></li>
-    <li class="breadcrumb-item active color-text1 texto-secundario" aria-current="page">Tasa Dolar</li>
-  </ol>
-</nav>
-
-  <div class="d-sm-flex align-items-center justify-content-between mb-5">
-       <h1 class="h3 mb-0 texto-principal"> <i class="fa-solid fa-money-bill-trend-up me-2" style="color: #E63946;"></i>
-        Configuracion del Tasa del Dolar</h1>
-       
+  <?php require_once 'vista/complementos/nav2.php'; ?>
+  <?php require_once 'vista/complementos/sidebar2.php'; ?>
+ 
+  <div class="row">
+    <div class="d-sm-flex align-items-center justify-content-between mb-5">
+        <h1 class="h3 mb-0 texto-principal"> <i class="fa-solid fa-money-bill-trend-up me-2" style="color: #E63946;"></i>
+          Configuracion del Tasa del Dolar</h1>
+        
+    </div>
   </div>
-
+  
+  <div class="transaction-list shadow-sm border-0">
+  
 
   <div class="conteiner">
     <div class="row">
@@ -57,7 +44,7 @@
       <label class="form-label text-dark texto-secundario"> Modificarla manualmente la tasa del $ a Bs</label>
       <div class="input-group mb-3">
         <input type="text" class="form-control text-dark" placeholder="0.00" id="inputtasadolar" name="precios">
-        <button class="btn btn-success text-dark" type="button" id="actualizar">
+        <button class="btn btn-success" type="button" id="actualizar">
           <i class="fa-solid fa-money-bill-transfer me-2"></i>Actualizar Tasa</button>
       </div>
       <span id="textotasadolar"  class="text-error mt-0"></span> 
@@ -93,11 +80,16 @@
     </div>
   </div>
 
+  
+
+
+  </div>
 
         
-   <script src="assets/js/modulotasa.js"></script>
+   
   <!--|||||||||||||||  Footer y JS  |||||||||||||||||||||||||||-->
-  <?php require_once 'vista/complementos/footer.php'; ?>  
-  <!--|||||||||||||||  FIN Footer y JS  |||||||||||||||||||||||||||-->    
+  <script src="assets/js/modulotasa.js"></script>
+  <?php require_once 'vista/complementos/footer2.php'; ?>  
+ 
 </body>
 </html>

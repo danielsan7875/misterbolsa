@@ -7,7 +7,8 @@
     private $conex;
     private $id_venta;
     private $fecha;
-    private $total;
+    private $total_bs;
+    private $total_dl;
     private $id_detalle;
     private $id_productos;
     private $cantidad;
@@ -23,73 +24,103 @@
         $this->conex = $this->conex->conex();
     }
 
-    public function registrar($id_producto, $cantidad, $precio, $maode) {
-        try {
-            // Iniciar transacción
-            $this->conex->beginTransaction();
+   public function registrar($id_producto, $cantidad, $precio, $maode, $id_metodopago, $monto_dolares, $monto_bs, $referencia) {
+    try {
+        // Iniciar transacción
+        $this->conex->beginTransaction();
 
-            // Registro en tabla venta
-            $registro_venta = "INSERT INTO venta (fecha, total) VALUES (:fecha, :total)";
-            $strExec_venta = $this->conex->prepare($registro_venta);
-            $strExec_venta->bindParam(':fecha', $this->fecha);
-            $strExec_venta->bindParam(':total', $this->total);
-            $strExec_venta->execute();
+        // 1️⃣ Registrar venta
+        $sql_venta = "INSERT INTO venta (fecha, total_dl, total_bs) 
+                      VALUES (:fecha, :total_dl, :total_bs)";
+        $stmt_venta = $this->conex->prepare($sql_venta);
+        $stmt_venta->bindParam(':fecha', $this->fecha);
+        $stmt_venta->bindParam(':total_dl', $this->total_dl);
+        $stmt_venta->bindParam(':total_bs', $this->total_bs);
+        $stmt_venta->execute();
 
-            // Obtener el ID de la Venta recién creada
-            $id_venta = $this->conex->lastInsertId();
+        // ID de la venta recién creada
+        $id_venta = $this->conex->lastInsertId();
 
-            if (!empty($id_producto) && !empty($cantidad) && !empty($precio) && !empty($maode)) {
-                $registro_detalle = "INSERT INTO detalle_venta (id_venta, id_producto, cantidad, precio_unitario, maode)
-                 VALUES (:id_venta, :id_producto, :cantidad, :precio, :maode)";
-                $strExec_detalle = $this->conex->prepare($registro_detalle);
-
-                foreach ($id_producto as $i => $producto) {
-                    $strExec_detalle->bindParam(':id_venta', $id_venta);
-                    $strExec_detalle->bindParam(':id_producto', $producto);
-                    $strExec_detalle->bindParam(':cantidad', $cantidad[$i]);
-                    $strExec_detalle->bindParam(':precio', $precio[$i]);
-                    $strExec_detalle->bindParam(':maode', $maode[$i]);
-                    $strExec_detalle->execute();
-
-                    // Actualizar el stock del producto
-                $actualizar_stock = "UPDATE producto SET stock = stock - :cantidad WHERE id_producto = :id_producto";
-                $strExec_stock = $this->conex->prepare($actualizar_stock);
-                $strExec_stock->bindParam(':cantidad', $cantidad[$i]);
-                $strExec_stock->bindParam(':id_producto', $producto);
-                $strExec_stock->execute();
-                }
-            }else{
-                $this->conex->rollBack();
-                $res = array('respuesta' => 0, 'accion' => 'registrar');
-            }
-
-            // Confirmar transacción
-            $this->conex->commit();
-            $res = array('respuesta' => 1, 'accion' => 'registrar');
-        } catch (Exception $e) {
-            // Revertir transacción si ocurre un error
+        // Validación mínima
+        if (empty($id_producto) || empty($cantidad) || empty($precio) || empty($maode)) {
             $this->conex->rollBack();
-            echo "Error: " . $e->getMessage() . "<br>";
-            $res = array('respuesta' => 0, 'accion' => 'registrar');
+            return ['respuesta' => 0, 'accion' => 'registrar'];
         }
 
-        return $res;
+        // 2️⃣ Registrar detalle de venta
+        $sql_detalle = "INSERT INTO detalle_venta 
+                        (id_venta, id_producto, cantidad, precio_unitario, maode)
+                        VALUES (:id_venta, :id_producto, :cantidad, :precio, :maode)";
+        $stmt_detalle = $this->conex->prepare($sql_detalle);
+
+        // 3️⃣ Actualizar stock
+        $sql_stock = "UPDATE producto SET stock = stock - :cantidad 
+                      WHERE id_producto = :id_producto";
+        $stmt_stock = $this->conex->prepare($sql_stock);
+
+        foreach ($id_producto as $i => $producto) {
+
+            // Insertar detalle
+            $stmt_detalle->bindParam(':id_venta', $id_venta);
+            $stmt_detalle->bindParam(':id_producto', $producto);
+            $stmt_detalle->bindParam(':cantidad', $cantidad[$i]);
+            $stmt_detalle->bindParam(':precio', $precio[$i]);
+            $stmt_detalle->bindParam(':maode', $maode[$i]);
+            $stmt_detalle->execute();
+
+            // Actualizar stock
+            $stmt_stock->bindParam(':cantidad', $cantidad[$i]);
+            $stmt_stock->bindParam(':id_producto', $producto);
+            $stmt_stock->execute();
+        }
+
+        // 4️⃣ Registrar detalle de pago
+        $sql_pago = "INSERT INTO detalle_pago 
+                     (id_venta, id_metodopago, monto_dolares, monto_bs, referencia)
+                     VALUES (:id_venta, :id_metodopago, :monto_dolares, :monto_bs, :referencia)";
+        $stmt_pago = $this->conex->prepare($sql_pago);
+
+        foreach ($id_metodopago as $i => $metodo) {
+            $stmt_pago->bindParam(':id_venta', $id_venta);
+            $stmt_pago->bindParam(':id_metodopago', $metodo);
+            $stmt_pago->bindParam(':monto_dolares', $monto_dolares[$i]);
+            $stmt_pago->bindParam(':monto_bs', $monto_bs[$i]);
+            $stmt_pago->bindParam(':referencia', $referencia[$i]);
+            $stmt_pago->execute();
+        }
+
+        // Confirmar transacción
+        $this->conex->commit();
+        return ['respuesta' => 1, 'accion' => 'registrar'];
+
+    } catch (Exception $e) {
+        $this->conex->rollBack();
+        return ['respuesta' => 0, 'accion' => 'registrar', 'error' => $e->getMessage()];
     }
-    
+}
+
 
 
   // Metodo para llamar las medidas existentes
-    public function obtenerProducto() {
-    $query = "SELECT pro.*, m.nombre AS nombre_marca, p.nombre AS nombre_presentacion 
+     public function obtenerProducto(){
+
+        $registro ="SELECT pro.*, m.nombre AS nombre_marca, p.nombre AS nombre_presentacion 
         FROM producto pro
         INNER JOIN marca m ON pro.id_marca = m.id_marca
         INNER JOIN presentacion p ON pro.id_presentacion = p.id_presentacion
-        WHERE pro.estatus =1";
-    $consulta = $this->conex->prepare($query);
-    $consulta->execute();
-    return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        WHERE pro.estatus <5
+        ORDER BY pro.id_producto DESC";
+        $consulta = $this->conex->prepare($registro);
+        $resul = $consulta->execute();
+
+        $datos=$consulta->fetchAll(PDO::FETCH_ASSOC);
+            if ($resul){
+                return $datos;
+            } else{
+                return $res = 0;
+            }
     
-    }
+    } //fin consultar
 
     public function obtenerDolar() {
         $query = "SELECT * FROM dolar WHERE id_dolar = 1";
@@ -97,6 +128,13 @@
         $consulta->execute();
         return $consulta->fetchAll(PDO::FETCH_ASSOC);
     }
+
+     public function obtenerMetodopago() {
+        $query = "SELECT * FROM metodopago WHERE estatus =1";
+        $consulta = $this->conex->prepare($query);
+        $consulta->execute();
+        return $consulta->fetchAll(PDO::FETCH_ASSOC);
+    } 
 
 
     public function consultar() {
@@ -157,12 +195,20 @@
         $this->id_detalle = $id_detalle;
     }
 
-    public function get_Total(){
-        return $this->total;
+    public function get_Total_Dl(){
+        return $this->total_dl;
     }
 
-    public function set_Total($total){
-        $this->total = $total;
+    public function set_Total_Dl($total_dl){
+        $this->total_dl = $total_dl;
+    }
+
+     public function get_Total_Bs(){
+        return $this->total_bs;
+    }
+
+    public function set_Total_Bs($total_bs){
+        $this->total_bs = $total_bs;
     }
 
     public function get_Precio(){

@@ -6,7 +6,7 @@
 }
 
 .modal-producto .modal-header {
-  background: linear-gradient(135deg, #D90429 0%, #457B9D 100%);
+  background: linear-gradient(135deg, #FFF5F0 0%, #FF3C37 100%);
   border-radius: 15px 15px 0 0;
   border-bottom: none;
   padding: 1.5rem;
@@ -185,12 +185,22 @@
   color: white;
 }
 
+.btn-eliminar {
+  background:#e73333;
+  color: white;
+
+
+}
+.btn-eliminar :hover {
+  background:#ff6161;
+  color: white;
+}
 /* Estilos para mensajes de error */
 .error-message {
   color: #dc3545;
   font-size: 0.85rem;
   margin-top: 0.25rem;
-  font-weight: 500;
+  font-weight: 500; 
 }
 
   /* Estilo general del popover */

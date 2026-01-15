@@ -7,9 +7,9 @@ function eliminar(boton){
       icon: 'question',
       showCancelButton: true,
       color: "#00000",
-      confirmButtonColor: '#457B9D',
+      confirmButtonColor: '#1a7538',
       cancelButtonColor: '#EF233C',
-      confirmButtonText: ' SI ',
+      confirmButtonText: ' SI, ELIMINAR ',
       cancelButtonText: 'NO'
     }).then((result) => {
       if (result.isConfirmed) {
@@ -180,8 +180,8 @@ $(document).ready(function() {
             3: 'Inactivo'
           };
           var estatus_classes = {
-            1: 'badge rounded-pill bg-success text-dark', // Activo
-            2: 'badge rounded-pill bg-warning text-dark', // No activo
+            1: 'badge rounded-pill bg-success', // Activo
+            2: 'badge rounded-pill bg-warning', // No activo
             3: 'badge rounded-pill bg-danger' // Inactivo
           };
       
@@ -229,7 +229,7 @@ $(document).ready(function() {
                   $('#nombre_marca').val('');  
                   muestraMensaje("success", 1000, "Se ha registrado con éxito", "Su registro se ha completado exitosamente");
                   desactivarLoaderBoton('#registrar');
-                  (function () {
+                   setTimeout(function () {
                     consulta();
                   }, 1000);
                 } else {

@@ -248,7 +248,8 @@ $('#bodyventa').on('input', '.cantidad', function () {
 
     $('.texto-secundario strong:contains("$")').text(`${totalDolares.toFixed(2)} $`);
     $('.texto-secundario strong:contains("Bs")').last().text(`${totalBs.toFixed(2)} Bs`);
-    $('#totaldolaresfor').val(totalDolares.toFixed(2)); 
+    $('#totaldolaresfor').val(totalDolares.toFixed(2));
+    $('#totalbsfor').val(totalBs.toFixed(2));  
   }
 
   const fechaActual = moment().format('YYYY-MM-DD');
@@ -303,9 +304,6 @@ $('#registrarventa').on("click", function (e) {
 });
 
 
-
-  });
-
 $('#bodyventa').on('blur', '.cantidad', function () {
   let cantidad = parseInt($(this).val());
   if (isNaN(cantidad) || cantidad <= 0) {
@@ -315,6 +313,26 @@ $('#bodyventa').on('blur', '.cantidad', function () {
 
   $(this).trigger('input'); // 👈 Esto reactiva tu cálculo de precios
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  });
+
+
 
 
 function activarLoaderBoton(idBoton, texto) {

@@ -2,52 +2,37 @@
 <html lang="en">
 
 <head>
-    <?php require_once 'vista/complementos/head.php'; ?>
+    <?php require_once 'vista/complementos/head2.php'; ?>
     <title>Modificar Marca | Mister Bolsa C.A</title>
-      <link rel="stylesheet" href="assets/css/for.css" />
+    
 </head>
 
 <body>
-  <!-- LOADER-->
-<div id="loaderPagina" class="section_loader">
-<div class="loader-3"></div>
-</div>
-  <!-- ||||||||||||||  Comienzo de Sidebar y Nav |||||||||||||||||||||||-->
-  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
-    data-sidebar-position="fixed" data-header-position="fixed">
-  <?php require_once 'vista/complementos/sidebar.php'; ?>
  
-    <div class="body-wrapper body-oscuro">
-    <?php require_once 'vista/complementos/nav.php'; ?>
-    <div class="container-fluid">
-  <!--|||||||||||||||   Fin de Sidebar y Nav  |||||||||||||||||||||||||||-->
+  <?php require_once 'vista/complementos/nav2.php'; ?>
+  <?php require_once 'vista/complementos/sidebar2.php'; ?>
+ 
+   <div class="row">
 
-
-  <nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="?pagina=home">Inicio</a></li>
-    <li class="breadcrumb-item"><a href="?pagina=marca">Marca</a></li>
-    <li class="breadcrumb-item active color-text1 texto-secundario" aria-current="page">Modificar Marca</li>
-  </ol>
-</nav>
-
-<div class="d-sm-flex align-items-center justify-content-between mb-5">
-       <h1 class="h3 mb-0 text-gray-900 texto-principal"> <i class="fa-solid fa-tag  mr-3" style="color: #E63946;"></i>
-        Modificar</h1>
-           
-       <!-- Button que abre el Modal N1 Registro -->
-          <a href="?pagina=marca" class="btn btn-primary">
-          <span class="icon text-white-100">
-          <i class="fa-solid fa-reply me-2"></i>
-            </span>
-            <span class="text ext-white-100">Volver</span>
-      </a>
+    <div class="d-sm-flex align-items-center justify-content-between mb-5">
+        <h1 class="h3 mb-0 text-gray-900 texto-principal"> <i class="fa-solid fa-tag  me-3" style="color: #E63946;"></i>
+          Modificar</h1>
+            
+        <!-- Button que abre el Modal N1 Registro -->
+            <a href="?pagina=marca" class="btn btn-primary">
+            <span class="icon text-white-100">
+            <i class="fa-solid fa-reply me-2"></i>
+              </span>
+              <span class="text ext-white-100">Volver</span>
+        </a>
       </div>
+  
+   </div> 
+    
+  
 
 
-  <div class="card shadow mb-4"> <!-- comienzo del Cuadro blanco-->
-      <div class="table-margen">    <!-- comienzo del Cuadro blanco body-->
- 
+   <div class="chart-container shadow-sm border-0">
       <form action="?pagina=marca" id="m" autocomplete="off"> <!--comienzo Formulario-->
         
 <div class="seccion-formulario">
@@ -62,7 +47,7 @@
           <div class="col-sm-6">
           <label class="form-label text-dark">Nombre</label>
             <div class="input-group mb-3">
-              <span class="input-group-text" id="basic-addon1"><i class="fa-regular fa-file-lines" style="color:#007bff;"></i></span>
+              <span class="input-group-text" id="basic-addon1"><i class="fa-regular fa-file-lines" style="color:#FF3C37;"></i></span>
               <input type="text" class="form-control text-dark" name="nombre" id="nombre_marca" value ="<?php echo $modificar ['nombre']?>" required>  
             </div>
               <span id="textomarca" class="vali-span"></span> <br>
@@ -71,7 +56,7 @@
           <div class="col-sm-4">
           <label class="form-label text-dark">Estatus</label>
             <div class="input-group mb-3">
-              <span class="input-group-text" id="basic-addon1"><i class="fa-regular fa-file-lines" style="color:#007bff;"></i></span>
+              <span class="input-group-text" id="basic-addon1"><i class="fa-regular fa-file-lines" style="color:#FF3C37;"></i></span>
                    <select class="form-select text-dark" name="estatus" required>
                      <?php
                        $estatus_texto = array(
@@ -90,22 +75,23 @@
 
 
       <hr>
-      <div class="button-container">
-          <button type="button" class="btn btn-guardar" id="actualizar">Actualizar</button>
-          <button type="reset" class="btn btn-limpiar" name="limpiar">Limpiar</button>
+      <div class="d-flex justify-content-center gap-3 my-4">
+          
+          <button type="reset" class="btn btn-lg btn-limpiar" name="limpiar"><i class="fa-solid fa-repeat me-2"></i>Limpiar</button>
+          <button type="button" class="btn btn-lg btn-guardar" id="actualizar"><i class="fa-solid fa-floppy-disk me-2"></i> Actualizar Datos</button>
       </div>
         </form> <!--fin del formulario-->
 
 
 
     </div>
-</div>
+
   
         
  
   <!--|||||||||||||||  Footer y JS  |||||||||||||||||||||||||||-->
   <script src="assets/js/marca.js"></script>
-  <?php require_once 'vista/complementos/footer.php'; ?>  
+  <?php require_once 'vista/complementos/footer2.php'; ?>  
   <!--|||||||||||||||  FIN Footer y JS  |||||||||||||||||||||||||||-->    
 </body>
 </html>
