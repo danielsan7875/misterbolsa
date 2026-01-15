@@ -64,22 +64,60 @@
 	}// fin actulizar
  
 
+   public function consultarUltimasVentas() {
 
-    public function get_Id_dolar(){
-        return $this->id_dolar;
-    }
+    $sql = "
+        SELECT 
+            v.id_venta,
+            v.fecha,
+            v.total_dl,
+            GROUP_CONCAT(pro.nombre SEPARATOR ', ') AS productos
+        FROM venta v
+        INNER JOIN detalle_venta dv ON v.id_venta = dv.id_venta
+        INNER JOIN producto pro ON dv.id_producto = pro.id_producto
+        GROUP BY v.id_venta, v.fecha, v.total_dl
+        ORDER BY v.id_venta DESC
+        LIMIT 3
+    ";
 
-    public function set_Id_dolar($id_dolar){
-        $this->id_dolar =$id_dolar;
-    }
+    $stmt = $this->conex->prepare($sql);
+    $stmt->execute();
 
-    public function get_Precios(){
-        return $this->precios;
-    }
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
-    public function set_Precios($precios){
-        $this->precios= $precios;
-    }
+
+
+public function TotalSemana() {
+    $query = "
+        SELECT 
+            SUM(total_dl) AS total_semana
+        FROM venta
+        WHERE fecha >= DATE_SUB(CURDATE(), INTERVAL 6 DAY)
+    ";
+
+    $consulta = $this->conex->prepare($query);
+    $consulta->execute();
+    return $consulta->fetch(PDO::FETCH_ASSOC);
+}
+
+public function SemanasVentas() {
+    $query = "
+        SELECT 
+            DATE(fecha) AS dia,
+            SUM(total_dl) AS total_dia
+        FROM venta
+        WHERE fecha >= DATE_SUB(CURDATE(), INTERVAL 6 DAY)
+        GROUP BY DATE(fecha)
+        ORDER BY dia ASC
+    ";
+
+    $consulta = $this->conex->prepare($query);
+    $consulta->execute();
+    return $consulta->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
 
     }
 

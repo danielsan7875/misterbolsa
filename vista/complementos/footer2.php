@@ -53,7 +53,7 @@
   
   <script src="assets/librerias/bootstrap5/js/bootstrap.bundle.min.js"></script>
 
-  
+  <script src="assets/librerias/chart.js/dist/chart.umd.min.js"></script>
 
   <script>
         const sidebar = document.getElementById('sidebar');

@@ -1,3 +1,4 @@
+/*
 async function obtenerTasaDolarApi() {
     try {
         const respuesta = await fetch('https://ve.dolarapi.com/v1/dolares/oficial');
@@ -20,5 +21,5 @@ async function obtenerTasaDolarApi() {
 }
 
 document.addEventListener("DOMContentLoaded", obtenerTasaDolarApi);
-
+*/
 

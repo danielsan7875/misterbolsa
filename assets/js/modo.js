@@ -1,51 +1,34 @@
 document.addEventListener('DOMContentLoaded', function () {
   const modoKey = 'modoOscuro_' + idUsuario;
+  const boton = document.getElementById('toggleModo');
   const modoActivo = localStorage.getItem(modoKey);
 
   if (modoActivo === 'activo') {
+    activarModoOscuro(boton, modoKey);
     document.body.classList.add('modo-oscuro');
-    actualizarBotonModo(true);
-  }
-});
-
-
-document.addEventListener('DOMContentLoaded', function () {
-  const modoKey = 'modoOscuro_' + idUsuario;
-  const modoActivo = localStorage.getItem(modoKey);
-
-  if (modoActivo === 'activo') {
-    document.body.classList.add('modo-oscuro');
-    actualizarBotonModo(true);
   }
 
-  // Buscar todos los botones dropdown-item
-  const botones = document.querySelectorAll('.dropdown-item');
+  boton.addEventListener('click', function () {
+    const activo = document.body.classList.toggle('modo-oscuro');
 
-  botones.forEach(function (boton) {
-    // Puedes usar un atributo personalizado o verificar el texto del botón
-    boton.addEventListener('click', function () {
-      // Si este botón es el que activa el modo oscuro
-      if (boton.id === 'toggleModo') {
-        document.body.classList.toggle('modo-oscuro');
-        const activo = document.body.classList.contains('modo-oscuro');
-        localStorage.setItem(modoKey, activo ? 'activo' : 'inactivo');
-        actualizarBotonModo(activo);
-      }
-    });
+    if (activo) {
+      activarModoOscuro(boton, modoKey);
+    } else {
+      desactivarModoOscuro(boton, modoKey);
+    }
   });
 });
 
 
-function actualizarBotonModo(activo) {
-  const boton = document.querySelector('.dropdown-item');
-  if (activo) {
-    boton.classList.remove('text-dark');
-    boton.classList.add('texto-secundario');
-    boton.innerHTML = '<i class="fa-solid fa-sun fs-7 me-2"></i> Modo Claro';
-  } else {
-    boton.classList.remove('text-light');
-    boton.classList.add('text-dark');
-    boton.innerHTML = '<i class="fa-solid fa-moon fs-7 me-2"></i> Modo Oscuro';
-  }
+function activarModoOscuro(boton, modoKey) {
+  boton.classList.add('activeModo');
+  boton.innerHTML = '<i class="fa-solid fa-sun"></i>';
+  localStorage.setItem(modoKey, 'activo');
+}
+
+function desactivarModoOscuro(boton, modoKey) {
+  boton.classList.remove('activeModo');
+  boton.innerHTML = '<i class="fa-solid fa-moon"></i>';
+  localStorage.setItem(modoKey, 'inactivo');
 }
 

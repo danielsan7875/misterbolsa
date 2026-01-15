@@ -362,6 +362,8 @@ $(document).ready(function() {
     }
     guardarHoraActual();
 
+
+
 });
 
 
@@ -469,3 +471,12 @@ function muestraMensaje(icono, tiempo, titulo, mensaje) {
       }
     });
   }
+
+  // Seleccionamos los elementos
+const origen = document.getElementById('tasadecambio'); // El que tiene el valor
+const destino = document.getElementById('tasacofing'); // Donde lo quieres pegar
+
+// Escuchamos cuando escribes o pegas algo
+origen.addEventListener('input', () => {
+    destino.value = origen.value;
+});

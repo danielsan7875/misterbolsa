@@ -61,12 +61,16 @@
 
 
     
-    public function contarVentas() {
-        $query = "SELECT COUNT(*) as total FROM venta";
-        $consulta = $this->conex->prepare($query);
-        $consulta->execute();
-        return $consulta->fetch(PDO::FETCH_ASSOC);
-    }
+ public function contarVentas() {
+    $query = "SELECT COUNT(d.id_venta) as total 
+              FROM detalle_cierre d
+              INNER JOIN cierre_diario c ON d.id_cierre = c.id_cierre
+              WHERE c.estatus = 1";
+              
+    $consulta = $this->conex->prepare($query);
+    $consulta->execute();
+    return $consulta->fetch(PDO::FETCH_ASSOC);
+}
     
 
 

@@ -14,9 +14,9 @@
             --Titulo2-for:#000000;
             --Color2:#5F0A00;
             --Color3:#B9A09B; 
-            --Color4:#FFF5F0;
-            --Color5:#292F36;
-            --Color6:#F4949F;
+            --Color4:#AE1F23;
+            --Color5:#C1121F;
+            --Color6:#FDF0D5;
         }
 
         body {
@@ -101,6 +101,10 @@
         }
         .nav-actions .btn-action:hover { background: var(--neo-blue); color: white; border-color: var(--neo-blue); }
 
+        .btn-action .activeModo{
+          background: var(--neo-blue); color: white; border-color: var(--neo-blue);
+        }
+
         /* --- SIDEBAR & OVERLAY --- */
         .sidebar {
             width: var(--sidebar-width);
@@ -169,13 +173,13 @@
 
         .summary-card.active::before { background: var(--Color2); }
 
-        .summary-card.active2 { background: var(--Color6); color: #000000; }
+        .summary-card.active2 { background: var(--Color4); color: #ffffff; }
 
-        .summary-card.active2::before { background: var(--Color6); }
+        .summary-card.active2::before { background: var(--Color4); }
 
-        .summary-card.active3 { background: var(--Color3); color: #ffffff; }
+        .summary-card.active3 { background: var(--Color6); color: #000000; }
 
-        .summary-card.active3::before { background: var(--Color3); }
+        .summary-card.active3::before { background: var(--Color6); }
 
         .summary-card .icon-box {
             width: 40px; height: 40px; border-radius: 10px;

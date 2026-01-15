@@ -18,6 +18,11 @@ $dolar = $objhome->obtenerDolar();
 $totalProductos = $objhome->contarProductos();
 $totalCompra = $objhome->contarCompras();
 $totalVenta = $objhome->contarVentas();
+$registro = $objhome->consultarUltimasVentas();
+$DatosGrafica = $objhome->SemanasVentas();
+$TotalSemana = $objhome->TotalSemana();
+
+
 
  if(isset($_POST['tasadolar'])){
   if(!empty($_POST['id_dolar']) && !empty($_POST['precios'])){

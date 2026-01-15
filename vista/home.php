@@ -16,7 +16,7 @@
                 <!-- COLUMNA IZQUIERDA -->
                 <div class="col-xl-9 col-lg-8">
                     <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h4 class="fw-bold m-0">Dashboard</h4>
+                        <h4 class="fw-bold m-0">Dashboard</h4> 
                        
                     </div>
 
@@ -25,15 +25,15 @@
                         <div class="col-md-4">
                             <div class="summary-card card-received active2">
                                 <div class="icon-box"><i class="fa-solid fa-cash-register"></i></div>
-                                <div class="text-muted small">Total de Registros Venta</div>
+                                <div class="small">Cantidad de Registros Venta</div>
                                     <?php $total1 = $totalVenta['total']; ?>
                                 <div class="h5 fw-bold mb-0"> <?php echo $total1; ?> </div>
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="summary-card card-spend active2">
+                            <div class="summary-card card-spend active3">
                                 <div class="icon-box"><i class="fa-solid fa-receipt"></i></div>
-                                <div class="text-muted small">Total de Registros Compra</div>
+                                <div class="text-dark small">Cantidad de Registros Compra</div>
                                  
                                      <?php $total2 = $totalCompra['total']; ?>
                                 <div class="h5 fw-bold mb-0"> <?php echo $total2; ?></div>
@@ -44,7 +44,7 @@
                                 <div class="icon-box bg-white text-primary"><i class="fa-solid fa-boxes-stacked"></i></div>
                                  <?php  $total3 = $totalProductos['total'];  ?>
                             
-                                <div class="opacity-75 small">Total de Registros Producto</div>
+                                <div class="opacity-75 small">Cantidad de Registros Producto</div>
                                 <div class="h5 fw-bold mb-0"><?php echo $total3; ?></div>
                             </div>
                         </div>
@@ -53,17 +53,13 @@
                     <!-- Gráfico -->
                     <div class="chart-container shadow-sm border-0">
                         <div class="d-flex justify-content-between align-items-center mb-4">
-                            <h6 class="fw-bold m-0">Movimientos del Mes</h6>
-                            <div class="tooltip-custom">Marzo: $34,240,000.90</div>
+                            <h6 class="fw-bold m-0">Movimientos de la semana</h6>
+                            <div class="tooltip-custom">
+                                    Últimos 7 días: $<?= number_format($TotalSemana['total_semana'], 2) ?>
+                            </div>
                         </div>
                         <div class="position-relative">
-                            <svg class="line-chart-svg" viewBox="0 0 800 200">
-                                <path d="M0,150 Q100,120 200,140 T400,80 T600,100 T800,40" fill="none" stroke="#2D5BFF" stroke-width="3"/>
-                                <path d="M0,170 Q100,160 200,165 T400,130 T600,140 T800,110" fill="none" stroke="#A4B9FF" stroke-width="2"/>
-                            </svg>
-                            <div class="d-flex justify-content-between mt-2 text-muted small">
-                                <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span>
-                            </div>
+                            <canvas id="graficaSemana" height="120"></canvas>
                         </div>
                     </div>
 
@@ -73,30 +69,36 @@
                             <h6 class="fw-bold m-0">Ultimas Ventas</h6>
                             <a href="?pagina=venta" class="text-primary small text-decoration-none">Ver Todos</a>
                         </div>
-                        <div class="tr-item">
-                            <div class="tr-icon" style="color: #0066ff; background: #f0f6ff;">S</div>
-                            <div class="flex-grow-1">
-                                <div class="fw-bold small">Starbucks Coffee</div>
-                                <div class="text-muted" style="font-size: 0.75rem;">Payment • 12 Jan 2024</div>
+                        <?php if (!empty($registro)): ?>
+                            <?php foreach ($registro as $row): ?>
+                                <div class="tr-item">
+                                    <div class="tr-icon" style="color:#0066ff; background:#f0f6ff;">
+                                        V
+                                    </div>
+
+                                    <div class="flex-grow-1">
+                                        <div class="fw-bold small">
+                                            <?php echo htmlspecialchars($row['productos']); ?>
+                                        </div>
+                                        <div class="text-muted" style="font-size: 0.75rem;">
+                                            #<?php echo $row['id_venta']; ?> |
+                                            <?php echo date('d-m-Y', strtotime($row['fecha'])); ?>
+                                        </div>
+                                    </div>
+
+                                    <div class="fw-bold text-success small">
+                                        $<?php echo number_format($row['total_dl'], 2); ?>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div class="text-muted small text-center">
+                                No hay ventas registradas hoy
                             </div>
-                            <div class="fw-bold small">-$12.00</div>
-                        </div>
-                        <div class="tr-item">
-                            <div class="tr-icon" style="color: #e50914; background: #fff0f0;">N</div>
-                            <div class="flex-grow-1">
-                                <div class="fw-bold small">Netflix Subscription</div>
-                                <div class="text-muted" style="font-size: 0.75rem;">Entertainment • 10 Jan 2024</div>
-                            </div>
-                            <div class="fw-bold small">-$15.99</div>
-                        </div>
-                        <div class="tr-item">
-                            <div class="tr-icon" style="color: #00c853; background: #e6f9ed;">JS</div>
-                            <div class="flex-grow-1">
-                                <div class="fw-bold small">Jane Smith</div>
-                                <div class="text-muted" style="font-size: 0.75rem;">Received • 08 Jan 2024</div>
-                            </div>
-                            <div class="fw-bold text-success small">+$2,450.00</div>
-                        </div>
+                        <?php endif; ?>
+
+
+                      
                     </div>
                 </div>
 
@@ -195,5 +197,61 @@
   <?php require_once 'complementos/footer2.php'; ?>
   <!--<script src="assets/js/home.js"></script>
   |||||||||||||||  FIN Footer y JS  |||||||||||||||||||||||||||--> 
+
+
+<script>
+    // Datos desde PHP
+    const labelsSemana = [
+        <?php foreach ($DatosGrafica as $d) { echo "'" . $d['dia'] . "',"; } ?>
+    ];
+
+    const datosSemana = [
+        <?php foreach ($DatosGrafica as $d) { echo $d['total_dia'] . ","; } ?>
+    ];
+</script>
+
+
+
+  <script>
+const ctx = document.getElementById('graficaSemana');
+
+setTimeout(() => {
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labelsSemana,
+            datasets: [{
+                label: 'Ventas (USD)',
+                data: datosSemana,
+                borderColor: '#2D5BFF',
+                backgroundColor: 'rgba(45, 91, 255, 0.2)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointRadius: 4,
+                pointBackgroundColor: '#2D5BFF'
+            }]
+        },
+        options: {
+            responsive: true,
+            animation: {
+                duration: 1500,
+                easing: 'easeInOutQuart'
+            },
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+}, 500);
+
+
+</script>
+
+
+
 </body>
 </html>

@@ -130,3 +130,48 @@
   background-color: #ececec !important;
      color: #000000 !important;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Animación suave al cambiar modo */
+body {
+  transition: background-color .35s ease, color .35s ease;
+}
+
+/* Modo oscuro */
+body.modo-oscuro {
+  background-color: #1e1e1e;
+  color: #e6e6e6;
+}
+
+/* Estilo del botón cuando está activo */
+.btn-action.activeModo {
+  background-color: #FF3C37 !important;
+  color: #fff;
+   border-color: #FF3C37;
+  transition: transform .3s ease, background-color .3s ease;
+   
+}
+
+.btn-action.activeModo i {
+  color: #ffffff;
+}

@@ -1,3 +1,7 @@
+ <script>
+  const idUsuario = <?php echo json_encode($_SESSION['id']); ?>;
+</script>
+
 <div id="loading-screen">
 <div id="wifi-loader">
     <svg class="circle-outer" viewBox="0 0 86 86">
@@ -49,7 +53,8 @@
             <!-- Acciones de Escritorio -->
             <div class="nav-actions d-none d-md-flex me-4">
                 <button class="btn-action" title="Ayuda"><i class="fa-solid fa-circle-question"></i></button>
-                <button class="btn-action" title="Modo Oscuro"><i class="fa-solid fa-moon"></i></button>
+             
+                <button id="toggleModo" class="btn-action" title="Modo Oscuro"> <i class="fa-solid fa-moon"></i> </button>
             </div>
 
             <!-- Perfil Dropdown -->

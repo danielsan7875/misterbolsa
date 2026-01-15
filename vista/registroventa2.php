@@ -60,7 +60,7 @@
                                                     $<?php echo number_format($productos['precio_unitario'], 2); ?>
                                                 </span>
                                                 <?php if($productos['precio_mayor'] > 0): ?>
-                                                    <small class="text-info" style="font-size: 1rem;">Mayor: $<?php echo number_format($productos['precio_mayor'], 2); ?></small>
+                                                    <small class="text-secundary" style="font-size: 1rem;">Mayor: $<?php echo number_format($productos['precio_mayor'], 2); ?></small>
                                                 <?php endif; ?>
                                                 
                                                 <button class="btn btn-sm btn-outline-primary p-2 btn-agregar" 
@@ -248,12 +248,31 @@
     <div class="modal fade" id="modalconfiguracion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Configuración</h5>
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title " id="staticBackdropLabel">Configuración</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                
+                        
+                <div class="transaction-list shadow-sm border-0 mt-3">
+                    <h5>Modo escuro</h5>
+                </div>
+                  <div class="transaction-list shadow-sm border-0">
+                    <h5>Estado del Cierre Diario: 
+                         <?php 
+                        if (!$cierre) {
+                        echo'<span class="text-danger"> No activo </span>';
+                        }else{
+                           echo'<span class="text-success"> Activo </span>';
+                        }
+                        ?>
+                    </h5>
+                    </div>
+                     <div class="transaction-list shadow-sm border-0">
+                         <h5>Tasa de Cambio (Guardada en el Sistema)
+                            <span class="text-success" id="tasacofing">  </span>
+                         </h5>
+                    </div>
             </div>
             <div class="modal-footer">
                 

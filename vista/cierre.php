@@ -102,10 +102,11 @@
           <div class="col-sm-4">
               <div class="card text-center" style="width: 20rem;">
               
-                <div class="card-body">
+                <div class="card-body"> 
+                  <?php $total = $cantidad['total']; ?>
                   <h5 class="card-title texto-secundario"><strong>Cantidad de venta</strong></h5>
                   <hr>
-                    <p style="font-size:30px;" class="text-dark texto-secundario"> 1 </p>
+                    <p style="font-size:30px;" class="text-dark texto-secundario"> <?php echo $total ?> </p>
 
               </div>
             </div>
@@ -150,7 +151,13 @@
           <tr>
               <td class="text-center bg-s"><?php echo $dato['id_cierre']; ?></td>
               <td class="text-center bg-s"><?php echo date("d/m/Y", strtotime($dato['fecha_creacion'])); ?></td>
-              <td class="text-center bg-s">    <?php echo !empty($dato['fecha_cierre']) ? date("d/m/Y", strtotime($dato['fecha_cierre'])) : ''; ?></td>
+              <td class="text-center bg-s"> 
+              <?php 
+                    $fecha = $dato['fecha_cierre'];
+                    $mostrar_fecha = (!empty($fecha) && $fecha !== '0000-00-00') ? date("d/m/Y", strtotime($fecha)) : ' - ';
+                ?>
+                <?php echo $mostrar_fecha; ?>
+              </td>
               <td class="text-center bg-s">
               <p> <span>$. </span><?php echo $dato['total_dia_dl']; ?> </p> 
               </td>

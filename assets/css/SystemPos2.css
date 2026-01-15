@@ -86,7 +86,7 @@
 
         .product-img {
             height: 50px;
-            background-color: #f8fafc;
+            background-color: #FFF5F0;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -247,6 +247,18 @@
 
         .btn-process:hover {
             background-color: #0b7954;
+        }
+
+        .btn-process:disabled {
+            background-color: #f2a5a5;
+            color: #000000;
+            cursor: not-allowed;
+            box-shadow: none;
+            opacity: 0.9;
+        }
+
+       .chart-container, .transaction-list {
+            background: white; border-radius: 24px; padding: 1.5rem; margin-bottom: 1.5rem;
         }
 
         /* Responsividad Móvil */

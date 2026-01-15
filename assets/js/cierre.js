@@ -98,7 +98,7 @@ function mostrarcierre(datos) {
 
         // Actualizar estatus
         estatusContainer.html(
-            'Se encuentra: <strong class="badge rounded-pill bg-success text-dark">Activo #' + idCierre + '</strong>'
+            'Se encuentra: <strong class="badge rounded-pill bg-success">Activo #' + idCierre + '</strong>'
         );
 
         // Activar botón

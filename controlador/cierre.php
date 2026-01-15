@@ -16,6 +16,7 @@ $objcierre = new Cierre();
 
 $registro = $objcierre->consultar();
 $dolar = $objcierre->obtenerDolar(); 
+$cantidad = $objcierre->contarVentas();
 
 if (isset($_POST['consultar'])) {
     $fecha = $_POST['fecha'];
