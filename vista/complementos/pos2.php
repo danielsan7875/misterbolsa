@@ -20,23 +20,39 @@
 <!-- 1. Navbar Superior -->
     <nav class="top-nav d-flex justify-content-between align-items-center sticky-top">
         <div class="d-flex align-items-center gap-3">
-            <a href="?pagina=venta" class="nav-btn active" title="Inicio">
-                 <i class="fa-solid fa-reply me-2"></i>
-            </a>
-            <button class="nav-btn" title="Historial">
+            <form action="?pagina=registroventa" method="POST">
+                <button type="submit" class="nav-btn active" name="salir" title="Inicio">
+                    <i class="fa-solid fa-reply"></i>
+                </button>
+            </form>
+            <button class="nav-btn" title="Historial" data-bs-toggle="modal" data-bs-target="#modalhistorial">
                 <i class="fa-solid fa-clock-rotate-left"></i>
             </button>
-            <button class="nav-btn" title="Configuración">
+            <button class="nav-btn" title="Configuración" data-bs-toggle="modal" data-bs-target="#modalconfiguracion">
               <i class="fa-solid fa-gear"></i>
             </button>
+            <?php 
+            if (!$cierre) {
+            echo'<button class="nav-btn" title="No Activo el Cierre">
+              <i class="fa-solid fa-xmark text-danger"></i>
+            </button>';
+            }else{
+           echo'<button class="nav-btn active" title="Cierre Activo">
+              <i class="fa-solid fa-check text-success"></i>
+            </button>';
+            }
+            ?>
         </div>
 
         <div class="sale-badge">
             <i class="fa-solid fa-cart-shopping" style="width: 16px; margin-right: 6px;"></i>
-            Venta #2024-0892
-        </div>
+            Venta # <?php if (is_array($NroVenta)): ?>
+                        <?php $NuevoNro = $NroVenta['id_venta'] + 1; ?> 
+                            <?php echo $NuevoNro; ?>
+                    <?php endif; ?>
+            </div>
 
-        <button class="nav-btn text-danger border-danger-subtle" title="Cerrar Sesión">
+        <button class="nav-btn text-danger border-danger-subtle" title="Cerrar Sesión" data-bs-toggle="modal" data-bs-target="#modalcerrar">
             <i class="fa-solid fa-right-from-bracket"></i>
         </button>
     </nav>

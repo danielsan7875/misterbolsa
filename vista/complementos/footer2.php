@@ -17,21 +17,29 @@
 <div class="modal fade" id="modalcerrar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      
-      <div class="modal-body">
-      <img src="assets/images/salir.png"  class="rounded mx-auto d-block" width="35%"><br>
-      <h4 class="text-center">
-        ¿Confirmas que deseas cerrar sesión?
-        </h4><br>
-      
-       <div class="button-container ">
-         <form action="?pagina=login" method="POST" autocomplete="off">  <!-- Cerrar sesión-->
-           <button type="submit" class="btn btn-primary" name="cerrar"> SI </button>
-          </form>    
-          <button class="btn boton2" type="button" data-bs-dismiss="modal"> NO </button> 
-        </div>
 
-      </div>
+        <div class="modal-body text-center p-4">
+
+            <i class="fa-solid fa-circle-question text-dark mb-4"
+              style="font-size: 7rem;"></i>
+
+            <h4 class="fw-bold mb-4">
+                ¿Confirmas que deseas cerrar sesión?
+            </h4>
+
+            <div class="d-flex justify-content-center gap-3">
+
+                <form action="?pagina=login" method="POST" autocomplete="off">
+                    <button type="submit" class="btn btn-success btn-lg px-4" name="cerrar">
+                        Sí
+                    </button>
+                </form>
+
+                <button type="button" class="btn btn-outline-secondary btn-lg px-4" data-bs-dismiss="modal">
+                    No
+                </button>
+            </div>
+        </div>
       
     </div>
   </div>

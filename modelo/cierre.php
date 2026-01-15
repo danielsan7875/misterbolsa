@@ -206,7 +206,7 @@
 
     // Paso 4: Actualizar la tabla cierre_diario
     $queryUpdate = "UPDATE cierre_diario SET 
-        fecha_cierre = :fecha
+        fecha_cierre = :fecha,
         total_dia_dl = :total_dia_dl,
         total_dia_bs = :total_dia_bs,
         total_pagomovil_dl = :pm_dl,

@@ -18,6 +18,8 @@
     private $id_dolar;
     private $precios;
 
+     private $id_cierre;
+    private $hora;
 
     function __construct(){
         $this->conex = new Conexion();
@@ -47,13 +49,13 @@
             return ['respuesta' => 0, 'accion' => 'registrar'];
         }
 
-        // 2️⃣ Registrar detalle de venta
+        // Registrar detalle de venta
         $sql_detalle = "INSERT INTO detalle_venta 
                         (id_venta, id_producto, cantidad, precio_unitario, maode)
                         VALUES (:id_venta, :id_producto, :cantidad, :precio, :maode)";
         $stmt_detalle = $this->conex->prepare($sql_detalle);
 
-        // 3️⃣ Actualizar stock
+        // Actualizar stock
         $sql_stock = "UPDATE producto SET stock = stock - :cantidad 
                       WHERE id_producto = :id_producto";
         $stmt_stock = $this->conex->prepare($sql_stock);
@@ -74,7 +76,7 @@
             $stmt_stock->execute();
         }
 
-        // 4️⃣ Registrar detalle de pago
+        // Registrar detalle de pago
         $sql_pago = "INSERT INTO detalle_pago 
                      (id_venta, id_metodopago, monto_dolares, monto_bs, referencia)
                      VALUES (:id_venta, :id_metodopago, :monto_dolares, :monto_bs, :referencia)";
@@ -88,6 +90,14 @@
             $stmt_pago->bindParam(':referencia', $referencia[$i]);
             $stmt_pago->execute();
         }
+
+        $sql_Cierre = "INSERT INTO  detalle_cierre (id_cierre, id_venta, hora) 
+                      VALUES (:id_cierre, :id_venta, :hora)";
+        $stmt_Cierre = $this->conex->prepare($sql_Cierre);
+        $stmt_Cierre->bindParam(':id_cierre', $this->id_cierre);
+        $stmt_Cierre->bindParam(':id_venta', $id_venta);
+        $stmt_Cierre->bindParam(':hora', $this->hora);
+        $stmt_Cierre->execute();
 
         // Confirmar transacción
         $this->conex->commit();
@@ -122,11 +132,22 @@
     
     } //fin consultar
 
+    
+    public function obtenerCierreActivo(){
+        $query = "SELECT * FROM cierre_diario WHERE estatus = 1 LIMIT 1";
+        $consulta = $this->conex->prepare($query);
+        $consulta->execute();
+        return $consulta->fetch(PDO::FETCH_ASSOC);
+
+    }
+
     public function obtenerDolar() {
         $query = "SELECT * FROM dolar WHERE id_dolar = 1";
         $consulta = $this->conex->prepare($query);
         $consulta->execute();
         return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        
+
     }
 
      public function obtenerMetodopago() {
@@ -134,6 +155,14 @@
         $consulta = $this->conex->prepare($query);
         $consulta->execute();
         return $consulta->fetchAll(PDO::FETCH_ASSOC);
+    } 
+
+    public function obtenerNroVenta() {
+       $query = "SELECT id_venta FROM venta ORDER BY id_venta DESC LIMIT 1";
+        $consulta = $this->conex->prepare($query);
+        $consulta->execute();
+        return $consulta->fetch(PDO::FETCH_ASSOC);
+
     } 
 
 
@@ -243,6 +272,22 @@
 
     public function set_Precios($precios){
         $this->precios= $precios;
+    }  
+    
+     public function get_Id_Cierre(){
+        return $this->id_cierre;
+    }
+
+    public function set_Id_Cierre($id_cierre){
+        $this->id_cierre= $id_cierre;
+    }    
+
+     public function get_Hora_Cierre(){
+        return $this->hora;
+    }
+
+    public function set_Hora_Cierre($hora){
+        $this->hora= $hora;
     }    
 
     }

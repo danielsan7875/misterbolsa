@@ -200,12 +200,30 @@
                         <input type="hidden" name="id_metodopago[]" id="metodopago_id">
                         <input type="hidden" name="referencias[]" id="referencia">
 
+                        <?php if (is_array($cierre)): ?>
+                            <input type="hidden" name="id_cierre" value="<?php echo $cierre['id_cierre']; ?>">
+                            <input type="hidden" name="hora" id="hora">
+                        <?php endif; ?>
 
                         <!-- Botón Continuar -->
-                        <button type="button" class="btn-process shadow-sm d-flex justify-content-between align-items-center" id="registrar">
-                            <span>Continuar Venta</span>
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </button>
+                        
+                        <?php 
+                            if (!$cierre) {
+                            echo'
+                            <button type="button" class="btn-process shadow-sm d-flex justify-content-between align-items-center" disabled>
+                                <span>Cierro no activo, no puede hacer venta</span>
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                            ';
+                            }else{
+                            echo'
+                            <button type="button" class="btn-process shadow-sm d-flex justify-content-between align-items-center" id="registrar">
+                                <span>Continuar Venta</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                            ';
+                            }
+                            ?>
                         </form>
                     </div>
                 </div>
@@ -224,7 +242,76 @@
 
     <script src="assets/js/SystemVentaPos.js"></script>
 
-    
+    <!-- |||||||||||||||| MODALES ||||||||||||||||| -->
+
+    <!-- Modal CONFIGURACION -->
+    <div class="modal fade" id="modalconfiguracion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Configuración</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                
+            </div>
+            <div class="modal-footer">
+                
+            </div>
+            </div>
+        </div>
+    </div>
+
+
+      <!-- Modal HISTORIAL -->
+    <div class="modal fade" id="modalhistorial" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Historial de Venta de Hoy</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                
+            </div>
+            <div class="modal-footer">
+                
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal CERRAR SESSION -->
+    <div class="modal fade" id="modalcerrar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+     <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+        <div class="modal-body text-center p-4">
+
+            <i class="fa-solid fa-circle-question text-dark mb-4"
+              style="font-size: 7rem;"></i>
+
+            <h4 class="fw-bold mb-4">
+                ¿Confirmas que deseas cerrar sesión?
+            </h4>
+
+            <div class="d-flex justify-content-center gap-3">
+
+                <form action="?pagina=login" method="POST" autocomplete="off">
+                    <button type="submit" class="btn btn-success btn-lg px-4" name="cerrar">
+                        Sí
+                    </button>
+                </form>
+
+                <button type="button" class="btn btn-outline-secondary btn-lg px-4" data-bs-dismiss="modal">
+                    No
+                </button>
+            </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
 
 </body>
 </html>

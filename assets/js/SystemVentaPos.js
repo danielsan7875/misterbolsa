@@ -351,6 +351,17 @@ $(document).ready(function() {
         }
         return true;
     }
+
+    function guardarHoraActual() {
+        const ahora = new Date();
+
+        const hora = String(ahora.getHours()).padStart(2, '0');
+        const minutos = String(ahora.getMinutes()).padStart(2, '0');
+
+        $('#hora').val(`${hora}:${minutos}`);
+    }
+    guardarHoraActual();
+
 });
 
 

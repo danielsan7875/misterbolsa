@@ -120,23 +120,6 @@
 
 
 
-    public function eliminar(){ // Eliminado Fisico
-        try {
-            $registro = "DELETE FROM venta WHERE id_venta = :id_venta";
-            $strExec = $this->conex->prepare($registro);
-            $strExec->bindParam(':id_venta', $this->id_venta);
-            $result = $strExec->execute();
-            if ($result){
-                $res = array('respuesta' => 1, 'accion' => 'eliminar');
-            } else{
-                $res = array('respuesta' => 0, 'accion' => 'eliminar');
-            }
-            return $res;
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
-        }
-    }
-
     public function tasadolar(){
 		$registro = "UPDATE dolar SET id_dolar = :id_dolar, precios = :precios WHERE id_dolar = :id_dolar";
 
