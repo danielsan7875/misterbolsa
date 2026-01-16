@@ -55,9 +55,16 @@ if (isset($_POST['consultar'])) {
     $resultado = $objcierre->procesarCierreDiario($id_cierre);
     echo json_encode($resultado); 
 
+} else if(isset($_POST['pdf'])){
 
-
-
+      if (!empty($_POST['pdf'])) {
+        $id_cierre = $_POST['pdf'];
+        var_dump($id_cierre);
+      if(!$id_cierre){
+        header('Location: ?pagina=cierre');
+      }
+          require_once 'assets/pdf/reportecierre.php';
+      }
 
 } else {
   require_once 'vista/cierre.php';

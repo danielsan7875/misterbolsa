@@ -11,10 +11,10 @@ $options->set('isRemoteEnabled', true); // Para cargar imágenes externas si es 
 $dompdf = new Dompdf($options);
 
 // Conexión PDO
-require_once '../../config/reporte.php';
+require_once 'config/reporte.php';
 
 // Consulta principal de la venta
-$sqlVenta = "SELECT fecha, total FROM venta WHERE id_venta = ?";
+$sqlVenta = "SELECT fecha, total_dl FROM venta WHERE id_venta = ?";
 $stmtVenta = $pdo->prepare($sqlVenta);
 $stmtVenta->execute([$id_venta]);
 $venta = $stmtVenta->fetch(PDO::FETCH_ASSOC);
@@ -98,7 +98,7 @@ $html .= '
   </tbody>
 </table>
 
-<h3 style="text-align:right; margin-top:10px;">Total: $ ' . number_format($venta['total'], 2, ',', '.') . '</h3>
+<h3 style="text-align:right; margin-top:10px;">Total: $ ' . number_format($venta['total_dl'], 2, ',', '.') . '</h3>
 ';
 $dompdf->loadHtml($html);
 $dompdf->render();

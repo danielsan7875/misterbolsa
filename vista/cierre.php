@@ -175,9 +175,10 @@
                     </span>
                   </td>
               <td class="text-center td-oscuro">
-                <form action="">
-                  <button type="button" class="btn btn-info btn-sm text-dark" disabled><i class="fa-solid fa-file-pdf me-2"></i>Descargar</button>
-                </form>
+               
+                 <form action="?pagina=cierre" method="POST" >
+                          <button type="submit"  class="btn btn-primary btn-sm" name="pdf" value="<?php echo  $dato['id_cierre']; ?>"> <i class="fa-regular fa-file-pdf me-2"></i>Descargar</button>
+                      </form>
               </td>
               
           </tr>

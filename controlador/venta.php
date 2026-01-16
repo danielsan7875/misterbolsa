@@ -42,14 +42,13 @@ if(isset($_POST['registrar'])){
   echo json_encode($result);
 
 }else if(isset($_POST['pdf'])){
-  if (!empty($_POST['pdf'])) {
-    $id_venta = $_POST['pdf'];
-    if(!$id_venta){
-  header('Location: ?pagina=venta');
-}
-    require_once 'assets/pdf/reporteventa.php';
-}
-
+    if (!empty($_POST['pdf'])) {
+      $id_venta = $_POST['pdf'];
+      if(!$id_venta){
+        header('Location: ?pagina=venta');
+      }
+          require_once 'assets/pdf/reporteventa.php';
+      }
 } else {
   
 if ($_SESSION["nivel"] == 3){
