@@ -14,7 +14,7 @@
  
   <div class="row">
       <div class="d-sm-flex align-items-center justify-content-between mb-5">
-          <h1 class="h3 mb-0 text-gray-900 texto-principal"> <i class="fa-solid fa-shapes  mr-3" style="color: #E63946;"></i>
+          <h1 class="h3 mb-0 TextOscuroTitel"> <i class="fa-solid fa-shapes  mr-3" style="color: #E63946;"></i>
           Presentación</h1>
               
           <!-- Button que abre el Modal N1 Registro -->
@@ -25,9 +25,9 @@
       </div>
   </div>
     
-  <div class="transaction-list shadow-sm border-0">
+  <div class="transaction-list shadow-sm border-0 DivOscuro1">
 
-    <div class="table-responsive">
+    <div class="table-responsive TextOscuro">
 
 
         <table class="table table-hover" style="width:100%">

@@ -146,15 +146,15 @@ $('#btn-agregar-producto').click(function () {
   // Agregar fila a la tabla
   const nuevaFila = `
     <tr>
-      <td class="mb-2 bg-s">
+      <td class="mb-2 td-oscuro">
         <input type="hidden" name="id_producto[]" value="${productoValue}">
         ${productoText}
       </td>
-      <td class="mb-2 bg-s">
+      <td class="mb-2 td-oscuro">
         <input type="hidden" name="cantidad[]" value="${cantidadValue}">
         ${cantidadValue}
       </td>
-      <td class="mb-2 bg-s">
+      <td class="mb-2 td-oscuro">
         <button type="button" class="btn btn-sm btn-danger eliminar-fila"> - Quitar </button>
       </td>
     </tr>

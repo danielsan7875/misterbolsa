@@ -14,7 +14,7 @@
  
   <div class="row">
     <div class="d-sm-flex align-items-center justify-content-between mb-5">
-       <h1 class="h3 mb-0 texto-principal"> <i class="fa-solid fa-users me-2" style="color: #E63946;"></i>
+       <h1 class="h3 mb-0 TextOscuroTitel"> <i class="fa-solid fa-users me-2" style="color: #E63946;"></i>
         Usuario</h1>
            
        <!-- Button que abre el Modal N1 Registro -->
@@ -26,9 +26,9 @@
 
   </div>
 
-  <div class="transaction-list shadow-sm border-0">
+  <div class="transaction-list shadow-sm border-0 DivOscuro1">
 
-    <div class="table-responsive  texto-secundario">
+    <div class="table-responsive TextOscuro">
         <table id="myTable" class="table table-m table-hover" style="width:100%">
             <thead class="table-color">
               <tr>
@@ -57,21 +57,21 @@
                 foreach ($registro as $dato){
                 ?>
                         <tr>
-                          <td class="text-center bg-s"> <?php echo $dato['id_usuario']?> </td>
-                          <td class="text-center bg-s"> <?php echo $dato['nombre']." ".$dato['apellido']?> </td>
+                          <td class="text-center td-oscuro"> <?php echo $dato['id_usuario']?> </td>
+                          <td class="text-center td-oscuro"> <?php echo $dato['nombre']." ".$dato['apellido']?> </td>
                         
-                          <td class="text-center bg-s"> <?php echo $dato['usuario']?> </td>
-                          <td class="text-center bg-s"> <?php echo $dato['clave']?> </td>
-                          <td class="text-center bg-s">
+                          <td class="text-center td-oscuro"> <?php echo $dato['usuario']?> </td>
+                          <td class="text-center td-oscuro"> <?php echo $dato['clave']?> </td>
+                          <td class="text-center td-oscuro">
                             <span class="<?= $estatus_classes[$dato['estatus']] ?>">
                               <b>
                               <?php echo $estatus_texto[$dato['estatus']] ?>
                               </b>
                             </span>
                           </td>
-                          <td class="text-center bg-s"> <?php echo $dato['nombre_tipo']?> </td>
+                          <td class="text-center td-oscuro"> <?php echo $dato['nombre_tipo']?> </td>
               
-                          <td class="bg-s">
+                          <td class="td-oscuro">
                               <form action="?pagina=usuario" method="POST" >
                                 <button name="modificar" class="btn btn-primary btn-sm modificar"
                                 value="<?php echo $dato['id_usuario'] ?>"><i class="fas fa-pencil-alt" title="Editar"></i> Editar</button>
@@ -110,9 +110,9 @@
       <form action="?pagina=usuario" id="u" autocomplete="off"> <!--comienzo Formulario-->
          <div class="seccion-formulario">
         <div class="row ">
-          <h6 class="texto-principal"><i class="fa-solid fa-user"></i> Datos de la Persona </h6>
+          <h6 class=""><i class="fa-solid fa-user"></i> Datos de la Persona </h6>
           <div class="col-sm">
-          <label class="form-label text-dark texto-secundario">Nombre</label>
+          <label class="form-label text-dark">Nombre</label>
      
             <div class="input-group mb-3">
               <span class="input-group-text div-icono" id="basic-addon1"><i class="fa-solid fa-address-book" style="color:#FF3C37;"></i></span>
@@ -122,7 +122,7 @@
           </div>
       
           <div class="col-sm">
-          <label class="form-label text-dark texto-secundario">Apellido</label>
+          <label class="form-label text-dark">Apellido</label>
         
             <div class="input-group mb-3">
               <span class="input-group-text div-icono" id="basic-addon1"><i class="fa-solid fa-address-book" style="color:#FF3C37;"></i></span>
@@ -133,7 +133,7 @@
           </div>
 
           <div class="col-sm">
-          <label class="form-label text-dark texto-secundario">Cargo (Tipo de Usuario)</label>
+          <label class="form-label text-dark">Cargo (Tipo de Usuario)</label>
             <div class="input-group mb-3">
               <span class="input-group-text div-icono" id="basic-addon1"><i class="fa-solid fa-user-tag" style="color:#FF3C37;"></i></span>
                 <select class="form-select text-dark" aria-label="Default select example" name="tipo_usuario" id="tiposelect" required>

@@ -51,7 +51,7 @@
                     </div>
 
                     <!-- Gráfico -->
-                    <div class="chart-container shadow-sm border-0">
+                    <div class="chart-container shadow-sm border-0 DivOscuro1">
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <h6 class="fw-bold m-0">Movimientos de la semana</h6>
                             <div class="tooltip-custom">
@@ -64,7 +64,7 @@
                     </div>
 
                     <!-- Transacciones -->
-                    <div class="transaction-list shadow-sm border-0">
+                    <div class="transaction-list shadow-sm border-0 DivOscuro1">
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <h6 class="fw-bold m-0">Ultimas Ventas</h6>
                             <a href="?pagina=venta" class="text-primary small text-decoration-none">Ver Todos</a>
@@ -105,7 +105,7 @@
                 <!-- COLUMNA DERECHA -->
                 <div class="col-xl-3 col-lg-4">
                     <h6 class="fw-bold mb-3">Mister Bolsa C.A</h6>
-                    <div class="credit-card shadow">
+                    <div class="credit-card shadow DivOscuro1">
                      
                     <div id="carouselExample" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
                         <div class="carousel-inner">
@@ -131,49 +131,49 @@
 
                     </div>
 
-                    <div class="mb-4 bg-white p-3 rounded-4 shadow-sm">
+                    <div class="mb-4 bg-white p-3 rounded-4 shadow-sm DivOscuro1">
                         <span class="text-muted small">Tasa de cambio (Guardada en el Sistema)</span>
                          <?php foreach ($dolar as $dolar){  ?>
-                        <div class="h4 fw-bold text-dark m-0"> 1,00 $ = <?php echo $dolar['precios']?> Bs </div>
+                        <div class="h4 fw-bold text-dark m-0 TextOscuro"> 1,00 $ = <?php echo $dolar['precios']?> Bs </div>
                           <?php } ?>
                     </div>
 
                     <h6 class="fw-bold mb-3">Acceso Directo</h6>
                     <div class="mb-4">
 
-                            <div class="card access-card shadow-sm">
+                            <div class="card access-card shadow-sm DivOscuro1">
                                 <div class="card-body d-flex align-items-center">
                                     <div class="icon-box me-3">
                                     <i class="fa-solid fa-boxes-stacked"></i>
                                     </div>
                                     <div>
-                                    <h5 class="card-title mb-0">Inventario</h5>
+                                    <h5 class="card-title mb-0 TextOscuro">Inventario</h5>
                                     <small class="text-muted">Gestionar productos</small>
                                     </div>
                                     <a href="?pagina=producto" class="stretched-link"></a>
                                 </div>
                             </div>
 
-                              <div class="card access-card shadow-sm mt-2">
+                              <div class="card access-card shadow-sm mt-2 DivOscuro1">
                                 <div class="card-body d-flex align-items-center">
                                     <div class="icon-box me-3">
-                                    <i class="fa-solid fa-cash-register"></i>
+                                        <i class="fa-solid fa-cash-register"></i>
                                     </div>
                                     <div>
-                                    <h5 class="card-title mb-0">Venta</h5>
-                                    <small class="text-muted">Registro Venta</small>
+                                        <h5 class="card-title mb-0 TextOscuro">Venta</h5>
+                                        <small class="text-muted">Registro Venta</small>
                                     </div>
                                     <a href="?pagina=registroventa" class="stretched-link"></a>
                                 </div>
                             </div>
 
-                              <div class="card access-card shadow-sm mt-2">
+                              <div class="card access-card shadow-sm mt-2 DivOscuro1">
                                 <div class="card-body d-flex align-items-center">
                                     <div class="icon-box me-3">
                                     <i class="fa-solid fa-file-invoice-dollar"></i>
                                     </div>
                                     <div>
-                                    <h5 class="card-title mb-0">Cierre Diario</h5>
+                                    <h5 class="card-title mb-0 TextOscuro">Cierre Diario</h5>
                                     <small class="text-muted">Gestionar Cierre</small>
                                     </div>
                                     <a href="?pagina=cierre" class="stretched-link"></a>
@@ -181,7 +181,7 @@
                             </div>                      
                     </div>
 
-                    <div class="wallet-promo bg-white p-4 shadow-sm border-0" style="border-radius: 20px;">
+                    <div class="wallet-promo bg-white p-4 shadow-sm border-0 DivOscuro1" style="border-radius: 20px;">
                         <h6 class="fw-bold text-primary mb-2">NeoPay Premium</h6>
                         <p class="text-secondary small mb-3">Get detailed reports and lower fees on all your operations.</p>
                         <button class="btn btn-primary w-100 btn-sm rounded-pill">Upgrade Now</button>

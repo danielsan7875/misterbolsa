@@ -99,11 +99,7 @@
             border: 1px solid #edf0f7; background: white;
             color: var(--neo-text-gray); margin-left: 10px; transition: all 0.2s;
         }
-        .nav-actions .btn-action:hover { background: var(--neo-blue); color: white; border-color: var(--neo-blue); }
-
-        .btn-action .activeModo{
-          background: var(--neo-blue); color: white; border-color: var(--neo-blue);
-        }
+        .nav-actions .btn-action:hover { background: var(--neo-blue); color: white; border-color: var(--neo-blue); }  
 
         /* --- SIDEBAR & OVERLAY --- */
         .sidebar {

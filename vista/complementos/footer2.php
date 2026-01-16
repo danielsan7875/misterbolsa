@@ -20,7 +20,7 @@
 
         <div class="modal-body text-center p-4">
 
-            <i class="fa-solid fa-circle-question text-dark mb-4"
+            <i class="fa-solid fa-circle-question text-dark mb-4 TextOscuro"
               style="font-size: 7rem;"></i>
 
             <h4 class="fw-bold mb-4">

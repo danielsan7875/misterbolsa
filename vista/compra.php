@@ -14,7 +14,7 @@
  
       <div class="row">
           <div class="d-sm-flex align-items-center justify-content-between mb-5">
-            <h1 class="h3 mb-0 text-gray-900 texto-principal"> <i class="fa-solid fa-receipt mr-3" style="color: #E63946;"></i>
+            <h1 class="h3 mb-0 TextOscuroTitel"> <i class="fa-solid fa-receipt mr-3" style="color: #E63946;"></i>
               Compra</h1>
                 
             <!-- Button que abre el Modal N1 Registro -->
@@ -29,9 +29,9 @@
             <button class="btn btn-primary mb-3" type="button" disabled><i class="fa-regular fa-file-pdf"></i>Reportes</button>
           </div>
 
-      <div class="transaction-list shadow-sm border-0">
+      <div class="transaction-list shadow-sm border-0 DivOscuro1">
 
-          <div class="table-responsive text-dark texto-secundario">
+          <div class="table-responsive text-dark TextOscuro">
             <table id="myTable" class="table table-hover" style="width:100%">
                 <thead class="table-color">
                   <tr>
@@ -70,10 +70,10 @@
                   <?php foreach ($compras as $id_compra => $info): ?>
   
                   <tr>
-                      <td class="text-center bg-s"><?php echo $id_compra; ?></td>
-                      <td class="text-center bg-s"><?php echo date("d/m/Y", strtotime($info['fecha'])); ?></td>
+                      <td class="text-center td-oscuro"><?php echo $id_compra; ?></td>
+                      <td class="text-center td-oscuro"><?php echo date("d/m/Y", strtotime($info['fecha'])); ?></td>
 
-                      <td class="bg-s">
+                      <td class="td-oscuro">
                           <ul class="mb-0">
                               <?php 
                               $detalles = $info['detalles'];
@@ -92,7 +92,7 @@
                           <?php endif; ?>
                       </td>
 
-                      <td class="bg-s">
+                      <td class="td-oscuro">
                           <ul class="mb-0">
                               <?php foreach ($mostrar as $detalle): ?>
                                   <li><?php echo $detalle['cantidad']; ?></li>
@@ -101,7 +101,7 @@
                       </td>
 
                       <?php if ($tipo_usuario == 1): ?>
-                      <td class="text-center bg-s">
+                      <td class="text-center td-oscuro">
                           <form action="?pagina=compra">
                               <button type="button" class="btn btn-primary btn-sm" disabled>
                                 Descargar
@@ -136,8 +136,8 @@
                                         <tbody>
                                           <?php foreach ($info['detalles'] as $detalle): ?>
                                           <tr>
-                                            <td class="bg-s"><?php echo $detalle['nombre'].' - '.$detalle['marca'].' - '.$detalle['presentacion']; ?></td>
-                                            <td class="text-center bg-s"><?php echo $detalle['cantidad']; ?></td>
+                                            <td class="td-oscuro"><?php echo $detalle['nombre'].' - '.$detalle['marca'].' - '.$detalle['presentacion']; ?></td>
+                                            <td class="text-center td-oscuro"><?php echo $detalle['cantidad']; ?></td>
                                           </tr>
                                           <?php endforeach; ?>
                                         </tbody>

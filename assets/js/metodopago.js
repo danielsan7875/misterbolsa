@@ -95,10 +95,10 @@ $(document).ready(function() {
     }
 
     var fila = '<tr>' +
-      '<td class="text-center bg-s">' + dato.id_metodopago + '</td>' +
-      '<td class="bg-s">' + dato.nombre + '</td>' +
-      '<td class="bg-s"><span class="' + estatus_classes[dato.estatus] + '">' + estatus_texto[dato.estatus] + '</span></td>' +
-      '<td class="bg-s">' +
+      '<td class="text-center td-oscuro">' + dato.id_metodopago + '</td>' +
+      '<td class="td-oscuro">' + dato.nombre + '</td>' +
+      '<td class="td-oscuro"><span class="' + estatus_classes[dato.estatus] + '">' + estatus_texto[dato.estatus] + '</span></td>' +
+      '<td class="td-oscuro">' +
         '<form method="POST" action="?pagina=presentacion">' +
           botones +
         '</form>' +

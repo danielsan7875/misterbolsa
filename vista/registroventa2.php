@@ -232,6 +232,8 @@
     </div>
 
     <!-- Scripts -->
+    <script src="assets/js/moment.js"></script>
+
     <script src="assets/js/datetable/data.js"></script>
 
     <script src="assets/js/sweetalert2.js"></script>

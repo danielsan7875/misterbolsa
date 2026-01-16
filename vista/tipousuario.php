@@ -13,7 +13,7 @@
  
   <div class="row">
       <div class="d-sm-flex align-items-center justify-content-between mb-5">
-        <h1 class="h3 mb-0 texto-principal"> <i class="fa-solid fa-user-tag me-2" style="color: #E63946;"></i>
+        <h1 class="h3 mb-0 TextOscuroTitel"> <i class="fa-solid fa-user-tag me-2" style="color: #E63946;"></i>
           Tipo de Usuario</h1>
             
         <!-- Button que abre el Modal N1 Registro -->
@@ -24,8 +24,8 @@
       </div>
   </div>
     
-  <div class="transaction-list shadow-sm border-0">
-      <div class="table-responsive">
+  <div class="transaction-list shadow-sm border-0 DivOscuro1">
+      <div class="table-responsive TextOscuro">
         <table class="table table-hover" style="width:100%">
             <thead class="table-color">
               <tr>

@@ -25,7 +25,7 @@
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
     <!-- NAVBAR SUPERIOR -->
-    <header class="top-navbar">
+    <header class="top-navbar NavOscuro">
         <div class="d-flex align-items-center h-100">
             <!-- Hamburguesa -->
             <button id="hamburgerBtn" class="btn btn-action d-lg-none me-3 btn-hamburger" onclick="toggleSidebar()">
@@ -64,7 +64,7 @@
                         <i class="fa-solid fa-user"></i>
                     </div>
                     <div class="user-info d-none d-sm-block">
-                        <span class="user-name">
+                        <span class="user-name TextOscuro">
                              <?php echo $_SESSION['nombre']." ".$_SESSION['apellido']; ?>
                         </span>
                         <span class="user-role">
@@ -72,7 +72,7 @@
                         </span>
                     </div>
                 </button>
-                <ul class="dropdown-menu dropdown-menu-end shadow">
+                <ul class="dropdown-menu dropdown-menu-end shadow DivOscuro2">
                     <!-- Items que aparecen solo en móvil dentro del dropdown -->
                     <li class="mobile-only-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-circle-question me-2"></i> Ayuda</a></li>
                     <li class="mobile-only-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-moon me-2"></i> Modo Oscuro</a></li>

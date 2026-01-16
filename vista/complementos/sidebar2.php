@@ -37,5 +37,5 @@
     </aside>
 
     <!-- CONTENIDO PRINCIPAL -->
-    <main class="main-content">
-        <div class="content-wrapper shadow-sm">
+    <main class="main-content ">
+        <div class="content-wrapper shadow-sm DivOscuro2">

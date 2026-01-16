@@ -25,4 +25,6 @@
   <link href="assets/css/modo.css" rel="stylesheet"></link>
 
   <link rel="stylesheet" href="assets/css/SystemPos.css">
+  
+  <link rel="stylesheet" href="assets/css/SystemPosOscuro.css">
 

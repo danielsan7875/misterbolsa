@@ -19,7 +19,7 @@
 
     <div class="row">
       <div class="d-sm-flex align-items-center justify-content-between mb-5">
-        <h1 class="h3 mb-0 text-gray-900 texto-principal"> <i class="fa-solid fa-boxes-stacked  me-2" style="color: #E63946;"></i>
+        <h1 class="h3 mb-0 TextOscuroTitel"> <i class="fa-solid fa-boxes-stacked  me-2" style="color: #E63946;"></i>
           Producto</h1>
            
           <!-- Button que abre el Modal N1 Registro -->
@@ -32,9 +32,9 @@
 
           <div id="alerta">  </div>
 
-    <div class="transaction-list shadow-sm -0">
+    <div class="transaction-list shadow-sm-0 DivOscuro1">
 
-      <div class="table-responsive text-dark texto-secundario" >
+      <div class="table-responsive text-dark TextOscuro" >
 
         <table id="myTable" class="table table-hover" style="width:100%">
             <thead>
@@ -68,19 +68,19 @@
                 ?>
                   <tr data-precio-unitario="<?php echo $dato['precio_unitario']; ?>" data-precio-mayor="<?php echo $dato['precio_mayor']; ?>" data-stock-minimo="<?php echo $dato['stock_minimo']; ?>">
                       
-                    <td class="text-center bg-s"> <?php echo $dato['id_producto']; ?></td>
+                    <td class="text-center td-oscuro"> <?php echo $dato['id_producto']; ?></td>
 
-                      <td class="bg-s"><?php echo $dato['nombre']; ?></td>
+                      <td class="td-oscuro"><?php echo $dato['nombre']; ?></td>
 
-                        <td class="bg-s">    
+                        <td class="td-oscuro">    
                           <div class="mt-0">Marca: <?php echo $dato['nombre_marca']; ?> </div>
                           <div class="mt-0"> • <?php echo $dato['nombre_presentacion']; ?> </div>
                         </td>
-                          <td class="fw-bold bg-s"><div id="precioBs"> </div>  </td>
+                          <td class="fw-bold td-oscuro"><div id="precioBs"> </div>  </td>
 
-                           <td class="fw-bold bg-s"> <div id="precioBss" > </div>  </td>
+                           <td class="fw-bold td-oscuro"> <div id="precioBss" > </div>  </td>
 
-                            <td class="text-center bg-s">
+                            <td class="text-center td-oscuro">
                                <?php
                                       if ($dato['stock'] == 0) {
                                         echo '<span class="badge bg-danger fs-6">'.$dato['stock'].'</span>';
@@ -91,7 +91,7 @@
                                       }
                                     ?></td>
 
-                              <td class="text-center bg-s">
+                              <td class="text-center td-oscuro">
                                 <!-- Botón de detalle -->
                                 <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#detalleModal-<?php echo $dato['id_producto']; ?>">
                                   <i class="fas fa-info-circle me-2"></i> Detalle
@@ -99,14 +99,14 @@
                               </td>
 
                               <?php if ($tipo_usuario == 1) { ?> 
-                                <td class="bg-s">  <!-- ACCION -->
+                                <td class="td-oscuro">  <!-- ACCION -->
                                   <form method="POST" action="?pagina=producto">
                                     <div class="dropdown">
                                       <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Opciones
                                       </button>
 
-                                      <ul class="dropdown-menu div-oscuro-1">
+                                      <ul class="dropdown-menu DivOscuro2">
                                         <li>
                                           <button name="modificar" class="dropdown-item modificar text-dark texto-secundario" value="<?php echo $dato['id_producto']; ?>">
                                             <i class="fas fa-pencil-alt me-2 text-primary"></i> Editar
@@ -144,10 +144,10 @@
                               <div class="seccion-formulario">
                               <h6><i class="fas fa-boxes"></i> Nombre del Producto </h6>
                                 <div class="row">
-                                  <div class="col"> <h5 class="card-title texto-secundario"><strong><?php echo $dato['nombre']; ?></strong></h5> </div>
+                                  <div class="col"> <h5 class="card-title TextOscuro"><strong><?php echo $dato['nombre']; ?></strong></h5> </div>
                                   <div class="col ">
-                                    <h5 class="mt-0 texto-secundario">Marca: <?php echo $dato['nombre_marca']; ?></h5>
-                                    <h5 class="mt-0 texto-secundario">Presentación: <?php echo $dato['nombre_presentacion']; ?></h5>
+                                    <h5 class="mt-0 ">Marca: <?php echo $dato['nombre_marca']; ?></h5>
+                                    <h5 class="mt-0 ">Presentación: <?php echo $dato['nombre_presentacion']; ?></h5>
                                 </div>
                         
                               </div>
@@ -159,8 +159,8 @@
                           <div class="seccion-formulario">
                               <h6><i class="fas fa-boxes"></i> Precio al Detal </h6>
                                 <div class="row">
-                                  <div class="col"><h5 class="texto-secundario"><strong>$:</strong> <?php echo $dato['precio_unitario']; ?></h5></div>
-                                  <div class="col"><h5 class="texto-secundario"><strong>Bs:</strong> <span class="precio-bs-detal" data-precio="<?php echo $dato['precio_unitario']; ?>"></h5></span></div>
+                                  <div class="col"><h5 class=""><strong>$:</strong> <?php echo $dato['precio_unitario']; ?></h5></div>
+                                  <div class="col"><h5 class=""><strong>Bs:</strong> <span class="precio-bs-detal" data-precio="<?php echo $dato['precio_unitario']; ?>"></h5></span></div>
                                 </div>
                               </div>
                       
@@ -169,9 +169,9 @@
                           <div class="seccion-formulario">
                               <h6><i class="fas fa-boxes"></i> Precio al Mayor </h6>
                                 <div class="row">
-                                  <div class="col"><h5 class="texto-secundario"><strong>$:</strong> <?php echo $dato['precio_mayor']; ?></h5></div>
-                                  <div class="col"><h5 class="texto-secundario"><strong>Bs:</strong> <span class="precio-bs-mayor" data-precio="<?php echo $dato['precio_mayor']; ?>"></span></h5></div>
-                                  <div class="col"><h5 class="texto-secundario"><strong>Cantidad Mayor:</strong> <?php echo $dato['cantidad_mayor']; ?></h5></div>
+                                  <div class="col"><h5 class=""><strong>$:</strong> <?php echo $dato['precio_mayor']; ?></h5></div>
+                                  <div class="col"><h5 class=""><strong>Bs:</strong> <span class="precio-bs-mayor" data-precio="<?php echo $dato['precio_mayor']; ?>"></span></h5></div>
+                                  <div class="col"><h5 class=""><strong>Cantidad Mayor:</strong> <?php echo $dato['cantidad_mayor']; ?></h5></div>
                                 </div>
                               </div>
                           
@@ -180,9 +180,9 @@
                             <div class="seccion-formulario">
                                   <h6><i class="fas fa-boxes"></i> Otros datos </h6>
                                 <div class="row">
-                                  <div class="col"> <h5 class="texto-secundario"><strong>Stock mínimo:</strong> <?php echo $dato['stock_minimo']; ?> </h5></div>
-                                  <div class="col"> <h5 class="texto-secundario"><strong>Stock Disponible:</strong> <?php echo $dato['stock']; ?></h5> </div>
-                                  <div class="col"> <h5 class="texto-secundario">
+                                  <div class="col"> <h5 class=""><strong>Stock mínimo:</strong> <?php echo $dato['stock_minimo']; ?> </h5></div>
+                                  <div class="col"> <h5 class=""><strong>Stock Disponible:</strong> <?php echo $dato['stock']; ?></h5> </div>
+                                  <div class="col"> <h5 class="">
                                     <strong>Estado:</strong>
                                     <?php
                                       if ($dato['stock'] >= $dato['stock_minimo']) {
@@ -198,7 +198,7 @@
                       
 
                           </div>
-                          <div class="modal-footer div-oscuro-2">
+                          <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                           </div>
                         </div>

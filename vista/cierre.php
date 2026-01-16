@@ -43,7 +43,7 @@
  
   <div class="row">
     <div class="d-sm-flex align-items-center justify-content-between mb-5">
-       <h1 class="h3 mb-0 text-gray-900 texto-principal"> <i class="fa-solid fa-file-invoice-dollar me-2" style="color: #E63946;"></i>
+       <h1 class="h3 mb-0 TextOscuroTitel"> <i class="fa-solid fa-file-invoice-dollar me-2" style="color: #E63946;"></i>
         Cierre Diario</h1>
           <form action="?pagina=cierre" method="POST" autocomplete="off" id="form_cierre">   
           <!-- Button que abre el Modal N1 Registro -->
@@ -63,14 +63,14 @@
       </div>
   </div>
     
-   <div class="transaction-list shadow-sm border-0">
+   <div class="transaction-list shadow-sm border-0 DivOscuro1">
         <div class="row">
           <div class="col-sm-4">
-            <div class="card text-center" style="width: 20rem;" id="card-cierre">
+            <div class="card text-center DivOscuro2" style="width: 20rem;" id="card-cierre">
           <div class="card-body" id="card-body-cierre">
-            <h5 class="card-title texto-secundario"><strong>Estatus del Cierre</strong></h5>
+            <h5 class="card-title TextOscuroTitel"><strong>Estatus del Cierre</strong></h5>
             <hr>
-            <h5 id="estatus-cierre" class="text-dark texto-secundario mb-3">
+            <h5 id="estatus-cierre" class="text-dark TextOscuro mb-3">
               Se encuentra: <strong class="badge rounded-pill bg-secondary text-light">No activo</strong>
             </h5>
             <form action="?pagina=cierre" method="POST" id="cierreBD">
@@ -84,14 +84,14 @@
 
           </div>
           <div class="col-sm-4">
-              <div class="card text-center" style="width: 20rem;">
+              <div class="card text-center DivOscuro2" style="width: 20rem;">
               
                 <div class="card-body">
-                  <h5 class="card-title texto-secundario"><strong>Cantidad de Cierre</strong></h5>
+                  <h5 class="card-title TextOscuroTitel"><strong>Cantidad de Cierre</strong></h5>
                   <hr>
                 
                   
-                  <p style="font-size:30px;" class="text-dark texto-secundario"> 
+                  <p style="font-size:30px;" class="text-dark TextOscuro"> 
                       <span id="cantidad-cierre"></span> / <span>3</span>
                 </p>
                   
@@ -100,13 +100,13 @@
 
           </div>
           <div class="col-sm-4">
-              <div class="card text-center" style="width: 20rem;">
+              <div class="card text-center DivOscuro2" style="width: 20rem;">
               
                 <div class="card-body"> 
                   <?php $total = $cantidad['total']; ?>
-                  <h5 class="card-title texto-secundario"><strong>Cantidad de venta</strong></h5>
+                  <h5 class="card-title TextOscuroTitel"><strong>Cantidad de venta</strong></h5>
                   <hr>
-                    <p style="font-size:30px;" class="text-dark texto-secundario"> <?php echo $total ?> </p>
+                    <p style="font-size:30px;" class="text-dark TextOscuro"> <?php echo $total ?> </p>
 
               </div>
             </div>
@@ -116,9 +116,9 @@
    </div>
 
 
-<div class="chart-container shadow-sm border-0">
+<div class="chart-container shadow-sm border-0 DivOscuro1">
 
-  <div class="table-responsive text-dark texto-secundario">
+  <div class="table-responsive text-dark TextOscuro">
         <table id="myTable" class="table table-hover" style="width:100%">
           <thead class="table-color">
             <tr class="table-primary">
@@ -149,32 +149,32 @@
            foreach ($registro as $dato){
         ?>
           <tr>
-              <td class="text-center bg-s"><?php echo $dato['id_cierre']; ?></td>
-              <td class="text-center bg-s"><?php echo date("d/m/Y", strtotime($dato['fecha_creacion'])); ?></td>
-              <td class="text-center bg-s"> 
+              <td class="text-center td-oscuro"><?php echo $dato['id_cierre']; ?></td>
+              <td class="text-center td-oscuro"><?php echo date("d/m/Y", strtotime($dato['fecha_creacion'])); ?></td>
+              <td class="text-center td-oscuro"> 
               <?php 
                     $fecha = $dato['fecha_cierre'];
                     $mostrar_fecha = (!empty($fecha) && $fecha !== '0000-00-00') ? date("d/m/Y", strtotime($fecha)) : ' - ';
                 ?>
                 <?php echo $mostrar_fecha; ?>
               </td>
-              <td class="text-center bg-s">
+              <td class="text-center td-oscuro">
               <p> <span>$. </span><?php echo $dato['total_dia_dl']; ?> </p> 
               </td>
-              <td class="text-center bg-s">
+              <td class="text-center td-oscuro">
                 <p class="badge rounded-pill bg-secondary"> <span>Bs. </span> <?php echo $dato['tasa']; ?></p>
               </td>
-              <td class="text-center bg-s">
+              <td class="text-center td-oscuro">
                  <p> <span>Bs. </span><?php echo $dato['total_dia_bs']; ?> </p> 
               </td>
-              <td class="text-center bg-s">
+              <td class="text-center td-oscuro">
                     <span class="<?= $estatus_classes[$dato['estatus']] ?>">
                       <b>
                        <?php echo $estatus_texto[$dato['estatus']] ?>
                        </b>
                     </span>
                   </td>
-              <td class="text-center bg-s">
+              <td class="text-center td-oscuro">
                 <form action="">
                   <button type="button" class="btn btn-info btn-sm text-dark" disabled><i class="fa-solid fa-file-pdf me-2"></i>Descargar</button>
                 </form>

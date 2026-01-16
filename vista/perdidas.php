@@ -15,7 +15,7 @@
  
   <div class="row">
       <div class="d-sm-flex align-items-center justify-content-between mb-5">
-          <h1 class="h3 mb-0 text-gray-900 texto-principal"> <i class="fas fa-chart-line me-2" style="color: #E63946;"></i>
+          <h1 class="h3 mb-0 TextOscuroTitel"> <i class="fas fa-chart-line me-2" style="color: #E63946;"></i>
             Perdidas</h1>
               
           <!-- Button que abre el Modal N1 Registro -->
@@ -26,8 +26,8 @@
       </div>
       </div>
         
-      <div class="transaction-list shadow-sm border-0">
-            <div class="table-responsive text-dark texto-secundario">
+      <div class="transaction-list shadow-sm border-0 DivOscuro1">
+            <div class="table-responsive text-dark TextOscuro">
       <table id="myTable" class="table table-hover" style="width:100%">
         <thead class="table-color">
           <tr>
@@ -46,14 +46,14 @@
             foreach ($registro as $dato){
             ?>
                     <tr>
-                      <td class="text-center bg-s"> <?php echo $dato['id_perdida']?> </td>
-                      <td class="text-center bg-s"> <?php echo $dato['fecha']?> </td>
-                      <td class="bg-s"> <?php echo $dato['nombre']." - ".$dato['nombre_marca']." - ".$dato['nombre_presentacion'] ?> </td>
-                      <td class="text-center bg-s"> <?php echo $dato['cantidad']?> </td>
-                      <td class="bg-s"> <?php echo $dato['nota']?> </td>
+                      <td class="text-center td-oscuro"> <?php echo $dato['id_perdida']?> </td>
+                      <td class="text-center td-oscuro"> <?php echo $dato['fecha']?> </td>
+                      <td class="td-oscuro"> <?php echo $dato['nombre']." - ".$dato['nombre_marca']." - ".$dato['nombre_presentacion'] ?> </td>
+                      <td class="text-center td-oscuro"> <?php echo $dato['cantidad']?> </td>
+                      <td class="td-oscuro"> <?php echo $dato['nota']?> </td>
 
                       <?php if( $tipo_usuario == 1) { ?> 
-                      <td class="bg-s">
+                      <td class="td-oscuro">
                       <form action="?pagina=perdidas">
                             <button type="button" onclick="eliminar(this)" class="btn btn-danger btn-sm eliminar" value="<?php echo $dato['id_perdida'] ?>"> <i class="fas fa-trash-alt" title="Eliminar"> </i> Eliminar </button>
                         </form>

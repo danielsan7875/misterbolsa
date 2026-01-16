@@ -1,0 +1,165 @@
+:root {
+    --text-blank:#fff;
+    --BaseN1: #171717;
+    --BaseN2:#222222;
+    --BaseN3:#343434;
+    --text-1:#FF3C37;
+    --text-0:#000000;
+    --text-2:#b4b4b4;
+}
+
+body {
+  transition: background-color .35s ease, color .35s ease;
+}
+
+.modo-oscuro {
+  background-color: var(--BaseN1)!important;
+  color: var(--text-blank) !important;
+}
+.modo-oscuro #loading-screen{
+    background-color: var(--BaseN1)!important;
+}
+body.modo-oscuro ::placeholder { color: #afafaf; /* más claro */ opacity: 1; }
+
+/* Modo oscuro */
+body.modo-oscuro {
+  background-color: #1e1e1e;
+  color: #e6e6e6;
+}
+
+/* Estilo del botón cuando está activo */
+.btn-action.activeModo {
+  background-color: var(--text-1) !important;
+  color: var(--text-blank);
+   border-color:var(--text-1);
+  transition: transform .3s ease, background-color .3s ease;
+   
+}
+
+.modo-oscuro .dropdown-menu .dropdown-item:hover {
+  background-color: var(--text-1)!important ; 
+  color:var(--text-blank) !important;         
+}
+
+.modo-oscuro .dropdown-item{
+      color:var(--text-blank) !important;    
+}
+
+.modo-oscuro .user-profile-dropdown .dropdown-toggle:hover {
+     color: var(--text-0) !important;
+}
+
+.btn-action.activeModo i {
+  color: var(--text-blank);
+}
+
+.modo-oscuro .body-oscuro{
+   background-color:var(--BaseN1)!important;
+  color:var(--text-blank) !important;
+}
+
+/* Sidebar */
+.modo-oscuro .sidebar {
+  background-color:var(--BaseN2) !important;
+  color: var(--text-blank) !important;
+  border-right: 1px solid var(--BaseN2);
+}
+
+.modo-oscuro .NavOscuro{
+  background-color:var(--BaseN2) !important;
+  color: var(--text-blank) !important;
+  border-right: 1px solid var(--BaseN2);
+}
+
+.modo-oscuro .TextOscuro {
+  color: var(--text-blank) !important;
+}
+
+.modo-oscuro .TextOscuroTitel {
+  color: var(--text-1) !important;
+}
+
+
+.modo-oscuro .DivOscuro1{
+  background-color:var(--BaseN1) !important;
+  color: var(--text-blank) !important;
+  border-right: 1px solid var(--BaseN1);
+}
+
+.modo-oscuro .DivOscuro2{
+  background-color:var(--BaseN2) !important;
+  color: var(--text-blank) !important;
+  border-right: 1px solid var(--BaseN2);
+}
+
+.modo-oscuro .text-muted{
+    color: var(--text-2) !important;
+}
+
+.modo-oscuro .dt-input{
+    background-color: var(--text-blank) !important;
+    color: var(--text-0) !important;
+}
+
+.modo-oscuro label{ 
+   color: var(--text-blank) !important;
+}
+
+.modo-oscuro .dt-empty{
+  background-color:var(--text-blank) !important;
+  color: var(--text-0) !important;
+}
+
+.modo-oscuro .dt-info{
+    color: var(--text-blank) !important;
+}
+
+.modo-oscuro .td-oscuro{
+  background-color:var(--BaseN2) !important;
+  color: var(--text-blank) !important;
+}
+
+.modo-oscuro .swal2-popup{
+  background-color:var(--BaseN2) !important;
+  color: var(--text-blank) !important;
+}
+
+.modo-oscuro .modal-body{
+  background-color:var(--BaseN1) !important;
+  color: var(--text-blank) !important;
+}
+
+.modo-oscuro .modal-footer{
+  background-color:var(--BaseN1) !important;
+  color: var(--text-blank) !important;
+}
+
+.modo-oscuro .seccion-formulario{
+    background-color:var(--BaseN2) !important;
+    color: var(--text-blank) !important;
+     border-left: 4px solid var(--text-1) !important;
+}
+
+.modo-oscuro .seccion-formulario h6{
+    color: var(--text-1) !important;
+}
+
+.modo-oscuro .seccion-formulario i{
+    color: var(--text-1) !important;
+}
+
+.modo-oscuro .form-control{
+  background-color: var(--BaseN3)!important;
+  color:var(--text-blank) !important;
+}
+
+.modo-oscuro .div-icono{
+  background-color: var(--BaseN3) !important;
+  border: 1px solid var(--text-blank);
+}
+
+.modo-oscuro .form-select {
+  background-color: var(--BaseN3) !important;
+  color:var(--text-blank) !important;
+  border: 1px solid var(--text-blank);
+}
