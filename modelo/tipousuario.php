@@ -52,11 +52,12 @@
 		   
 	}
 
-    public function consultar(){
+    public function consultar($limite = 100){
 
         $registro ="SELECT * FROM tipo_usuario WHERE estatus <5
-        ORDER BY id_tipo DESC";
+        ORDER BY id_tipo DESC LIMIT :limite";
         $consulta = $this->conex->prepare($registro);
+        $consulta->bindParam(':limite', $limite, PDO::PARAM_INT);
         $resul = $consulta->execute();
 
         $datos=$consulta->fetchAll(PDO::FETCH_ASSOC);
@@ -69,6 +70,15 @@
         }
     
     } //fin consultar
+
+      public function contarTotal(){
+            $sql = "SELECT COUNT(*) AS total FROM tipo_usuario WHERE estatus < 5";
+            $consulta = $this->conex->prepare($sql);
+            $consulta->execute();
+            $fila = $consulta->fetch(PDO::FETCH_ASSOC);
+            return $fila['total'];
+        }
+
 
 
     

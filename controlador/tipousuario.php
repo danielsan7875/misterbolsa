@@ -10,12 +10,25 @@ if ($_SESSION["nivel"] == 3){
   header("location:?pagina=registroventa");
 }
 
-
     require_once 'modelo/tipousuario.php';
     $objtipousuario = new Tipousuario();
 
+    // 200 por defecto
+    if (!isset($_SESSION['limite_tipo'])) {
+        $_SESSION['limite_tipo'] = 100;
+    }
+
+    //  "ver más"
+    if (isset($_POST['ver_mas'])) {
+        $_SESSION['limite_tipo'] += 100; // Aumenta 100 registros
+        header("location:?pagina=tipousuario");
+        exit;
+    }
+
+    $total_registros = $objtipousuario->contarTotal(); 
+
     if (isset($_POST['consultar'])) {
-        $registro = $objtipousuario->consultar();
+        $registro = $objtipousuario->consultar($_SESSION['limite_tipo']);
         echo json_encode($registro);
 
     } else if(isset($_POST['registrar'])){

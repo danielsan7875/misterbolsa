@@ -27,6 +27,57 @@
       </div>
 
       <div class="transaction-list shadow-sm border-0 DivOscuro1">
+            <div class="col-12">
+              <p class="text-muted"><i class="fa-solid fa-calendar-days me-2"></i>Consulta de Perdidas por Fecha</p>
+            </div>
+
+          <form method="POST"  action="?pagina=perdidas" class="row g-2 align-items-end mt-2">
+
+        <!-- Checkbox 15 dias -->
+        <div class="col-12 col-md-2">
+            <label class="form-label invisible">Filtro</label>
+
+            <input type="checkbox" id="filtro15" name="filtro" value="15" hidden>
+
+            <label for="filtro15" class="filter-card">
+                <span class="check-box"></span>
+                <span class="filter-text">Últimos 15 días</span>
+            </label>
+        </div>
+
+         <!-- Checkbox MES -->
+        <div class="col-12 col-md-2">
+            <label class="form-label invisible">Filtro</label>
+
+            <input type="checkbox" id="filtroMes" name="filtro" value="mes" hidden>
+
+            <label for="filtroMes" class="filter-card">
+                <span class="check-box"></span>
+                <span class="filter-text">Este mes</span>
+            </label>
+        </div>
+
+        <!-- Desde -->
+        <div class="col-12 col-md-3">
+            <label class="form-label"><i class="fa-solid fa-calendar-days me-2"></i>Desde</label>
+            <input type="date" id="fecha_desde" name="desde" class="form-control">
+        </div>
+
+        <!-- Hasta -->
+        <div class="col-12 col-md-3">
+            <label class="form-label"><i class="fa-solid fa-calendar-days me-2"></i>Hasta</label>
+            <input type="date" id="fecha_hasta" name="hasta" class="form-control">
+        </div>
+
+        <!-- Botón -->
+        <div class="col-12 col-md-2 d-grid ">
+            <button type="submit" name="consultafiltro" value="buscar" class="btn btn-primary" style=" padding: 12px 15px;">
+              <i class="fa-solid fa-magnifying-glass me-2"></i>  Buscar
+            </button>
+        </div>
+
+    </form>
+
 
       </div>
 
@@ -63,7 +114,7 @@
                                   </div>
                               </div>
                           </td> 
-                      <td class="td-oscuro align-middle"> <?php echo $dato['nombre']." - ".$dato['nombre_marca']." - ".$dato['nombre_presentacion'] ?> </td>
+                      <td class="td-oscuro align-middle"> <?php echo $dato['nombre_producto']." - ".$dato['nombre_marca']." - ".$dato['nombre_presentacion'] ?> </td>
                       <td class="text-center td-oscuro align-middle"> <?php echo $dato['cantidad']?> </td>
                       <td class="td-oscuro align-middle"> <?php echo $dato['nota']?> </td>
                     </tr>
@@ -152,6 +203,7 @@
   <script src="assets/js/moment.js"></script>
   <script src="assets/js/perdidas.js"></script>
   <?php require_once 'complementos/footer2.php'; ?>  
+    <script src="assets/js/ConsultaFecha.js"></script>
   <!--|||||||||||||||  FIN Footer y JS  |||||||||||||||||||||||||||--> 
 
 

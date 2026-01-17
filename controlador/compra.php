@@ -36,6 +36,27 @@ if(isset($_POST['registrar'])){
       $result = $objcompra->eliminar();
       echo json_encode($result);
   
+} else if (isset($_POST['modificar'])) {
+
+    $filtro = $_POST['filtro'] ?? null;
+    $desde  = $_POST['desde'] ?? null;
+    $hasta  = $_POST['hasta'] ?? null;
+
+    $filtradofecha = $objcompra->consultarFiltrado($filtro, $desde, $hasta);
+
+      // TEXTO DEL PERIODO
+    if ($filtro == "15") {
+        $periodo = "Últimos 15 días (Hoy y 14 días anteriores)";
+    } elseif ($filtro == "mes") {
+        $periodo = "Mes actual (" . date('F Y') . ")";
+    } elseif (!empty($desde) && !empty($hasta)) {
+        $periodo = "Desde " . date('d/m/Y', strtotime($desde)) .
+                   " hasta " . date('d/m/Y', strtotime($hasta));
+    } else {
+        $periodo = "Todos los registros";
+    }
+
+    require_once("vista/complementos/consulta/compra.php");
 } else if ($tipo_usuario == 1 || $tipo_usuario == 2) { // Validacion si es administrador entra
      require_once 'vista/compra.php';
 } else {

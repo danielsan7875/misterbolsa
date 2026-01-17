@@ -73,7 +73,7 @@
     return $res;
 }
 
-
+/*
     public function consultar(){
 
         $registro ="SELECT c.*, dc.*, m.nombre AS nombre_marca, p.nombre AS nombre_presentacion, pro.nombre
@@ -95,6 +95,34 @@
     
     } //fin consultar
 
+    */
+
+    public function consultar(){
+
+    $registro ="SELECT 
+                    c.*, 
+                    dc.*, 
+                    m.nombre AS nombre_marca, 
+                    p.nombre AS nombre_presentacion, 
+                    pro.nombre
+                FROM compra c
+                INNER JOIN detalle_compra dc ON c.id_compra = dc.id_compra
+                INNER JOIN producto pro ON dc.id_producto = pro.id_producto
+                INNER JOIN marca m ON pro.id_marca = m.id_marca
+                INNER JOIN presentacion p ON pro.id_presentacion = p.id_presentacion
+                WHERE c.fecha >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+                ORDER BY c.id_compra DESC";
+
+    $consulta = $this->conex->prepare($registro);
+    $resul = $consulta->execute();
+
+    $datos = $consulta->fetchAll(PDO::FETCH_ASSOC);
+
+    return $resul ? $datos : 0;
+}
+
+
+
   // Metodo para llamar las medidas existentes
     public function obtenerProducto() {
     $query = "SELECT pro.*, m.nombre AS nombre_marca, p.nombre AS nombre_presentacion 
@@ -107,6 +135,43 @@
     return $consulta->fetchAll(PDO::FETCH_ASSOC);
     
     }
+
+    public function consultarFiltrado($filtro = null, $desde = null, $hasta = null) {
+
+    $where = "";
+    $params = [];
+
+    if ($filtro == "15") {
+        $where = "WHERE c.fecha >= DATE_SUB(CURDATE(), INTERVAL 15 DAY)";
+    }
+
+    if ($filtro == "mes") {
+        $where = "WHERE MONTH(c.fecha) = MONTH(CURDATE())
+                  AND YEAR(c.fecha) = YEAR(CURDATE())";
+    }
+
+    if (!empty($desde) && !empty($hasta)) {
+        $where = "WHERE c.fecha BETWEEN :desde AND :hasta";
+        $params[':desde'] = $desde;
+        $params[':hasta'] = $hasta;
+    }
+
+    $sql = "SELECT c.*, dc.*, m.nombre AS nombre_marca,
+                   p.nombre AS nombre_presentacion, pro.nombre
+            FROM compra c
+            INNER JOIN detalle_compra dc ON c.id_compra = dc.id_compra
+            INNER JOIN producto pro ON dc.id_producto = pro.id_producto
+            INNER JOIN marca m ON pro.id_marca = m.id_marca
+            INNER JOIN presentacion p ON pro.id_presentacion = p.id_presentacion
+            $where
+            ORDER BY c.id_compra DESC";
+
+    $consulta = $this->conex->prepare($sql);
+    $consulta->execute($params);
+
+    return $consulta->fetchAll(PDO::FETCH_ASSOC);
+}
+
 
     public function eliminar(){ // Eliminado Fisico
         try {

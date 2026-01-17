@@ -85,6 +85,17 @@
         </table>
         
       </div>
+
+      <?php if ($total_registros > $_SESSION['limite_marca']): ?>
+        <form method="POST" action="?pagina=marca">
+          <div class="text-center ">
+            <button type="submit" name="ver_mas" class="btn btn-primary w-50 mt-3">
+                <i class="fas fa-plus-circle"></i> Ver más registros (+100)
+            </button>
+            </div>
+        </form>
+        <?php endif; ?>
+
     </div>  
     
 

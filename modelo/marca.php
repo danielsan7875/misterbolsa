@@ -54,6 +54,7 @@
         return $res;
     } //fin registrar
 
+    /*
     public function consultar(){
 
         $registro ="SELECT * FROM marca WHERE estatus <5
@@ -68,6 +69,33 @@
             }
     
     } //fin consultar
+*/
+
+public function consultar($limite = 200){
+
+    $registro ="SELECT * 
+                FROM marca 
+                WHERE estatus < 5
+                ORDER BY id_marca DESC
+                LIMIT :limite";
+
+    $consulta = $this->conex->prepare($registro);
+    $consulta->bindParam(':limite', $limite, PDO::PARAM_INT);
+    $consulta->execute();
+
+    $datos = $consulta->fetchAll(PDO::FETCH_ASSOC);
+
+    return $datos ?: 0;
+}
+
+    public function contarTotal(){
+    $sql = "SELECT COUNT(*) AS total FROM marca WHERE estatus < 5";
+    $consulta = $this->conex->prepare($sql);
+    $consulta->execute();
+    $fila = $consulta->fetch(PDO::FETCH_ASSOC);
+    return $fila['total'];
+}
+
 
     public function actualizar(){
 		$registro = "UPDATE marca SET id_marca = :id_marca, nombre = :nombre, estatus = :estatus WHERE id_marca = :id_marca";

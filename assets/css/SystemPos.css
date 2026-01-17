@@ -730,3 +730,98 @@ body.loading-active {
     font-weight: 600;
     color: var(--text-color, #414856);
 }
+
+.filter-card {
+    height: 48px; /* coincide con input con padding 12px */
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    padding: 12px 15px;
+    font-size: 0.95rem;
+    background-color: #f8f9fa;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* cuadrado */
+.filter-card .check-box {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #adb5bd;
+    border-radius: 4px;
+    background-color: #fff;
+    position: relative;
+    flex-shrink: 0;
+}
+
+/* texto */
+.filter-card .filter-text {
+    color: #495057;
+}
+
+/* hover */
+.filter-card:hover {
+    border-color: #0d6efd;
+    background-color: #ffffff;
+}
+
+/* activo */
+input:checked + .filter-card {
+    border-color: #0d6efd;
+    background-color: #e7f1ff;
+}
+
+/* check */
+input:checked + .filter-card .check-box {
+    border-color: #0d6efd;
+    background-color: #0d6efd;
+}
+
+
+
+/*boton top*/
+input:checked + .filter-card .check-box::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 5px;
+    width: 4px;
+    height: 8px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+
+.btn-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 45px;
+    height: 45px;
+    border-radius: 20%;
+    border: none;
+    background:var(--neo-blue);
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+    display: none; /* oculto por defecto */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    transition: opacity 0.3s ease;
+    z-index: 9999;
+}
+
+.btn-top.show {
+    display: block;
+    opacity: 1;
+}
+
+.btn-top.hide {
+    opacity: 0;
+}
+
+

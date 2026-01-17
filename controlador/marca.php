@@ -14,7 +14,20 @@ require_once 'modelo/marca.php';
 
 $objmarca = new Marca();
 
-$registro = $objmarca->consultar();
+// 200 por defecto
+if (!isset($_SESSION['limite_marca'])) {
+    $_SESSION['limite_marca'] = 200;
+}
+
+//  "ver más"
+if (isset($_POST['ver_mas'])) {
+    $_SESSION['limite_marca'] += 100; // Aumenta 100 registros
+     header("location:?pagina=marca");
+    exit;
+}
+
+$registro = $objmarca->consultar($_SESSION['limite_marca']);
+$total_registros = $objmarca->contarTotal(); 
 
 if(isset($_POST['registrar'])){
    if( !empty($_POST['nombre'])){ 

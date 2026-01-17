@@ -46,6 +46,9 @@
     </div>
   </div>
 </div>
+
+<button id="btnTop" class="btn-top">↑</button>
+
   
   <script src="assets/js/datetable/data.js"></script>
 
@@ -76,4 +79,28 @@
                 hamburgerBtn.classList.remove('active');
             }
         });
+
+
+
+        const btnTop = document.getElementById('btnTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                btnTop.classList.add('show');
+                btnTop.classList.remove('hide');
+            } else {
+                btnTop.classList.add('hide');
+                setTimeout(() => btnTop.classList.remove('show'), 300);
+            }
+        });
+
+        btnTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
     </script>
+
+    

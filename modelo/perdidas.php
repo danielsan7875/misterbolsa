@@ -67,7 +67,7 @@
     }
     
     
-    
+   /* 
     public function consultar(){
 
         $registro ="SELECT per.*, m.nombre AS nombre_marca, p.nombre AS nombre_presentacion, pro.nombre
@@ -87,6 +87,73 @@
             }
     
     } //fin consultar
+*/
+
+public function consultar(){
+
+    $registro ="SELECT 
+                    per.*, 
+                    m.nombre AS nombre_marca, 
+                    p.nombre AS nombre_presentacion, 
+                    pro.nombre AS nombre_producto
+                FROM perdida per
+                INNER JOIN producto pro ON per.id_producto = pro.id_producto
+                INNER JOIN marca m ON pro.id_marca = m.id_marca
+                INNER JOIN presentacion p ON pro.id_presentacion = p.id_presentacion
+                WHERE per.fecha >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+                ORDER BY per.id_perdida DESC";
+
+    $consulta = $this->conex->prepare($registro);
+    $resul = $consulta->execute();
+
+    $datos = $consulta->fetchAll(PDO::FETCH_ASSOC);
+
+    return $resul ? $datos : 0;
+}
+
+
+public function consultarFiltrado($filtro = null, $desde = null, $hasta = null) {
+
+    $where = "";
+    $params = [];
+
+    // FILTRO: Últimos 15 días
+    if ($filtro == "15") {
+        $where = "WHERE per.fecha >= DATE_SUB(CURDATE(), INTERVAL 15 DAY)";
+    }
+
+    // FILTRO: Mes actual
+    if ($filtro == "mes") {
+        $where = "WHERE MONTH(per.fecha) = MONTH(CURDATE())
+                  AND YEAR(per.fecha) = YEAR(CURDATE())";
+    }
+
+    // FILTRO: Rango personalizado
+    if (!empty($desde) && !empty($hasta)) {
+        $where = "WHERE per.fecha BETWEEN :desde AND :hasta";
+        $params[':desde'] = $desde;
+        $params[':hasta'] = $hasta;
+    }
+
+    // CONSULTA COMPLETA
+    $sql = "SELECT 
+                per.*, 
+                m.nombre AS nombre_marca, 
+                p.nombre AS nombre_presentacion, 
+                pro.nombre AS nombre_producto
+            FROM perdida per
+            INNER JOIN producto pro ON per.id_producto = pro.id_producto
+            INNER JOIN marca m ON pro.id_marca = m.id_marca
+            INNER JOIN presentacion p ON pro.id_presentacion = p.id_presentacion
+            $where
+            ORDER BY per.id_perdida DESC";
+
+    $consulta = $this->conex->prepare($sql);
+    $consulta->execute($params);
+
+    return $consulta->fetchAll(PDO::FETCH_ASSOC);
+}
+
 
   // Metodo para llamar las medidas existentes
     public function obtenerProducto() {

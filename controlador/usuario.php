@@ -14,8 +14,23 @@ if ($_SESSION["nivel"] == 3){
 require_once 'modelo/usuario.php';
 
     $objusuario = new Usuario ();
+
+    // 200 por defecto
+    if (!isset($_SESSION['limite_usuario'])) {
+        $_SESSION['limite_usuario'] = 200;
+    }
+
+    //  "ver más"
+    if (isset($_POST['ver_mas'])) {
+        $_SESSION['limite_usuario'] += 100; // Aumenta 100 registros
+        header("location:?pagina=usuario");
+        exit;
+    }
+
+
+    $registro = $objusuario->consultar($_SESSION['limite_usuario']);
+    $total_registros = $objusuario->contarTotal(); 
     
-    $registro = $objusuario->consultar(); 
     $tipos = $objusuario->obtenerTipo(); 
     
     if(isset($_POST['registrar'])){

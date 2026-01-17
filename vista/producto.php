@@ -34,7 +34,46 @@
 
           
       <div class="transaction-list shadow-sm border-0 DivOscuro1">
-            <div id="alerta">  </div>
+
+            <div class="row align-items-center g-2 my-3 mt-0">
+
+              <!-- Columna 1: Alerta (70%) -->
+              <div class="col-12 col-md-8">
+                 <?php if (empty($StockMenor)) : ?>
+
+                <!-- ALERTA VERDE SIN BOTÓN -->
+                <div class="alert alert-success m-0" role="alert">
+                   <i class="fa-solid fa-circle-check me-2"></i> Niveles de inventario correctos: Todos los productos cuentan con stock suficiente
+                </div>
+
+              <?php else : ?>
+
+              <!-- ALERTA ROJA CON BOTÓN DENTRO -->
+              <div class="alert alert-warning d-flex justify-content-between align-items-center m-0" role="alert">
+                  <span> <i class="fa-solid fa-triangle-exclamation me-2"></i> <strong>Revisión necesaria: </strong> Hay productos con bajo o mínimo stock, </span>
+                    <button class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#Stock">
+                        Ver productos
+                    </button>
+              </div>
+               <?php endif; ?>     
+              </div>
+
+              <!-- Columna 2: Botón (30%) -->
+             <div class="col-12 col-md-4">
+            
+                  <div class="d-flex justify-content-end gap-2">
+                      <button class="btn btn-primary  w-100" >
+                          Descargar PDF
+                      </button>
+
+                      <button class="btn btn-secondary  w-100" disabled>
+                          Personalizado
+                      </button>
+                  </div>
+              </div>
+
+          </div>
+
       </div>
 
     <div class="transaction-list shadow-sm-0 DivOscuro1">
@@ -44,7 +83,7 @@
         <table id="myTable" class="table table-hover" style="width:100%">
             <thead>
                 <tr class="table-color">
-                    <th>#</th>
+              
                     <th>Nombre</th>
                     <th>Marca y Presentación</th>
                     <th>Precio DETAL</th>
@@ -73,17 +112,47 @@
                 ?>
                   <tr data-precio-unitario="<?php echo $dato['precio_unitario']; ?>" data-precio-mayor="<?php echo $dato['precio_mayor']; ?>" data-stock-minimo="<?php echo $dato['stock_minimo']; ?>">
                       
-                    <td class="text-center td-oscuro"> <?php echo $dato['id_producto']; ?></td>
-
-                      <td class="td-oscuro"><?php echo $dato['nombre']; ?></td>
+                        <td class="td-oscuro">
+                          <div class="d-flex align-items-center">
+                              <div class="me-3">
+                                  <i class="fa-solid fa-boxes-stacked fa-2x" style="color: #E63946;"></i>
+                              </div>
+                              <div>
+                                  <div style="font-size: 0.9 rem;">
+                                      <?php echo $dato['nombre']; ?>
+                                  </div>
+                                  <div class="text-muted small">
+                                      # <?php echo $dato['id_producto']; ?>
+                                  </div>
+                              </div>
+                          </div>
+                      </td> 
 
                         <td class="td-oscuro">    
                           <div class="mt-0">Marca: <?php echo $dato['nombre_marca']; ?> </div>
-                          <div class="mt-0"> • <?php echo $dato['nombre_presentacion']; ?> </div>
+                          <div class="mt-0">  <i class="fa-solid fa-shapes" style="color: #E63946;"></i> <?php echo $dato['nombre_presentacion']; ?> </div>
                         </td>
-                          <td class="fw-bold td-oscuro"><div id="precioBs"> </div>  </td>
+                          <td class="fw-bold td-oscuro">
+                            <div>
+                                  <div style="font-size: 0.9 rem;" id="precioBs">
+                                     
+                                  </div>
+                                  <div class="text-muted small">
+                                    $ <?php echo $dato['precio_unitario']; ?>
+                                  </div>
+                              </div> 
+                          </td>
 
-                           <td class="fw-bold td-oscuro"> <div id="precioBss" > </div>  </td>
+                           <td class="td-oscuro"> 
+                             <div>
+                                  <div style="font-size: 0.9 rem;" id="precioBss">
+                                     
+                                  </div>
+                                  <div class="text-muted small">
+                                    $ <?php echo $dato['precio_mayor']; ?>
+                                  </div>
+                              </div>
+                            </td>
 
                             <td class="text-center td-oscuro">
                                <?php
@@ -92,7 +161,7 @@
                                       } else if($dato['stock'] >= $dato['stock_minimo']){
                                         echo '<span class="badge bg-primary fs-6">'.$dato['stock'].'</span>';
                                       } else{
-                                         echo '<span class="badge bg-warning fs-6">'.$dato['stock'].'</span>';
+                                         echo '<span class="badge bg-warning fs-6 text-dark">'.$dato['stock'].'</span>';
                                       }
                                     ?></td>
 
@@ -216,6 +285,17 @@
         </table>
        
       </div>
+
+        <?php if ($total_registros > $_SESSION['limite_producto']): ?>
+        <form method="POST" action="?pagina=producto">
+          <div class="text-center ">
+            <button type="submit" name="ver_mas" class="btn btn-primary w-50 mt-3">
+                <i class="fas fa-plus-circle"></i> Ver más registros (+100)
+            </button>
+            </div>
+        </form>
+        <?php endif; ?>
+
     </div> <!-- DIV 2 -->
   
 
@@ -337,6 +417,63 @@
       </div>
     </div>
   </div>
+
+
+
+
+  <div class="modal fade" id="Stock" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content modal-producto div-oscuro-2">
+
+            <div class="modal-header encabezado-modal">
+                <h1 class="modal-title fs-5" style="color:#ffffff;">
+                    <i class="fas fa-boxes" style="color:#ffffff;"></i> Productos con Stock Bajo
+                </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body div-oscuro-2">
+
+                <table class="table table-hover w-100">
+                    <thead class="table-color">
+                        <tr>
+                            <th>Producto</th>
+                            <th>Marca y Presentación</th>
+                            <th>Stock</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($StockMenor as $producto) : ?>
+                            <tr>
+                                <td class="td-oscuro">
+                                   <div class="mt-0"> <?= $producto['nombre'] ?> </div>
+                                  <div class="mt-0 text-muted"> Cod. <?= $producto['id_producto'] ?> </div>
+                                </td>
+                                <td class="td-oscuro">
+                                  <div class="mt-0">Marca: <?php echo $producto['nombre_marca']; ?> </div>
+                                  <div class="mt-0">  <i class="fa-solid fa-shapes" style="color: #E63946;"></i>
+                                   <?php echo $producto['nombre_presentacion']; ?> </div>
+                                </td>
+                                <td class="td-oscuro"> <i class="fa-solid fa-triangle-exclamation me-2 text-warning"></i> <?= $producto['stock'] ?></td>
+                           
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+
+                
+
+            </div>
+            <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
 
      
     

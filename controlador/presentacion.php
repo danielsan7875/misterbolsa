@@ -14,7 +14,21 @@ require_once 'modelo/presentacion.php';
 
 $objpresentacion = new Presentacion();
 
- $registro = $objpresentacion->consultar();
+// 200 por defecto
+if (!isset($_SESSION['limite_presentacion'])) {
+    $_SESSION['limite_presentacion'] = 200;
+}
+
+//  "ver más"
+if (isset($_POST['ver_mas'])) {
+    $_SESSION['limite_presentacion'] += 100; // Aumenta 100 registros
+     header("location:?pagina=presentacion");
+    exit;
+}
+
+
+ $registro = $objpresentacion->consultar($_SESSION['limite_presentacion']);
+ $total_registros = $objpresentacion->contarTotal(); 
 
 if(isset($_POST['registrar'])){
         if( !empty($_POST['nombre'])){

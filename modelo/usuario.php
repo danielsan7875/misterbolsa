@@ -60,13 +60,14 @@ class Usuario extends Conexion{
 		   
 	}
 
-    public function consultar(){
+    public function consultar($limite = 200){
     
         $registro="SELECT u.*,tu.id_tipo, tu.nombre AS nombre_tipo
         FROM usuario u 
         INNER JOIN  tipo_usuario tu ON u.id_tipo = tu.id_tipo
-        ORDER BY u.id_usuario DESC";
+        ORDER BY u.id_usuario DESC  LIMIT :limite";
         $consulta = $this->conex->prepare($registro);
+           $consulta->bindParam(':limite', $limite, PDO::PARAM_INT);
         $resul = $consulta->execute();
 
         $datos=$consulta->fetchAll(PDO::FETCH_ASSOC);
@@ -84,7 +85,16 @@ class Usuario extends Conexion{
         $consulta = $this->conex->prepare($query);
         $consulta->execute();
         return $consulta->fetchAll(PDO::FETCH_ASSOC);
-        } 
+        }
+        
+        public function contarTotal(){
+            $sql = "SELECT COUNT(*) AS total FROM usuario WHERE estatus < 5";
+            $consulta = $this->conex->prepare($sql);
+            $consulta->execute();
+            $fila = $consulta->fetch(PDO::FETCH_ASSOC);
+            return $fila['total'];
+        }
+
 
         public function eliminar(){
             try {

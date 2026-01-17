@@ -35,7 +35,28 @@ if (isset($_POST['registrar'])) {
   $result = $objperdidas->eliminar();
   echo json_encode($result);
 
- }else{
+ }else if (isset($_POST['consultafiltro'])) {
+
+    $filtro = $_POST['filtro'] ?? null;
+    $desde  = $_POST['desde'] ?? null;
+    $hasta  = $_POST['hasta'] ?? null;
+
+    $filtradofecha = $objperdidas->consultarFiltrado($filtro, $desde, $hasta);
+
+      // TEXTO DEL PERIODO
+    if ($filtro == "15") {
+        $periodo = "Últimos 15 días (Hoy y 14 días anteriores)";
+    } elseif ($filtro == "mes") {
+        $periodo = "Mes actual (" . date('F Y') . ")";
+    } elseif (!empty($desde) && !empty($hasta)) {
+        $periodo = "Desde " . date('d/m/Y', strtotime($desde)) .
+                   " hasta " . date('d/m/Y', strtotime($hasta));
+    } else {
+        $periodo = "Todos los registros";
+    }
+
+    require_once("vista/complementos/consulta/perdidas.php");
+}else{
    require_once 'vista/perdidas.php';
  }
 ?>

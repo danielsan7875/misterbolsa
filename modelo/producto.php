@@ -71,15 +71,16 @@
         return $res;
     } //fin registrar
 
-    public function consultar(){
+    public function consultar($limite = 200){
 
         $registro ="SELECT pro.*, m.nombre AS nombre_marca, p.nombre AS nombre_presentacion 
         FROM producto pro
         INNER JOIN marca m ON pro.id_marca = m.id_marca
         INNER JOIN presentacion p ON pro.id_presentacion = p.id_presentacion
         WHERE pro.estatus <5
-        ORDER BY pro.id_producto DESC";
+        ORDER BY pro.id_producto DESC LIMIT :limite";
         $consulta = $this->conex->prepare($registro);
+         $consulta->bindParam(':limite', $limite, PDO::PARAM_INT);
         $resul = $consulta->execute();
 
         $datos=$consulta->fetchAll(PDO::FETCH_ASSOC);
@@ -91,9 +92,45 @@
     
     } //fin consultar
 
+     public function contarTotal(){
+            $sql = "SELECT COUNT(*) AS total FROM producto WHERE estatus < 5";
+            $consulta = $this->conex->prepare($sql);
+            $consulta->execute();
+            $fila = $consulta->fetch(PDO::FETCH_ASSOC);
+            return $fila['total'];
+    }
+
+
+    public function StockMenor(){
+
+    $registro ="SELECT pro.*, 
+                       m.nombre AS nombre_marca, 
+                       p.nombre AS nombre_presentacion 
+                FROM producto pro
+                INNER JOIN marca m 
+                    ON pro.id_marca = m.id_marca
+                INNER JOIN presentacion p 
+                    ON pro.id_presentacion = p.id_presentacion
+                WHERE pro.estatus < 5
+                  AND pro.stock <= pro.stock_minimo
+                ORDER BY pro.id_producto DESC";
+
+    $consulta = $this->conex->prepare($registro);
+    $resul = $consulta->execute();
+
+    $datos = $consulta->fetchAll(PDO::FETCH_ASSOC);
+
+    if ($resul){
+        return $datos;
+    } else {
+        return 0;
+    }
+}
+
+
     // Metodo para llamar las Presentaciones existentes
     public function obtenerPresentacion() {
-        $query = "SELECT * FROM presentacion WHERE estatus = 1";
+        $query = "SELECT * FROM presentacion WHERE estatus = 1 LIMIT 100";
         $consulta = $this->conex->prepare($query);
         $consulta->execute();
         return $consulta->fetchAll(PDO::FETCH_ASSOC);
@@ -101,7 +138,7 @@
     
      // Metodo para llamar las medidas existentes
      public function obtenerMarca() {
-        $query = "SELECT * FROM marca WHERE estatus =1";
+        $query = "SELECT * FROM marca WHERE estatus =1 LIMIT 100";
         $consulta = $this->conex->prepare($query);
         $consulta->execute();
         return $consulta->fetchAll(PDO::FETCH_ASSOC);

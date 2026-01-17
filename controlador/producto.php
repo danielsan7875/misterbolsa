@@ -4,9 +4,7 @@ session_start();
 if (empty($_SESSION["id"])){
   header("location:?pagina=login");
 }
-
 $vista="Producto - Inventario"; $activo="6";
-
 $tipo_usuario = $_SESSION['nivel'];
 
 if ($_SESSION["nivel"] == 3){
@@ -17,10 +15,27 @@ require_once 'modelo/producto.php';
 
 $objproducto = new Producto();
 
-$registro = $objproducto->consultar();
-$marca = $objproducto->obtenerMarca();
-$presentacion = $objproducto->obtenerPresentacion();
-$dolar = $objproducto->obtenerDolar();
+ // 200 por defecto
+    if (!isset($_SESSION['limite_producto'])) {
+        $_SESSION['limite_producto'] = 200;
+    }
+
+    //  "ver más"
+    if (isset($_POST['ver_mas'])) {
+        $_SESSION['limite_producto'] += 100; // Aumenta 100 registros
+        header("location:?pagina=usuario");
+        exit;
+    }
+
+    $registro = $objproducto->consultar($_SESSION['limite_producto']);
+    $total_registros = $objproducto->contarTotal(); 
+
+    $marca = $objproducto->obtenerMarca();
+    $presentacion = $objproducto->obtenerPresentacion();
+
+    $dolar = $objproducto->obtenerDolar();
+
+    $StockMenor = $objproducto->StockMenor();
 
 if(isset($_POST['registrar'])){
    if(!empty($_POST['nombre'])){
@@ -70,19 +85,10 @@ if(isset($_POST['registrar'])){
         $res = array('respuesta' => 0, 'accion' => 'eliminar', 'text' => 'No puedes Eliminar un producto con stock disponible');
         echo json_encode($res);
         
-}
+  }
    
 
-  }else if(isset($_POST['tasadolar'])){
-    if(!empty($_POST['id_dolar']) && !empty($_POST['precios'])){
-
-        $objproducto->set_Id_dolar($_POST['id_dolar']); 
-        $objproducto->set_precios($_POST['precios']); 
- 
-        $result = $objproducto->tasadolar();
-        echo json_encode($result);
-    }
-  } else {
+  }else {
     require_once 'vista/producto.php';
   }
     
