@@ -60,15 +60,12 @@
         ORDER BY id_marca DESC";
         $consulta = $this->conex->prepare($registro);
         $resul = $consulta->execute();
-
         $datos=$consulta->fetchAll(PDO::FETCH_ASSOC);
-        if ($resul) {
-            $dato['datos'] = $datos;
-            $dato['accion'] = 'consultar';
-            return $dato;
-        } else {
-            return $res = 0;
-        }
+            if ($resul){
+                return $datos;
+            } else{
+                return $res = 0;
+            }
     
     } //fin consultar
 

@@ -10,17 +10,13 @@ if ($_SESSION["nivel"] == 3){
   header("location:?pagina=registroventa");
 }
 
-
 require_once 'modelo/presentacion.php';
 
-    $objpresentacion = new Presentacion();
+$objpresentacion = new Presentacion();
 
-    
-    if (isset($_POST['consultar'])) {
-        $registro = $objpresentacion->consultar();
-        echo json_encode($registro);
-    
-    } else if(isset($_POST['registrar'])){
+ $registro = $objpresentacion->consultar();
+
+if(isset($_POST['registrar'])){
         if( !empty($_POST['nombre'])){
 
             $objpresentacion->set_Nombre($_POST['nombre']);

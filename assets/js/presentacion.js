@@ -92,15 +92,10 @@ function validarFormulario() {
 }  
 
 
-function consulta() {
-    var datos = new FormData();
-    datos.append('consultar', 'consultar');
-    enviaAjax(datos);
-  }
 
 $(document).ready(function() {
    // VALIDACION DE DATOS  
-    consulta();
+  
   $("#nombre_prese").on("keypress", function(e) {
     // Permitir letras (mayúsculas y minúsculas), números, espacios y los caracteres especiales - # /
     validarkeypress(/^[a-zA-Z0-9\-.#\/\s\b]*$/, e);
@@ -130,36 +125,33 @@ $(document).ready(function() {
  
       });
 
-$('#actualizar').on("click", function () {
-  Swal.fire({
-    title: '¿Desea actualizar los datos?',
-    text: '',
-    icon: 'question',
-    showCancelButton: true,
-    color: "#00000",
-    confirmButtonColor: '#1a7538',
-    cancelButtonColor: '#EF233C',
-    confirmButtonText: ' SI; ACTUALIZAR ',
-    cancelButtonText: 'NO'
-  }).then((result) => {
-    if (!validarFormulario()) {
-                muestraMensaje("error", 2000, "Campos inválidos O Vacios", "Por favor, corrige los errores antes de continuar.");
-              return;
-    }else if (result.isConfirmed) {
-      activarLoaderBoton('#actualizar', "Guardando...");
-      var datos = new FormData($('#m')[0]);
-      datos.append('actualizar', 'actualizar');
-      enviaAjax(datos);
-    }
-  });      
+    $('#actualizar').on("click", function () {
+      Swal.fire({
+        title: '¿Desea actualizar los datos?',
+        text: '',
+        icon: 'question',
+        showCancelButton: true,
+        color: "#00000",
+        confirmButtonColor: '#1a7538',
+        cancelButtonColor: '#EF233C',
+        confirmButtonText: ' SI; ACTUALIZAR ',
+        cancelButtonText: 'NO'
+      }).then((result) => {
+        if (!validarFormulario()) {
+                    muestraMensaje("error", 2000, "Campos inválidos O Vacios", "Por favor, corrige los errores antes de continuar.");
+                  return;
+        }else if (result.isConfirmed) {
+          activarLoaderBoton('#actualizar', "Guardando...");
+          var datos = new FormData($('#m')[0]);
+          datos.append('actualizar', 'actualizar');
+          enviaAjax(datos);
+        }
+      });      
 
 
-});
+    });
     
   });
-
-
-
 
   function muestraMensaje(icono, tiempo, titulo, mensaje) {
     Swal.fire({
@@ -170,43 +162,6 @@ $('#actualizar').on("click", function () {
       showConfirmButton: false,
     });
   }
-
-
-  function crearConsulta(datos) {
-
-    var tablaBody = $('#tablapresentacion');
-    tablaBody.empty();
-  
-    datos.forEach(function (dato) {
-        var estatus_texto = {
-            1: 'Activo',
-            2: 'No Activo',
-            3: 'Inactivo'
-          };
-          var estatus_classes = {
-            1: 'badge rounded-pill bg-success', // Activo
-            2: 'badge rounded-pill bg-warning', // No activo
-            3: 'badge rounded-pill bg-danger' // Inactivo
-          };
-      
-  
-      var fila = '<tr>' +
-        '<td class="text-center td-oscuro">' + dato.id_presentacion + '</td>' +
-        '<td class="td-oscuro">' + dato.nombre + '</td>' +
-        '<td class="td-oscuro"><span class="'+ estatus_classes[dato.estatus] + '">' + estatus_texto[dato.estatus] + '</span></td>' +
-        '<td class="td-oscuro">' +
-        '<form method="POST" action="?pagina=presentacion">' +
-            '<button name="modificar" class="btn btn-primary btn-sm modificar me-3" value="' + dato.id_presentacion + '"><i class="fas fa-pencil-alt" title="Editar"></i> Modificar </button>' +
-            '<button type="button" onclick="eliminar(this)" class="btn btn-danger btn-sm eliminar" value="' + dato.id_presentacion + '"><i class="fas fa-trash-alt" title="Eliminar"> </i> Eliminar </button>' +
-        '</form>' +
-        '</td>' +
-        '</tr>';
-  
-      tablaBody.append(fila);
-    });
-  
-  }
-
 
     
   function enviaAjax(datos) {
@@ -225,38 +180,36 @@ $('#actualizar').on("click", function () {
         var lee = JSON.parse(respuesta);
         try {
   
-            if (lee.accion == 'consultar') {
-                crearConsulta(lee.datos);
-              }
-              else if (lee.accion == 'incluir') {
+              if (lee.accion == 'incluir') {
                 if (lee.respuesta == 1) {
-                     $('#nombre_prese').val('');  
-                  muestraMensaje("success", 1000, "Se ha registrado con éxito", "Su registro se ha completado exitosamente");
+                  muestraMensaje("success", 1500, "Se ha registrado con éxito", "Su registro se ha completado exitosamente");
                   desactivarLoaderBoton('#registrar');
+
                   setTimeout(function () {
-                    consulta();
-                  }, 1000);
+                   location = '?pagina=presentacion';
+                  }, 2000);
                 } else {
-                  muestraMensaje("error", 1000, "ERROR", "ERROR");
+                  muestraMensaje("error", 2000, "ERROR", "ERROR");
                   desactivarLoaderBoton('#registrar');
                 }
               } else if (lee.accion == 'actualizar') {
                 if (lee.respuesta == 1) {
-                  muestraMensaje("success", 1000, "Se ha Modificado con éxito", "Su registro se ha Actualizado exitosamente");
+                  muestraMensaje("success", 1500, "Se ha Modificado con éxito", "Su registro se ha Actualizado exitosamente");
                   desactivarLoaderBoton('#actualizar');
+
                   setTimeout(function () {
                     location = '?pagina=presentacion';
-                  }, 1000);
+                  }, 2000);
                 } else {
                   muestraMensaje("error", 2000, "ERROR", "ERROR");
                   desactivarLoaderBoton('#actualizar');
                 }
               } else if (lee.accion == 'eliminar') {
                 if (lee.respuesta == 1) {
-                  muestraMensaje("success", 1000, "Se ha eliminado con éxito", "Los datos se han borrado correctamente");
+                  muestraMensaje("success", 1500, "Se ha eliminado con éxito", "Los datos se han borrado correctamente");
                   setTimeout(function () {
-                    consulta();
-                  }, 1000);
+                     location = '?pagina=presentacion';
+                  }, 2000);
                 } else {
                   muestraMensaje("error", 2000, "ERROR", lee.text);
                 }

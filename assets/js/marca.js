@@ -85,12 +85,6 @@ function validarCampo(campo, regex, textoError, mensaje) {
   }
 }
 
-function consulta() {
-    var datos = new FormData();
-    datos.append('consultar', 'consultar');
-    enviaAjax(datos);
-  }
-
 function validarFormulario() {
     const resultados = [
         validarCampo($("#nombre_marca"), /^(?=.*[a-zA-Z]|(?=.*[0-9]))[a-zA-Z0-9\s]{4,100}$/, $("#textomarca"), "Debe haber como mínimo de 4 caracteres"),
@@ -100,7 +94,6 @@ function validarFormulario() {
 }  
 
 $(document).ready(function() {
-    consulta();
    // VALIDACION DE DATOS  
   $("#nombre_marca").on("keypress", function(e) {
     validarkeypress(/^[a-zA-Z0-9-\s\b]*$/, e);
@@ -151,8 +144,6 @@ $(document).ready(function() {
  
   });
 
-
-
     
   });
 
@@ -166,44 +157,6 @@ $(document).ready(function() {
       showConfirmButton: false,
     });
   }
-
-
-  function crearConsulta(datos) {
-
-    var tablaBody = $('#tablamarca');
-    tablaBody.empty();
-  
-    datos.forEach(function (dato) {
-        var estatus_texto = {
-            1: 'Activo',
-            2: 'No Activo',
-            3: 'Inactivo'
-          };
-          var estatus_classes = {
-            1: 'badge rounded-pill bg-success', // Activo
-            2: 'badge rounded-pill bg-warning', // No activo
-            3: 'badge rounded-pill bg-danger' // Inactivo
-          };
-      
-  
-      var fila = '<tr>' +
-        '<td class="text-center td-oscuro">' + dato.id_marca + '</td>' +
-        '<td class="td-oscuro">' + dato.nombre + '</td>' +
-        '<td class="td-oscuro"><span class="' + estatus_classes[dato.estatus] + '">' + estatus_texto[dato.estatus] + '</span></td>' +
-        '<td class="td-oscuro">' +
-        '<form method="POST" action="?pagina=marca">' +
-            '<button name="modificar" class="btn btn-primary btn-sm modificar me-3" value="' + dato.id_marca + '"><i class="fas fa-pencil-alt" title="Editar"></i> Modificar </button>' +
-            '<button type="button" onclick="eliminar(this)" class="btn btn-danger btn-sm eliminar" value="' + dato.id_marca + '"><i class="fas fa-trash-alt" title="Eliminar"> </i> Eliminar </button>' +
-        '</form>' +
-        '</td>' +
-        '</tr>';
-  
-      tablaBody.append(fila);
-    });
-  
-  }
-
-
     
   function enviaAjax(datos) {
     $.ajax({
@@ -221,17 +174,13 @@ $(document).ready(function() {
         var lee = JSON.parse(respuesta);
         try {
   
-            if (lee.accion == 'consultar') {
-                crearConsulta(lee.datos);
-              }
-              else if (lee.accion == 'incluir') {
-                if (lee.respuesta == 1) {
-                  $('#nombre_marca').val('');  
+            if (lee.accion == 'incluir') {
+                if (lee.respuesta == 1) { 
                   muestraMensaje("success", 1000, "Se ha registrado con éxito", "Su registro se ha completado exitosamente");
-                  desactivarLoaderBoton('#registrar');
-                   setTimeout(function () {
-                    consulta();
-                  }, 1000);
+                   desactivarLoaderBoton('#registrar');
+                    setTimeout(function () {
+                      location = '?pagina=marca';
+                    }, 1000);
                 } else {
                   muestraMensaje("error", 1000, "ERROR", "ERROR");
                   desactivarLoaderBoton('#registrar');
@@ -250,11 +199,12 @@ $(document).ready(function() {
               } else if (lee.accion == 'eliminar') {
                 if (lee.respuesta == 1) {
                   muestraMensaje("success", 1000, "Se ha eliminado con éxito", "Los datos se han borrado correctamente ");
-                  setTimeout(function () {
-                    consulta();
+                   setTimeout(function () {
+                    location = '?pagina=marca';
                   }, 1000);
-                } else {
+                }else {
                   muestraMensaje("error", 2000, "ERROR", lee.text);
+                  desactivarLoaderBoton('#actualizar');
                 }
               }
   

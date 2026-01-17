@@ -30,7 +30,12 @@
       </div>
     </div>
 
-          <div id="alerta">  </div>
+       
+
+          
+      <div class="transaction-list shadow-sm border-0 DivOscuro1">
+            <div id="alerta">  </div>
+      </div>
 
     <div class="transaction-list shadow-sm-0 DivOscuro1">
 
@@ -142,9 +147,9 @@
                             <!-- Primera Card: Nombre, Marca, Presentación -->
                           
                               <div class="seccion-formulario">
-                              <h6><i class="fas fa-boxes"></i> Nombre del Producto </h6>
+                              <h6 ><i class="fas fa-boxes"></i> Nombre del Producto </h6>
                                 <div class="row">
-                                  <div class="col"> <h5 class="card-title TextOscuro"><strong><?php echo $dato['nombre']; ?></strong></h5> </div>
+                                  <div class="col"> <h5 class="card-title text-dark TextOscuro"><strong><?php echo $dato['nombre']; ?></strong></h5> </div>
                                   <div class="col ">
                                     <h5 class="mt-0 ">Marca: <?php echo $dato['nombre_marca']; ?></h5>
                                     <h5 class="mt-0 ">Presentación: <?php echo $dato['nombre_presentacion']; ?></h5>

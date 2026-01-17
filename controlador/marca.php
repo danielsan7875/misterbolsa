@@ -14,11 +14,9 @@ require_once 'modelo/marca.php';
 
 $objmarca = new Marca();
 
-if (isset($_POST['consultar'])) {
-    $registro = $objmarca->consultar();
-    echo json_encode($registro);
+$registro = $objmarca->consultar();
 
-} else if(isset($_POST['registrar'])){
+if(isset($_POST['registrar'])){
    if( !empty($_POST['nombre'])){ 
 
        $objmarca->set_Nombre($_POST['nombre']);

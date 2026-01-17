@@ -60,14 +60,12 @@
         $consulta = $this->conex->prepare($registro);
         $resul = $consulta->execute();
 
-        $datos=$consulta->fetchAll(PDO::FETCH_ASSOC);
-        if ($resul) {
-            $dato['datos'] = $datos;
-            $dato['accion'] = 'consultar';
-            return $dato;
-        } else {
-            return $res = 0;
-        }
+         $datos=$consulta->fetchAll(PDO::FETCH_ASSOC);
+            if ($resul){
+                return $datos;
+            } else{
+                return $res = 0;
+            }
     
     } //fin consultar
 

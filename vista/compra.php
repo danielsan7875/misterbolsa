@@ -14,7 +14,7 @@
  
       <div class="row">
           <div class="d-sm-flex align-items-center justify-content-between mb-5">
-            <h1 class="h3 mb-0 TextOscuroTitel"> <i class="fa-solid fa-receipt mr-3" style="color: #E63946;"></i>
+            <h1 class="h3 mb-0 TextOscuroTitel"> <i class="fa-solid fa-receipt me-2" style="color: #E63946;"></i>
               Compra</h1>
                 
             <!-- Button que abre el Modal N1 Registro -->
@@ -25,9 +25,11 @@
           </div>
       </div>
 
-          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button class="btn btn-primary mb-3" type="button" disabled><i class="fa-regular fa-file-pdf"></i>Reportes</button>
-          </div>
+          <div class="transaction-list shadow-sm border-0 DivOscuro1">
+
+      </div>
+
+    <p class="text-muted">Periodo actual de registros: Últimos 7 días (Hoy y 6 días anteriores)</p>
 
       <div class="transaction-list shadow-sm border-0 DivOscuro1">
 
@@ -35,8 +37,7 @@
             <table id="myTable" class="table table-hover" style="width:100%">
                 <thead class="table-color">
                   <tr>
-                    <th >NRO</th>
-                    <th>Fecha</th>
+                    <th>Nro y Fecha</th>
                     <th>Producto</th>
                     <th>Cantidad</th>
                     
@@ -70,8 +71,22 @@
                   <?php foreach ($compras as $id_compra => $info): ?>
   
                   <tr>
-                      <td class="text-center td-oscuro"><?php echo $id_compra; ?></td>
-                      <td class="text-center td-oscuro"><?php echo date("d/m/Y", strtotime($info['fecha'])); ?></td>
+    
+                       <td class="td-oscuro">
+                              <div class="d-flex align-items-center">
+                                  <div class="me-3">
+                                      <i class="fa-solid fa-receipt fa-2x" style="color: #E63946;"></i>
+                                  </div>
+                                  <div>
+                                      <div>
+                                        <?php echo date("d/m/Y", strtotime($info['fecha'])); ?>
+                                      </div>
+                                      <div class="text-muted small">
+                                          Nro: <?php echo $id_compra; ?>
+                                      </div>
+                                  </div>
+                              </div>
+                          </td>
 
                       <td class="td-oscuro">
                           <ul class="mb-0">
@@ -80,7 +95,7 @@
                               $mostrar = array_slice($detalles, 0, 2);
                               foreach ($mostrar as $detalle): ?>
                                   <li>
-                                      <i class="fa-solid fa-boxes-stacked texto-principal me-2" style="color: #457B9D;"></i>
+                                      <i class="fa-solid fa-boxes-stacked text-primary me-2"></i>
                                       <?php echo $detalle['nombre'].' - '.$detalle['marca'].' - '.$detalle['presentacion']; ?>
                                   </li>
                               <?php endforeach; ?>
@@ -143,8 +158,8 @@
                                         </tbody>
                                       </table>
                                     </div>
-                                    <div class="modal-footer div-oscuro-2">
-                                      <button type="button" class="btn btn-info text-dark" data-bs-dismiss="modal">Cerrar</button>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                                     </div>
                                   </div>
                                 </div>

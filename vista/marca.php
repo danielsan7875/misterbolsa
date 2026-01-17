@@ -27,19 +27,60 @@
     <div class="transaction-list shadow-sm border-0 DivOscuro1">
       <div class="table-responsive TextOcuro">
 
-          <table class="table table-hover" style="width:100%">
+          <table id="myTable"  class="table table-hover" style="width:100%">
             <thead class="table-color">
               <tr>
-                <th>#</th>
                 <th>NOMBRE</th>
                 <th>ESTATUS</th>
                 <th>ACCION</th>
               </tr>
             </thead>
 
-            <tbody id="tablamarca">
-            
-            
+            <tbody>
+            <?php
+            $estatus_texto = array( // Texto que aparece en la vista
+                  1 => 'Activo',
+                  2 => 'No Activo',
+                );
+          
+                $estatus_classes = array(// para el estido CSS
+                  1=> 'badge rounded-pill bg-success ', // Activo
+                  2=>'badge rounded-pill bg-warning', // No activo
+                  3=> 'badge rounded-pill bg-danger' // Inactivo
+                );
+
+            foreach ($registro as $dato){
+            ?>
+             <tr> 
+               <td class="td-oscuro">
+                  <div class="d-flex align-items-center">
+                      <div class="me-3">
+                          <i class="fas fa-tag fa-2x" style="color: #E63946;"></i>
+                      </div>
+                      <div>
+                          <div class="fw-bold" style="font-size: 1.1rem;">
+                              <?php echo $dato['nombre']; ?>
+                          </div>
+                          <div class="text-muted small">
+                              # <?php echo $dato['id_marca']; ?>
+                          </div>
+                      </div>
+                  </div>
+              </td> 
+                <td class="td-oscuro align-middle">
+                    <span class="<?= $estatus_classes[$dato['estatus']] ?> fa-1x">
+                              <?php echo $estatus_texto[$dato['estatus']] ?>
+                    </span>
+                </td>
+                <td class="td-oscuro align-middle"> 
+                <form method="POST" action="?pagina=marca"> 
+                    <button name="modificar" class="btn btn-primary btn-sm modificar me-3" value="<?php echo $dato['id_marca']?> "><i class="fas fa-pencil-alt" title="Editar"></i> Modificar </button> 
+                    <button type="button" onclick="eliminar(this)" class="btn btn-danger btn-sm eliminar" value="<?php echo $dato['id_marca']?> "><i class="fas fa-trash-alt" title="Eliminar"> </i> Eliminar </button> 
+                </form> 
+                </td> 
+                </tr>
+
+              <?php } ?>
             </tbody>
         </table>
         

@@ -32,7 +32,7 @@
         <table id="myTable" class="table table-m table-hover" style="width:100%">
             <thead class="table-color">
               <tr>
-                <th class="text-center">#</th>
+               
                 <th class="text-center">NOMBRE Y APELLIDO</th>
             
                 <th class="text-center">USUARIO</th>
@@ -57,21 +57,34 @@
                 foreach ($registro as $dato){
                 ?>
                         <tr>
-                          <td class="text-center td-oscuro"> <?php echo $dato['id_usuario']?> </td>
-                          <td class="text-center td-oscuro"> <?php echo $dato['nombre']." ".$dato['apellido']?> </td>
+                           <td class="td-oscuro">
+                              <div class="d-flex align-items-center">
+                                  <div class="me-3">
+                                      <i class="fa-solid fa-users fa-2x" style="color: #E63946;"></i>
+                                  </div>
+                                  <div>
+                                      <div class="fw-bold" style="font-size: 1.1rem;">
+                                         <?php echo $dato['nombre']." ".$dato['apellido']?>
+                                      </div>
+                                      <div class="text-muted small">
+                                          # <?php echo $dato['id_usuario']?>
+                                      </div>
+                                  </div>
+                              </div>
+                          </td> 
                         
-                          <td class="text-center td-oscuro"> <?php echo $dato['usuario']?> </td>
-                          <td class="text-center td-oscuro"> <?php echo $dato['clave']?> </td>
-                          <td class="text-center td-oscuro">
-                            <span class="<?= $estatus_classes[$dato['estatus']] ?>">
-                              <b>
+                          <td class="text-center td-oscuro align-middle"> <?php echo $dato['usuario']?> </td>
+                          <td class="text-center td-oscuro align-middle"> <?php echo $dato['clave']?> </td>
+                          <td class="text-center td-oscuro align-middle">
+                            <span class="<?= $estatus_classes[$dato['estatus']] ?> fa-1x">
+                              
                               <?php echo $estatus_texto[$dato['estatus']] ?>
-                              </b>
+                              
                             </span>
                           </td>
-                          <td class="text-center td-oscuro"> <?php echo $dato['nombre_tipo']?> </td>
+                          <td class="text-center td-oscuro align-middle"> <?php echo $dato['nombre_tipo']?> </td>
               
-                          <td class="td-oscuro">
+                          <td class="td-oscuro align-middle">
                               <form action="?pagina=usuario" method="POST" >
                                 <button name="modificar" class="btn btn-primary btn-sm modificar"
                                 value="<?php echo $dato['id_usuario'] ?>"><i class="fas fa-pencil-alt" title="Editar"></i> Editar</button>

@@ -25,20 +25,22 @@
           </button>
       </div>
       </div>
+
+      <div class="transaction-list shadow-sm border-0 DivOscuro1">
+
+      </div>
+
+    <p class="text-muted">Periodo actual de registros: Últimos 7 días (Hoy y 6 días anteriores)</p>
         
       <div class="transaction-list shadow-sm border-0 DivOscuro1">
             <div class="table-responsive text-dark TextOscuro">
       <table id="myTable" class="table table-hover" style="width:100%">
         <thead class="table-color">
           <tr>
-            <th>#</th>
             <th>FECHA</th>
             <th>PRODUCTO</th>
             <th>CANTIDAD</th>
             <th>NOTA</th>
-            <?php if( $tipo_usuario == 1) { ?> 
-            <th>ACCION</th>
-            <?php } ?>
           </tr>
         </thead>
         <tbody>
@@ -46,20 +48,24 @@
             foreach ($registro as $dato){
             ?>
                     <tr>
-                      <td class="text-center td-oscuro"> <?php echo $dato['id_perdida']?> </td>
-                      <td class="text-center td-oscuro"> <?php echo $dato['fecha']?> </td>
-                      <td class="td-oscuro"> <?php echo $dato['nombre']." - ".$dato['nombre_marca']." - ".$dato['nombre_presentacion'] ?> </td>
-                      <td class="text-center td-oscuro"> <?php echo $dato['cantidad']?> </td>
-                      <td class="td-oscuro"> <?php echo $dato['nota']?> </td>
-
-                      <?php if( $tipo_usuario == 1) { ?> 
-                      <td class="td-oscuro">
-                      <form action="?pagina=perdidas">
-                            <button type="button" onclick="eliminar(this)" class="btn btn-danger btn-sm eliminar" value="<?php echo $dato['id_perdida'] ?>"> <i class="fas fa-trash-alt" title="Eliminar"> </i> Eliminar </button>
-                        </form>
-
-                      </td>
-                      <?php } ?>
+                        <td class="td-oscuro">
+                              <div class="d-flex align-items-center">
+                                  <div class="me-3">
+                                      <i class="fas fa-chart-line fa-2x" style="color: #E63946;"></i>
+                                  </div>
+                                  <div>
+                                      <div>
+                                        <?php echo date("d/m/Y", strtotime($dato['fecha']))?> 
+                                      </div>
+                                      <div class="text-muted small">
+                                          # <?php echo $dato['id_perdida']?>
+                                      </div>
+                                  </div>
+                              </div>
+                          </td> 
+                      <td class="td-oscuro align-middle"> <?php echo $dato['nombre']." - ".$dato['nombre_marca']." - ".$dato['nombre_presentacion'] ?> </td>
+                      <td class="text-center td-oscuro align-middle"> <?php echo $dato['cantidad']?> </td>
+                      <td class="td-oscuro align-middle"> <?php echo $dato['nota']?> </td>
                     </tr>
     <?php } ?>
         
