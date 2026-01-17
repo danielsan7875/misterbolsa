@@ -4,8 +4,10 @@
                         <p class="mb-0">© 2026 Desarollador Daniel E Sanchez | Mister Bolsa C.A - Tienen los derechos </p>
                     </div>
                     <div class="col-md-6 text-center text-md-end mt-2 mt-md-0">
+                        <!--
                         <a href="#" class="text-decoration-none text-muted me-3">Privacy</a>
                         <a href="#" class="text-decoration-none text-muted">Terms</a>
+        -->
                     </div>
                 </div>
             </footer>

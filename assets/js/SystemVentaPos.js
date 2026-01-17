@@ -111,8 +111,8 @@ $(document).ready(function() {
             title: '¿Estás seguro?',
             text: "Se eliminarán todos los productos del carrito.",
             icon: 'warning',
-              backdrop: true, 
-             heightAuto: false,
+            backdrop: true, 
+            heightAuto: false,
             showCancelButton: true,
             confirmButtonColor: '#dc3545',
             cancelButtonColor: '#6c757d',
@@ -150,9 +150,6 @@ $(document).ready(function() {
 
         if (carrito.length === 0) {
             $contenedor.html('<p class="text-center text-muted my-4">El carrito está vacío</p>');
-            $("#registrar").prop("disabled", true);
-        } else {
-            $("#registrar").prop("disabled", false);
         }
 
         carrito.forEach(item => {
@@ -232,7 +229,7 @@ $(document).ready(function() {
 
     //--------------------------------------------- FECHA GUARDAR -----------------
 
-    $('#fecha').val(new Date().toISOString().slice(0, 10));
+    $('#fecha').val(moment().format('YYYY-MM-DD'));
 
     //--------------------------------------------- METODO PAGO --------------------
 

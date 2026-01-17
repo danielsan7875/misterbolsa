@@ -84,7 +84,7 @@ $(document).ready(function() {
     
       $("#usuario").on("keyup", function () {
        validarCampo($(this),/^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]{6,16}$/,
-      $("#textousuario"),"El formato debe ser entre 6 y 16 caracteres, incluyendo letras y números");
+      $("#textousuario"),"Debe ser entre 6 y 16 caracteres, letras y números");
       });
 
       $("#password").on("keypress", function(e) {
@@ -93,7 +93,7 @@ $(document).ready(function() {
       
       $("#password").on("keyup", function() {
         validarCampo($(this),/^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]{8,16}$/, 
-        $("#textopassword"), "El formato debe ser entre 8 y 16 caracteres");
+        $("#textopassword"), "La Contraseña, entre 8 y 16 caracteres");
       });
 
 
@@ -122,7 +122,7 @@ function validarFormularioLogin() {
   const regexUsuario = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]{6,16}$/;
   if (!regexUsuario.test(usuario)) {
     $("#usuario").removeClass("is-validd ").addClass("is-invalidd");
-    $("#textousuario").text("Formato incorrecto. Debe tener entre 6 y 16 caracteres, incluyendo letras y números.");
+    $("#textousuario").text("Debe tener entre 6 y 16 caracteres, letras y números.");
     valido = false;
   } else {
     $("#usuario").removeClass("is-invalidd").addClass("is-validd ");
@@ -134,7 +134,7 @@ function validarFormularioLogin() {
   const regexPassword = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]{8,16}$/;
   if (!regexPassword.test(password)) {
     $("#password").removeClass("is-validd").addClass("is-invalidd");
-    $("#textopassword").text("Formato incorrecto. Debe tener entre 8 y 16 caracteres, incluyendo letras y números.");
+    $("#textopassword").text("Debe tener entre 8 y 16 caracteres, letras y números.");
     valido = false;
   } else {
     $("#password").removeClass("is-invalidd").addClass("is-validd");
