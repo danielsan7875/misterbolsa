@@ -16,7 +16,7 @@
             --Color3:#B9A09B; 
             --Color4:#AE1F23;
             --Color5:#C1121F;
-            --Color6:#FDF0D5;
+            --Color6:#4b4b4b ;
         }
 
         body {
@@ -173,7 +173,7 @@
 
         .summary-card.active2::before { background: var(--Color4); }
 
-        .summary-card.active3 { background: var(--Color6); color: #000000; }
+        .summary-card.active3 { background: var(--Color6); color: #ffffff; }
 
         .summary-card.active3::before { background: var(--Color6); }
 
@@ -824,4 +824,108 @@ input:checked + .filter-card .check-box::after {
     opacity: 0;
 }
 
+
+
+/*PERIFL*/
+ .profile-cover {
+            height: 250px;
+            background-image: linear-gradient(to right, var(--neo-blue) 0%, #c5726f 100%);
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        /* Área de información del encabezado (Avatar + Nombre) */
+        .profile-header-content {
+            position: relative;
+            padding-top: 0;
+            margin-top: -60px; /* Eleva el avatar sobre el banner */
+            display: flex;
+            align-items: flex-end;
+            gap: 20px;
+            padding-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .avatar-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .profile-avatar {
+            width: 140px;
+            height: 140px;
+            border: 5px solid #ffffff;
+            object-fit: cover;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            background-color: #f1f5f9;
+        }
+
+        .avatar-icon-placeholder {
+            width: 140px;
+            height: 140px;
+            border: 5px solid #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #e2e8f0;
+            font-size: 4rem;
+            color: #94a3b8;
+        }
+
+        .user-info-text {
+            margin-bottom: 10px;
+        }
+
+        .user-info-text h2 {
+            margin: 0;
+            font-weight: 800;
+            color: #1e293b;
+        }
+
+        .user-info-text p {
+            margin: 0;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        /* Estilo de Tarjetas y Formulario */
+        .card1 {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header1 {
+            background-color: #ffffff;
+            border-bottom: 1px solid #f1f5f9;
+            padding: 1.25rem;
+            font-weight: 700;
+        }
+
+
+        /* Sección de Contraseña */
+        .password-section {
+            background-color: #f8fafc;
+            border: 1px solid #f1f5f9;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        /* Ajustes Responsivos */
+        @media (max-width: 768px) {
+            .profile-cover {
+                height: 180px;
+            }
+            .profile-header-content {
+                justify-content: center;
+                text-align: center;
+                margin-top: -70px;
+            }
+            .user-info-text {
+                width: 100%;
+            }
+        }
 

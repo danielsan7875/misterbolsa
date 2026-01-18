@@ -8,10 +8,6 @@
 <link rel="stylesheet" href="assets/css/for.css" /> -->
 
 <style>
-.g{
-  width: 100%;
-}
-
 .boton-rojo-sombra {
   background-color: #d32f2f;
   color: #fff;
@@ -33,7 +29,7 @@
   box-shadow: none;
   opacity: 0.7;
 }
-                  </style>
+</style>
 </head>
 
 <body> 
@@ -64,55 +60,59 @@
   </div>
     
    <div class="transaction-list shadow-sm border-0 DivOscuro1">
-        <div class="row">
-          <div class="col-sm-4">
-            <div class="card text-center DivOscuro2" style="width: 20rem;" id="card-cierre">
-          <div class="card-body" id="card-body-cierre">
-            <h5 class="card-title TextOscuroTitel"><strong>Estatus del Cierre</strong></h5>
-            <hr>
-            <h5 id="estatus-cierre" class="text-dark TextOscuro mb-3">
-              Se encuentra: <strong class="badge rounded-pill bg-secondary text-light">No activo</strong>
-            </h5>
-            <form action="?pagina=cierre" method="POST" id="cierreBD">
-                <input type="hidden" id="fechaCierreBd" name="fecha_cierre" value="">
-                <input type="hidden" id="id_cierre_hidden" name="id_cierre" value="">
-            <button type="button" id="btn-cerrar-cierre" name="cierre" class="boton-rojo-sombra  g">Cerrar Cierre</button>
-            </form>
-          </div>
+       <div class="row justify-content-center g-4 my-3 mt-0">
+
+    <!-- CARD 1 -->
+    <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
+        <div class="card text-center DivOscuro2 w-100">
+            <div class="card-body" id="card-body-cierre">
+                <h5 class="card-title TextOscuroTitel"><strong>Estatus del Cierre</strong></h5>
+                <hr>
+                <h5 id="estatus-cierre" class="text-dark TextOscuro mb-3">
+                    Se encuentra: 
+                    <strong class="badge rounded-pill bg-secondary text-light">No activo</strong>
+                </h5>
+
+                <form action="?pagina=cierre" method="POST" id="cierreBD">
+                    <input type="hidden" id="fechaCierreBd" name="fecha_cierre">
+                    <input type="hidden" id="id_cierre_hidden" name="id_cierre">
+                    <button type="button" id="btn-cerrar-cierre" class="boton-rojo-sombra w-100">
+                        Cerrar Cierre
+                    </button>
+                </form>
+            </div>
         </div>
+    </div>
 
-
-          </div>
-          <div class="col-sm-4">
-              <div class="card text-center DivOscuro2" style="width: 20rem;">
-              
-                <div class="card-body">
-                  <h5 class="card-title TextOscuroTitel"><strong>Cantidad de Cierre</strong></h5>
-                  <hr>
-                
-                  
-                  <p style="font-size:30px;" class="text-dark TextOscuro"> 
-                      <span id="cantidad-cierre"></span> / <span>3</span>
+    <!-- CARD 2 -->
+    <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
+        <div class="card text-center DivOscuro2 w-100">
+            <div class="card-body">
+                <h5 class="card-title TextOscuroTitel"><strong>Cantidad de Cierre</strong></h5>
+                <hr>
+                <p style="font-size:30px;" class="text-dark TextOscuro">
+                    <span id="cantidad-cierre"></span> / <span>3</span>
                 </p>
-                  
-              </div>
             </div>
-
-          </div>
-          <div class="col-sm-4">
-              <div class="card text-center DivOscuro2" style="width: 20rem;">
-              
-                <div class="card-body"> 
-                  <?php $total = $cantidad['total']; ?>
-                  <h5 class="card-title TextOscuroTitel"><strong>Cantidad de venta</strong></h5>
-                  <hr>
-                    <p style="font-size:30px;" class="text-dark TextOscuro"> <?php echo $total ?> </p>
-
-              </div>
-            </div>
-
-          </div>
         </div>
+    </div>
+
+    <!-- CARD 3 -->
+    <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
+        <div class="card text-center DivOscuro2 w-100">
+            <div class="card-body">
+                <?php $total = $cantidad['total']; ?>
+                <h5 class="card-title TextOscuroTitel"><strong>Cantidad de venta</strong></h5>
+                <hr>
+                <p style="font-size:30px;" class="text-dark TextOscuro">
+                    <?php echo $total ?>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
    </div>
 
 
@@ -143,7 +143,7 @@
         );
   
         $estatus_classes = array(// para el estido CSS
-          1=> 'badge rounded-pill bg-warning ',
+          1=> 'badge rounded-pill bg-warning text-dark ',
           2=>'badge rounded-pill bg-success ', 
         );
            foreach ($registro as $dato){
@@ -175,15 +175,17 @@
                     </span>
                   </td>
               <td class="text-center td-oscuro">
-               
-                 <form action="?pagina=cierre" method="POST" >
+               <?php  if($dato['estatus'] == 1){  ?>
+                  <button type="button"  class="btn btn-primary btn-sm" disabled> <i class="fa-regular fa-file-pdf me-2"></i>Descargar</button>
+                <?php  } else {  ?>
+                  <form action="?pagina=cierre" method="POST" >
                           <button type="submit"  class="btn btn-primary btn-sm" name="pdf" value="<?php echo  $dato['id_cierre']; ?>"> <i class="fa-regular fa-file-pdf me-2"></i>Descargar</button>
-                      </form>
+                    </form>
+                 <?php }  ?>
               </td>
               
           </tr>
 
-        <!-- Modal con todos los detalles -->
         <?php } ?>
         </tbody>
         </table>
@@ -195,11 +197,11 @@
 
 
 <form action="?pagina=cierre" id="fecha_consulta">
-<input type="hidden" name="fecha" id="consulta" >
+  <input type="hidden" name="fecha" id="consulta" >
 </form>
 
 <form action="?pagina=cierre" id="consultacierre">
-<input type="hidden" name="fecha" id="fechacierre" >
+  <input type="hidden" name="fecha" id="fechacierre" >
 </form>
 
  

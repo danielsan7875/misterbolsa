@@ -62,7 +62,7 @@
              <div class="col-12 col-md-4">
             
                   <div class="d-flex justify-content-end gap-2">
-                      <button class="btn btn-primary  w-100" >
+                      <button class="btn btn-primary  w-100" disabled >
                           Descargar PDF
                       </button>
 
@@ -179,6 +179,7 @@
                                       <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Opciones
                                       </button>
+                                        <button type="button" class="btn btn-warning" disabled><i class="fa-solid fa-triangle-exclamation"></i></button>
 
                                       <ul class="dropdown-menu DivOscuro2">
                                         <li>
@@ -195,10 +196,15 @@
 
                                       </ul>
                                     </div>
+                                  
+
                                     <!-- Hidden inputs outside the dropdown -->
                                     <input type="hidden" name="eliminar" value="<?php echo $dato['id_producto']; ?>">
                                     <input type="hidden" name="stock" value="<?php echo $dato['stock']; ?>">
+
+                                     
                                   </form>
+                                 
                                 </td>
                               <?php } ?>
                   </tr>

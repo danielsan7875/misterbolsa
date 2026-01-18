@@ -78,8 +78,8 @@
                     <li class="mobile-only-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-moon me-2"></i> Modo Oscuro</a></li>
                     <li class="mobile-only-item"><hr class="dropdown-divider"></li>
                     
-                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user me-2"></i> Mi Perfil </a></li>
-                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gear me-2"></i> Configuracion</a></li>
+                    <li><a class="dropdown-item" href="?pagina=perfil"><i class="fa-solid fa-user me-2"></i> Mi Perfil </a></li>
+                    <!-- <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gear me-2"></i> Configuracion</a></li> -->
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#modalcerrar"><i class="fa-solid fa-right-from-bracket me-2"></i> Cerrar Session</a></li>
                 </ul>

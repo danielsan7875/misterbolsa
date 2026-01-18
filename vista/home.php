@@ -25,7 +25,7 @@
                         <div class="col-md-4">
                             <div class="summary-card card-received active2">
                                 <div class="icon-box"><i class="fa-solid fa-cash-register"></i></div>
-                                <div class="small">Cantidad de Registros Venta</div>
+                                <div class="small">Cantidad de Registros Ventas</div>
                                     <?php $total1 = $totalVenta['total']; ?>
                                 <div class="h5 fw-bold mb-0"> <?php echo $total1; ?> </div>
                             </div>
@@ -33,7 +33,7 @@
                         <div class="col-md-4">
                             <div class="summary-card card-spend active3">
                                 <div class="icon-box"><i class="fa-solid fa-receipt"></i></div>
-                                <div class="text-dark small">Cantidad de Registros Compra</div>
+                                <div class="text-white small">Cantidad de Registros Compras</div>
                                  
                                      <?php $total2 = $totalCompra['total']; ?>
                                 <div class="h5 fw-bold mb-0"> <?php echo $total2; ?></div>
@@ -44,7 +44,7 @@
                                 <div class="icon-box bg-white text-primary"><i class="fa-solid fa-boxes-stacked"></i></div>
                                  <?php  $total3 = $totalProductos['total'];  ?>
                             
-                                <div class="opacity-75 small">Cantidad de Registros Producto</div>
+                                <div class="opacity-75 small">Cantidad de Registros Productos</div>
                                 <div class="h5 fw-bold mb-0"><?php echo $total3; ?></div>
                             </div>
                         </div>

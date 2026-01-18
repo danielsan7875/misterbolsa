@@ -21,6 +21,7 @@ if (isset($_POST['ingresar'])) {
                 $_SESSION["id"] = $resultado->id_usuario;
                 $_SESSION["nombre"] = $resultado->nombre;
                 $_SESSION["apellido"] = $resultado->apellido;
+                $_SESSION["usuario"] = $resultado->usuario;
                 $_SESSION['id_tipo'] = $resultado->id_tipo;
                 $_SESSION['nombre_tipo'] = $resultado->nombre_tipo;
                 $_SESSION['nivel'] = $resultado->nivel;

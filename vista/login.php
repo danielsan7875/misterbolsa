@@ -81,7 +81,7 @@
                                 Recordarme
                             </label>
                         </div>
-                        <a href="#" class="text-decoration-none small">¿Olvidaste tu contraseña?</a>
+                        <a href="#" id="forgotPass" class="text-decoration-none small">¿Olvidaste tu contraseña?</a>
                     </div>
                     
                     <input type="hidden" name="dolar" id="bcvfor">
@@ -115,5 +115,19 @@
         <script src="assets/librerias/bootstrap5/js/bootstrap.min.js"></script>
         <script src="assets/librerias/bootstrap5/js/bootstrap.bundle.min.js"></script>
       <script src="assets/js/login.js"></script>
+      <script>
+document.getElementById("forgotPass").addEventListener("click", function(e) {
+    e.preventDefault(); // evita que recargue la página
+
+    Swal.fire({
+        title: "Recuperar contraseña",
+        text: "Comunícate con el administrador para restablecer tu contraseña.",
+        icon: "info",
+        confirmButtonText: "Entendido",
+        confirmButtonColor: "#3085d6"
+    });
+});
+</script>
+
 </body>
 </html>
