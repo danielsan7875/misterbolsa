@@ -5,6 +5,8 @@
             --text-primary: #0f172a;
             --text-secondary: #64748b;
             --success-color: #10b981;
+               --Table-color: #FF3C37;
+                --Titulo-for:#5F0A00;
         }
 
         body {
@@ -570,4 +572,56 @@ body.loading-active {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+
+/* |||||||||||| TABLA DE REGISTRO */
+.table-color th {
+    background-color: var(--Table-color)!important;
+    color: white !important;            
+    border: none !important;
+}
+.modal-producto {
+  border-radius: 15px;
+  border: none;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.modal-producto .modal-header {
+  background:var(--Titulo-for) !important;
+  border-radius: 15px 15px 0 0;
+  border-bottom: none;
+  padding: 1.5rem;
+  color: #000000;
+}
+
+.modal-producto .modal-title {
+  color: #fdfeff;
+  font-weight: 700;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.modal-producto .modal-title i {
+  font-size: 1.8rem;
+  color: #0a0909;
+}
+
+.modal-producto .modal-body {
+  padding: 2rem;
+  background: #FFF5F0;
+}
+
+.modal-producto .btn-close {
+  background-color: #B9A09B;
+  border-radius: 50%;
+  padding: 8px;
+  transition: all 0.3s ease;
+}
+
+.modal-producto .btn-close:hover {
+  background-color: #eb0f0f;
+  transform: scale(1.1);
 }

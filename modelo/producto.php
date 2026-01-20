@@ -111,7 +111,7 @@
                     ON pro.id_marca = m.id_marca
                 INNER JOIN presentacion p 
                     ON pro.id_presentacion = p.id_presentacion
-                WHERE pro.estatus < 5
+                WHERE pro.estatus = 1
                   AND pro.stock <= pro.stock_minimo
                 ORDER BY pro.id_producto DESC";
 
@@ -195,6 +195,44 @@
                 $res=array('respuesta'=>1,'accion'=>'eliminar');
             } else {
                 $res=array('respuesta'=>0,'accion'=>'eliminar');
+            }
+            return $res;
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
+     public function desactivar(){ // Elimanado Logico
+        try {
+
+            $registro = "UPDATE producto SET estatus = 2 WHERE id_producto = :id_producto";
+            $strExec = $this->conex->prepare($registro);
+            $strExec->bindParam(':id_producto', $this->id_producto);
+            $result = $strExec->execute();
+    
+            if ($result) {
+                $res=array('respuesta'=>1,'accion'=>'estatus');
+            } else {
+                $res=array('respuesta'=>0,'accion'=>'estatus');
+            }
+            return $res;
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
+     public function activar(){ // Elimanado Logico
+        try {
+
+            $registro = "UPDATE producto SET estatus = 1 WHERE id_producto = :id_producto";
+            $strExec = $this->conex->prepare($registro);
+            $strExec->bindParam(':id_producto', $this->id_producto);
+            $result = $strExec->execute();
+    
+            if ($result) {
+                $res=array('respuesta'=>2,'accion'=>'estatus');
+            } else {
+                $res=array('respuesta'=>0,'accion'=>'estatus');
             }
             return $res;
         } catch (PDOException $e) {

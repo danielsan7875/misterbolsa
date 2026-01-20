@@ -8,7 +8,7 @@ $tipo_usuario = $_SESSION['nivel'];
 require_once 'modelo/registroventa.php';
 $objventa = new Registroventa();
 
-$registro = $objventa->consultar();
+$registro = $objventa->consultarVenta();
 
 $cierre = $objventa->obtenerCierreActivo();
 $NroVenta = $objventa->obtenerNroVenta();

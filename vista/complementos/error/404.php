@@ -9,6 +9,8 @@
     <?php require_once 'vista/complementos/nav2.php'; ?>
 <?php require_once 'vista/complementos/sidebar2.php'; ?>
 
+    <div class="transaction-list shadow-sm-0 DivOscuro1">
+
     <div class="error-container">
                 <!-- Ilustración SVG Minimalista -->
                 <div class="error-illustration">
@@ -24,15 +26,17 @@
                 </div>
 
                 <div class="error-code">404</div>
-                <h1 class="error-title">¡Vaya! Página no encontrada</h1>
+                <h1 class="error-title TextOscuroTitel">¡Vaya! Página no encontrada</h1>
                 <p class="error-message">
                     Lo sentimos, la página que estás buscando parece haber sido movida o no existe. 
                     Verifica la URL o utiliza el botón inferior para volver al panel principal.
                 </p>
                 <a href="?pagina=home" class="btn-back-home">
-                    <i class="fa-solid fa-house"></i> Volver al Dashboard
+                    <i class="fa-solid fa-house"></i> Volver al Inicio
                 </a>
             </div>
+
+        </div>      
 <?php require_once 'vista/complementos/footer2.php'; ?>
 </body>
 </html>

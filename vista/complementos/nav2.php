@@ -52,7 +52,7 @@
         <div class="d-flex align-items-center">
             <!-- Acciones de Escritorio -->
             <div class="nav-actions d-none d-md-flex me-4">
-                <button class="btn-action" title="Ayuda"><i class="fa-solid fa-circle-question"></i></button>
+                <button class="btn-action" title="Ayuda" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="fa-solid fa-circle-question"></i></button>
              
                 <button id="toggleModo" class="btn-action" title="Modo Oscuro"> <i class="fa-solid fa-moon"></i> </button>
             </div>
@@ -74,7 +74,7 @@
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end shadow DivOscuro2">
                     <!-- Items que aparecen solo en móvil dentro del dropdown -->
-                    <li class="mobile-only-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-circle-question me-2"></i> Ayuda</a></li>
+                    <li class="mobile-only-item"><button class="dropdown-item" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="fa-solid fa-circle-question me-2"></i> Ayuda</button></li>
                     <li class="mobile-only-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-moon me-2"></i> Modo Oscuro</a></li>
                     <li class="mobile-only-item"><hr class="dropdown-divider"></li>
                     
@@ -85,5 +85,18 @@
                 </ul>
             </div>
         </div>
+        
     </header>
+
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Ayuda</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <a href="vista/complementos/manueldeusuario.pdf" target="_black">Manual de usuario</a>
+            <input type="text" class="form-control w-100">
+        </div>
+    </div>
 

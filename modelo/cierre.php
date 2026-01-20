@@ -60,44 +60,50 @@
     } //fin registrar
 
 
-    
- public function contarVentas() {
-    $query = "SELECT COUNT(d.id_venta) as total 
-              FROM detalle_cierre d
-              INNER JOIN cierre_diario c ON d.id_cierre = c.id_cierre
-              WHERE c.estatus = 1";
-              
-    $consulta = $this->conex->prepare($query);
-    $consulta->execute();
-    return $consulta->fetch(PDO::FETCH_ASSOC);
-}
-    
-
-
-    public function contarCierrePorFecha($fecha) {
-        $query = "SELECT COUNT(*) as total FROM cierre_diario WHERE fecha_creacion = :fecha";
+    public function obtenerCierreActivo(){
+        $query = "SELECT * FROM cierre_diario WHERE estatus = 1 LIMIT 1";
         $consulta = $this->conex->prepare($query);
-        $consulta->bindParam(':fecha', $fecha);
         $consulta->execute();
-        $datos=$consulta->fetchAll(PDO::FETCH_ASSOC);
-        if ($consulta) {
-            $dato['datos'] = $datos;
-            $dato['accion'] = 'consultar';
-            return $dato;
-        } else {
-            return $res = 0;
-        }
+        return $consulta->fetch(PDO::FETCH_ASSOC);
+
     }
 
+    
+    public function contarVentas() {
+        $query = "SELECT COUNT(d.id_venta) as total 
+                FROM detalle_cierre d
+                INNER JOIN cierre_diario c ON d.id_cierre = c.id_cierre
+                WHERE c.estatus = 1";
+                
+        $consulta = $this->conex->prepare($query);
+        $consulta->execute();
+        return $consulta->fetch(PDO::FETCH_ASSOC);
+    }
+        
+
+
+   public function contarCierrePorFecha($fecha) {
+    // Usamos DATE() por si la columna tiene horas, así comparamos solo el día
+    $query = "SELECT COUNT(*) as totalcontar FROM cierre_diario WHERE DATE(fecha_creacion) = DATE(:fecha)";
+    $consulta = $this->conex->prepare($query);
+    $consulta->bindParam(':fecha', $fecha);
+    $consulta->execute();
+    
+    // fetch(PDO::FETCH_ASSOC) devuelve ['totalcontar' => valor]
+    $datos = $consulta->fetch(PDO::FETCH_ASSOC);
+    
+    return $datos ? $datos : ['totalcontar' => 0];
+}
 
     
   
-    public function consultar(){
+    public function consultar($limite = 200){
 
         $registro ="SELECT *
         FROM cierre_diario
-        ORDER BY id_cierre DESC";
+        ORDER BY id_cierre DESC LIMIT :limite";
         $consulta = $this->conex->prepare($registro);
+        $consulta->bindParam(':limite', $limite, PDO::PARAM_INT);
         $resul = $consulta->execute();
 
         $datos=$consulta->fetchAll(PDO::FETCH_ASSOC);
@@ -107,6 +113,15 @@
                 return $res = 0;
             }
     
+    }
+
+
+    public function contarTotal(){
+            $sql = "SELECT COUNT(*) AS total FROM cierre_diario WHERE estatus < 3";
+            $consulta = $this->conex->prepare($sql);
+            $consulta->execute();
+            $fila = $consulta->fetch(PDO::FETCH_ASSOC);
+            return $fila['total'];
     }
 
 

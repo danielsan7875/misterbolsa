@@ -88,7 +88,26 @@ if(isset($_POST['registrar'])){
   }
    
 
-  }else {
+  }else if(isset($_POST['accion_estatus'])){
+
+
+    $id_producto = $_POST['id_producto'];
+    $accion = $_POST['accion_estatus'];
+
+    $objproducto->set_Id_producto($id_producto);
+
+    if ($accion === "activar") {
+        $result = $objproducto->activar(); // Debes tener este método en tu clase
+    } else {
+        $result = $objproducto->desactivar();
+    }
+
+    echo json_encode($result);
+    exit; // Importante para que no se filtre basura de la vista
+
+  } else if(isset($_POST['pdfcompleto'])){
+      require_once 'assets/pdf/reporteproducto.php';
+  } else{
     require_once 'vista/producto.php';
   }
     

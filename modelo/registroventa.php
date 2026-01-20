@@ -118,7 +118,7 @@
         FROM producto pro
         INNER JOIN marca m ON pro.id_marca = m.id_marca
         INNER JOIN presentacion p ON pro.id_presentacion = p.id_presentacion
-        WHERE pro.estatus <5
+        WHERE pro.estatus = 1
         ORDER BY pro.id_producto DESC";
         $consulta = $this->conex->prepare($registro);
         $resul = $consulta->execute();
@@ -167,7 +167,7 @@
 
 
     public function consultar() {
-    $registro = "SELECT v.*, dv.*, m.nombre AS nombre_marca, p.nombre AS nombre_presentacion, pro.nombre
+     $registro = "SELECT v.*, dv.*, m.nombre AS nombre_marca, p.nombre AS nombre_presentacion, pro.nombre
         FROM venta v
         INNER JOIN detalle_venta dv ON v.id_venta = dv.id_venta
         INNER JOIN producto pro ON dv.id_producto = pro.id_producto
@@ -181,7 +181,40 @@
 
     $datos = $consulta->fetchAll(PDO::FETCH_ASSOC);
     return $resul ? $datos : 0;
+    }
+
+    public function consultarVenta(){
+
+    $registro ="SELECT 
+                    v.*, 
+                    dv.*, 
+                    m.nombre AS nombre_marca, 
+                    p.nombre AS nombre_presentacion, 
+                    pro.nombre AS nombre_producto,
+                    dp.id_detallepago,
+                    dp.id_metodopago,
+                    dp.monto_dolares,
+                    dp.monto_bs,
+                    dp.referencia,
+                    mp.nombre AS metodo_pago
+                FROM venta v
+                INNER JOIN detalle_venta dv ON v.id_venta = dv.id_venta
+                INNER JOIN producto pro ON dv.id_producto = pro.id_producto
+                INNER JOIN marca m ON pro.id_marca = m.id_marca
+                INNER JOIN presentacion p ON pro.id_presentacion = p.id_presentacion
+                LEFT JOIN detalle_pago dp ON v.id_venta = dp.id_venta
+                LEFT JOIN metodopago mp ON dp.id_metodopago = mp.id_metodopago
+                WHERE v.fecha = CURDATE()
+                ORDER BY v.id_venta DESC";
+
+    $consulta = $this->conex->prepare($registro);
+    $resul = $consulta->execute();
+
+    $datos = $consulta->fetchAll(PDO::FETCH_ASSOC);
+
+    return $resul ? $datos : 0;
 }
+
 
     
     public function get_Id_venta(){

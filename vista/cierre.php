@@ -4,32 +4,6 @@
 <head>
     <?php require_once 'complementos/head2.php'; ?>
     <title>Cierre Diario | Mister Bolsa C.A</title>
-    <!-- <link rel="stylesheet" href="assets/css/compra.css" />
-<link rel="stylesheet" href="assets/css/for.css" /> -->
-
-<style>
-.boton-rojo-sombra {
-  background-color: #d32f2f;
-  color: #fff;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 6px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-.boton-rojo-sombra:hover {
-  background-color: #b71c1c;
-  transform: scale(1.05);
-}
-
-.boton-rojo-sombra:disabled {
-  background-color: #f2a5a5;
-  color: #fff;
-  cursor: not-allowed;
-  box-shadow: none;
-  opacity: 0.7;
-}
-</style>
 </head>
 
 <body> 
@@ -50,11 +24,18 @@
                   <input type="hidden" name="tasa" id="tasass" value="<?php echo $dolar['precios']?>">
               <?php } ?>
 
-              <button type="button" class="btn btn-success" name="iniciar" id="iniciar">
-         
-              <i class="fa-solid fa-circle-play me-2"></i>
-                Comenzar
-              </button>
+                <?php if (!$cierre) {
+                    echo'
+                    <button type="button" class="btn btn-success" name="iniciar" id="iniciar">
+                    <i class="fa-solid fa-circle-play me-2"></i> Comenzar
+                    </button>
+                    '; }else{
+                    echo'
+                    <button type="button" class="btn btn-success" name="iniciar"  disabled>
+                    <i class="fa-solid fa-circle-play me-2"></i> Comenzar
+                    </button>
+                    '
+                ; } ?>            
           </form> 
       </div>
   </div>
@@ -68,17 +49,32 @@
             <div class="card-body" id="card-body-cierre">
                 <h5 class="card-title TextOscuroTitel"><strong>Estatus del Cierre</strong></h5>
                 <hr>
-                <h5 id="estatus-cierre" class="text-dark TextOscuro mb-3">
-                    Se encuentra: 
-                    <strong class="badge rounded-pill bg-secondary text-light">No activo</strong>
-                </h5>
+                 <?php if (!$cierre) {
+                     echo'
+                      <h5 class="text-dark TextOscuro mb-3">
+                        Se encuentra:<strong class="badge rounded-pill bg-secondary text-light">No activo</strong>
+                      </h5>
+                      '; }else{
+                       echo'
+                      <h5 id="" class="text-dark TextOscuro mb-3">
+                        Se encuentra:  <strong class="badge rounded-pill bg-success">Activo #'.$cierre['id_cierre'].'</strong>
+                      </h5>'
+                      ;
+                  } ?>
 
                 <form action="?pagina=cierre" method="POST" id="cierreBD">
-                    <input type="hidden" id="fechaCierreBd" name="fecha_cierre">
-                    <input type="hidden" id="id_cierre_hidden" name="id_cierre">
-                    <button type="button" id="btn-cerrar-cierre" class="boton-rojo-sombra w-100">
-                        Cerrar Cierre
-                    </button>
+                     <input type="hidden" id="fechaCierreBd" name="fecha_cierre">
+                     <input type="hidden" name="id_cierre" value="<?php echo $cierre['id_cierre']?>" >
+                   
+                    <?php if (!$cierre) {
+                        echo'
+                        <button type="button" id="btn-cerrar-cierre" class="btn btn-danger w-100" disabled> Cerrar Cierre </button>
+                        '; }else{
+                         echo'
+                         <button type="button" id="btn-cerrar-cierre" class="btn btn-danger w-100"> Cerrar Cierre </button>
+                        ';
+                    } ?>
+                 
                 </form>
             </div>
         </div>
@@ -91,7 +87,7 @@
                 <h5 class="card-title TextOscuroTitel"><strong>Cantidad de Cierre</strong></h5>
                 <hr>
                 <p style="font-size:30px;" class="text-dark TextOscuro">
-                    <span id="cantidad-cierre"></span> / <span>3</span>
+                    <span> <?php echo isset($contarcierre['totalcontar']) ? $contarcierre['totalcontar'] : 0; ?> / 3 </span>
                 </p>
             </div>
         </div>
@@ -150,7 +146,13 @@
         ?>
           <tr>
               <td class="text-center td-oscuro"><?php echo $dato['id_cierre']; ?></td>
-              <td class="text-center td-oscuro"><?php echo date("d/m/Y", strtotime($dato['fecha_creacion'])); ?></td>
+              <td class="text-center td-oscuro">
+                <?php 
+                    $fecha = $dato['fecha_creacion'];
+                    $mostrar_fecha1 = (!empty($fecha) && $fecha !== '0000-00-00') ? date("d/m/Y", strtotime($fecha)) : ' - ';
+                ?>
+                <?php echo $mostrar_fecha1; ?>
+              </td>
               <td class="text-center td-oscuro"> 
               <?php 
                     $fecha = $dato['fecha_cierre'];
@@ -159,7 +161,7 @@
                 <?php echo $mostrar_fecha; ?>
               </td>
               <td class="text-center td-oscuro">
-              <p> <span>$. </span><?php echo $dato['total_dia_dl']; ?> </p> 
+              <p> <span>$. </span><?php echo $dato['total_dia_dl']; ?>  </p> 
               </td>
               <td class="text-center td-oscuro">
                 <p class="badge rounded-pill bg-secondary"> <span>Bs. </span> <?php echo $dato['tasa']; ?></p>
@@ -192,19 +194,21 @@
     
       </div>
 
+      <?php if ($total_registros > $_SESSION['limite_cierre']): ?>
+        <form method="POST" action="?pagina=cierre">
+          <div class="text-center ">
+            <button type="submit" name="ver_mas" class="btn btn-primary w-50 mt-3">
+                <i class="fas fa-plus-circle"></i> Ver más registros (+100)
+            </button>
+            </div>
+        </form>
+        <?php endif; ?>
+
+
 
 </div>
 
 
-<form action="?pagina=cierre" id="fecha_consulta">
-  <input type="hidden" name="fecha" id="consulta" >
-</form>
-
-<form action="?pagina=cierre" id="consultacierre">
-  <input type="hidden" name="fecha" id="fechacierre" >
-</form>
-
- 
   <!--|||||||||||||||  Footer y JS  |||||||||||||||||||||||||||-->
   <script src="assets/js/moment.js"></script>
   <script src="assets/js/cierre.js"></script>

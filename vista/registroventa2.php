@@ -249,15 +249,26 @@
     <!-- Modal CONFIGURACION -->
     <div class="modal fade" id="modalconfiguracion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-            <div class="modal-header bg-primary">
-                <h5 class="modal-title " id="staticBackdropLabel">Configuración</h5>
+            <div class="modal-content modal-producto">
+            <div class="modal-header" >
+                <h5 class="modal-title" id="staticBackdropLabel">Configuración</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                         
                 <div class="transaction-list shadow-sm border-0 mt-3">
-                    <h5>Modo escuro</h5>
+                    <div class="row">
+                        <div class="col">
+                            <h5>Modo Oscuro</h5>
+                        </div>
+                        <div class="col">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                               
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
                   <div class="transaction-list shadow-sm border-0">
                     <h5>Estado del Cierre Diario: 
@@ -265,7 +276,7 @@
                         if (!$cierre) {
                         echo'<span class="text-danger"> No activo </span>';
                         }else{
-                           echo'<span class="text-success"> Activo </span>';
+                           echo'<span class="text-success"> Activo Nro. '.$cierre["id_cierre"].' </span>';
                         }
                         ?>
                     </h5>
@@ -277,7 +288,7 @@
                     </div>
             </div>
             <div class="modal-footer">
-                
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
             </div>
             </div>
         </div>
@@ -285,18 +296,139 @@
 
 
       <!-- Modal HISTORIAL -->
-    <div class="modal fade" id="modalhistorial" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
+    <div class="modal fade" id="modalhistorial"  data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content modal-producto">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Historial de Venta de Hoy</h5>
+                <h5 class="modal-title" id="staticBackdropLabel"> <i class="fa-solid fa-clock-rotate-left me-2"></i> Historial de Venta de Hoy</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 
+
+                             <div class="transaction-list shadow-sm border-0 DivOscuro1">
+
+      <div class="table-responsive text-dark TextOscuro">
+        <table id="myTable" class="table table-hover" style="width:100%">
+          <thead class="table-color">
+            <tr>
+              <th>Nro y Fecha</th>
+              <th>Producto</th>
+         
+              <th>Cant. / Modo</th>
+              <th>Precio Uni. $</th>
+              <th>TOTAL $</th>
+              <?php if( $tipo_usuario == 1) { ?>
+              <th>Accion</th>
+              <?php } ?>
+            </tr>
+          </thead>
+            <tbody>
+              <?php
+            $ventas = [];
+            foreach ($registro as $dato) {
+                $id_venta = $dato['id_venta'];
+
+                if (!isset($ventas[$id_venta])) {
+                    $ventas[$id_venta] = [
+                        'fecha' => $dato['fecha'],
+                        'total' => $dato['total_dl'],
+                        'totalBs' => $dato['total_bs'],
+                        'detalles' => [],
+                        'pagos' => []
+                    ];
+                }
+
+                // Agregar productos
+                $ventas[$id_venta]['detalles'][] = [
+                    'nombre' => $dato['nombre_producto'],
+                    'cantidad' => $dato['cantidad'],
+                    'marca' => $dato['nombre_marca'],
+                    'presentacion' => $dato['nombre_presentacion'],
+                    'precio_unitario' => $dato['precio_unitario'],
+                    'maode' => $dato['maode']
+                ];
+
+            }
+
+              ?>
+              <?php foreach ($ventas as $id_venta => $info): ?>
+              <tr>
+
+                   <td class="td-oscuro">
+                  <div class="d-flex align-items-center">
+                      <div class="me-3">
+                          <i class="fa-solid fa-cash-register fa-2x" style="color: #E63946;"></i>
+                      </div>
+                      <div>
+                          <div style="font-size: 1.1rem;">
+                                 Nro: <?php echo $id_venta; ?>
+                          </div>
+                          <div class="small text-primary">
+                            <strong>
+                            <?php echo date("d/m/Y", strtotime($info['fecha'])); ?>
+                            </strong>
+                          </div>
+                      </div>
+                  </div>
+              </td> 
+
+               <td class="td-oscuro">
+                    <ul class="mb-0 list-unstyled">
+                        <?php foreach ($info['detalles'] as $detalle): ?>
+                            <li>
+                                <i class="fa-solid fa-boxes-stacked me-2 text-primary"></i>
+                                <?php echo $detalle['nombre'].' - '.$detalle['marca'].' - '.$detalle['presentacion']; ?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </td>
+
+               <td class="td-oscuro">
+                    <ul class="list-unstyled mb-0">
+                        <?php foreach ($info['detalles'] as $detalle): ?>
+                            <li>
+                                <?php echo $detalle['cantidad'] . ' - ' . strtoupper($detalle['maode']); ?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </td>
+
+                  <td class="td-oscuro">
+                        <ul class="list-unstyled mb-0">
+                            <?php foreach ($info['detalles'] as $detalle): ?>
+                                <li><?php echo number_format($detalle['precio_unitario'], 2, ',', '.') . ' $'; ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </td>
+
+
+                  <td class="td-oscuro align-middle">
+                    <?php echo  '$ '.$info['total']; ?>
+                            <p class="text-muted">Bs. <?php echo $info['totalBs'] ?></p>
+                  </td>
+
+                  <?php if ($tipo_usuario == 1): ?>
+                  <td class="td-oscuro align-middle">
+                      <form action="?pagina=venta" method="POST" >
+                          <button type="submit"  class="btn btn-primary btn-sm" name="pdf" value="<?php echo $id_venta; ?>"> <i class="fa-regular fa-file-pdf me-2"></i>Descargar</button>
+                      </form>
+                  </td>
+                  <?php endif; ?>
+              </tr>
+              <?php endforeach; ?>
+            </tbody>
+        </table>
+      </div>
+
+    </div>
+
+
+
+
             </div>
             <div class="modal-footer">
-                
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
             </div>
             </div>
         </div>
@@ -334,5 +466,18 @@
   </div>
 </div>
 
+
+
+
+
+<script>
+    document.addEventListener('hidden.bs.modal', function (event) {
+    if (event.target.id === 'modalhistorial') {
+        const modal = document.getElementById('modal-<?php echo $id_venta; ?>');
+        new bootstrap.Modal(modal).show();
+    }
+});
+
+</script>
 </body>
 </html>

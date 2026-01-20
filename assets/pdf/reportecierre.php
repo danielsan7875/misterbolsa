@@ -1,4 +1,5 @@
 <?php
+
 require_once 'assets/dompdf/autoload.inc.php';
 
 use Dompdf\Dompdf;
@@ -17,8 +18,8 @@ require_once 'config/reporte.php';
 $local = [
     'nombre' => 'MISTER BOLSA, C.A.',
     'rif' => 'J-29979563-1',
-    'direccion' => 'Av. Principal, Local 12, Caracas',
-    'telefono' => '0414-1234567'
+    'direccion' => 'Av. Principal, Local 12, Cabudare',
+    'telefono' => '0424-5820047'
 ];
 
 // CONSULTA 1 — CIERRE DIARIO
@@ -38,7 +39,7 @@ if (!$cierre) {
 
 // CONSULTA 2 — VENTAS DEL CIERRE
 $sqlVentas = "
-    SELECT dc.id_venta, dc.hora, v.total_dl
+    SELECT dc.id_venta, dc.hora, v.total_dl, v.total_bs
     FROM detalle_cierre dc
     JOIN venta v ON dc.id_venta = v.id_venta
     WHERE dc.id_cierre = ?
@@ -165,33 +166,100 @@ $html = '
   .tabla th {
     background-color: #b3d9f3;
   }
-</style>
+
+  ul {
+    margin: 0;
+    padding-left: 15px;
+}
+
+li {
+    margin-bottom: 4px;
+}
+
+.sin-puntos {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+    
+}
+
+.sin-puntos li {
+    margin-bottom: 4px;
+}
+
+.text-left {
+    text-align: left !important;
+}
 
 
+.logo {
+    max-width: 500px;
+}
 
-<!-- ENCABEZADO -->
-<div class="header">
+.local-name {
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
 
-  <div class="header-left">
-    <img src="' . $logoBase64 . '" class="logo">
-    <div>
-      <p class="local-name">' . $local['nombre'] . '</p>
-    </div>
-  </div>
+p {
+    margin: 2px 0;
+}
 
-  <div class="header-right">
-    <p><strong>RIF:</strong> ' . $local['rif'] . '</p>
-    <p>' . $local['direccion'] . '</p>
-    <p><strong>Tel:</strong> ' . $local['telefono'] . '</p>
-  </div>
 
-</div>
+</style>';
 
-<!-- FECHAS -->
-<p><strong>Fecha de Apertura:</strong> ' . date("d/m/Y H:i", strtotime($cierre['fecha_creacion'])) . '</p>
-<p><strong>Fecha de Cierre:</strong> ' . date("d/m/Y H:i", strtotime($cierre['fecha_cierre'])) . '</p>
-<p><strong>N° Cierre:</strong> #' . $id_cierre . '</p>
 
+$html .= '
+<table width="100%" style="margin-bottom: 15px; background: #b3d9f3; border-radius: 6px; padding:12px;">
+    <tr>
+        <!-- LOGO -->
+        <td width="40%" align="left" valign="middle">
+            <img src="' . $logoBase64 . '" class="logo">
+        </td>
+
+        <!-- DATOS DEL LOCAL -->
+        <td width="60%" align="right" valign="middle">
+            <p class="local-name">' . $local['nombre'] . '</p>
+            <p><strong>RIF:</strong> ' . $local['rif'] . '</p>
+            <p>' . $local['direccion'] . '</p>
+            <p><strong>Tel:</strong> ' . $local['telefono'] . '</p>
+        </td>
+    </tr>
+</table>';
+
+
+$html .= '
+<table width="100%" style="margin-bottom: 10px;">
+    <tr>
+        <td width="33%">
+            <strong>N° Cierre:</strong> #' . $id_cierre . '
+        </td>
+        <td width="33%" align="center">
+            <strong>Fecha Apertura:</strong> ' . date("d/m/Y h:i A", strtotime($cierre['fecha_creacion'])) . '
+        </td>
+        <td width="33%" align="right">
+            <strong>Fecha Cierre:</strong> ' . date("d/m/Y h:i A", strtotime($cierre['fecha_cierre'])) . '
+        </td>
+    </tr>
+</table>';
+
+$html .= '
+<table width="100%" style="margin-bottom: 15px;">
+    <tr>
+        <td width="33%">
+            <strong>Tasa del Día:</strong> ' . number_format($cierre['tasa'], 2, ',', '.') . '
+        </td>
+        <td width="33%" align="center">
+            <strong>Generado por:</strong> ' . $_SESSION['nombre'] . ' ' . $_SESSION['apellido'] . '
+        </td>
+        <td width="33%" align="right">
+            <strong>Fecha Impresión:</strong> ' . date("d/m/Y h:i A") . '
+        </td>
+    </tr>
+</table>';
+
+$html .= '
 <h3 class="section-title">Totales del Día</h3>
 
 <table width="100%" style="margin-top:10px; border-collapse:collapse;">
@@ -203,10 +271,10 @@ $html = '
         <h4 style="text-align:center; margin:0 0 8px 0; font-size:14px;">Totales en USD</h4>
         <table width="100%" style="border-collapse:collapse;">
           <tr><td>Total Día</td><td><strong>$ ' . number_format($cierre['total_dia_dl'], 2, ',', '.') . '</strong></td></tr>
-          <tr><td>Efectivo</td><td><strong>$ ' . number_format($cierre['total_efectivo_dl'], 2, ',', '.') . '</strong></td></tr>
-          <tr><td>Punto</td><td><strong>$ ' . number_format($cierre['total_punto_dl'], 2, ',', '.') . '</strong></td></tr>
-          <tr><td>Pago Móvil</td><td><strong>$ ' . number_format($cierre['total_pagomovil_dl'], 2, ',', '.') . '</strong></td></tr>
-          <tr><td>Divisas</td><td><strong>$ ' . number_format($cierre['total_divisas_dl'], 2, ',', '.') . '</strong></td></tr>
+          <tr><td>Efectivo</td><td>$ ' . number_format($cierre['total_efectivo_dl'], 2, ',', '.') . '</td></tr>
+          <tr><td>Punto</td><td>$ ' . number_format($cierre['total_punto_dl'], 2, ',', '.') . '</td></tr>
+          <tr><td>Pago Móvil</td><td>$ ' . number_format($cierre['total_pagomovil_dl'], 2, ',', '.') . '</td></tr>
+          <tr><td>Divisas</td><td>$ ' . number_format($cierre['total_divisas_dl'], 2, ',', '.') . '</td></tr>
         </table>
       </div>
     </td>
@@ -217,10 +285,10 @@ $html = '
         <h4 style="text-align:center; margin:0 0 8px 0; font-size:14px;">Totales en Bolívares</h4>
         <table width="100%" style="border-collapse:collapse;">
           <tr><td>Total Día</td><td><strong>' . number_format($cierre['total_dia_bs'], 2, ',', '.') . ' Bs</strong></td></tr>
-          <tr><td>Efectivo</td><td><strong>' . number_format($cierre['total_efectivo_bs'], 2, ',', '.') . ' Bs</strong></td></tr>
-          <tr><td>Punto</td><td><strong>' . number_format($cierre['total_punto_bs'], 2, ',', '.') . ' Bs</strong></td></tr>
-          <tr><td>Pago Móvil</td><td><strong>' . number_format($cierre['total_pagomovil_bs'], 2, ',', '.') . ' Bs</strong></td></tr>
-          <tr><td>Divisas</td><td><strong>' . number_format($cierre['total_divisas_bs'], 2, ',', '.') . ' Bs</strong></td></tr>
+          <tr><td>Efectivo</td><td>' . number_format($cierre['total_efectivo_bs'], 2, ',', '.') . ' Bs</td></tr>
+          <tr><td>Punto</td><td>' . number_format($cierre['total_punto_bs'], 2, ',', '.') . ' Bs</td></tr>
+          <tr><td>Pago Móvil</td><td>' . number_format($cierre['total_pagomovil_bs'], 2, ',', '.') . ' Bs</td></tr>
+          <tr><td>Divisas</td><td>' . number_format($cierre['total_divisas_bs'], 2, ',', '.') . ' Bs</td></tr>
         </table>
       </div>
     </td>
@@ -228,57 +296,78 @@ $html = '
   </tr>
 </table>
 
-<p><strong>Tasa del Día:</strong> ' . number_format($cierre['tasa'], 2, ',', '.') . '</p>
-
-
 <!-- DETALLE DE VENTAS -->
 <h3 class="section-title">Detalle de Ventas</h3>
 
 <table class="tabla">
   <thead>
     <tr>
-      <th>#</th>
+      <th>Nro Venta</th>
       <th>Producto</th>
       <th>Cantidad</th>
-      <th>Modo</th>
+      <th>Modo / Precio</th>
       <th>Total ($)</th>
       <th>Hora</th>
     </tr>
   </thead>
   <tbody>';
-
-$contador = 1;
-
 foreach ($ventas as $v) {
 
     $stmtProductos->execute([$v['id_venta']]);
     $productos = $stmtProductos->fetchAll(PDO::FETCH_ASSOC);
 
+    $listaProductos = '<ul class="sin-puntos">';
+    $listaCantidad  = '<ul class="sin-puntos">';
+    $listaModo      = '<ul class="sin-puntos">';
+
     foreach ($productos as $p) {
 
-        $subtotal = $p['cantidad'] * $p['precio_unitario'];
+        $listaProductos .= '<li>'
+            . $p['producto'] . ' - ' . $p['marca'] . ' - ' . $p['presentacion']
+            . '</li>';
 
-        $html .= '
-        <tr>
-            <td>' . $contador . '</td>
-            <td>' . $p['producto'] . ' - ' . $p['marca'] . ' - ' . $p['presentacion'] . '</td>
-            <td>' . $p['cantidad'] . '</td>
-            <td>' . strtoupper($p['maode']) . '</td>
-            <td>' . number_format($subtotal, 2, ',', '.') . '</td>
-            <td>' . $v['hora'] . '</td>
-        </tr>';
+        $listaCantidad .= '<li>' . $p['cantidad'] . '</li>';
 
-        $contador++;
+        $listaModo .= '<li>'
+            . strtoupper($p['maode']) . ' (' . number_format($p['precio_unitario'], 2, ',', '.') . ' $)'
+            . '</li>';
     }
+
+    $listaProductos .= '</ul>';
+    $listaCantidad  .= '</ul>';
+    $listaModo      .= '</ul>';
+
+    $html .= '
+    <tr>
+        <td>' . $v['id_venta'] . '</td>
+        <td class="text-left">' . $listaProductos . '</td>
+        <td>' . $listaCantidad . '</td>
+        <td>' . $listaModo . '</td>
+        <td>
+            <strong>' . number_format($v['total_dl'], 2, ',', '.') . ' $</strong><br>
+            <small>Bs. ' . number_format($v['total_bs'], 2, ',', '.') . '</small>
+        </td>
+       <td>' . date('h:i A', strtotime($v['hora'])) . '</td>
+    </tr>';
 }
 
-$html .= '
-  </tbody>
-</table>
-';
+$html .= '</tbody></table>';
 
 $dompdf->loadHtml($html);
 $dompdf->setPaper('letter', 'portrait');
 $dompdf->render();
-$dompdf->stream("cierre_diario_$id_cierre.pdf", ["Attachment" => true]);
+
+// 4. Agregar numeración de páginas al canvas después del render
+$canvas = $dompdf->getCanvas();
+$canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+    $text = "Páginas $pageNumber de $pageCount";
+    $font = $fontMetrics->getFont('Arial', 'normal');
+    $size = 8;
+    $width = $fontMetrics->getTextWidth($text, $font, $size);
+    $x = $canvas->get_width() - $width - 40;
+    $y = $canvas->get_height() - 35;
+    $canvas->text($x, $y, $text, $font, $size);
+});
+
+$dompdf->stream("CIERRE_DIARO_NRO-$id_cierre.pdf", ["Attachment" => true]);
 ?>

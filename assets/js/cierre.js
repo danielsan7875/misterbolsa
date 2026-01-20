@@ -1,8 +1,7 @@
 $(document).ready(function(){
     var hoy = moment().format('YYYY-MM-DD');
+    
     $('#cierrefecha').val(hoy);
-    $('#consulta').val(hoy);
-    $('#fechacierre').val(hoy);
     $('#fechaCierreBd').val(hoy);
 
 
@@ -50,77 +49,7 @@ $(document).ready(function(){
 });
 
 
-
-consulta();
-consultaCierre();
-
-
 });
-
-
-
-
-
-
-
-
-
-
-function consulta() {
-    var datos = new FormData($('#fecha_consulta')[0]);
-    datos.append('consultar', 'consultar');
-    enviaAjax(datos);
-  }
-
- function mostrarCantidadCierre(datos) {
- 
-  datos.forEach(function (dato) {
-    
-    $('#cantidad-cierre').text(dato.total);
-       });
-}
-
-function consultaCierre() {
-    var datos = new FormData($('#consultacierre')[0]);
-    datos.append('consultarcierre', 'consultarcierre');
-    enviaAjax(datos);
-  }
-
-
-function mostrarcierre(datos) {
-    const estatusContainer = $('#estatus-cierre');
-    const botonCerrar = $('#btn-cerrar-cierre');
-    const inputHidden = $('#id_cierre_hidden');
-
-    if (datos.length > 0) {
-        const dato = datos[0]; // asumimos que solo hay uno
-        const idCierre = dato.id_cierre;
-
-        // Actualizar estatus
-        estatusContainer.html(
-            'Se encuentra: <strong class="badge rounded-pill bg-success">Activo #' + idCierre + '</strong>'
-        );
-
-        // Activar botón
-        botonCerrar.prop('disabled', false);
-
-        // Actualizar input hidden
-        inputHidden.val(idCierre);
-
-    } else {
-        // Mostrar "No activo"
-        estatusContainer.html(
-            'Se encuentra: <strong class="badge rounded-pill bg-secondary text-light">No activo</strong>'
-        );
-
-        // Desactivar botón
-        botonCerrar.prop('disabled', true);
-
-        // Limpiar input hidden
-        inputHidden.val('');
-    }
-}
-
 
 function activarLoaderBoton(idBoton, texto) {
     const $boton = $(idBoton);
@@ -162,13 +91,8 @@ function muestraMensaje(icono, tiempo, titulo, mensaje) {
         console.log(respuesta);
         var lee = JSON.parse(respuesta);
         try {
-             if (lee.accion == 'consultar') {
-                mostrarCantidadCierre(lee.datos);
-            
-            }else if (lee.accion == 'consultarcierre') {
-                mostrarcierre(lee.datos);
-            
-            }else if (lee.accion == 'iniciar') {
+           
+          if (lee.accion == 'iniciar') {
                 if (lee.respuesta == 1) {
               muestraMensaje("success", 1000, "Se ha registrado con éxito", "Su registro se ha completado exitosamente");
                 desactivarLoaderBoton('#iniciar'); 

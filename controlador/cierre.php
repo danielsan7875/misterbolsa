@@ -14,21 +14,34 @@ require_once 'modelo/cierre.php';
 $objcierre = new Cierre();
 
 
-$registro = $objcierre->consultar();
+
+ // 200 por defecto
+    if (!isset($_SESSION['limite_cierre'])) {
+        $_SESSION['limite_cierre'] = 200;
+    }
+
+    //  "ver más"
+    if (isset($_POST['ver_mas'])) {
+        $_SESSION['limite_cierre'] += 100; // Aumenta 100 registros
+        header("location:?pagina=cierre");
+        exit;
+    }
+
+
+
+$registro = $objcierre->consultar($_SESSION['limite_cierre']);
+$total_registros = $objcierre->contarTotal();
+
 $dolar = $objcierre->obtenerDolar(); 
 $cantidad = $objcierre->contarVentas();
+$cierre = $objcierre->obtenerCierreActivo();
+$contarcierre = ['totalcontar' => 0];
+if(!empty($cierre)){
+    $fecha = $cierre['fecha_creacion'];
+    $contarcierre = $objcierre->contarCierrePorFecha($fecha);
+}
 
-if (isset($_POST['consultar'])) {
-    $fecha = $_POST['fecha'];
-    $registro = $objcierre->contarCierrePorFecha($fecha);
-    echo json_encode($registro);
-
-} else if (isset($_POST['consultarcierre'])) {
-    $fecha = $_POST['fecha'];
-    $registro = $objcierre->consultarCierreActivo($fecha);
-    echo json_encode($registro);
-
-}else if(isset($_POST['iniciar'])){
+  if(isset($_POST['iniciar'])){
     $fecha = $_POST['fecha'];
     $tasa = $_POST['tasa'];
 
@@ -59,11 +72,12 @@ if (isset($_POST['consultar'])) {
 
       if (!empty($_POST['pdf'])) {
         $id_cierre = $_POST['pdf'];
-        var_dump($id_cierre);
+     
       if(!$id_cierre){
         header('Location: ?pagina=cierre');
       }
           require_once 'assets/pdf/reportecierre.php';
+          echo json_encode($res);
       }
 
 } else {

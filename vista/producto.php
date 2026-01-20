@@ -7,7 +7,22 @@
     <!--
     <link rel="stylesheet" href="assets/css/producto.css" />
      <link rel="stylesheet" href="assets/css/for.css" />
+
+     
 -->
+
+<style>
+    /* Estilo para productos desactivados (Estatus 2) */
+    .fila-desactivada {
+        background-color: #f2f2f2 !important; /* Gris muy claro */
+        color: #888888; /* Texto gris oscuro/opaco */
+    }
+
+    /* Opcional: si quieres que se vea un poco transparente */
+    .fila-desactivada td {
+        border-color: #ddd;
+    }
+</style>
 </head>
 
 <body>
@@ -60,17 +75,23 @@
 
               <!-- Columna 2: Botón (30%) -->
              <div class="col-12 col-md-4">
-            
-                  <div class="d-flex justify-content-end gap-2">
-                      <button class="btn btn-primary  w-100" disabled >
-                          Descargar PDF
-                      </button>
+                  <div class="row g-2"> <div class="col-6">
+                          <form action="?pagina=producto" method="POST" class="h-100">
+                              <button type="submit" class="btn btn-primary w-100 h-100" name="pdfcompleto">
+                                  Descargar PDF
+                              </button>
+                          </form>
+                      </div>
 
-                      <button class="btn btn-secondary  w-100" disabled>
-                          Personalizado
-                      </button>
+                      <div class="col-6">
+                          <button class="btn btn-secondary w-100 h-100" disabled>
+                              Personalizado
+                          </button>
+                      </div>
+
                   </div>
               </div>
+
 
           </div>
 
@@ -110,19 +131,33 @@
 
                 foreach ($registro as $dato){
                 ?>
-                  <tr data-precio-unitario="<?php echo $dato['precio_unitario']; ?>" data-precio-mayor="<?php echo $dato['precio_mayor']; ?>" data-stock-minimo="<?php echo $dato['stock_minimo']; ?>">
+                <?php 
+                    // Determinamos si el estatus es 2 para aplicar el estilo
+                    $estilo_fila = ($dato['estatus'] == 2) ? 'fila-desactivada' : '';
+                ?>
+                  <tr class="<?php echo $estilo_fila; ?>" data-precio-unitario="<?php echo $dato['precio_unitario']; ?>" data-precio-mayor="<?php echo $dato['precio_mayor']; ?>" data-stock-minimo="<?php echo $dato['stock_minimo']; ?>">
                       
                         <td class="td-oscuro">
                           <div class="d-flex align-items-center">
                               <div class="me-3">
-                                  <i class="fa-solid fa-boxes-stacked fa-2x" style="color: #E63946;"></i>
+                                 <?php if($dato['estatus'] == 2) {
+                                   echo '<i class="fa-solid fa-boxes-stacked fa-2x" style="color: #707070;"></i>';
+                                 } else{
+                                   echo '<i class="fa-solid fa-boxes-stacked fa-2x" style="color: #E63946;"></i>';
+                                 }
+                                  ?>
+                                  
                               </div>
                               <div>
                                   <div style="font-size: 0.9 rem;">
                                       <?php echo $dato['nombre']; ?>
                                   </div>
                                   <div class="text-muted small">
-                                      # <?php echo $dato['id_producto']; ?>
+                                      # <?php echo $dato['id_producto']; ?> 
+                                      <?php if($dato['estatus'] == 2) { ?>
+                                         <span class="badge bg-warning text-dark"> Producto desactivado </span>
+                                      <?php } ?> 
+                                      
                                   </div>
                               </div>
                           </div>
@@ -130,7 +165,15 @@
 
                         <td class="td-oscuro">    
                           <div class="mt-0">Marca: <?php echo $dato['nombre_marca']; ?> </div>
-                          <div class="mt-0">  <i class="fa-solid fa-shapes" style="color: #E63946;"></i> <?php echo $dato['nombre_presentacion']; ?> </div>
+                          <div class="mt-0">
+                             
+                                 <?php if($dato['estatus'] == 2) {
+                                   echo '<i class="fa-solid fa-shapes" style="color: #707070;"></i>';
+                                 } else{
+                                   echo ' <i class="fa-solid fa-shapes" style="color: #E63946;"></i> ';
+                                 }
+                                  ?>
+                            <?php echo $dato['nombre_presentacion']; ?> </div>
                         </td>
                           <td class="fw-bold td-oscuro">
                             <div>
@@ -179,7 +222,21 @@
                                       <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Opciones
                                       </button>
-                                        <button type="button" class="btn btn-warning" disabled><i class="fa-solid fa-triangle-exclamation"></i></button>
+
+                                      <?php 
+                                            // Si el estatus es 2 (desactivado), el botón debe ser para "Activar"
+                                            $esDesactivo = ($dato['estatus'] == 2);
+                                            $claseBtn = $esDesactivo ? 'btn-success' : 'btn-warning';
+                                            $icono = $esDesactivo ? 'fa-check' : 'fa-triangle-exclamation';
+                                        ?>
+
+                                        <button type="button" 
+                                                onclick="gestionarEstatus(this)" 
+                                                class="btn <?php echo $claseBtn; ?>" 
+                                                value="<?php echo $dato['id_producto']; ?>"
+                                                data-estatus="<?php echo $dato['estatus']; ?>">
+                                            <i class="fa-solid <?php echo $icono; ?>"></i>
+                                        </button>
 
                                       <ul class="dropdown-menu DivOscuro2">
                                         <li>
@@ -196,13 +253,10 @@
 
                                       </ul>
                                     </div>
-                                  
 
                                     <!-- Hidden inputs outside the dropdown -->
                                     <input type="hidden" name="eliminar" value="<?php echo $dato['id_producto']; ?>">
-                                    <input type="hidden" name="stock" value="<?php echo $dato['stock']; ?>">
-
-                                     
+                                    <input type="hidden" name="stock" value="<?php echo $dato['stock']; ?>">                                     
                                   </form>
                                  
                                 </td>

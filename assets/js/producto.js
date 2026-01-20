@@ -35,6 +35,31 @@ deleteButtons.forEach(function (button) {
 
 
 
+function gestionarEstatus(boton) {
+    const id = boton.value;
+    const estatusActual = boton.getAttribute('data-estatus');
+  
+    const nuevaAccion = (estatusActual == "2") ? "activar" : "desactivar";
+    const titulo = (estatusActual == "2") ? "¿Desea ACTIVAR el producto?" : "¿Desea DESACTIVAR el producto?";
+
+    Swal.fire({
+        title: titulo,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: (nuevaAccion === "activar") ? '#1a7538' : '#EF233C',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'SÍ, ' + nuevaAccion.toUpperCase(),
+        cancelButtonText: 'NO'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            var datos = new FormData();
+            datos.append('accion_estatus', nuevaAccion); // Enviamos qué queremos hacer
+            datos.append('id_producto', id);
+            enviaAjax(datos);
+        }
+    });
+}
+
 function formatearDecimalAutomatico(input) {
     input.on("keyup", function () {
         let valor = $(this).val().replace(/\D/g, ""); // Elimina todo lo que no sea dígito
@@ -425,6 +450,20 @@ function muestraMensaje(icono, tiempo, titulo, mensaje) {
             } else {
               muestraMensaje("error", 2000, "ERROR", lee.text);
             }
+          } else if (lee.accion == 'estatus') {
+              if (lee.respuesta == 1) {
+                muestraMensaje("success", 1500, "Se ha desactivo con éxito", "");
+                  setTimeout(function () {
+                    location = '?pagina=producto';
+                  }, 2000);
+              } else if (lee.respuesta == 2) {
+                muestraMensaje("success", 1500, "Se ha activo con éxito", "");
+                  setTimeout(function () {
+                    location = '?pagina=producto';
+                  }, 2000);
+              }else {
+                muestraMensaje("error", 2000, "ERROR", lee.text);
+              }
           }
   
         } catch (e) {

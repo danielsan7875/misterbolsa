@@ -163,3 +163,7 @@ body.modo-oscuro {
   color:var(--text-blank) !important;
   border: 1px solid var(--text-blank);
 }
+
+.modo-oscuro .user-profile-dropdown .dropdown-toggle:hover span{
+    color: var(--text-0) !important;
+}
