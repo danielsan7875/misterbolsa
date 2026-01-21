@@ -6,6 +6,7 @@
     --text-1:#FF3C37;
     --text-0:#000000;
     --text-2:#b4b4b4;
+    --text-3:#1e5feb;
 }
 
 body {
@@ -77,6 +78,10 @@ body.modo-oscuro {
 
 .modo-oscuro .TextOscuroTitel {
   color: var(--text-1) !important;
+}
+
+.modo-oscuro .TextOscuroTitel2 {
+  color: var(--text-3) !important;
 }
 
 
@@ -166,4 +171,16 @@ body.modo-oscuro {
 
 .modo-oscuro .user-profile-dropdown .dropdown-toggle:hover span{
     color: var(--text-0) !important;
+}
+
+/*registro venta*/
+.modo-oscuro .payment-method-card.active {
+            border-color: var(--text-3) ;
+            background-color: #373838 ;
+            color: var(--primary-color) ;
+  }
+
+  .modo-oscuro .cart-item:hover {
+    background-color: #373838 !important;
+    color:var(--text-blank) !important;
 }

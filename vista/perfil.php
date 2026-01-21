@@ -41,38 +41,45 @@
                 <div class="card-body p-4">
                     <p class="text-muted small mb-4">Puede cambiar tu información personal aquí.</p>
                     
-                    <form>
+                    <form action="?pagina=perfil" method="POST" id="forPerfil" autocomplete="off">
                         <!-- Campos: Nombre, Apellido y Usuario -->
                         <div class="row g-3">
+                          
                             <div class="col-md-4">
                                 <label class="form-label">Nombre</label>
-                                <input type="text" class="form-control" name="first_name" value="<?php echo $_SESSION["nombre"];?>" placeholder="Tu nombre">
+                                <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $_SESSION["nombre"];?>" placeholder="Tu nombre">
+                                   <span id="textonombre" class="text-error mt-0"></span> 
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label">Apellido</label>
-                                <input type="text" class="form-control" name="last_name" value="<?php echo $_SESSION["apellido"];?>" placeholder="Tu apellido">
+                                <input type="text" class="form-control" id="apellido" name="apellido" value="<?php echo $_SESSION["apellido"];?>" placeholder="Tu apellido">
+                                   <span id="textoapellido" class="text-error mt-0"></span> 
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label">Nombre de Usuario</label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-light text-muted border-end-0">@</span>
-                                    <input type="text" class="form-control border-start-0 ps-0" name="username" value="<?php echo $_SESSION["usuario"];?>" placeholder="usuario">
+                                    <input type="text" class="form-control border-start-0 ps-0" id="usuario" name="usuario" value="<?php echo $_SESSION["usuario"];?>" placeholder="usuario">
                                 </div>
+                                   <span id="textousuario" class="text-error mt-0"></span> 
                             </div>
                         
                         </div>
 
+                        <input type="hidden" name="id_usuario" value="<?php echo $_SESSION["id"] ?>">
+
                           <!-- Botones de Acción -->
                         <div class="d-flex justify-content-end gap-2 mt-4">
-                            <button type="button" class="btn btn-outline-secondary">Limpiar</button>
-                            <button type="submit" class="btn btn-primary shadow-sm">Guardar Cambios</button>
+                            <button type="reset" class="btn btn-outline-secondary">Limpiar</button>
+                            <button type="button" class="btn btn-success shadow-sm" id="actualizar">Guardar Cambios</button>
                         </div>
-
-
+</form>
+                    <form action="?pagina=perfil" method="POST" id="forClave" autocomplete="off">
                         <!-- 3. Sección de Cambio de Clave -->
                         <div class="password-section DivOscuro2">
                             <h5 class="fw-bold mb-3"><i class="bi bi-lock-fill me-2 text-primary"></i>Cambiar Contraseña</h5>
                             <div class="row g-3">
+                                  
                                 <div class="col-12">
                                     <label class="form-label">Contraseña Actual</label>
                                     <input type="password" class="form-control" placeholder="••••••••">
@@ -87,11 +94,12 @@
                                 </div>
                             </div>
                         </div>
+                        <input type="hidden" name="id_usuario" value="<?php echo $_SESSION["id"] ?>">
 
                         <!-- Botones de Acción -->
                         <div class="d-flex justify-content-end gap-2 mt-4">
-                            <button type="button" class="btn btn-outline-secondary">Limpiar</button>
-                            <button type="submit" class="btn btn-primary shadow-sm">Guardar Cambios</button>
+                            <button type="reset" class="btn btn-outline-secondary">Limpiar</button>
+                            <button type="button" class="btn btn-success shadow-sm" id="clave">Actulizar clave</button>
                         </div>
                     </form>
                 </div>
@@ -103,5 +111,6 @@
 
 </div>
 <?php require_once 'vista/complementos/footer2.php'; ?>
+<script src="assets/js/perfil.js"></script>
 </body>
 </html>

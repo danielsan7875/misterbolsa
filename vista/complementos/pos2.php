@@ -17,8 +17,12 @@
 </div>
 </div>
 
+ <script>
+  const idUsuario = <?php echo json_encode($_SESSION['id']); ?>;
+</script>
+
 <!-- 1. Navbar Superior -->
-    <nav class="top-nav d-flex justify-content-between align-items-center sticky-top">
+    <nav class="top-nav d-flex justify-content-between align-items-center sticky-top DivOscuro2">
         <div class="d-flex align-items-center gap-3">
             <form action="?pagina=registroventa" method="POST">
                 <button type="submit" class="nav-btn active" name="salir" title="Inicio">

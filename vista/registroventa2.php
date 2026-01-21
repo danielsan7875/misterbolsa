@@ -35,9 +35,9 @@
                         <?php if (!empty($producto)): ?>
                             <?php foreach ($producto as $productos): ?>
                                 <div class="col producto-item">
-                                    <div class="product-card">
+                                    <div class="product-card DivOscuro2">
                                         <div class="product-img">
-                                            <i class="fa-solid fa-boxes-stacked" style="font-size: 28px;"></i>
+                                            <i class="fa-solid fa-boxes-stacked TextOscuroTitel2" style="font-size: 28px;"></i>
                                         </div>
                                         <div class="p-3 d-flex flex-column flex-grow-1">
                                             <h6 class="fw-semibold mb-1 text-truncate nombre-producto">
@@ -100,11 +100,11 @@
             <!-- 3. Columna Derecha: Detalle de Venta -->
               
 
-            <div class="col-lg-4 h-100 pb-3">
+            <div class="col-lg-4 h-100 pb-3 DivOscuro2">
               
                
 
-                <div class="cart-column">
+                <div class="cart-column DivOscuro2">
                     <form action="?pagina=registroventa" method="POST" autocomplete="off" id="SystemPos">
                   <div class="cart-header d-flex justify-content-between align-items-center">
                         <h5 class="mb-0 fw-bold">
@@ -125,14 +125,14 @@
                     </div>
 
                     <!-- Sección Inferior (Método de Pago, Totales, Botón) -->
-                    <div class="payment-section">
+                    <div class="payment-section DivOscuro2">
                         <!-- Métodos de Pago -->
                         <label class="form-label text-muted small fw-bold text-uppercase mb-2">Método de Pago</label>
                         <div class="row g-2 mb-4">
                           <?php if (!empty($metodo)): ?>
                             <?php foreach ($metodo as $metodo): ?>
                                 <div class="col-3">
-                                   <div class="payment-method-card" data-id="<?php echo $metodo['id_metodopago']; ?>">
+                                   <div class="payment-method-card TextOscuroTitel2" data-id="<?php echo $metodo['id_metodopago']; ?>">
                                         <?php
                                             // Asignamos el icono según el ID de la base de datos
                                             $icono = "fa-money-bill"; // Icono por defecto
@@ -144,7 +144,7 @@
                                             }
                                         ?>
                                         <i class="fa-solid <?php echo $icono; ?> mb-1"></i>
-                                        <div class="small fw-medium">
+                                        <div class="small fw-medium TextOscuroTitel2">
                                             <?php echo htmlspecialchars($metodo['nombre']); ?>
                                         </div>
                                     </div>
@@ -172,17 +172,17 @@
                             <div class="total-row">
                                 <span>Tasa de Cambio</span>
                                     <?php foreach ($dolar as $dolar){  ?>
-                                        <span class="fw-medium text-dark " id="tasade">Bs <?php echo $dolar['precios']?></span>
+                                        <span class="fw-medium text-dark TextOscuro" id="tasade">Bs <?php echo $dolar['precios']?></span>
                                          <input type="hidden" id="tasadecambio"  value="<?php echo $dolar['precios']?>">
                                     <?php } ?> 
                                    
                             </div>
                             <div class="total-row">
                                 <span class="text-muted">Total en Dólares</span>
-                                <strong><span id="total-dolares" class="fw-bold text-dark fs-5">$0.00</span></strong>
+                                <strong><span id="total-dolares" class="fw-bold text-dark fs-5 TextOscuro">$0.00</span></strong>
                             </div>
                             <div class="d-flex justify-content-between align-items-center mt-3">
-                                <span class="fs-5 fw-bold text-dark">Total a Pagar</span>
+                                <span class="fs-5 fw-bold text-dark TextOscuro">Total a Pagar</span>
                             
                                 <strong><span class="grand-total text-primary">Bs. 0.00</span></strong>
                             </div>
@@ -256,21 +256,21 @@
             </div>
             <div class="modal-body">
                         
-                <div class="transaction-list shadow-sm border-0 mt-3">
+                <div class="transaction-list shadow-sm border-0 mt-3 DivOscuro2">
                     <div class="row">
                         <div class="col">
                             <h5>Modo Oscuro</h5>
                         </div>
                         <div class="col">
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                <input class="form-check-input" id="toggleModo" type="checkbox" id="flexSwitchCheckDefault">
                                
                             </div>
                         </div>
                     </div>
                     
                 </div>
-                  <div class="transaction-list shadow-sm border-0">
+                  <div class="transaction-list shadow-sm border-0 DivOscuro2">
                     <h5>Estado del Cierre Diario: 
                          <?php 
                         if (!$cierre) {
@@ -281,7 +281,7 @@
                         ?>
                     </h5>
                     </div>
-                     <div class="transaction-list shadow-sm border-0">
+                     <div class="transaction-list shadow-sm border-0 DivOscuro2">
                          <h5>Tasa de Cambio (Guardada en el Sistema)
                             <span class="text-success" id="tasacofing">  </span>
                          </h5>
@@ -306,7 +306,7 @@
             <div class="modal-body">
                 
 
-                             <div class="transaction-list shadow-sm border-0 DivOscuro1">
+                             <div class="transaction-list shadow-sm border-0 DivOscuro2">
 
       <div class="table-responsive text-dark TextOscuro">
         <table id="myTable" class="table table-hover" style="width:100%">
@@ -467,17 +467,5 @@
 </div>
 
 
-
-
-
-<script>
-    document.addEventListener('hidden.bs.modal', function (event) {
-    if (event.target.id === 'modalhistorial') {
-        const modal = document.getElementById('modal-<?php echo $id_venta; ?>');
-        new bootstrap.Modal(modal).show();
-    }
-});
-
-</script>
 </body>
 </html>

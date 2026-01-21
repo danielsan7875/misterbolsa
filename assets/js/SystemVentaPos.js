@@ -182,7 +182,7 @@ $(document).ready(function() {
                     <div class="d-flex flex-column align-items-end gap-1">
                         <div class="qty-control d-flex align-items-center border rounded">
                             <button type="button" class="btn btn-sm btn-control px-2" data-id="${item.id}" data-accion="menos">-</button>
-                            <span class="fw-bold small px-2" style="min-width: 25px; text-align: center;">${item.cantidad}</span>
+                            <span class="fw-bold small px-2 TextOscuroTitel2" style="min-width: 25px; text-align: center;">${item.cantidad}</span>
                             <button type="button" class="btn btn-sm btn-control px-2" data-id="${item.id}" data-accion="mas" ${item.cantidad >= item.stockMax ? 'disabled' : ''}>+</button>
                         </div>
                         <span class="fw-bold text-primary small">$${subtotal.toFixed(2)}</span>
@@ -477,3 +477,40 @@ const destino = document.getElementById('tasacofing'); // Donde lo quieres pegar
 origen.addEventListener('input', () => {
     destino.value = origen.value;
 });
+
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const modoKey = 'modoOscuro_' + idUsuario;
+    const switchModo = document.getElementById('toggleModo');
+
+    // Leer estado guardado
+    const modoActivo = localStorage.getItem(modoKey);
+
+    if (modoActivo === 'activo') {
+        document.body.classList.add('modo-oscuro');
+        switchModo.checked = true;
+    }
+
+    // Evento cambio del switch
+    switchModo.addEventListener('change', function () {
+
+        if (this.checked) {
+            activarModoOscuro(modoKey);
+        } else {
+            desactivarModoOscuro(modoKey);
+        }
+
+    });
+
+});
+
+function activarModoOscuro(modoKey) {
+    document.body.classList.add('modo-oscuro');
+    localStorage.setItem(modoKey, 'activo');
+}
+
+function desactivarModoOscuro(modoKey) {
+    document.body.classList.remove('modo-oscuro');
+    localStorage.setItem(modoKey, 'inactivo');
+}

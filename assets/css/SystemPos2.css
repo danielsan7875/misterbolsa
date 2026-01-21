@@ -140,8 +140,8 @@
         }
 
         .cart-items {
-    scrollbar-gutter: stable;
-}
+              scrollbar-gutter: stable;
+          }
 
         .qty-control {
             display: flex;
@@ -624,4 +624,8 @@ body.loading-active {
 .modal-producto .btn-close:hover {
   background-color: #eb0f0f;
   transform: scale(1.1);
+}
+
+.form-check-input {
+    transform: scale(1.8);
 }

@@ -24,7 +24,7 @@
   <script src="assets/libs/select2/select2.min.js"></script>
 
   <!-- <script src="assets/js/modo.js"></script>-->
-  <link href="assets/css/modo.css" rel="stylesheet"></link>
+    <link rel="stylesheet" href="assets/css/SystemPosOscuro.css">
 
   <link rel="stylesheet" href="assets/css/SystemPos2.css">
 
