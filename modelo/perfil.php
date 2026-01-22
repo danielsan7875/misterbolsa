@@ -10,6 +10,8 @@ class Perfil extends Conexion{
     private $apellidos;
     private $usuario;
     private $clave;
+    private $nueva;
+    private $confirmar;
     
 
     function __construct()
@@ -34,25 +36,9 @@ class Perfil extends Conexion{
                 return $res = 0;
             }
     
-    } //fin consultar
+         } //fin consultar
 
-        public function eliminar(){
-            try {
-                $registro = "DELETE FROM usuario WHERE id_usuario = :id_usuario";
-                $strExec = $this->conex->prepare($registro);
-                $strExec->bindParam(':id_usuario', $this->id_usuario);
-                $result = $strExec->execute();
-                if ($result){
-                    $res=array('respuesta'=>1,'accion'=>'eliminar');
-                } else{
-                    $res=array('respuesta'=>0,'accion'=>'eliminar');
-                }
-
-                return $res;
-            } catch (PDOException $e) {
-                echo "Error: " . $e->getMessage();
-            }
-        }
+      
 
         public function actualizar(){
             $registro = "UPDATE usuario SET nombre = :nombres, apellido = :apellidos, usuario = :usuario WHERE id_usuario = :id_usuario";
@@ -71,6 +57,36 @@ class Perfil extends Conexion{
                  }
             return $res;
         }// fin actulizar
+
+        public function actualizarClave($id_usuario, $nuevaClave){
+            $registro = "UPDATE usuario SET clave = :nueva WHERE id_usuario = :id_usuario";
+    
+            $stmt = $this->conex->prepare($registro);
+            $stmt->bindParam(':id_usuario', $id_usuario);
+            $stmt->bindParam(':nueva', $nuevaClave);
+    
+            $resul= $stmt->execute();
+                if ($resul) {
+                    $res=array('respuesta'=>1,'accion'=>'clave');
+                }else{
+                    $res=array('respuesta'=>0,'accion'=>'clave');
+                 }
+            return $res;
+        }// fin actulizar
+
+
+
+       public function consultarClaveActual($id_usuario){
+            $sql = "SELECT clave FROM usuario WHERE id_usuario = :id_usuario";
+            $stmt = $this->conex->prepare($sql);
+            $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+
+
+
+
     
     public function get_Id_Usuario()
     {
@@ -109,6 +125,20 @@ class Perfil extends Conexion{
         return $this->clave;
     }
     public function set_Clave($clave) {
+        $this->clave = strtolower($clave);
+    }
+
+     public function get_Nueva() {
+        return $this->clave;
+    }
+    public function set_Nueva($clave) {
+        $this->clave = strtolower($clave);
+    }
+
+     public function get_Confirmar() {
+        return $this->clave;
+    }
+    public function set_confimar($clave) {
         $this->clave = strtolower($clave);
     }
 

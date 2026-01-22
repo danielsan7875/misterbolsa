@@ -60,6 +60,16 @@ function validarCampo(campo, regex, textoError, mensaje) {
     return resultados.every(r => r === true);
 }
 
+ function validarFormulario2() {
+    const resultados = [
+        validarCampo($("#actual"), /^[a-z0-9]{8,16}$/, $("#textoactual"), "La contraseña debe tener entre 8 y 16 caracteres, minúsculas y números"),
+        validarCampo($("#nueva"), /^[a-z0-9]{8,16}$/, $("#textonueva"), "La contraseña debe tener entre 8 y 16 caracteres, minúsculas y números"),
+        validarCampo($("#confirmar"), /^[a-z0-9]{8,16}$/, $("#textoconfirmar"), "La contraseña debe tener entre 8 y 16 caracteres, minúsculas y números")
+    ];
+
+    return resultados.every(r => r === true);
+}
+
 $(document).ready(function() {
 
     $("#nombre").on("keypress", function(e) {
@@ -92,14 +102,34 @@ $(document).ready(function() {
       $("#textousuario"), "Debe ser entre 6 y 16 caracteres, letras y números");
     });
 
-    $("#clave").on("keypress", function(e) {
+    $("#actual").on("keypress", function(e) {
       validarkeypress(/^[a-z0-9]+$/, e);
     });
 
-    $("#clave").on("keyup", function() {
+    $("#actual").on("keyup", function() {
       validarCampo($(this),/^[a-z0-9]{8,16}$/, 
-      $("#textoclave"), "La contraseña debe tener entre 8 y 16 caracteres, solo letras minúsculas y números");
+      $("#textoactual"), "La contraseña debe tener entre 8 y 16 caracteres, minúsculas y números");
     });
+
+    $("#nueva").on("keypress", function(e) {
+      validarkeypress(/^[a-z0-9]+$/, e);
+    });
+
+    $("#nueva").on("keyup", function() {
+      validarCampo($(this),/^[a-z0-9]{8,16}$/, 
+      $("#textonueva"), "La contraseña debe tener entre 8 y 16 caracteres, minúsculas y números");
+    });
+
+
+    $("#confirmar").on("keypress", function(e) {
+      validarkeypress(/^[a-z0-9]+$/, e);
+    });
+
+    $("#confirmar").on("keyup", function() {
+      validarCampo($(this),/^[a-z0-9]{8,16}$/, 
+      $("#textoconfirmar"), "La contraseña debe tener entre 8 y 16 caracteres, minúsculas y números");
+    });
+
 
 
 
@@ -127,8 +157,36 @@ $(document).ready(function() {
         enviaAjax(datos);
       }
     });  
-});
+    });
 
+
+
+      $('#clave').on("click", function () {
+            Swal.fire({
+              title: '¿Desea actualizar la clave?',
+              text: '',
+              icon: 'question',
+              showCancelButton: true,
+              color: "#00000",
+              confirmButtonColor: '#1d994dff',
+              cancelButtonColor: '#EF233C',
+              confirmButtonText: ' SI ',
+              cancelButtonText: 'NO'
+            }).then((result) => {
+              if (!validarFormulario2()) {
+                muestraMensaje("error", 2000, "Campos inválidos O Vacios", "Por favor, corrige los errores antes de continuar.");
+                return;
+            }
+            else if (result.isConfirmed) {
+              activarLoaderBoton('#clave', "Guardando...");
+                var datos = new FormData($('#forClave')[0]);
+                datos.append('clave', 'clave');
+                enviaAjax(datos);
+              }
+            });  
+
+
+      });
 
 
 
@@ -168,38 +226,29 @@ function muestraMensaje(icono, tiempo, titulo, mensaje) {
         var lee = JSON.parse(respuesta);
         try {
   
-          if (lee.accion == 'registrar') {
+          if (lee.accion == 'clave') {
             if (lee.respuesta == 1) {
-              muestraMensaje("success", 1000, "Se ha registrado con éxito", "Su registro se ha completado exitosamente");
-                  desactivarLoaderBoton('#registrar');
+              muestraMensaje("success", 1500, "Se ha Actualizado con éxito", "");
+                  desactivarLoaderBoton('#clave');
               setTimeout(function () {
-                location = '?pagina=usuario';
-              }, 1000);
+                location = '?pagina=perfil';
+              }, 2000);
             } else {
               muestraMensaje("error", 2000, "ERROR", "ERROR");
-                  desactivarLoaderBoton('#registrar');
+                  desactivarLoaderBoton('#clave');
             }
           } else if (lee.accion == 'actualizar') {
             if (lee.respuesta == 1) {
-              muestraMensaje("success", 1000, "Se ha Modificado con éxito", "Actualizado exitosamente");
+              muestraMensaje("success", 1500, "Se ha Modificado con éxito", "Actualizado exitosamente");
                   desactivarLoaderBoton('#actualizar');
               setTimeout(function () {
                 location = '?pagina=perfil';
-              }, 1500);
+              }, 2000);
             } else {
               muestraMensaje("error", 2000, "ERROR", "Intente Nuevamente O Mas Tarde");
                   desactivarLoaderBoton('#actualizar');
             }
-          } else if (lee.accion == 'eliminar') {
-            if (lee.respuesta == 1) {
-              muestraMensaje("success", 1000, "Se ha eliminado con éxito", "Los datos se han borrado correctamente ");
-              setTimeout(function () {
-                location = '?pagina=usuario';
-              }, 1000);
-            } else {
-              muestraMensaje("error", 2000, "ERROR", lee.text);
-            }
-          }
+          } 
   
         } catch (e) {
           alert("Error en JSON " + e.name);

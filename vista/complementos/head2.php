@@ -10,15 +10,15 @@
 
   <link rel="stylesheet" href="assets/libs/fontawesome/css/all.min.css" />
 
+     <script src="assets/js/loader.js"></script>
+
   <script src="assets/libs/jquery/jquery.min.js"></script>
 
- <script src="assets/js/loader.js"></script>
+  <link href="assets/libs/select2/select2.min.css" rel="stylesheet">
+  <script src="assets/libs/select2/select2.min.js"></script>
 
   <link href="assets/libs/DataTables/datatables.min.css" rel="stylesheet">
   <script src="assets/libs/DataTables/datatables.min.js"></script>
- 
-  <link href="assets/libs/select2/select2.min.css" rel="stylesheet">
-  <script src="assets/libs/select2/select2.min.js"></script>
 
   <script src="assets/js/modo.js"></script>
 

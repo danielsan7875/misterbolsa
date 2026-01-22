@@ -135,14 +135,7 @@
         $consulta->execute();
         return $consulta->fetchAll(PDO::FETCH_ASSOC);
     }
-    
-     // Metodo para llamar las medidas existentes
-     public function obtenerMarca() {
-        $query = "SELECT * FROM marca WHERE estatus =1 LIMIT 100";
-        $consulta = $this->conex->prepare($query);
-        $consulta->execute();
-        return $consulta->fetchAll(PDO::FETCH_ASSOC);
-    } 
+  
 
      // Metodo para llamar las medidas existentes
      public function obtenerDolar() {
@@ -180,6 +173,71 @@
 			 }
 		return $res;
 	}// fin actulizar
+
+
+public function buscarMarca($buscar) {
+
+    $sql = "SELECT id_marca, nombre
+            FROM marca
+            WHERE estatus = 1
+            AND nombre LIKE :buscar
+            ORDER BY nombre
+            LIMIT 20";
+
+    $stmt = $this->conex->prepare($sql);
+    $stmt->bindValue(':buscar', "%$buscar%");
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+public function ultimasMarcas() {
+
+    $sql = "SELECT id_marca, nombre
+            FROM marca
+            WHERE estatus = 1
+            ORDER BY id_marca DESC
+            LIMIT 20";
+
+    $stmt = $this->conex->prepare($sql);
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+
+public function buscarPresentacion($buscar2) {
+
+    $sql = "SELECT id_presentacion, nombre
+            FROM presentacion
+            WHERE estatus = 1
+            AND nombre LIKE :buscar
+            ORDER BY nombre
+            LIMIT 20";
+
+    $stmt = $this->conex->prepare($sql);
+    $stmt->bindValue(':buscar', "%$buscar2%");
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+public function ultimasPresentacion() {
+
+    $sql = "SELECT id_presentacion, nombre
+            FROM presentacion
+            WHERE estatus = 1
+            ORDER BY id_presentacion DESC
+            LIMIT 20";
+
+    $stmt = $this->conex->prepare($sql);
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
 
     

@@ -43,6 +43,13 @@
         $consulta->execute();
         return $consulta->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function contarVentasHoy() {
+        $query = "SELECT COUNT(*) as total FROM venta WHERE fecha = CURDATE()";
+        $consulta = $this->conex->prepare($query);
+        $consulta->execute();
+        return $consulta->fetch(PDO::FETCH_ASSOC);
+    }
     
     
     public function tasadolar(){
@@ -94,6 +101,20 @@ public function TotalSemana() {
             SUM(total_dl) AS total_semana
         FROM venta
         WHERE fecha >= DATE_SUB(CURDATE(), INTERVAL 6 DAY)
+    ";
+
+    $consulta = $this->conex->prepare($query);
+    $consulta->execute();
+    return $consulta->fetch(PDO::FETCH_ASSOC);
+}
+
+
+public function TotalHoy() {
+    $query = "
+        SELECT 
+            SUM(total_dl) AS total_hoy
+        FROM venta
+        WHERE fecha = CURDATE()
     ";
 
     $consulta = $this->conex->prepare($query);

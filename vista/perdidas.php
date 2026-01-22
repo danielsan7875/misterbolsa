@@ -4,8 +4,6 @@
 <head>
     <?php require_once 'complementos/head2.php'; ?>
     <title>Perdidas | Mister Bolsa C.A</title>
-    <link rel="stylesheet" href="assets/css/perdida.css" />
-   
 </head>
 
 <body>

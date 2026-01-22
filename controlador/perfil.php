@@ -35,13 +35,33 @@ require_once 'modelo/perfil.php';
 
   } else if(isset($_POST["clave"])){
 
-      $objperfil->set_Id_usuario($_POST['id_usuario']);
-      $objperfil->set_Nombres($_POST['nombres']);
-      $objperfil->set_Apellidos($_POST['apellidos']);
-      $objperfil->set_Usuario($_POST['usuario']);
+    $id_usuario = $_POST['id_usuario'];
+    $claveActual = $_POST['actual'];
+    $nueva = $_POST['nueva'];
+    $confirmar = $_POST['confirmar'];
 
-      $result=$objperfil->actualizar();
-      echo json_encode($result);
+       $datos = $objperfil->consultarClaveActual($id_usuario);
+
+        if (!$datos) {
+              echo json_encode(['respuesta'=>0,'accion'=>'clave']);
+            exit;
+        }
+
+    
+        if ($datos['clave'] !== $claveActual) {
+              echo json_encode(['respuesta'=>0,'accion'=>'clave']);
+            exit;
+        }
+
+        
+        if ($nueva !== $confirmar) {
+            echo json_encode(['respuesta'=>0,'accion'=>'clave']);
+            exit;
+        }
+
+      $actualizado = $objperfil->actualizarClave($id_usuario, $nueva);
+      echo json_encode($actualizado);
+      exit;
 
 
 

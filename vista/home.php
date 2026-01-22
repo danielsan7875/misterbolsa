@@ -182,15 +182,25 @@
                     </div>
 
                     <div class="wallet-promo bg-white p-4 shadow-sm border-0 DivOscuro1" style="border-radius: 20px;">
-                        <h6 class="fw-bold text-primary mb-2">NeoPay Premium</h6>
-                        <p class="text-secondary small mb-3">Get detailed reports and lower fees on all your operations.</p>
-                        <button class="btn btn-primary w-100 btn-sm rounded-pill">Upgrade Now</button>
+                        <h6 class="fw-bold mb-2">  <i class="fa-solid fa-cash-register me-2"></i> Ventas de Hoy</h6>
+
+                          <div class="row mb-2">
+                              <?php $totalHoy = $TotalHoy['total_hoy']; $TotalCantidad = $TotalCantidadHoy["total"];?>
+                            <div class="col">
+                                <p class="text-muted ">Total: <span class="text-success"> <strong> $ <?php echo number_format($totalHoy, 2, ',', '.'); ?> </strong> </span> </p>
+                            </div>
+                            <div class="col">
+                                <p class="text-muted">Cantidad: <span class="text-primary"><strong> <?php echo $TotalCantidad ?> </strong> </span> </p>
+                            </div>
+                          </div>
+                        <a href="?pagina=venta" class="btn btn-primary w-100 btn-sm rounded-pill">Ir a Venta</a>
                     </div>
                 </div>
             </div>
 
 
-
+ 
+                                <div class="h5 fw-bold mb-0"></div>
 
 
   <!--|||||||||||||||  Footer y JS  |||||||||||||||||||||||||||-->

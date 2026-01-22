@@ -301,14 +301,6 @@ if (alertMessages.length > 0) {
             validarCampo($(this),/^[0-9]{1,4}$/, 
             $("#textocantidadmayor"), "Debe haber como mínimo 1 caracter");
          });
-
-        $("#marcaselect").on("change", function () {
-            validarCampo($(this), null, $("#textomarca"), "Por favor, seleccione una marca válida.");
-        });
-
-          $("#presenselect").on("change", function () {
-          validarCampo($(this), null, $("#textopresentacion"), "Por favor, seleccione una presentanción válida.");
-        });
         
         $("#preciomayor").on("keyup", function () {
           const precio = parseFloat($("#precio").val());
@@ -326,7 +318,7 @@ if (alertMessages.length > 0) {
       });
 
       $('#registrar').on("click", function () {
-          if (!validarFormulario()) {
+          if (!validarFormulario2()) {
                 muestraMensaje("error", 2000, "Campos inválidos O Vacios", "Por favor, corrige los errores antes de continuar.");
               return;
           }
@@ -336,6 +328,91 @@ if (alertMessages.length > 0) {
           datos.append('registrar', 'registrar');
           enviaAjax(datos);
       });
+
+$('#exampleModal').on('shown.bs.modal', function () {
+
+    if (!$('#marcaselect').hasClass('select2-hidden-accessible')) {
+
+        $('#marcaselect').select2({
+            width: '88%',
+            dropdownParent: $('#exampleModal'),
+            placeholder: 'Seleccione o busque una marca',
+            allowClear: true,
+
+            ajax: {
+                delay: 300,
+
+                transport: function (params, success, failure) {
+
+                    let datos = new FormData(document.getElementById('u'));
+                    datos.append('ajaxMarca', '1');
+
+                    // 🔹 Si no hay búsqueda, traer últimos 20
+                    datos.append('buscarMarca', params.data.q ? params.data.q : '');
+
+                    $.ajax({
+                        url: '',
+                        type: 'POST',
+                        data: datos,
+                        contentType: false,
+                        processData: false,
+                        dataType: 'json',
+                        success: success,
+                        error: failure
+                    });
+                },
+
+                processResults: function (data) {
+                    return {
+                        results: data.map(function (m) {
+                            return {
+                                id: m.id_marca,
+                                text: m.nombre
+                            };
+                        })
+                    };
+                }
+            },
+
+            language: {
+                inputTooShort: function () {
+                    return 'Escriba para buscar marcas';
+                },
+                searching: function () {
+                    return 'Buscando marcas…';
+                },
+                noResults: function () {
+                    return 'No se encontraron marcas';
+                }
+            }
+        });
+         $('#marcaselect').on('select2:open', function() {
+            $('input.select2-search__field').attr('placeholder', 'Buscador');
+        });
+        $('#marcaselect').on('select2:open', function () {
+
+        const searchInput = document.querySelector('.select2-search__field');
+
+        if (!searchInput) return;
+
+        searchInput.addEventListener('input', function () {
+
+            // 🔹 Permitir solo letras, números y espacios
+            this.value = this.value.replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]/g, '');
+
+        });
+
+    });
+        $('#marcaselect').select2('open');
+        $('#marcaselect').select2('close');
+    }
+
+});
+
+
+
+
+
 
 });
 
@@ -348,6 +425,22 @@ function validarFormulario() {
         validarCampo($("#cantidadmayor"), /^[0-9]{1,4}$/, $("#textocantidadmayor"), "Debe haber como mínimo 1 caracter"),
         validarCampo($("#marcaselect"), null, $("#textomarca"), "Por favor, seleccione un rol válido."),
         validarCampo($("#presenselect"), null, $("#textopresentacion"), "Por favor, seleccione un rol válido.")
+    ];
+
+    return resultados.every(r => r === true);
+}
+
+function validarFormulario2() {
+    const resultados = [
+        validarCampo($("#nombre"), /^[a-zA-Z0-9\-#\/\s]{4,100}$/, $("#textonombre"), "Debe haber como mínimo 4 caracteres"),
+        validarCampo($("#precio"), /^[0-9\.]{4,7}$/, $("#textoprecio"), "Debe haber como mínimo 0.01"),
+        validarCampo($("#stock"), /^[0-9]{1,4}$/, $("#textostock"), "Debe haber como mínimo 1 caracter"),
+        validarCampo($("#preciomayor"), /^[0-9\.]{4,7}$/, $("#textopreciomayor"), "Debe haber como mínimo 0.01"),
+        validarCampo($("#cantidadmayor"), /^[0-9]{1,4}$/, $("#textocantidadmayor"), "Debe haber como mínimo 1 caracter"),
+
+        // ✅ Select2
+        validarSelect2($("#marcaselect"), $("#textomarca"), "Por favor, seleccione una marca válida."),
+        validarSelect2($("#presenselect"), $("#textopresentacion"), "Por favor, seleccione una presentación válida.")
     ];
 
     return resultados.every(r => r === true);
@@ -376,12 +469,127 @@ $('#actualizar').on("click", function () {
       datos.append('actualizar', 'actualizar');
       enviaAjax(datos);
     }
-  });      
+  }); 
+  
+  
+
+
+$('#marcaselect, #presenselect').on('change', function () {
+    validarSelect2(
+        $(this),
+        $(this).attr('id') === 'marcaselect' ? $("#textomarca") : $("#textopresentacion"),
+        "Campo obligatorio"
+    );
+});
+
+
+
 
 
 });
 
+function validarSelect2(select, spanError, mensaje) {
 
+    if (!select.val() || select.val() === "") {
+        spanError.text(mensaje);
+        select.next('.select2-container').addClass('is-invalid');
+        return false;
+    }
+
+    spanError.text('');
+    select.next('.select2-container').removeClass('is-invalid');
+    return true;
+}
+
+
+
+
+
+$(document).ready(function() {
+
+
+
+$('#exampleModal').on('shown.bs.modal', function () {
+
+    if (!$('#presenselect').hasClass('select2-hidden-accessible')) {
+
+        $('#presenselect').select2({
+            width: '88%',
+            dropdownParent: $('#exampleModal'),
+            placeholder: 'Seleccione o busque una presentacion',
+            allowClear: true,
+
+            ajax: {
+                delay: 300,
+
+                transport: function (params, success, failure) {
+
+                    let datos = new FormData(document.getElementById('u'));
+                    datos.append('ajaxPresentacion', '1');
+
+                    // 🔹 Si no hay búsqueda, traer últimos 20
+                    datos.append('buscarPresentacion', params.data.q ? params.data.q : '');
+
+                    $.ajax({
+                        url: '',
+                        type: 'POST',
+                        data: datos,
+                        contentType: false,
+                        processData: false,
+                        dataType: 'json',
+                        success: success,
+                        error: failure
+                    });
+                },
+
+                processResults: function (data) {
+                    return {
+                        results: data.map(function (e) {
+                            return {
+                                id: e.id_presentacion,
+                                text: e.nombre
+                            };
+                        })
+                    };
+                }
+            },
+
+            language: {
+                inputTooShort: function () {
+                    return 'Escriba para buscar presentacion';
+                },
+                searching: function () {
+                    return 'Buscando presentacion…';
+                },
+                noResults: function () {
+                    return 'No se encontraron presentacion';
+                }
+            }
+        });
+         $('#presenselect').on('select2:open', function() {
+            $('input.select2-search__field').attr('placeholder', 'Buscador');
+        });
+        $('#presenselect').on('select2:open', function () {
+
+        const searchInput = document.querySelector('.select2-search__field');
+
+        if (!searchInput) return;
+
+        searchInput.addEventListener('input', function () {
+
+            // 🔹 Permitir solo letras, números y espacios
+            this.value = this.value.replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]/g, '');
+
+        });
+
+    });
+        $('#presenselect').select2('open');
+        $('#presenselect').select2('close');
+    }
+
+});
+
+});
 
 
 function muestraMensaje(icono, tiempo, titulo, mensaje) {
@@ -464,8 +672,12 @@ function muestraMensaje(icono, tiempo, titulo, mensaje) {
               }else {
                 muestraMensaje("error", 2000, "ERROR", lee.text);
               }
-          }
-  
+          
+        }
+
+
+
+
         } catch (e) {
           alert("Error en JSON " + e.name);
         }
@@ -482,3 +694,6 @@ function muestraMensaje(icono, tiempo, titulo, mensaje) {
       }
     });
   }
+
+
+

@@ -4,25 +4,7 @@
 <head>
     <?php require_once 'complementos/head2.php'; ?>
     <title>Producto | Mister Bolsa C.A</title>
-    <!--
-    <link rel="stylesheet" href="assets/css/producto.css" />
-     <link rel="stylesheet" href="assets/css/for.css" />
 
-     
--->
-
-<style>
-    /* Estilo para productos desactivados (Estatus 2) */
-    .fila-desactivada {
-        background-color: #f2f2f2 !important; /* Gris muy claro */
-        color: #888888; /* Texto gris oscuro/opaco */
-    }
-
-    /* Opcional: si quieres que se vea un poco transparente */
-    .fila-desactivada td {
-        border-color: #ddd;
-    }
-</style>
 </head>
 
 <body>
@@ -386,17 +368,15 @@
           </div>
         </div>
 
+
         <div class="row ">
           <div class="col-sm">
           <label class="form-label text-dark">Marca</label>
           <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-tag " style="color:#FF3C37;"></i></span>
-          <select class="form-select text-dark" aria-label="Default select example"  name="marca" id="marcaselect" required>
-              <option value="">Seleccione una Marca:</option>
-                 <?php foreach($marca as $marca) {?>
-                     <option value="<?php echo $marca['id_marca'];?>"> <?php echo $marca['nombre'];?> </option>
-               <?php } ?>
-           </select> 
+       
+
+             <select id="marcaselect" name="marca" class="form-select" style="width:87%" required></select>
            
            </div>
            <span id="textomarca"  class="text-error mt-0"></span> 
@@ -406,12 +386,8 @@
           <label class="form-label text-dark">Presentacion</label>
           <div class="input-group mb-3">
           <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-shapes" style="color:#FF3C37;"></i></span>
-          <select class="form-select text-dark" aria-label="Default select example" name="presentacion" id="presenselect" required>
-              <option value="">Seleccione una Presentacion:</option>
-                 <?php foreach($presentacion as $presentacion) {?>
-                     <option value="<?php echo $presentacion['id_presentacion'];?>"> <?php echo $presentacion['nombre'];?> </option>
-               <?php } ?>
-           </select> 
+
+          <select class="form-select text-dark" name="presentacion" id="presenselect" required> </select> 
        
            </div>  
                <span id="textopresentacion"  class="text-error mt-0"></span> 

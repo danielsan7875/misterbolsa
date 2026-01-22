@@ -184,3 +184,103 @@ body.modo-oscuro {
     background-color: #373838 !important;
     color:var(--text-blank) !important;
 }
+
+
+/* |||||||||||||||||||| ||||||||||||||||||||||||||||||||||  SELECT2 - MODO OSCURO */
+
+.modo-oscuro .select2-container--default .select2-selection--single {
+    background-color: #1f1f1f;
+    color: #ffffff;
+    border: 2px solid #2c2c2c;
+    border-radius: 8px;
+    min-height: 46px;
+    display: flex;
+    align-items: center;
+}
+
+/* Texto seleccionado */
+.modo-oscuro .select2-selection__rendered {
+    color: #ffffff !important;
+}
+
+/* Flecha */
+.modo-oscuro .select2-selection__arrow b {
+    border-color: #ffffff transparent transparent transparent;
+}
+
+/* Dropdown */
+.modo-oscuro .select2-dropdown {
+    background-color: #1f1f1f;
+    border: 2px solid #2c2c2c;
+}
+
+/* Opciones */
+.modo-oscuro .select2-results__option {
+    color: #ffffff;
+    background-color: #1f1f1f;
+}
+
+/* Hover opción */
+.modo-oscuro .select2-results__option--highlighted {
+    background-color: #5F0A00;
+    color: #ffffff;
+}
+
+/* Opción seleccionada */
+.modo-oscuro .select2-results__option--selected {
+    background-color: #3a0d08;
+    color: #ffffff;
+}
+
+/* Input buscador */
+.modo-oscuro .select2-search__field {
+    background-color: #2a2a2a;
+    color: #ffffff;
+    border: 2px solid #2c2c2c;
+    border-radius: 6px;
+}
+
+/* Placeholder buscador */
+.modo-oscuro .select2-search__field::placeholder {
+    color: #bbbbbb;
+}
+
+/* Clear (X) */
+.modo-oscuro .select2-selection__clear {
+    color: #ffffff;
+}
+
+/* Error */
+.modo-oscuro .select2-container.is-invalid .select2-selection {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25);
+}
+
+
+/* SELECT2 - MODO OSCURO (FOCUS FIX) */
+
+
+.modo-oscuro .select2-container--default.select2-container--focus
+.select2-selection--single,
+.modo-oscuro .select2-container--default.select2-container--open
+.select2-selection--single {
+    background-color: #1f1f1f !important;
+    color: #ffffff !important;
+    border-color: #5F0A00 !important;
+}
+
+.modo-oscuro .select2-container--default.select2-container--focus
+.select2-selection__rendered,
+.modo-oscuro .select2-container--default.select2-container--open
+.select2-selection__rendered {
+    color: #ffffff !important;
+}
+
+.modo-oscuro .select2-container--default.select2-container--focus
+.select2-selection__rendered,
+.modo-oscuro .select2-container--default.select2-container--open
+.select2-selection__rendered {
+    color: #ffffff !important;
+}
+
+/* ======================================================== */

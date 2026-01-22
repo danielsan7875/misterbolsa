@@ -21,6 +21,8 @@ $totalVenta = $objhome->contarVentas();
 $registro = $objhome->consultarUltimasVentas();
 $DatosGrafica = $objhome->SemanasVentas();
 $TotalSemana = $objhome->TotalSemana();
+$TotalHoy = $objhome->TotalHoy();
+$TotalCantidadHoy = $objhome->contarVentasHoy();
 
 
 

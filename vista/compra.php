@@ -4,7 +4,7 @@
 <head>
     <?php require_once 'complementos/head2.php'; ?>
     <title>Compra | Mister Bolsa C.A</title>
-    <link rel="stylesheet" href="assets/css/compra.css" />
+ 
 
 </head>
 
@@ -260,7 +260,7 @@
 
           <div class="row">
                     <div class="col">
-                      <button type="button" class="g btn btn-primary" id="btn-agregar-producto"> + AGREGAR</button>
+                      <button type="button" class="g btn btn-primary w-100" id="btn-agregar-producto"> + AGREGAR</button>
                     </div>
                   </div>
         </div>

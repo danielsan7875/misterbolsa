@@ -30,14 +30,44 @@ $objproducto = new Producto();
     $registro = $objproducto->consultar($_SESSION['limite_producto']);
     $total_registros = $objproducto->contarTotal(); 
 
-    $marca = $objproducto->obtenerMarca();
+   
     $presentacion = $objproducto->obtenerPresentacion();
 
     $dolar = $objproducto->obtenerDolar();
 
     $StockMenor = $objproducto->StockMenor();
 
-if(isset($_POST['registrar'])){
+if (isset($_POST['ajaxMarca'])) {
+
+    $buscar = $_POST['buscarMarca'] ?? '';
+
+    if ($buscar === '') {
+        // 🔹 Últimos 20 registrados
+        $marca = $objproducto->ultimasMarcas();
+    } else {
+        // 🔹 Búsqueda normal
+        $marca = $objproducto->buscarMarca($buscar);
+    }
+
+    echo json_encode($marca);
+    exit;
+
+} else if (isset($_POST['ajaxPresentacion'])) {
+
+    $buscar2 = $_POST['buscarPresentacion'] ?? '';
+
+    if ($buscar2 === '') {
+        // 🔹 Últimos 20 registrados
+        $presentacion = $objproducto->ultimasPresentacion();
+    } else {
+        // 🔹 Búsqueda normal
+        $presentacion = $objproducto->buscarPresentacion($buscar2);
+    }
+
+    echo json_encode($presentacion);
+    exit;
+
+}else if(isset($_POST['registrar'])){
    if(!empty($_POST['nombre'])){
 
        $objproducto->set_Nombre($_POST['nombre']);

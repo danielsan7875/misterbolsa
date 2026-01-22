@@ -82,15 +82,18 @@
                                   
                                 <div class="col-12">
                                     <label class="form-label">Contraseña Actual</label>
-                                    <input type="password" class="form-control" placeholder="••••••••">
+                                    <input type="text" class="form-control" name="actual" id="actual" placeholder="••••••••">
+                                         <span id="textoactual" class="text-error mt-0"></span> 
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Nueva Contraseña</label>
-                                    <input type="password" class="form-control" placeholder="Nueva clave">
+                                    <input type="text" class="form-control" name="nueva" id="nueva" placeholder="Nueva clave">
+                                         <span id="textonueva" class="text-error mt-0"></span> 
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Confirmar Contraseña</label>
-                                    <input type="password" class="form-control" placeholder="Repite la nueva clave">
+                                    <input type="text" class="form-control"  name="confirmar" id="confirmar" placeholder="Repite la nueva clave">
+                                         <span id="textoconfirmar" class="text-error mt-0"></span> 
                                 </div>
                             </div>
                         </div>
