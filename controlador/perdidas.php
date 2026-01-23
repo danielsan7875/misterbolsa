@@ -14,10 +14,24 @@ require_once 'modelo/perdidas.php';
 $objperdidas = new Perdidas();
 
 $registro = $objperdidas->consultar();
-$producto = $objperdidas->obtenerProducto();
 
 
-if (isset($_POST['registrar'])) {
+if (isset($_POST['ajaxProducto'])) {
+
+    $buscar = $_POST['buscarProducto'] ?? '';
+
+    if ($buscar === '') {
+        // Últimos 20 registrados
+        $producto = $objperdidas->ultimosProductos();
+    } else {
+        // Búsqueda normal
+        $producto = $objperdidas->buscarProducto($buscar);
+    }
+
+    echo json_encode($producto);
+    exit;
+
+} else if (isset($_POST['registrar'])) {
   if (!empty($_POST['id_producto']) && !empty($_POST['cantidad']) && !empty($_POST['fecha']) && !empty($_POST['nota'])) {
       $objperdidas->set_Id_producto($_POST['id_producto']);
       $objperdidas->set_Cantidad($_POST['cantidad']);

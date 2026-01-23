@@ -75,23 +75,91 @@ function validarFormulario() {
 
 $(document).ready(function() {
 
-    var hoy = moment().format('YYYY-MM-DD'); // Formato de fecha para el input tipo date
-    $('#fecha').val(hoy);
+    var today = moment().format('YYYY-MM-DD'); // Formato de fecha para el input tipo date
+    $('#fecha').val(today);
 
+  
     $('#exampleModal').on('shown.bs.modal', function () {
+
+    if (!$('#idproducto').hasClass('select2-hidden-accessible')) {
+
         $('#idproducto').select2({
+            width: '88%',
             dropdownParent: $('#exampleModal'),
-            width: '90%',
+            placeholder: 'Seleccione o busque una productos',
+            allowClear: true,
+
+            ajax: {
+                delay: 300,
+
+                transport: function (params, success, failure) {
+
+                    let datos = new FormData(document.getElementById('u'));
+                    datos.append('ajaxProducto', '1');
+
+                    // 🔹 Si no hay búsqueda, traer últimos 20
+                    datos.append('buscarProducto', params.data.q ? params.data.q : '');
+
+                    $.ajax({
+                        url: '',
+                        type: 'POST',
+                        data: datos,
+                        contentType: false,
+                        processData: false,
+                        dataType: 'json',
+                        success: success,
+                        error: failure
+                    });
+                },
+
+                processResults: function (data) {
+                    return {
+                        results: data.map(function (m) {
+                            return {
+                                id: m.id_producto,
+                                text: m.nombre_producto + ' | ' + m.nombre_marca + ' | ' + m.nombre_presentacion
+                            };
+                        })
+                    };
+                }
+
+            },
+
             language: {
-                 noResults: function() {
-                 return "No se encontraron resultados, intenta con otro término.";
-                 } 
+                inputTooShort: function () {
+                    return 'Escriba para buscar producto';
+                },
+                searching: function () {
+                    return 'Buscando producto…';
+                },
+                noResults: function () {
+                    return 'No se encontraron producto';
+                }
             }
         });
-        $('#idproducto').on('select2:open', function() {
+         $('#idproducto').on('select2:open', function() {
             $('input.select2-search__field').attr('placeholder', 'Buscador');
         });
+        $('#idproducto').on('select2:open', function () {
+
+        const searchInput = document.querySelector('.select2-search__field');
+
+        if (!searchInput) return;
+
+        searchInput.addEventListener('input', function () {
+
+            // 🔹 Permitir solo letras, números y espacios
+            this.value = this.value.replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]/g, '');
+
+        });
+
     });
+        $('#idproducto').select2('open');
+        $('#idproducto').select2('close');
+    }
+
+});
+
 
 
 

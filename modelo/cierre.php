@@ -82,11 +82,10 @@
         
 
 
-   public function contarCierrePorFecha($fecha) {
+   public function contarCierrePorFecha() {
     // Usamos DATE() por si la columna tiene horas, así comparamos solo el día
-    $query = "SELECT COUNT(*) as totalcontar FROM cierre_diario WHERE DATE(fecha_creacion) = DATE(:fecha)";
+    $query = "SELECT COUNT(*) as totalcontar FROM cierre_diario WHERE DATE(fecha_creacion) = CURDATE()";
     $consulta = $this->conex->prepare($query);
-    $consulta->bindParam(':fecha', $fecha);
     $consulta->execute();
     
     // fetch(PDO::FETCH_ASSOC) devuelve ['totalcontar' => valor]

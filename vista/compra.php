@@ -168,8 +168,8 @@
 
                       <?php if ($tipo_usuario == 1): ?>
                       <td class="text-center td-oscuro">
-                          <form action="?pagina=compra">
-                              <button type="button" class="btn btn-primary btn-sm" disabled>
+                          <form action="?pagina=compra" method="POST">
+                              <button type="summit" class="btn btn-primary btn-sm" name="pdf" value="<?php echo $id_compra; ?>"> <i class="fa-regular fa-file-pdf me-2"></i>
                                 Descargar
                               </button>
                           </form>
@@ -242,12 +242,9 @@
           <label class="form-label text-dark">Producto</label>
           <div class="input-group mb-3">
           <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-boxes-stacked" style="color:#007bff;"></i></span>
-          <select class="form-select text-dark select-formulario" aria-label="Default select example" name="id_producto" id="idproducto" required >
-              <option value="">Seleccione un Producto:</option>
-                <?php foreach($producto as $producto) {?>
-                <option value="<?php echo $producto['id_producto'];?>"> <?php echo $producto['nombre']." - ".$producto['nombre_marca']." - ".$producto['nombre_presentacion']?> </option>
-               <?php } ?>
-            </select>
+
+          <select class="form-select text-dark" name="id_producto" id="idproducto" required > </select>
+          
            </div>
            <span class="text-error mt-0" id="textoproducto"></span>
           </div>

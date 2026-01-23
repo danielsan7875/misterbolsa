@@ -127,7 +127,16 @@
                     <!-- Sección Inferior (Método de Pago, Totales, Botón) -->
                     <div class="payment-section DivOscuro2">
                         <!-- Métodos de Pago -->
-                        <label class="form-label text-muted small fw-bold text-uppercase mb-2">Método de Pago</label>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <label class="form-label text-muted small fw-bold text-uppercase m-0">
+                                Métodos de Pagos
+                            </label>
+
+                            <button type="button" class="btn btn-primary btn-sm">
+                               <i class="fa-solid fa-circle-plus me-2"></i>  Pagos Multiples
+                            </button>
+                        </div>
+
                         <div class="row g-2 mb-4">
                           <?php if (!empty($metodo)): ?>
                             <?php foreach ($metodo as $metodo): ?>
@@ -156,9 +165,7 @@
                             </div>
                         <?php endif; ?>
                         </div>
-                          <div class="row g-2 mb-4">
-                            <Button type="button" class="btn btn-primary">Pagos Multiples</Button>
-                          </div>
+                          
 
                           <div class="mt-3 d-none" id="contenedorReferencia">
                                 <label class="form-label">Referencia</label>
@@ -169,25 +176,23 @@
 
                         <!-- Totales -->
                         <div class="border-top border-dashed mb-3 pt-3">
-                            <div class="total-row">
-                                <span>Tasa de Cambio</span>
-                                    <?php foreach ($dolar as $dolar){  ?>
-                                        <span class="fw-medium text-dark TextOscuro" id="tasade">Bs <?php echo $dolar['precios']?></span>
-                                         <input type="hidden" id="tasadecambio"  value="<?php echo $dolar['precios']?>">
-                                    <?php } ?> 
-                                   
-                            </div>
+                           
+                            <?php $precio = $dolar[0]['precios'];  ?>
                             <div class="total-row">
                                 <span class="text-muted">Total en Dólares</span>
+                                        <span class="fw-medium text-muted" id="tasade"> Tasa de Cambio: Bs <?= $precio ?></span>
+
                                 <strong><span id="total-dolares" class="fw-bold text-dark fs-5 TextOscuro">$0.00</span></strong>
                             </div>
                             <div class="d-flex justify-content-between align-items-center mt-3">
                                 <span class="fs-5 fw-bold text-dark TextOscuro">Total a Pagar</span>
-                            
+
                                 <strong><span class="grand-total text-primary">Bs. 0.00</span></strong>
                             </div>
                         </div>
-                     
+
+
+                       <input type="hidden" id="tasadecambio" value="<?= $precio ?>">
                          
                         <input type="hidden" name="fecha" id="fecha">
                         <input type="hidden" name="total_dl" id="total_dl">

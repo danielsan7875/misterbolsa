@@ -14,10 +14,25 @@ require_once 'modelo/compra.php';
 $objcompra = new Compra();
 
 $registro = $objcompra->consultar();
-$producto = $objcompra->obtenerProducto(); 
+ 
+if (isset($_POST['ajaxProducto'])) {
 
-if(isset($_POST['registrar'])){
-  if( !empty($_POST['id_producto'] && !empty($_POST['cantidad']) && !empty($_POST['fecha'])) ){
+    $buscar = $_POST['buscarProducto'] ?? '';
+
+    if ($buscar === '') {
+        // Últimos 20 registrados
+        $producto = $objcompra->ultimosProductos();
+    } else {
+        // Búsqueda normal
+        $producto = $objcompra->buscarProducto($buscar);
+    }
+
+    echo json_encode($producto);
+    exit;
+
+} else if(isset($_POST['registrar'])){
+  
+if( !empty($_POST['id_producto'] && !empty($_POST['cantidad']) && !empty($_POST['fecha'])) ){
 
       $objcompra->set_Fecha($_POST['fecha']);
 
@@ -25,17 +40,24 @@ if(isset($_POST['registrar'])){
       $cantidad=$_POST['cantidad'];
 
       $result=$objcompra->registrar($id_producto,$cantidad);
+    
       echo json_encode($result);
      
+  } else{
+      echo json_encode(['respuesta' => 0, 'accion' => 'registrar']);
   }
 
-} else if(isset($_POST['eliminar'])){
-     $id_compra = $_POST['eliminar'];
+} else if(isset($_POST['pdf'])){
 
-      $objcompra->set_Id_compra($id_compra); 
-      $result = $objcompra->eliminar();
-      echo json_encode($result);
-  
+    if (!empty($_POST['pdf'])) {
+      $id_compra = $_POST['pdf'];
+            if(!$id_compra){
+                header('Location: ?pagina=compra');
+            }
+          require_once 'assets/pdf/reportecompra.php';
+      }
+
+
 } else if (isset($_POST['modificar'])) {
 
     $filtro = $_POST['filtro'] ?? null;

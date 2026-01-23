@@ -182,15 +182,15 @@
                     </div>
 
                     <div class="wallet-promo bg-white p-4 shadow-sm border-0 DivOscuro1" style="border-radius: 20px;">
-                        <h6 class="fw-bold mb-2">  <i class="fa-solid fa-cash-register me-2"></i> Ventas de Hoy</h6>
+                        <h5 class="fw-bold mb-3">  <i class="fa-solid fa-cash-register me-2"></i> Ventas de Hoy</h5>
 
                           <div class="row mb-2">
                               <?php $totalHoy = $TotalHoy['total_hoy']; $TotalCantidad = $TotalCantidadHoy["total"];?>
                             <div class="col">
-                                <p class="text-muted ">Total: <span class="text-success"> <strong> $ <?php echo number_format($totalHoy, 2, ',', '.'); ?> </strong> </span> </p>
+                                <h5 class="text-muted ">Total: <span class="text-success"> <strong> $ <?php echo number_format($totalHoy, 2, ',', '.'); ?> </strong> </span> </h5>
                             </div>
                             <div class="col">
-                                <p class="text-muted">Cantidad: <span class="text-primary"><strong> <?php echo $TotalCantidad ?> </strong> </span> </p>
+                                <h5 class="text-muted">Cantidad: <span class="text-primary"><strong> <?php echo $TotalCantidad ?> </strong> </span> </h5>
                             </div>
                           </div>
                         <a href="?pagina=venta" class="btn btn-primary w-100 btn-sm rounded-pill">Ir a Venta</a>

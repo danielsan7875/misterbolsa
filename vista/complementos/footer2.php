@@ -47,7 +47,7 @@
   </div>
 </div>
 
-<button id="btnTop" class="btn-top">↑</button>
+<button id="btnTop" class="btn-top"><i class="fa-solid fa-caret-up"></i></button>
 
   
   <script src="assets/js/datetable/data.js"></script>

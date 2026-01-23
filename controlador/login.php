@@ -25,9 +25,12 @@ if (isset($_POST['ingresar'])) {
                 $_SESSION['id_tipo'] = $resultado->id_tipo;
                 $_SESSION['nombre_tipo'] = $resultado->nombre_tipo;
                 $_SESSION['nivel'] = $resultado->nivel;
+                
+                if($dolar === 'no'){
+                    echo json_encode(['respuesta' => 1, 'accion' => 'ingresar']);
+                    exit;
 
-
-                if(floatval($dolar) != 0.00){
+                } else if(floatval($dolar) != 0.00){
                                       
                     $objlogin->set_Dolar($dolar);
                     $resul = $objlogin->Tasa();

@@ -35,11 +35,10 @@ $total_registros = $objcierre->contarTotal();
 $dolar = $objcierre->obtenerDolar(); 
 $cantidad = $objcierre->contarVentas();
 $cierre = $objcierre->obtenerCierreActivo();
-$contarcierre = ['totalcontar' => 0];
-if(!empty($cierre)){
-    $fecha = $cierre['fecha_creacion'];
-    $contarcierre = $objcierre->contarCierrePorFecha($fecha);
-}
+
+$contarcierre = $objcierre->contarCierrePorFecha();
+
+
 
   if(isset($_POST['iniciar'])){
     $fecha = $_POST['fecha'];

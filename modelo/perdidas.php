@@ -156,16 +156,50 @@ public function consultarFiltrado($filtro = null, $desde = null, $hasta = null) 
 
 
   // Metodo para llamar las medidas existentes
-    public function obtenerProducto() {
-    $query = "SELECT pro.*, m.nombre AS nombre_marca, p.nombre AS nombre_presentacion 
-        FROM producto pro
-        INNER JOIN marca m ON pro.id_marca = m.id_marca
-        INNER JOIN presentacion p ON pro.id_presentacion = p.id_presentacion
-        WHERE pro.estatus =1";
-    $consulta = $this->conex->prepare($query);
-    $consulta->execute();
-    return $consulta->fetchAll(PDO::FETCH_ASSOC);
-    
+    public function buscarProducto($buscar) {
+
+        $sql = "SELECT 
+                    pro.id_producto,
+                    pro.nombre AS nombre_producto,
+                    m.nombre AS nombre_marca,
+                    p.nombre AS nombre_presentacion
+                FROM producto pro
+                INNER JOIN marca m ON pro.id_marca = m.id_marca
+                INNER JOIN presentacion p ON pro.id_presentacion = p.id_presentacion
+                WHERE pro.estatus = 1
+                AND (
+                        pro.nombre LIKE :buscar
+                    OR m.nombre LIKE :buscar
+                    OR p.nombre LIKE :buscar
+                )
+                ORDER BY pro.nombre
+                LIMIT 20";
+
+        $stmt = $this->conex->prepare($sql);
+        $stmt->bindValue(':buscar', "%$buscar%", PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function ultimosProductos() {
+
+        $sql = "SELECT 
+                    pro.id_producto,
+                    pro.nombre AS nombre_producto,
+                    m.nombre AS nombre_marca,
+                    p.nombre AS nombre_presentacion
+                FROM producto pro
+                INNER JOIN marca m ON pro.id_marca = m.id_marca
+                INNER JOIN presentacion p ON pro.id_presentacion = p.id_presentacion
+                WHERE pro.estatus = 1
+                ORDER BY pro.id_producto DESC
+                LIMIT 20";
+
+        $stmt = $this->conex->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function eliminar(){ // Eliminado Fisico

@@ -19,6 +19,15 @@ $totalperdidas = $objdetalle->cantidadPerdida();
 $totalbajo = $objdetalle->contarProductosBajoStock();
 $topProductos = $objdetalle->obtenerTopProductosVendidos();
 
+$RotacionBaja30 = $objdetalle->obtenerRotacionBaja30Dias(20, 30, 10);
+
+$StockIdealTop = $objdetalle->obtenerStockIdealTop(30, 7, 10);
+
+
+$DatosGrafica = $objdetalle->VentasMesActual();
+$TotalMes = $objdetalle->TotalMesActual();
+
+
 
 require_once 'vista/detalle.php';
 ?>

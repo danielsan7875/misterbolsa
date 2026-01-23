@@ -119,7 +119,7 @@
                 ?>
                   <tr class="<?php echo $estilo_fila; ?>" data-precio-unitario="<?php echo $dato['precio_unitario']; ?>" data-precio-mayor="<?php echo $dato['precio_mayor']; ?>" data-stock-minimo="<?php echo $dato['stock_minimo']; ?>">
                       
-                        <td class="td-oscuro">
+                        <td class="td-oscuro ">
                           <div class="d-flex align-items-center">
                               <div class="me-3">
                                  <?php if($dato['estatus'] == 2) {
@@ -179,7 +179,7 @@
                               </div>
                             </td>
 
-                            <td class="text-center td-oscuro">
+                            <td class="text-center td-oscuro align-middle">
                                <?php
                                       if ($dato['stock'] == 0) {
                                         echo '<span class="badge bg-danger fs-6">'.$dato['stock'].'</span>';
@@ -190,7 +190,7 @@
                                       }
                                     ?></td>
 
-                              <td class="text-center td-oscuro">
+                              <td class="text-center td-oscuro align-middle">
                                 <!-- Botón de detalle -->
                                 <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#detalleModal-<?php echo $dato['id_producto']; ?>">
                                   <i class="fas fa-info-circle me-2"></i> Detalle
@@ -198,7 +198,7 @@
                               </td>
 
                               <?php if ($tipo_usuario == 1) { ?> 
-                                <td class="td-oscuro">  <!-- ACCION -->
+                                <td class="td-oscuro align-middle">  <!-- ACCION -->
                                   <form method="POST" action="?pagina=producto">
                                     <div class="dropdown">
                                       <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">

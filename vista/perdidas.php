@@ -146,12 +146,9 @@
              <label class="form-label text-dark">Producto</label>
                 <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-boxes-stacked" style="color:#007bff;"></i></span>
-                <select class="form-select text-dark" aria-label="Default select example" name="id_producto" id="idproducto"   width="10px" required>
-                  <option value="">Seleccione un Producto:</option>
-                       <?php foreach($producto as $producto) {?>
-                  <option value="<?php echo $producto['id_producto'];?>"> <?php echo $producto['nombre']." - ".$producto['nombre_marca']." - ".$producto['nombre_presentacion']?> </option>
-                     <?php } ?>
-                </select> 
+
+                <select class="form-select text-dark" name="id_producto" id="idproducto" required> </select> 
+                
               </div>
                  <span id="textoproducto" class="text-error mt-0"></span>
           </div>

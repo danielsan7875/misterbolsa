@@ -92,7 +92,7 @@
               <th>Nro y Fecha</th>
               <th>Producto</th>
               <th>Cantidad</th>
-              <th>M o D</th>
+              <th>Modo</th>
               <th>Precio Uni. $</th>
               <th>TOTAL $</th>
               <?php if( $tipo_usuario == 1) { ?>

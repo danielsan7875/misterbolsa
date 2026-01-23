@@ -76,9 +76,9 @@
                     
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="remember">
+                          <input class="form-check-input" type="checkbox" id="remember" checked>
                             <label class="form-check-label text-secondary" for="remember">
-                                Recordarme
+                                Actualizar dolar
                             </label>
                         </div>
                         <a href="#" id="forgotPass" class="text-decoration-none small">¿Olvidaste tu contraseña?</a>
@@ -128,6 +128,18 @@ document.getElementById("forgotPass").addEventListener("click", function(e) {
     });
 });
 </script>
+<script>
+document.getElementById('remember').addEventListener('change', function () {
+    const hidden = document.getElementById('bcvfor');
+
+    if (this.checked) {
+        hidden.value = "1";   // o el valor que quieras enviar
+    } else {
+        hidden.value = "";    // vacío = no se envía
+    }
+});
+</script>
+
 
 </body>
 </html>

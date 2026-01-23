@@ -73,29 +73,6 @@
     return $res;
 }
 
-/*
-    public function consultar(){
-
-        $registro ="SELECT c.*, dc.*, m.nombre AS nombre_marca, p.nombre AS nombre_presentacion, pro.nombre
-        FROM compra c
-        INNER JOIN detalle_compra dc ON c.id_compra = dc.id_compra
-        INNER JOIN producto pro ON dc.id_producto = pro.id_producto
-        INNER JOIN marca m ON pro.id_marca = m.id_marca
-        INNER JOIN presentacion p ON pro.id_presentacion = p.id_presentacion
-        ORDER BY c.id_compra DESC";
-        $consulta = $this->conex->prepare($registro);
-        $resul = $consulta->execute();
-
-        $datos=$consulta->fetchAll(PDO::FETCH_ASSOC);
-            if ($resul){
-                return $datos;
-            } else{
-                return $res = 0;
-            }
-    
-    } //fin consultar
-
-    */
 
     public function consultar(){
 
@@ -124,17 +101,53 @@
 
 
   // Metodo para llamar las medidas existentes
-    public function obtenerProducto() {
-    $query = "SELECT pro.*, m.nombre AS nombre_marca, p.nombre AS nombre_presentacion 
-        FROM producto pro
-        INNER JOIN marca m ON pro.id_marca = m.id_marca
-        INNER JOIN presentacion p ON pro.id_presentacion = p.id_presentacion
-        WHERE pro.estatus =1";
-    $consulta = $this->conex->prepare($query);
-    $consulta->execute();
-    return $consulta->fetchAll(PDO::FETCH_ASSOC);
-    
+    public function buscarProducto($buscar) {
+
+        $sql = "SELECT 
+                    pro.id_producto,
+                    pro.nombre AS nombre_producto,
+                    m.nombre AS nombre_marca,
+                    p.nombre AS nombre_presentacion
+                FROM producto pro
+                INNER JOIN marca m ON pro.id_marca = m.id_marca
+                INNER JOIN presentacion p ON pro.id_presentacion = p.id_presentacion
+                WHERE pro.estatus = 1
+                AND (
+                        pro.nombre LIKE :buscar
+                    OR m.nombre LIKE :buscar
+                    OR p.nombre LIKE :buscar
+                )
+                ORDER BY pro.nombre
+                LIMIT 20";
+
+        $stmt = $this->conex->prepare($sql);
+        $stmt->bindValue(':buscar', "%$buscar%", PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function ultimosProductos() {
+
+        $sql = "SELECT 
+                    pro.id_producto,
+                    pro.nombre AS nombre_producto,
+                    m.nombre AS nombre_marca,
+                    p.nombre AS nombre_presentacion
+                FROM producto pro
+                INNER JOIN marca m ON pro.id_marca = m.id_marca
+                INNER JOIN presentacion p ON pro.id_presentacion = p.id_presentacion
+                WHERE pro.estatus = 1
+                ORDER BY pro.id_producto DESC
+                LIMIT 20";
+
+        $stmt = $this->conex->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
 
     public function consultarFiltrado($filtro = null, $desde = null, $hasta = null) {
 

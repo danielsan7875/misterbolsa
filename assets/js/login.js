@@ -227,7 +227,17 @@ function muestraMensajetost(icono, titulo, mensaje, tiempo) {
   }
 
 
-  async function obtenerTasaDolarApi() {
+
+async function obtenerTasaDolarApi() {
+    const checkbox = document.getElementById("remember");
+    const hidden = document.getElementById("bcvfor");
+
+    // Si el checkbox NO está activo, no se envía nada
+    if (!checkbox.checked) {
+        hidden.value = "";
+        return;
+    }
+
     try {
         const respuesta = await fetch('https://ve.dolarapi.com/v1/dolares/oficial');
         if (!respuesta.ok) {
@@ -235,15 +245,27 @@ function muestraMensajetost(icono, titulo, mensaje, tiempo) {
         }
 
         const datos = await respuesta.json();
-        const tasaBCV = datos.promedio.toFixed(2); // Redondea la tasa a 2 decimales
+        const tasaBCV = datos.promedio.toFixed(2);
 
-        document.getElementById("bcvfor").value = tasaBCV;
+        hidden.value = tasaBCV;
     } catch (error) {
-        document.getElementById("bcvfor").value = "0.00";
+        hidden.value = "0.00";
     }
 }
 
+// Ejecutar al cargar la página
 document.addEventListener("DOMContentLoaded", obtenerTasaDolarApi);
+
+// Detectar cambios en el checkbox
+document.getElementById("remember").addEventListener("change", function () {
+    if (this.checked) {
+        obtenerTasaDolarApi(); // Si se activa, consulta y coloca la tasa
+    } else {
+       document.getElementById("bcvfor").value = "no"; 
+    }
+});
+
+
 
 
   

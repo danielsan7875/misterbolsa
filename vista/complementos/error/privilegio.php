@@ -2,43 +2,46 @@
 <html lang="en">
 
 <head>
-    <?php require_once 'vista/complementos/head.php'; ?>
+       <?php require_once 'vista/complementos/head2.php'; ?>
     <title>Acceso Denegado | Mister Bolsa C.A</title>
 </head>
 
 <body>
-  <!-- LOADER-->
-<div id="loaderPagina" class="section_loader">
-<div class="loader-3"></div>
-</div>
-  <!-- ||||||||||||||  Comienzo de Sidebar y Nav |||||||||||||||||||||||-->
-  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
-    data-sidebar-position="fixed" data-header-position="fixed">
-  <?php require_once 'vista/complementos/sidebar.php'; ?>
- 
-    <div class="body-wrapper">
-    <?php require_once 'vista/complementos/nav.php'; ?>
-    <div class="container-fluid">
-  <!--|||||||||||||||   Fin de Sidebar y Nav  |||||||||||||||||||||||||||-->
+    <?php require_once 'vista/complementos/nav2.php'; ?>
+<?php require_once 'vista/complementos/sidebar2.php'; ?>
 
+    <div class="transaction-list shadow-sm-0 DivOscuro1">
+      <div class="container py-5">
+  <div class="row align-items-center text-center text-md-start">
+    
+    <!-- Texto -->
+    <div class="col-md-6 mb-4 mb-md-0">
+      <h2 class="fw-bold mb-2">Estimado Usuario:</h2>
+      <h2 class="fw-bold text-primary mb-4">
+        <?php echo $_SESSION['nombre']." ".$_SESSION['apellido']; ?>
+      </h2>
 
-<div class="row m-4">
-  <div class="col">
-  <h2> <b> Estimado Usuario: </b> </h2>
-  <h2> <b> <?php echo $_SESSION['nombre']." ".$_SESSION['apellido']; ?> </b> </h2>
-  <br>  <br> <br> 
-  <h3 class="mb-5">Acceso denegado. Por favor, contacte al administrador para solicitar los permisos correspondientes.</h3>  
-  <br>  <br> <br> 
-  <a href="?pagina=home" class="btn btn-primary"> <i class="fas fa-home mr-2"></i> Volver al Inicio</a>
-  </div>
-  <div class="col">
-  <img src="assets/images/error/acceso.svg" alt="" width="90%">
+      <h3 class=" text-muted mb-5">
+        Acceso denegado. Por favor, contacte al administrador para solicitar los permisos correspondientes.
+      </h3>
+
+      <a href="?pagina=home" class="btn btn-lg btn-primary px-5 py-3 shadow">
+        <i class="fas fa-home me-2"></i> Volver al Inicio
+      </a>
+    </div>
+
+    <!-- Imagen -->
+    <div class="col-md-6 text-center">
+      <img src="assets/images/error/acceso.svg" alt="Acceso denegado" class="img-fluid" style="max-width: 420px;">
+    </div>
+
   </div>
 </div>
-        
+
+ </div>       
  
   <!--|||||||||||||||  Footer y JS  |||||||||||||||||||||||||||-->
-  <?php require_once 'vista/complementos/footer.php'; ?>  
+<?php require_once 'vista/complementos/footer2.php'; ?>
   <!--|||||||||||||||  FIN Footer y JS  |||||||||||||||||||||||||||-->    
 </body>
 </html>
