@@ -13,11 +13,25 @@ $registro = $objventa->consultarVenta();
 $cierre = $objventa->obtenerCierreActivo();
 $NroVenta = $objventa->obtenerNroVenta();
 
-$producto = $objventa->obtenerProducto();
+
 $dolar = $objventa->obtenerDolar();  
 $metodo = $objventa->obtenerMetodopago();  
 
-if (isset($_POST['registrar'])) {
+
+
+if (isset($_POST['buscarProducto'])) {
+
+    $buscar = trim($_POST['buscarProducto']);
+    $productos = $objventa->buscarProducto($buscar, 50);
+    echo json_encode([
+        'accion' => 'buscarProducto',
+        'respuesta' => $productos
+    ]);
+
+    exit;
+
+
+} else if (isset($_POST['registrar'])) {
 
     
     if (!$cierre) {

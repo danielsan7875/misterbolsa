@@ -47,7 +47,7 @@
 
               <!-- ALERTA ROJA CON BOTÓN DENTRO -->
               <div class="alert alert-warning d-flex justify-content-between align-items-center m-0" role="alert">
-                  <span> <i class="fa-solid fa-triangle-exclamation me-2"></i> <strong>Revisión necesaria: </strong> Hay productos con bajo o mínimo stock, </span>
+                  <span> <i class="fa-solid fa-triangle-exclamation me-2"></i> <strong>Revisión necesaria: </strong> Hay productos con bajo o mínimo stock</span>
                     <button class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#Stock">
                         Ver productos
                     </button>
@@ -458,7 +458,7 @@
 
 
   <div class="modal fade" id="Stock" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
         <div class="modal-content modal-producto div-oscuro-2">
 
             <div class="modal-header encabezado-modal">

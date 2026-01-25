@@ -112,25 +112,35 @@
 
 
   // Metodo para llamar las medidas existentes
-     public function obtenerProducto(){
+  public function buscarProducto($buscar = '', $limit = 50) {
 
-        $registro ="SELECT pro.*, m.nombre AS nombre_marca, p.nombre AS nombre_presentacion 
-        FROM producto pro
-        INNER JOIN marca m ON pro.id_marca = m.id_marca
-        INNER JOIN presentacion p ON pro.id_presentacion = p.id_presentacion
-        WHERE pro.estatus = 1
-        ORDER BY pro.id_producto DESC";
-        $consulta = $this->conex->prepare($registro);
-        $resul = $consulta->execute();
+    $sql = "SELECT pro.*, 
+                   m.nombre AS nombre_marca, 
+                   p.nombre AS nombre_presentacion 
+            FROM producto pro
+            INNER JOIN marca m ON pro.id_marca = m.id_marca
+            INNER JOIN presentacion p ON pro.id_presentacion = p.id_presentacion
+            WHERE pro.estatus = 1";
 
-        $datos=$consulta->fetchAll(PDO::FETCH_ASSOC);
-            if ($resul){
-                return $datos;
-            } else{
-                return $res = 0;
-            }
-    
-    } //fin consultar
+    if (!empty($buscar)) {
+        $sql .= " AND (pro.nombre LIKE :buscar OR m.nombre LIKE :buscar)";
+    }
+
+    $sql .= " ORDER BY pro.id_producto DESC LIMIT :limite";
+
+    $stmt = $this->conex->prepare($sql);
+
+    if (!empty($buscar)) {
+        $stmt->bindValue(':buscar', "%$buscar%", PDO::PARAM_STR);
+    }
+
+    $stmt->bindValue(':limite', (int)$limit, PDO::PARAM_INT);
+
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 
     
     public function obtenerCierreActivo(){
@@ -162,7 +172,6 @@
         $consulta = $this->conex->prepare($query);
         $consulta->execute();
         return $consulta->fetch(PDO::FETCH_ASSOC);
-
     } 
 
 

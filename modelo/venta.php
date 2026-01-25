@@ -200,18 +200,7 @@ public function consultarFiltrado($filtro = null, $desde = null, $hasta = null) 
     return $consulta->fetchAll(PDO::FETCH_ASSOC);
 }
 
-  // Metodo para llamar las medidas existentes
-    public function obtenerProducto() {
-    $query = "SELECT pro.*, m.nombre AS nombre_marca, p.nombre AS nombre_presentacion 
-        FROM producto pro
-        INNER JOIN marca m ON pro.id_marca = m.id_marca
-        INNER JOIN presentacion p ON pro.id_presentacion = p.id_presentacion
-        WHERE pro.estatus =1";
-    $consulta = $this->conex->prepare($query);
-    $consulta->execute();
-    return $consulta->fetchAll(PDO::FETCH_ASSOC);
-    
-    }
+ 
 
     public function obtenerDolar() {
         $query = "SELECT * FROM dolar WHERE id_dolar = 1";
@@ -221,22 +210,6 @@ public function consultarFiltrado($filtro = null, $desde = null, $hasta = null) 
     }
 
 
-
-    public function tasadolar(){
-		$registro = "UPDATE dolar SET id_dolar = :id_dolar, precios = :precios WHERE id_dolar = :id_dolar";
-
-		$strExec = $this->conex->prepare($registro);
-        $strExec->bindParam(':id_dolar', $this->id_dolar);    
-        $strExec->bindParam(':precios', $this->precios);
-
-		$resul= $strExec->execute();
-			if ($resul) {
-                $res = array('respuesta' => 1, 'accion' => 'tasadolar');
-			}else{
-                $res = array('respuesta' => 0, 'accion' => 'tasadolar');
-			 }
-		return $res;
-	}// fin actulizar
   
     
     public function get_Id_venta(){

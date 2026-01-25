@@ -396,11 +396,16 @@ function muestraMensaje(icono, tiempo, titulo, mensaje) {
               muestraMensaje("error", 2000, "ERROR", "Intente más Tarde");
               desactivarLoaderBoton('#registrarventa');
             }
-          } 
+          }
+
           
         } catch (e) {
           alert("Error en JSON " + e.name);
             desactivarLoaderBoton('#registrarventa');
+        }
+
+        if (lee.accion == 'buscarProducto') {
+              renderProductos(lee.respuesta);
         }
       },
       error: function (request, status, err) {
@@ -417,3 +422,12 @@ function muestraMensaje(icono, tiempo, titulo, mensaje) {
       }
     });
   }  
+
+
+
+
+
+
+
+
+    

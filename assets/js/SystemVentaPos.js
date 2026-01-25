@@ -1,35 +1,11 @@
 // BUCARDAOR DE PRODUCTOS
 $(document).ready(function() {
-    $("#inputBuscar").on("keyup", function() {
-        var valorBusqueda = $(this).val().toLowerCase().trim();
-        var productosVisibles = 0;
-
-        $(".producto-item").each(function() {
-            // Obtenemos el texto del nombre del producto
-            var nombreProducto = $(this).find(".nombre-producto").text().toLowerCase();
-
-            // Verificamos si el valor buscado está incluido en el nombre
-            if (nombreProducto.indexOf(valorBusqueda) > -1) {
-                $(this).fadeIn(200); // Mostramos con una transición suave
-                productosVisibles++;
-            } else {
-                $(this).fadeOut(100); // Ocultamos
-            }
-        });
-
-        // Lógica para mostrar el mensaje de "No se encuentra nada"
-        if (productosVisibles === 0 && valorBusqueda !== "") {
-            $("#mensajeVacio").removeClass("d-none");
-        } else {
-            $("#mensajeVacio").addClass("d-none");
-        }
-    });
 
     // ------------------------------------- CARRITO----------------------
       let carrito = [];
 
     // AGREGAR AL CARRITO CON VALIDACIÓN DE STOCK
-    $(".btn-agregar").on("click", function() {
+     $(document).on("click", ".btn-agregar", function() {
         const id = $(this).data("id");
         const nombre = $(this).data("nombre");
         const precioDetal = parseFloat($(this).data("precio-detal"));
@@ -366,6 +342,7 @@ $(document).ready(function() {
 
 
 
+
 function activarLoaderBoton(idBoton, texto) {
     const $boton = $(idBoton);
     const textoActual = $boton.html();
@@ -382,6 +359,17 @@ function desactivarLoaderBoton(idBoton) {
 }
 
 
+   function bloquearPantalla() {
+        $('#overlay-bloqueo').fadeIn(200);
+        $('body').css('overflow', 'hidden'); // bloquear scroll
+    }
+
+    function desbloquearPantalla() {
+        $('#overlay-bloqueo').fadeOut(200);
+        $('body').css('overflow', 'auto');
+    }
+
+
 function muestraMensaje(icono, tiempo, titulo, mensaje) {
     Swal.fire({
       icon: icono,
@@ -395,15 +383,7 @@ function muestraMensaje(icono, tiempo, titulo, mensaje) {
   }
 
 
-    function bloquearPantalla() {
-        $('#overlay-bloqueo').fadeIn(200);
-        $('body').css('overflow', 'hidden'); // bloquear scroll
-    }
-
-    function desbloquearPantalla() {
-        $('#overlay-bloqueo').fadeOut(200);
-        $('body').css('overflow', 'auto');
-    }
+ 
 
 
   
@@ -422,7 +402,7 @@ function muestraMensaje(icono, tiempo, titulo, mensaje) {
         console.log(respuesta);
         var lee = JSON.parse(respuesta);
         try {
-  
+        ocultarLoaderBuscador();
           if (lee.accion == 'registrar') {
             if (lee.respuesta == 1) {
               muestraMensaje("success", 1500, "Se ha registrado con éxito", "Su registro se ha completado exitosamente");
@@ -448,6 +428,9 @@ function muestraMensaje(icono, tiempo, titulo, mensaje) {
               muestraMensaje("error", 2000, "ERROR", "Intente Nuevamente O Mas Tarde");
               desactivarLoaderBoton('#actualizar');
             }
+          } else if (lee.accion == 'buscarProducto')  {
+                ocultarLoaderBuscador();
+              renderProductos(lee.respuesta);
           }
   
         } catch (e) {
@@ -459,9 +442,13 @@ function muestraMensaje(icono, tiempo, titulo, mensaje) {
         if (status == "timeout") {
           muestraMensaje("error", 2000, "Error", "Servidor ocupado, intente de nuevo");
              desactivarLoaderBoton('#registrar'); 
+             ocultarLoaderBuscador();
+
         } else {
           muestraMensaje("error", 2000, "Error", "ERROR: <br/>" + request + status + err);
              desactivarLoaderBoton('#registrar'); 
+             ocultarLoaderBuscador();
+
         }
       },
       complete: function () {
@@ -513,4 +500,150 @@ function activarModoOscuro(modoKey) {
 function desactivarModoOscuro(modoKey) {
     document.body.classList.remove('modo-oscuro');
     localStorage.setItem(modoKey, 'inactivo');
+}
+
+
+
+$(document).ready(function () {
+
+    // 🔹 CARGA INICIAL → últimos 50 productos
+    cargarProductosInicial();
+
+    // 🔹 BUSCADOR DINÁMICO
+ let temporizadorBusqueda;
+
+$('#inputBuscar').on('input', function () {
+
+    clearTimeout(temporizadorBusqueda);
+    let texto = $(this).val();
+    texto = texto.replace(/[^a-zA-Z0-9\s\-#]/g, '');
+    $(this).val(texto);
+
+    temporizadorBusqueda = setTimeout(function () {
+        buscarProductoAjax(texto.trim());
+    }, 1500);
+
+});
+
+
+  
+
+});
+
+
+  function mostrarLoaderBuscador() {
+    $('#loaderBuscador').removeClass('d-none');
+    }
+
+    function ocultarLoaderBuscador() {
+        $('#loaderBuscador').addClass('d-none');
+    }
+
+
+/* =====================================================
+   🔹 CARGA INICIAL DE PRODUCTOS
+===================================================== */
+
+function cargarProductosInicial() {
+
+    const datos = new FormData();
+    datos.append('buscarProducto', '');
+
+    enviaAjax(datos);
+}
+
+
+/* =====================================================
+   🔹 BUSCAR PRODUCTOS AJAX
+===================================================== */
+
+function buscarProductoAjax(texto) {
+       mostrarLoaderBuscador();
+    const datos = new FormData();
+    datos.append('buscarProducto', texto);
+
+    enviaAjax(datos);
+}
+
+
+/* =====================================================
+   🔹 MODIFICACIÓN DE TU enviaAjax()
+   👉 Solo debes AÑADIR este bloque dentro del success
+===================================================== */
+
+// Dentro de tu success(respuesta) agrega:
+
+/*
+if (lee.accion == 'buscarProducto') {
+    renderProductos(lee.respuesta);
+}
+*/
+
+
+/* =====================================================
+   🔹 RENDER DE CARDS (RESPETA TU DISEÑO)
+===================================================== */
+
+function renderProductos(productos) {
+
+    let html = '';
+
+    $('#contenedorProductos').html('');
+    $('#mensajeVacio').addClass('d-none');
+
+    if (!productos || productos.length === 0) {
+        $('#mensajeVacio').removeClass('d-none');
+        return;
+    }
+
+    productos.forEach(p => {
+
+        html += `
+        <div class="col producto-item">
+            <div class="product-card DivOscuro2">
+                <div class="product-img">
+                    <i class="fa-solid fa-boxes-stacked TextOscuroTitel2" style="font-size: 28px;"></i>
+                </div>
+
+                <div class="p-3 d-flex flex-column flex-grow-1">
+
+                    <h6 class="fw-semibold mb-1 text-truncate nombre-producto">
+                        ${p.nombre} | ${p.nombre_marca}
+                    </h6>
+
+                    <span class="text-muted mb-1">
+                        Presentacion: ${p.nombre_presentacion}
+                    </span>
+
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="stock-badge ${p.stock <= 0 ? 'text-danger fw-bold' : ''}">
+                            Stock: <span class="num-stock">${p.stock}</span>
+                        </span>
+
+                        ${p.cantidad_mayor > 0 ? `<small class="text-muted">Mayor: ${p.cantidad_mayor}u.</small>` : ''}
+                    </div>
+
+                    <div class="mt-auto d-flex justify-content-between align-items-center">
+                        <span class="fw-bold text-primary fs-5">$${parseFloat(p.precio_unitario).toFixed(2)}</span>
+
+                        ${p.precio_mayor > 0 ? `<small class="text-secundary">Mayor: $${parseFloat(p.precio_mayor).toFixed(2)}</small>` : ''}
+
+                        <button class="btn btn-sm btn-outline-primary p-2 btn-agregar"
+                            data-id="${p.id_producto}"
+                            data-nombre="${p.nombre}"
+                            data-precio-detal="${p.precio_unitario}"
+                            data-precio-mayor="${p.precio_mayor}"
+                            data-cant-mayor="${p.cantidad_mayor}"
+                            data-stock="${p.stock}">
+                            Añadir <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>`;
+
+    });
+
+    $('#contenedorProductos').html(html);
 }

@@ -27,72 +27,31 @@
                             <i class="fa-solid fa-magnifying-glass text-muted" style="width: 18px;"></i>
                         </span>
                         <input type="text" id="inputBuscar" class="form-control border-start-0 rounded-end-pill py-2" placeholder="Buscar producto por nombre">
-                       
+                      
+                         <!-- Loader -->
+                        <div id="loaderBuscador" class="text-center my-2 col-12">
+                            <div class="d-flex justify-content-center align-items-center gap-2">
+                                       
+                                <div class="spinner-border spinner-border-sm text-primary"></div>
+                                <span class="fw-semibold text-primary">Buscando productos...</span>
+                                   
+                            </div>
+                        </div>
+
+                         <!-- Mensaje vacío -->
+                        <div id="mensajeVacio" class="col-12 my-5  d-none">
+                            <div class="alert alert-warning text-center">
+                                <i class="fa-solid fa-circle-exclamation me-2"></i>
+                                No se encontraron productos.
+                            </div>
+                        </div>
+
                     </div>
 
                     <!-- Grid de Cards -->
                     <div class="row row-cols-1 row-cols-md-3 g-4"  id="contenedorProductos"> 
-                        <?php if (!empty($producto)): ?>
-                            <?php foreach ($producto as $productos): ?>
-                                <div class="col producto-item">
-                                    <div class="product-card DivOscuro2">
-                                        <div class="product-img">
-                                            <i class="fa-solid fa-boxes-stacked TextOscuroTitel2" style="font-size: 28px;"></i>
-                                        </div>
-                                        <div class="p-3 d-flex flex-column flex-grow-1">
-                                            <h6 class="fw-semibold mb-1 text-truncate nombre-producto">
-                                                <?php echo htmlspecialchars($productos['nombre']).' | '.htmlspecialchars($productos['nombre_marca']); ?>
-                                            </h6>
-                                            <span class="text-muted mb-1">Presentacion: <?php echo htmlspecialchars($productos['nombre_presentacion']) ?></span>
 
-                                            
-                                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                                   <span class="stock-badge <?php echo ($productos['stock'] <= 0) ? 'text-danger fw-bold' : ''; ?>">
-                                                        Stock: <span class="num-stock"><?php echo $productos['stock']; ?></span>
-                                                    </span>
-                                                    <?php if($productos['cantidad_mayor'] > 0): ?>
-                                                        <small class="text-muted">Mayor: <?php echo $productos['cantidad_mayor']; ?>u.</small>
-                                                    <?php endif; ?>
-                                            </div>
-                                            
-                                            <div class="mt-auto d-flex justify-content-between align-items-center">
-                                               <span class="fw-bold text-primary fs-5">
-                                                    $<?php echo number_format($productos['precio_unitario'], 2); ?>
-                                                </span>
-                                                <?php if($productos['precio_mayor'] > 0): ?>
-                                                    <small class="text-secundary" style="font-size: 1rem;">Mayor: $<?php echo number_format($productos['precio_mayor'], 2); ?></small>
-                                                <?php endif; ?>
-                                                
-                                                <button class="btn btn-sm btn-outline-primary p-2 btn-agregar" 
-                                                        data-id="<?php echo $productos['id_producto']; ?>"
-                                                        data-nombre="<?php echo htmlspecialchars($productos['nombre']); ?>"
-                                                        data-precio-detal="<?php echo $productos['precio_unitario']; ?>"
-                                                        data-precio-mayor="<?php echo $productos['precio_mayor']; ?>"
-                                                        data-cant-mayor="<?php echo $productos['cantidad_mayor']; ?>"
-                                                        data-stock="<?php echo $productos['stock']; ?>">
-                                                    Añadir <i class="fa-solid fa-plus" style="width: 16px; height: 16px;"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php endforeach; ?>
-
-                             <!-- Mensaje de "No encontrado" oculto por defecto -->
-                            <div id="mensajeVacio" class="col-12 w-100 d-none">
-                                <div class="alert alert-warning text-center">
-                                    <i class="fa-solid fa-circle-exclamation me-2"></i>
-                                    No se encontraron productos que coincidan con tu búsqueda.
-                                </div>
-                            </div>
-
-                        <?php else: ?>
-                            <div class="col" style="width:100%;">
-                                 <div class="alert alert-dark" role="alert" style="width:100%;">
-                                    <h2>No se encontraron productos registrados.</h2> 
-                                </div>
-                            </div>
-                        <?php endif; ?>
+                       
                     </div>
                 </div>
             </div>
@@ -100,6 +59,7 @@
             <!-- 3. Columna Derecha: Detalle de Venta -->
               
 
+                        
             <div class="col-lg-4 h-100 pb-3 DivOscuro2">
               
                
@@ -470,6 +430,25 @@
     </div>
   </div>
 </div>
+
+
+
+
+
+
+
+<script>
+    
+
+  
+
+</script>
+
+
+
+
+
+
 
 
 </body>

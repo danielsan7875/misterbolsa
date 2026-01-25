@@ -12,7 +12,7 @@ require_once 'modelo/venta.php';
 $objventa = new Venta();
 
 $registro = $objventa->consultar();
-$producto = $objventa->obtenerProducto();
+
 $dolar = $objventa->obtenerDolar();  
 
 if(isset($_POST['registrar'])){
