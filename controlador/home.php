@@ -1,43 +1,34 @@
 <?php
- $vista="Inicio - Dashboard";
- $activo="1";
- 
-session_start();
-if (empty($_SESSION["id"])){
-  header("location:?pagina=login");
-}
-$tipo_usuario = $_SESSION['nivel'];
-
-if ($_SESSION["nivel"] == 3){
-  header("location:?pagina=registroventa");
-}
-require_once 'modelo/home.php';
-$objhome = new Home();
-
-$dolar = $objhome->obtenerDolar(); 
-$totalProductos = $objhome->contarProductos();
-$totalCompra = $objhome->contarCompras();
-$totalVenta = $objhome->contarVentas();
-$registro = $objhome->consultarUltimasVentas();
-$DatosGrafica = $objhome->SemanasVentas();
-$TotalSemana = $objhome->TotalSemana();
-$TotalHoy = $objhome->TotalHoy();
-$TotalCantidadHoy = $objhome->contarVentasHoy();
-
-
-
- if(isset($_POST['tasadolar'])){
-  if(!empty($_POST['id_dolar']) && !empty($_POST['precios'])){
-
-      $objhome->set_Id_dolar($_POST['id_dolar']); 
-      $objhome->set_Precios($_POST['precios']); 
-
-      $result = $objhome->tasadolar();
-      echo json_encode($result);
+  session_start();
+  if (empty($_SESSION["id"])){
+    header("location:?pagina=login");
+  } else if ($_SESSION["nivel"] == 3){
+    header("location:?pagina=registroventa");
   }
 
-}
-
-
-    require_once 'vista/home.php';
+  $vista="Inicio - Dashboard";  $activo="1"; $tipo_usuario = $_SESSION['nivel'];
+//------
+  require_once 'modelo/home.php';
+  $objhome = new Home();
+//------
+  $dolar = $objhome->obtenerDolar(); 
+//------  
+  $totalProductos = $objhome->contarProductos();
+//------  
+  $totalCompra = $objhome->contarCompras();
+//------  
+  $totalVenta = $objhome->contarVentas();
+//------  
+  $registro = $objhome->consultarUltimasVentas();
+//------  
+  $DatosGrafica = $objhome->SemanasVentas();
+//------  
+  $TotalSemana = $objhome->TotalSemana();
+//------  
+  $TotalHoy = $objhome->TotalHoy();
+//------  
+  $TotalCantidadHoy = $objhome->contarVentasHoy();
+//------
+  require_once 'vista/home.php';
+//------
 ?>

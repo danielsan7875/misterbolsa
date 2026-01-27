@@ -1,5 +1,5 @@
 
-function eliminar(boton){
+function desactivar(boton){
     Swal.fire({
       title: '¿Desea Desactivar?',
       text: '',
@@ -13,7 +13,7 @@ function eliminar(boton){
     }).then((result) => {
       if (result.isConfirmed) {
         var datos = new FormData();
-        datos.append('eliminar', boton.value);
+        datos.append('desactivar', boton.value);
         enviaAjax(datos);
       }
     });
@@ -33,7 +33,7 @@ function eliminar(boton){
     }).then((result) => {
       if (result.isConfirmed) {
         var datos = new FormData();
-        datos.append('incluir', boton.value);
+        datos.append('activar', boton.value);
         enviaAjax(datos);
       }
     });
@@ -85,7 +85,7 @@ $(document).ready(function() {
     // Botones condicionales según estatus
     var botones = '';
     if (parseInt(dato.estatus) === 1)  {
-      botones = '<button type="button" onclick="eliminar(this)" class="btn btn-warning btn-sm eliminar" value="' + dato.id_metodopago + '">' +
+      botones = '<button type="button" onclick="desactivar(this)" class="btn btn-warning btn-sm eliminar" value="' + dato.id_metodopago + '">' +
                   '<i class="fa-solid fa-triangle-exclamation me-2" title="Desactivar"></i> Desactivar' +
                 '</button>';
     } else if (parseInt(dato.estatus) === 2 || parseInt(dato.estatus) === 3) {
@@ -130,31 +130,30 @@ $(document).ready(function() {
   
             if (lee.accion == 'consultar') {
                 crearConsulta(lee.datos);
-              }
-              else if (lee.accion == 'incluir') {
+            
+            }else if (lee.accion == 'activar') {
                 if (lee.respuesta == 1) {
                   muestraMensaje("success", 1500, "Se ha activado con éxito", "");
-             
                   setTimeout(function () {
                     consulta();
-                  }, 1000);
+                  }, 2000);
                 } else {
-                  muestraMensaje("error", 1000, "ERROR", "ERROR");
+                  muestraMensaje("error", 3000, "Error", lee.text);
                 
                 }
-              }  else if (lee.accion == 'eliminar') {
+            } else if (lee.accion == 'desactivar') {
                 if (lee.respuesta == 1) {
                   muestraMensaje("success", 1500, "Se ha Desactivado con éxito", "");
                   setTimeout(function () {
                     consulta();
-                  }, 1000);
+                  }, 2000);
                 } else {
-                  muestraMensaje("error", 2000, "ERROR", lee.text);
+                  muestraMensaje("error", 3000, "Error", lee.text);
                 }
-              }
+            }
   
         } catch (e) {
-          alert("Error en JSON " + e.name);
+          muestraMensaje("error", 2000, "Error en JSON",e.name);
         }
       },
       error: function (request, status, err) {

@@ -25,7 +25,7 @@
       </div>
    </div>
 
-  <div class="chart-container shadow-sm border-0">
+  <div class="chart-container shadow-sm border-0 DivOscuro1">
 
       <form action="?pagina=tipousuario" id="m" autocomplete="off"> <!--comienzo Formulario-->
         

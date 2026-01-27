@@ -83,7 +83,7 @@
                           </td>
 
                       <td class="td-oscuro">
-                          <ul class="mb-0">
+                          <ul class="mb-0 list-unstyled">
                               <?php 
                               $detalles = $info['detalles'];
                               $mostrar = array_slice($detalles, 0, 2);
@@ -102,7 +102,7 @@
                       </td>
 
                       <td class="td-oscuro">
-                          <ul class="mb-0">
+                          <ul class="mb-0 list-unstyled">
                               <?php foreach ($mostrar as $detalle): ?>
                                   <li><?php echo $detalle['cantidad']; ?></li>
                               <?php endforeach; ?>
@@ -110,9 +110,9 @@
                       </td>
 
                       <?php if ($tipo_usuario == 1): ?>
-                      <td class="text-center td-oscuro">
-                          <form action="?pagina=compra">
-                              <button type="button" class="btn btn-primary btn-sm" disabled>
+                     <td class="text-center td-oscuro">
+                          <form action="?pagina=compra" method="POST">
+                              <button type="summit" class="btn btn-primary btn-sm" name="pdf" value="<?php echo $id_compra; ?>"> <i class="fa-regular fa-file-pdf me-2"></i>
                                 Descargar
                               </button>
                           </form>

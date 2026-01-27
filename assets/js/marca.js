@@ -1,5 +1,3 @@
-
-
 function eliminar(boton){
     Swal.fire({
       title: '¿Desea eliminar los datos?',
@@ -124,9 +122,9 @@ $(document).ready(function() {
       icon: 'question',
       showCancelButton: true,
       color: "#00000",
-      confirmButtonColor: '#457B9D',
+      confirmButtonColor: '#1a7538',
       cancelButtonColor: '#EF233C',
-      confirmButtonText: ' SI ',
+      confirmButtonText: ' SI, ACTUALIZAR',
       cancelButtonText: 'NO'
     }).then((result) => {
       if (!validarFormulario()) {
@@ -173,51 +171,51 @@ $(document).ready(function() {
         console.log(respuesta);
         var lee = JSON.parse(respuesta);
         try {
-  
-            if (lee.accion == 'incluir') {
+
+            if (lee.accion == 'registrar') {
                 if (lee.respuesta == 1) { 
-                  muestraMensaje("success", 1000, "Se ha registrado con éxito", "Su registro se ha completado exitosamente");
+                  muestraMensaje("success", 1500, "Se ha registrado con éxito", "Marca Agregada");
                    desactivarLoaderBoton('#registrar');
                     setTimeout(function () {
                       location = '?pagina=marca';
-                    }, 1000);
+                    }, 2000);
                 } else {
-                  muestraMensaje("error", 1000, "ERROR", "ERROR");
+                  muestraMensaje("error", 3000, "Error", text.lee);
                   desactivarLoaderBoton('#registrar');
                 }
               } else if (lee.accion == 'actualizar') {
                 if (lee.respuesta == 1) {
-                  muestraMensaje("success", 1000, "Se ha Modificado con éxito", "Su registro se ha Actualizado exitosamente");
+                  muestraMensaje("success", 1500, "Se ha Modificado con éxito", "Marca Actualizada");
                   desactivarLoaderBoton('#actualizar');
                   setTimeout(function () {
                     location = '?pagina=marca';
                   }, 1000);
                 } else {
-                  muestraMensaje("error", 2000, "ERROR", "ERROR");
+                  muestraMensaje("error", 3000, "Error", text.lee);
                   desactivarLoaderBoton('#actualizar');
                 }
               } else if (lee.accion == 'eliminar') {
                 if (lee.respuesta == 1) {
-                  muestraMensaje("success", 1000, "Se ha eliminado con éxito", "Los datos se han borrado correctamente ");
-                   setTimeout(function () {
+                  muestraMensaje("success", 1500, "Se ha eliminado con éxito", "Marca Eliminada");
+                    setTimeout(function () {
                     location = '?pagina=marca';
-                  }, 1000);
+                    }, 2000);
                 }else {
-                  muestraMensaje("error", 2000, "ERROR", lee.text);
+                  muestraMensaje("error", 3000, "Error", lee.text);
                   desactivarLoaderBoton('#actualizar');
                 }
               }
   
         } catch (e) {
-          alert("Error en JSON " + e.name);
+          muestraMensaje("error", 4000, "Error en JSON ", e.name);
         }
       },
       error: function (request, status, err) {
         Swal.close();
         if (status == "timeout") {
-          muestraMensaje("error", 2000, "Error", "Servidor ocupado, intente de nuevo");
+          muestraMensaje("error", 3000, "Error", "Servidor ocupado, intente de nuevo");
         } else {
-          muestraMensaje("error", 2000, "Error", "ERROR: <br/>" + request + status + err);
+          muestraMensaje("error", 3000, "Error", "ERROR: <br/>" + request + status + err);
         }
       },
       complete: function () {

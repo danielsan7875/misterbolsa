@@ -618,76 +618,69 @@ function muestraMensaje(icono, tiempo, titulo, mensaje) {
         var lee = JSON.parse(respuesta);
         try {
   
-          if (lee.accion == 'registrar') {
-            if (lee.respuesta == 1) {
-              muestraMensaje("success", 1000, "Se ha registrado con éxito", "Su registro se ha completado exitosamente");
-              desactivarLoaderBoton('#registrar'); 
-              setTimeout(function () {
-                location = '?pagina=producto';
-              }, 1000);
-            } else {
-              muestraMensaje("error", 2000, "ERROR", "ERROR");
-              desactivarLoaderBoton('#registrar'); 
-            }
-          } else if (lee.accion == 'actualizar') { // falta
-            if (lee.respuesta == 1) {
-              muestraMensaje("success", 1000, "Se ha Modificado con éxito", "Su registro se ha Actualizado exitosamente");
-              desactivarLoaderBoton('#actualizar');
-              setTimeout(function () {
-                location = '?pagina=producto';
-              }, 1000);
-            } else {
-              muestraMensaje("error", 2000, "ERROR", "Intente Nuevamente O Mas Tarde");
-              desactivarLoaderBoton('#actualizar');
-            }
-          }else if (lee.accion == 'tasadolar') {
-            if (lee.respuesta == 1) {
-              muestraMensaje("success", 1000, "Tasa Actualiza", "Se ha modificado la tasa correctamente");
-              setTimeout(function () {
-                location = '?pagina=producto';
-              }, 1000);
-            } else {
-              muestraMensaje("error", 2000, "ERROR", "Intente Nuevamente O Mas Tarde");
-            }
-          } else if (lee.accion == 'eliminar') {
-            if (lee.respuesta == 1) {
-              muestraMensaje("success", 1000, "Se ha eliminado con éxito", "Los datos se han borrado correctamente ");
-              setTimeout(function () {
-                location = '?pagina=producto';
-              }, 1000);
-            } else {
-              muestraMensaje("error", 2000, "ERROR", lee.text);
-            }
-          } else if (lee.accion == 'estatus') {
-              if (lee.respuesta == 1) {
-                muestraMensaje("success", 1500, "Se ha desactivo con éxito", "");
-                  setTimeout(function () {
+            if (lee.accion == 'registrar') {
+                if (lee.respuesta == 1) {
+                    muestraMensaje("success", 1500, "Se ha registrado con éxito", "Producto Agredado");
+                    desactivarLoaderBoton('#registrar'); 
+                    setTimeout(function () {
                     location = '?pagina=producto';
-                  }, 2000);
-              } else if (lee.respuesta == 2) {
-                muestraMensaje("success", 1500, "Se ha activo con éxito", "");
-                  setTimeout(function () {
+                    }, 2000);
+                } else {
+                    muestraMensaje("error", 2000, "ERROR", "ERROR");
+                    desactivarLoaderBoton('#registrar'); 
+                }
+            } else if (lee.accion == 'actualizar') { // falta
+                if (lee.respuesta == 1) {
+                    muestraMensaje("success", 1500, "Se ha modificado con éxito", "Producto Actualizado");
+                    desactivarLoaderBoton('#actualizar');
+                        setTimeout(function () {
+                        location = '?pagina=producto';
+                        }, 2000);
+                } else {
+                    muestraMensaje("error", 2000, "Error", text.lee);
+                    desactivarLoaderBoton('#actualizar');
+                }
+            } else if (lee.accion == 'eliminar') {
+                if (lee.respuesta == 1) {
+                    muestraMensaje("success", 1500, "Se ha eliminado con éxito", "Borrado correctamente");
+                    setTimeout(function () {
                     location = '?pagina=producto';
-                  }, 2000);
-              }else {
-                muestraMensaje("error", 2000, "ERROR", lee.text);
-              }
-          
-        }
-
-
-
+                    }, 2000);
+                } else {
+                    muestraMensaje("error", 2000, "Error", lee.text);
+                }
+            } else if (lee.accion == 'estatus') {
+                if (lee.respuesta == 1) {
+                    muestraMensaje("success", 1500, "Se ha desactivo con éxito", "");
+                    setTimeout(function () {
+                        location = '?pagina=producto';
+                    }, 2000);
+                } else if (lee.respuesta == 2) {
+                    muestraMensaje("success", 1500, "Se ha activo con éxito", "");
+                    setTimeout(function () {
+                        location = '?pagina=producto';
+                    }, 2000);
+                }else {
+                    muestraMensaje("error", 2000, "ERROR", lee.text);
+                }
+            }
 
         } catch (e) {
-          alert("Error en JSON " + e.name);
+          muestraMensaje("error", 4000, "Error en JSON", e.name);
+            desactivarLoaderBoton('#actualizar');
+               desactivarLoaderBoton('#registrar'); 
         }
       },
       error: function (request, status, err) {
         Swal.close();
         if (status == "timeout") {
           muestraMensaje("error", 2000, "Error", "Servidor ocupado, intente de nuevo");
+            desactivarLoaderBoton('#actualizar');
+               desactivarLoaderBoton('#registrar'); 
         } else {
           muestraMensaje("error", 2000, "Error", "ERROR: <br/>" + request + status + err);
+            desactivarLoaderBoton('#actualizar');
+               desactivarLoaderBoton('#registrar'); 
         }
       },
       complete: function () {

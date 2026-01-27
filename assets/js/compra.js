@@ -366,13 +366,13 @@ function muestraMensaje(icono, tiempo, titulo, mensaje) {
   
           if (lee.accion == 'registrar') {
             if (lee.respuesta == 1) {
-              muestraMensaje("success", 1000, "Se ha registrado con éxito", "Su registro se ha completado exitosamente");
-                desactivarLoaderBoton('#registrar'); 
+              muestraMensaje("success", 1500, "Se ha registrado con éxito", "completado exitosamente");
+              desactivarLoaderBoton('#registrar'); 
               setTimeout(function () {
                 location = '?pagina=compra';
-              }, 1000);
+              }, 2000);
             } else {
-              muestraMensaje("error", 2000, "ERROR", "ERROR");
+                muestraMensaje("error", 2000, "Error", lee.text);
                 desactivarLoaderBoton('#registrar'); 
             }
           } else if (lee.accion == 'eliminar') {
@@ -382,7 +382,7 @@ function muestraMensaje(icono, tiempo, titulo, mensaje) {
                 location = '?pagina=compra';
               }, 1000);
             } else {
-              muestraMensaje("error", 2000, "ERROR", lee.text);
+              muestraMensaje("error", 2000, "Error", lee.text);
             }
           }
   

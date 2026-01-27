@@ -74,8 +74,8 @@
                 </td>
                 <td class="td-oscuro align-middle"> 
                 <form method="POST" action="?pagina=marca"> 
-                    <button name="modificar" class="btn btn-primary btn-sm modificar me-3" value="<?php echo $dato['id_marca']?> "><i class="fas fa-pencil-alt" title="Editar"></i> Modificar </button> 
-                    <button type="button" onclick="eliminar(this)" class="btn btn-danger btn-sm eliminar" value="<?php echo $dato['id_marca']?> "><i class="fas fa-trash-alt" title="Eliminar"> </i> Eliminar </button> 
+                    <button name="modificar" class="btn btn-primary btn-sm modificar me-3" value="<?php echo $dato['id_marca']?>"><i class="fas fa-pencil-alt" title="Editar"></i> Modificar </button> 
+                    <button type="button" onclick="eliminar(this)" class="btn btn-danger btn-sm eliminar" value="<?php echo $dato['id_marca']?>"><i class="fas fa-trash-alt" title="Eliminar"> </i> Eliminar </button> 
                 </form> 
                 </td> 
                 </tr>

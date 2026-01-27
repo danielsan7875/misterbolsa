@@ -28,12 +28,12 @@
 
   </div>  
     
-  <div class="chart-container shadow-sm border-0">
+  <div class="chart-container shadow-sm border-0 DivOscuro1">
 
       <form action="?pagina=producto" id="m" autocomplete="off"> <!--comienzo Formulario-->
          <div class="seccion-formulario">
         <div class="row ">
-           <h6><i class="fas fa-boxes"></i> Datos del Producto Nuevo </h6>
+           <h6><i class="fas fa-boxes"></i> Datos del Producto </h6>
 
           <div class="col-sm">
           <label class="form-label text-dark">Nombre</label>
@@ -148,6 +148,152 @@
   <!--|||||||||||||||  Footer y JS  |||||||||||||||||||||||||||-->
   <script src="assets/js/producto.js"></script>
   <?php require_once 'vista/complementos/footer2.php'; ?>  
-  <!--|||||||||||||||  FIN Footer y JS  |||||||||||||||||||||||||||-->    
+
+  <!--|||||||||||||||  FIN Footer y JS  |||||||||||||||||||||||||||-->   
+  
+  
+  <script>
+    $(document).ready(function() {
+    if (!$('#marcaselect').hasClass('select2-hidden-accessible')) {
+
+    $('#marcaselect').select2({
+        width: '100%',
+        placeholder: 'Seleccione o busque una marca',
+        allowClear: true,
+
+        ajax: {
+            delay: 300,
+
+            transport: function (params, success, failure) {
+
+                let datos = new FormData();
+                datos.append('ajaxMarca', '1');
+                datos.append('buscarMarca', params.data.q ? params.data.q : '');
+
+                $.ajax({
+                    url: '',
+                    type: 'POST',
+                    data: datos,
+                    contentType: false,
+                    processData: false,
+                    dataType: 'json',
+                    success: success,
+                    error: failure
+                });
+            },
+
+            processResults: function (data) {
+                return {
+                    results: data.map(function (m) {
+                        return {
+                            id: m.id_marca,
+                            text: m.nombre
+                        };
+                    })
+                };
+            }
+        },
+
+        language: {
+            inputTooShort: function () {
+                return 'Escriba para buscar marcas';
+            },
+            searching: function () {
+                return 'Buscando marcas…';
+            },
+            noResults: function () {
+                return 'No se encontraron marcas';
+            }
+        }
+    });
+
+    $('#marcaselect').on('select2:open', function () {
+        $('input.select2-search__field').attr('placeholder', 'Buscador');
+    });
+
+}
+
+
+
+
+ if (!$('#presenselect').hasClass('select2-hidden-accessible')) {
+
+        $('#presenselect').select2({
+            width: '88%',
+            dropdownParent: $('#exampleModal'),
+            placeholder: 'Seleccione o busque una presentacion',
+            allowClear: true,
+
+            ajax: {
+                delay: 300,
+
+                transport: function (params, success, failure) {
+
+                    let datos = new FormData(document.getElementById('u'));
+                    datos.append('ajaxPresentacion', '1');
+
+                    // 🔹 Si no hay búsqueda, traer últimos 20
+                    datos.append('buscarPresentacion', params.data.q ? params.data.q : '');
+
+                    $.ajax({
+                        url: '',
+                        type: 'POST',
+                        data: datos,
+                        contentType: false,
+                        processData: false,
+                        dataType: 'json',
+                        success: success,
+                        error: failure
+                    });
+                },
+
+                processResults: function (data) {
+                    return {
+                        results: data.map(function (e) {
+                            return {
+                                id: e.id_presentacion,
+                                text: e.nombre
+                            };
+                        })
+                    };
+                }
+            },
+
+            language: {
+                inputTooShort: function () {
+                    return 'Escriba para buscar presentacion';
+                },
+                searching: function () {
+                    return 'Buscando presentacion…';
+                },
+                noResults: function () {
+                    return 'No se encontraron presentacion';
+                }
+            }
+        });
+         $('#presenselect').on('select2:open', function() {
+            $('input.select2-search__field').attr('placeholder', 'Buscador');
+        });
+        $('#presenselect').on('select2:open', function () {
+
+        const searchInput = document.querySelector('.select2-search__field');
+
+        if (!searchInput) return;
+
+        searchInput.addEventListener('input', function () {
+
+            // 🔹 Permitir solo letras, números y espacios
+            this.value = this.value.replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]/g, '');
+
+        });
+
+    });
+        $('#presenselect').select2('open');
+        $('#presenselect').select2('close');
+    }
+
+
+   });
+  </script>
 </body>
 </html>
