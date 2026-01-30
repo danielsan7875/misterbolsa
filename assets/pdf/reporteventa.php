@@ -27,9 +27,9 @@ $stmtVenta->execute([$id_venta]);
 $venta = $stmtVenta->fetch(PDO::FETCH_ASSOC);
 
 /* ===============================
-   CONSULTA DETALLES + PAGOS
+   CONSULTA SOLO PRODUCTOS
 ================================ */
-$sqlDetalles = "
+$sqlProductos = "
 SELECT 
     dv.cantidad,
     dv.precio_unitario,
@@ -37,53 +37,43 @@ SELECT
 
     pro.nombre AS nombre_producto,
     m.nombre   AS nombre_marca,
-    p.nombre   AS nombre_presentacion,
+    p.nombre   AS nombre_presentacion
 
+FROM detalle_venta dv
+INNER JOIN producto pro ON dv.id_producto = pro.id_producto
+INNER JOIN marca m ON pro.id_marca = m.id_marca
+INNER JOIN presentacion p ON pro.id_presentacion = p.id_presentacion
+WHERE dv.id_venta = ?
+";
+
+$stmtProductos = $pdo->prepare($sqlProductos);
+$stmtProductos->execute([$id_venta]);
+$productos = $stmtProductos->fetchAll(PDO::FETCH_ASSOC);
+
+/* ===============================
+   CONSULTA SOLO PAGOS
+================================ */
+$sqlPagos = "
+SELECT 
     dp.id_detallepago,
     dp.monto_dolares,
     dp.monto_bs,
     dp.referencia,
     mp.nombre AS metodo_pago
-
-FROM detalle_venta dv
-INNER JOIN venta v ON dv.id_venta = v.id_venta
-INNER JOIN producto pro ON dv.id_producto = pro.id_producto
-INNER JOIN marca m ON pro.id_marca = m.id_marca
-INNER JOIN presentacion p ON pro.id_presentacion = p.id_presentacion
-LEFT JOIN detalle_pago dp ON v.id_venta = dp.id_venta
-LEFT JOIN metodopago mp ON dp.id_metodopago = mp.id_metodopago
-WHERE v.id_venta = ?
+FROM detalle_pago dp
+INNER JOIN metodopago mp ON dp.id_metodopago = mp.id_metodopago
+WHERE dp.id_venta = ?
 ";
 
-$stmtDetalles = $pdo->prepare($sqlDetalles);
-$stmtDetalles->execute([$id_venta]);
-$detalles = $stmtDetalles->fetchAll(PDO::FETCH_ASSOC);
+$stmtPagos = $pdo->prepare($sqlPagos);
+$stmtPagos->execute([$id_venta]);
+$pagos = $stmtPagos->fetchAll(PDO::FETCH_ASSOC);
 
 /* ===============================
    VALIDACIÓN
 ================================ */
-if (!$venta || empty($detalles)) {
+if (!$venta || empty($productos)) {
     die('No se encontraron datos para la venta.');
-}
-
-/* ===============================
-   AGRUPAR PAGOS (SIN DUPLICAR)
-================================ */
-$pagos = [];
-
-foreach ($detalles as $d) {
-    if (!empty($d['id_detallepago'])) {
-        $key = $d['id_detallepago'];
-
-        if (!isset($pagos[$key])) {
-            $pagos[$key] = [
-                'metodo' => $d['metodo_pago'],
-                'monto_dolares' => $d['monto_dolares'],
-                'monto_bs' => $d['monto_bs'],
-                'referencia' => $d['referencia']
-            ];
-        }
-    }
 }
 
 /* ===============================
@@ -124,36 +114,7 @@ body { font-family: Arial, sans-serif; font-size: 12px; }
 <p>
 <strong>ID Venta:</strong> #'.$id_venta.'<br>
 <strong>Fecha:</strong> '.date("d/m/Y", strtotime($venta['fecha'])).'
-</p>
-
-<h3 style="text-align:center;">Detalle de Productos</h3>
-
-<table class="tabla">
-<thead>
-<tr>
-    <th>Producto</th>
-    <th>Cant. / Modo</th>
-    <th>Precio Unitario ($)</th>
-    <th>Subtotal ($)</th>
-</tr>
-</thead>
-<tbody>';
-
-foreach ($detalles as $d) {
-    $subtotal = $d['cantidad'] * $d['precio_unitario'];
-
-    $html .= '
-    <tr>
-        <td>'.$d['nombre_producto'].' - '.$d['nombre_marca'].' - '.$d['nombre_presentacion'].'</td>
-        <td>'.$d['cantidad'].' - '.strtoupper($d['maode']).'</td>
-        <td>'.number_format($d['precio_unitario'], 2, ',', '.').'</td>
-        <td>'.number_format($subtotal, 2, ',', '.').'</td>
-    </tr>';
-}
-
-$html .= '
-</tbody>
-</table>';
+</p>';
 
 /* ===============================
    TABLA MÉTODOS DE PAGO
@@ -177,7 +138,7 @@ if (!empty($pagos)) {
     foreach ($pagos as $p) {
         $html .= '
         <tr>
-            <td>'.$p['metodo'].'</td>
+            <td>'.$p['metodo_pago'].'</td>
             <td>'.number_format($p['monto_dolares'], 2, ',', '.').'</td>
             <td>'.number_format($p['monto_bs'], 2, ',', '.').'</td>
             <td>'.($p['referencia'] ?: '-').'</td>
@@ -188,6 +149,39 @@ if (!empty($pagos)) {
     </tbody>
     </table>';
 }
+
+
+$html .='
+
+<h3 style="text-align:center; margin-top:20px;">Detalle de Productos</h3>
+
+<table class="tabla">
+<thead>
+<tr>
+    <th>Producto</th>
+    <th>Cant. / Modo</th>
+    <th>Precio Unitario ($)</th>
+    <th>Subtotal ($)</th>
+</tr>
+</thead>
+<tbody>';
+
+foreach ($productos as $d) {
+    $subtotal = $d['cantidad'] * $d['precio_unitario'];
+
+    $html .= '
+    <tr>
+        <td>'.$d['nombre_producto'].' - '.$d['nombre_marca'].' - '.$d['nombre_presentacion'].'</td>
+        <td>'.$d['cantidad'].' - '.strtoupper($d['maode']).'</td>
+        <td>'.number_format($d['precio_unitario'], 2, ',', '.').'</td>
+        <td>'.number_format($subtotal, 2, ',', '.').'</td>
+    </tr>';
+}
+
+$html .= '
+</tbody>
+</table>';
+
 
 /* ===============================
    TOTALES

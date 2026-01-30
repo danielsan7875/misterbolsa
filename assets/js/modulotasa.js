@@ -183,22 +183,11 @@ function muestraMensaje(icono, tiempo, titulo, mensaje) {
         var lee = JSON.parse(respuesta);
         try {
   
-          if (lee.accion == 'registrar') {
-            if (lee.respuesta == 1) {
-              muestraMensaje("success", 1000, "Se ha registrado con éxito", "Su registro se ha completado exitosamente");
-              desactivarLoaderBoton('#registrar'); 
-              setTimeout(function () {
-                location = '?pagina=tasa';
-              }, 1000);
-            } else {
-              muestraMensaje("error", 2000, "ERROR", "ERROR");
-              desactivarLoaderBoton('#registrar'); 
-            }
-          } else  if (lee.accion == 'tasadolar') {
+          if (lee.accion == 'tasadolar') {
             if (lee.respuesta == 1) {
               muestraMensaje("success", 1000, "Tasa Actualiza", "");
               desactivarLoaderBoton('#sincronizar'); 
-              desactivarLoaderBoton('#actualizar'); 
+                desactivarLoaderBoton('#actualizar'); 
               setTimeout(function () {
                 location = '?pagina=tasa';
               }, 1000);

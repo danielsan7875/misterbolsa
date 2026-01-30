@@ -1,113 +1,240 @@
 <?php
 
-    require_once 'conexion.php';
-
-    class Registroventa extends Conexion{
-
-    private $conex;
-    private $id_venta;
-    private $fecha;
-    private $total_bs;
-    private $total_dl;
-    private $id_detalle;
-    private $id_productos;
-    private $cantidad;
-    private $maode;
-    private $precio;
-
-    private $id_dolar;
-    private $precios;
-
-     private $id_cierre;
-    private $hora;
-
+require_once 'conexion.php';
+class Registroventa extends Conexion{
+//---------------------
     function __construct(){
         $this->conex = new Conexion();
         $this->conex = $this->conex->conex();
     }
+//----------------------
+    public function procesarVenta($jsonDatos) {
+        $datos = json_decode($jsonDatos, true);
+        $operacion = $datos['operacion'];
+        $datosProcesar = $datos['datos'];
+        
+        try {
+            switch ($operacion) {
+                
+                case 'registrar':
+                   if (!$this->verificarExistenciaProducto($datosProcesar['id_producto'])) {
+                        return ['respuesta' => 0, 'accion' => 'registrar', 'text' => 'Uno o más productos no existen'];
+                    }
+                    
+                    if (!$this->verificarExistenciaMetodopago($datosProcesar['id_metodopago'])) {
+                        return ['respuesta' => 0, 'accion' => 'registrar', 'text' => 'Uno o más metodo de pago no existe'];
+                    }
 
-   public function registrar($id_producto, $cantidad, $precio, $maode, $id_metodopago, $monto_dolares, $monto_bs, $referencia) {
+                    if (!$this->verificarStockProducto($datosProcesar['id_producto'], $datosProcesar['cantidad'])) {
+                        return ['respuesta' => 0, 'accion' => 'registrar', 'text' => 'Stock insuficiente en uno o más productos' ];
+                    }
+
+                    return $this->ejecutarRegistroVenta($datosProcesar);
+                   
+                case 'actualizar':
+                    if (!$this->verificarExistenciaPresentacion($datosProcesar['id_presentacion'])) {
+                        return ['respuesta' => 0, 'accion' => 'actualizar', 'text' => 'La presentacion no existe'];
+                    }
+                   
+                    return $this->ejecutarActualizarPresentacion($datosProcesar);    
+             
+            
+                       
+                default:
+                    return ['respuesta' => 0, 'mensaje' => 'Operación no válida'];
+            }
+        } catch (\Exception $e) {
+            return ['respuesta' => 0, 'mensaje' => $e->getMessage()];
+        }
+    }
+//-------------------------------------------------------
+    private function verificarExistenciaProducto($id_producto) {
+        try {
+            // Si es array → validar todos
+            if (is_array($id_producto)) {
+                if (empty($id_producto)) return false;
+
+                $placeholders = implode(',', array_fill(0, count($id_producto), '?'));
+                $sql = "SELECT COUNT(*) 
+                        FROM producto 
+                        WHERE id_producto IN ($placeholders)";
+
+                $stmt = $this->conex->prepare($sql);
+                $stmt->execute($id_producto);
+                // Si existen todos → count == total enviados
+                return $stmt->fetchColumn() == count($id_producto);
+            }
+            $sql = "SELECT COUNT(*) 
+                    FROM producto 
+                    WHERE id_producto = ?";
+
+            $stmt = $this->conex->prepare($sql);
+            $stmt->execute([$id_producto]);
+            return $stmt->fetchColumn() > 0;
+        } catch (PDOException $e) {
+            throw $e;
+        }
+    }
+//-------------------------------------------------------
+    private function verificarExistenciaMetodopago($id_metodopago) {
+        try {
+            // Si es array → validar todos
+            if (is_array($id_metodopago)) {
+                if (empty($id_metodopago)) return false;
+
+                $placeholders = implode(',', array_fill(0, count($id_metodopago), '?'));
+                $sql = "SELECT COUNT(*) 
+                        FROM metodopago 
+                        WHERE id_metodopago IN ($placeholders)";
+
+                $stmt = $this->conex->prepare($sql);
+                $stmt->execute($id_metodopago);
+                // Si existen todos → count == total enviados
+                return $stmt->fetchColumn() == count($id_metodopago);
+            }
+            $sql = "SELECT COUNT(*) 
+                    FROM metodopago 
+                    WHERE id_metodopago = ?";
+
+            $stmt = $this->conex->prepare($sql);
+            $stmt->execute([$id_metodopago]);
+            return $stmt->fetchColumn() > 0;
+        } catch (PDOException $e) {
+            throw $e;
+        }
+    }  
+//-------------------------------------------------------    
+    private function verificarStockProducto($id_producto, $cantidad) {
+        try {
+
+            // Validación básica
+            if (empty($id_producto) || empty($cantidad)) return false;
+
+            // Si es un solo producto
+            if (!is_array($id_producto)) {
+                $sql = "SELECT stock FROM producto WHERE id_producto = ?";
+                $stmt = $this->conex->prepare($sql);
+                $stmt->execute([$id_producto]);
+                $stock = $stmt->fetchColumn();
+
+                return $stock !== false && $stock >= $cantidad;
+            }
+
+            // Si son múltiples productos
+            foreach ($id_producto as $i => $id) {
+
+                $cantSolicitada = $cantidad[$i] ?? 0;
+
+                $sql = "SELECT stock FROM producto WHERE id_producto = ?";
+                $stmt = $this->conex->prepare($sql);
+                $stmt->execute([$id]);
+
+                $stock = $stmt->fetchColumn();
+
+                if ($stock === false || $stock < $cantSolicitada) {
+                    return false;
+                }
+            }
+
+            return true;
+
+        } catch (PDOException $e) {
+            throw $e;
+        }
+    }
+
+    
+  private function ejecutarRegistroVenta($datos) {
     try {
-        // Iniciar transacción
-        $this->conex->beginTransaction();
+        $conex = $this->conex;
+        $conex->beginTransaction();
 
         // 1️⃣ Registrar venta
-        $sql_venta = "INSERT INTO venta (fecha, total_dl, total_bs) 
-                      VALUES (:fecha, :total_dl, :total_bs)";
-        $stmt_venta = $this->conex->prepare($sql_venta);
-        $stmt_venta->bindParam(':fecha', $this->fecha);
-        $stmt_venta->bindParam(':total_dl', $this->total_dl);
-        $stmt_venta->bindParam(':total_bs', $this->total_bs);
-        $stmt_venta->execute();
+        $sqlVenta = "INSERT INTO venta (fecha, total_dl, total_bs) 
+                     VALUES (:fecha, :total_dl, :total_bs)";
+        $stmtVenta = $conex->prepare($sqlVenta);
+        $stmtVenta->execute([
+            'fecha'     => $datos['fecha'],
+            'total_dl'  => $datos['total_Dl'],
+            'total_bs'  => $datos['total_Bs']
+        ]);
 
-        // ID de la venta recién creada
-        $id_venta = $this->conex->lastInsertId();
+        $id_venta = $conex->lastInsertId();
 
         // Validación mínima
-        if (empty($id_producto) || empty($cantidad) || empty($precio) || empty($maode)) {
-            $this->conex->rollBack();
-            return ['respuesta' => 0, 'accion' => 'registrar'];
+        if (empty($datos['id_producto']) || empty($datos['cantidad']) || empty($datos['precio']) || empty($datos['maode'])) {
+            $conex->rollBack();
+            return ['respuesta' => 0, 'accion' => 'registrar', 'text' => 'Datos incompletos'];
         }
 
-        // Registrar detalle de venta
-        $sql_detalle = "INSERT INTO detalle_venta 
-                        (id_venta, id_producto, cantidad, precio_unitario, maode)
-                        VALUES (:id_venta, :id_producto, :cantidad, :precio, :maode)";
-        $stmt_detalle = $this->conex->prepare($sql_detalle);
+        // 2️⃣ Registrar detalle de venta + actualizar stock
+        $sqlDetalle = "INSERT INTO detalle_venta (id_venta, id_producto, cantidad, precio_unitario, maode)
+                       VALUES (:id_venta, :id_producto, :cantidad, :precio_unitario, :maode)";
+        $stmtDetalle = $conex->prepare($sqlDetalle);
 
-        // Actualizar stock
-        $sql_stock = "UPDATE producto SET stock = stock - :cantidad 
-                      WHERE id_producto = :id_producto";
-        $stmt_stock = $this->conex->prepare($sql_stock);
+        $sqlStock = "UPDATE producto SET stock = stock - :cantidad WHERE id_producto = :id_producto";
+        $stmtStock = $conex->prepare($sqlStock);
 
-        foreach ($id_producto as $i => $producto) {
+        foreach ($datos['id_producto'] as $i => $producto) {
+            $paramDetalle = [
+                'id_venta'      => $id_venta,
+                'id_producto'   => $producto,
+                'cantidad'      => $datos['cantidad'][$i],
+                'precio_unitario' => $datos['precio'][$i],
+                'maode'         => $datos['maode'][$i]
+            ];
+            $stmtDetalle->execute($paramDetalle);
 
-            // Insertar detalle
-            $stmt_detalle->bindParam(':id_venta', $id_venta);
-            $stmt_detalle->bindParam(':id_producto', $producto);
-            $stmt_detalle->bindParam(':cantidad', $cantidad[$i]);
-            $stmt_detalle->bindParam(':precio', $precio[$i]);
-            $stmt_detalle->bindParam(':maode', $maode[$i]);
-            $stmt_detalle->execute();
-
-            // Actualizar stock
-            $stmt_stock->bindParam(':cantidad', $cantidad[$i]);
-            $stmt_stock->bindParam(':id_producto', $producto);
-            $stmt_stock->execute();
+            $paramStock = [
+                'cantidad'    => $datos['cantidad'][$i],
+                'id_producto' => $producto
+            ];
+            $stmtStock->execute($paramStock);
         }
 
-        // Registrar detalle de pago
-        $sql_pago = "INSERT INTO detalle_pago 
-                     (id_venta, id_metodopago, monto_dolares, monto_bs, referencia)
-                     VALUES (:id_venta, :id_metodopago, :monto_dolares, :monto_bs, :referencia)";
-        $stmt_pago = $this->conex->prepare($sql_pago);
+        // 3️⃣ Registrar detalle de pagos
+        if (!empty($datos['id_metodopago'])) {
+            $sqlPago = "INSERT INTO detalle_pago (id_venta, id_metodopago, monto_dolares, monto_bs, referencia)
+                        VALUES (:id_venta, :id_metodopago, :monto_dolares, :monto_bs, :referencia)";
+            $stmtPago = $conex->prepare($sqlPago);
 
-        foreach ($id_metodopago as $i => $metodo) {
-            $stmt_pago->bindParam(':id_venta', $id_venta);
-            $stmt_pago->bindParam(':id_metodopago', $metodo);
-            $stmt_pago->bindParam(':monto_dolares', $monto_dolares[$i]);
-            $stmt_pago->bindParam(':monto_bs', $monto_bs[$i]);
-            $stmt_pago->bindParam(':referencia', $referencia[$i]);
-            $stmt_pago->execute();
+            foreach ($datos['id_metodopago'] as $i => $metodo) {
+                $ref = isset($datos['referencia'][$i]) ? $datos['referencia'][$i] : '';
+                $stmtPago->execute([
+                    'id_venta'       => $id_venta,
+                    'id_metodopago'  => $metodo,
+                    'monto_dolares'  => $datos['monto_dolares'][$i],
+                    'monto_bs'       => $datos['monto_bs'][$i],
+                    'referencia'     => $ref
+                ]);
+            }
         }
 
-        $sql_Cierre = "INSERT INTO  detalle_cierre (id_cierre, id_venta, hora) 
+        // 4️⃣ Registrar detalle de cierre (hora)
+        $sqlCierre = "INSERT INTO detalle_cierre (id_cierre, id_venta, hora)
                       VALUES (:id_cierre, :id_venta, :hora)";
-        $stmt_Cierre = $this->conex->prepare($sql_Cierre);
-        $stmt_Cierre->bindParam(':id_cierre', $this->id_cierre);
-        $stmt_Cierre->bindParam(':id_venta', $id_venta);
-        $stmt_Cierre->bindParam(':hora', $this->hora);
-        $stmt_Cierre->execute();
+        $stmtCierre = $conex->prepare($sqlCierre);
+        $stmtCierre->execute([
+            'id_cierre' => $datos['id_Cierre'],
+            'id_venta'  => $id_venta,
+            'hora'      => $datos['hora_Cierre']
+        ]);
 
         // Confirmar transacción
-        $this->conex->commit();
+        $conex->commit();
+        $conex = null;
+
         return ['respuesta' => 1, 'accion' => 'registrar'];
 
-    } catch (Exception $e) {
-        $this->conex->rollBack();
-        return ['respuesta' => 0, 'accion' => 'registrar', 'error' => $e->getMessage()];
+    } catch (\PDOException $e) {
+        if ($conex) {
+            $conex->rollBack();
+            $conex = null;
+        }
+        return ['respuesta' => 0, 'accion' => 'registrar', 'text' => $e->getMessage()];
     }
 }
+
 
 
 
@@ -122,23 +249,23 @@
             INNER JOIN presentacion p ON pro.id_presentacion = p.id_presentacion
             WHERE pro.estatus = 1";
 
-    if (!empty($buscar)) {
-        $sql .= " AND (pro.nombre LIKE :buscar OR m.nombre LIKE :buscar)";
-    }
+        if (!empty($buscar)) {
+            $sql .= " AND (pro.nombre LIKE :buscar OR m.nombre LIKE :buscar)";
+        }
 
-    $sql .= " ORDER BY pro.id_producto DESC LIMIT :limite";
+        $sql .= " ORDER BY pro.id_producto DESC LIMIT :limite";
 
-    $stmt = $this->conex->prepare($sql);
+        $stmt = $this->conex->prepare($sql);
 
-    if (!empty($buscar)) {
-        $stmt->bindValue(':buscar', "%$buscar%", PDO::PARAM_STR);
-    }
+        if (!empty($buscar)) {
+            $stmt->bindValue(':buscar', "%$buscar%", PDO::PARAM_STR);
+        }
 
-    $stmt->bindValue(':limite', (int)$limit, PDO::PARAM_INT);
+        $stmt->bindValue(':limite', (int)$limit, PDO::PARAM_INT);
 
-    $stmt->execute();
+        $stmt->execute();
 
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 
@@ -175,22 +302,7 @@
     } 
 
 
-    public function consultar() {
-     $registro = "SELECT v.*, dv.*, m.nombre AS nombre_marca, p.nombre AS nombre_presentacion, pro.nombre
-        FROM venta v
-        INNER JOIN detalle_venta dv ON v.id_venta = dv.id_venta
-        INNER JOIN producto pro ON dv.id_producto = pro.id_producto
-        INNER JOIN marca m ON pro.id_marca = m.id_marca
-        INNER JOIN presentacion p ON pro.id_presentacion = p.id_presentacion
-        WHERE DATE(v.fecha) = CURDATE()
-        ORDER BY v.id_venta DESC";
-
-    $consulta = $this->conex->prepare($registro);
-    $resul = $consulta->execute();
-
-    $datos = $consulta->fetchAll(PDO::FETCH_ASSOC);
-    return $resul ? $datos : 0;
-    }
+    
 
     public function consultarVenta(){
 
@@ -226,111 +338,7 @@
 
 
     
-    public function get_Id_venta(){
-        return $this->id_venta;
-    }
-
-    public function set_Id_venta($id_venta){
-        $this->id_venta =$id_venta;
-    }
-
-    public function get_Id_producto(){
-        return $this->id_producto;
-    }
-
-    public function set_Id_producto($id_producto){
-        $this->id_producto = $id_producto;
-    }
-
-    public function get_Cantidad(){
-        return $this->cantidad;
-    }
-
-    public function set_Cantidad($cantidad){
-        $this->cantidad = $cantidad;
-    }
-
-    public function get_Fecha(){
-        return $this->fecha;
-    }
-
-    public function set_Fecha($fecha){
-        $this->fecha = $fecha;
-    }
-
-    public function get_Id_detalle(){
-        return $this->id_detalle;
-    }
-
-    public function set_Id_detalle($id_detalle){
-        $this->id_detalle = $id_detalle;
-    }
-
-    public function get_Total_Dl(){
-        return $this->total_dl;
-    }
-
-    public function set_Total_Dl($total_dl){
-        $this->total_dl = $total_dl;
-    }
-
-     public function get_Total_Bs(){
-        return $this->total_bs;
-    }
-
-    public function set_Total_Bs($total_bs){
-        $this->total_bs = $total_bs;
-    }
-
-    public function get_Precio(){
-        return $this->precio;
-    }
-
-    public function set_Precio($precio){
-        $this->precio = $precio;
-    }
-
-    public function get_Maode(){
-        return $this->maode;
-    }
-
-    public function set_Maode($maode){
-        $this->maode = $maode;
-    }
-
    
-
-    public function get_Id_dolar(){
-        return $this->id_dolar;
-    }
-
-    public function set_Id_dolar($id_dolar){
-        $this->id_dolar =$id_dolar;
-    }
-
-    public function get_Precios(){
-        return $this->precios;
-    }
-
-    public function set_Precios($precios){
-        $this->precios= $precios;
-    }  
-    
-     public function get_Id_Cierre(){
-        return $this->id_cierre;
-    }
-
-    public function set_Id_Cierre($id_cierre){
-        $this->id_cierre= $id_cierre;
-    }    
-
-     public function get_Hora_Cierre(){
-        return $this->hora;
-    }
-
-    public function set_Hora_Cierre($hora){
-        $this->hora= $hora;
-    }    
 
     }
 

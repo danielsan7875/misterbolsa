@@ -16,7 +16,7 @@ $objproducto = new Producto();
 //---------------
     if (isset($_POST['ver_mas'])) {
         $_SESSION['limite_producto'] += 100; // Aumenta 100 registros
-        header("location:?pagina=usuario");
+        header("location:?pagina=producto");
         exit;
     }
 //--------------------

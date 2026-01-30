@@ -183,7 +183,7 @@ $(document).ready(function() {
         // Actualización de Totales en Dólares
         $("#total-dolares").text(`$${totalGeneral.toFixed(2)}`);
         $("#total_dl").val(`${totalGeneral.toFixed(2)}`);
-        $("#monto_dl").val(`${totalGeneral.toFixed(2)}`);
+        $("#summary-total-usd").text(`$ ${totalGeneral.toFixed(2)}`);
 
         
         // CÁLCULO DE CAMBIO A BS
@@ -196,7 +196,7 @@ $(document).ready(function() {
         const totalBs = totalGeneral * tasa;
         $(".grand-total").text(`Bs. ${totalBs.toFixed(2)}`);
         $("#total_bs").val(`${totalBs.toFixed(2)}`);
-        $("#monto_bs").val(`${totalBs.toFixed(2)}`);
+        $("#summary-total-bs").text(`Bs. ${totalBs.toFixed(2)}`);
 
 
 
@@ -207,66 +207,19 @@ $(document).ready(function() {
 
     $('#fecha').val(moment().format('YYYY-MM-DD'));
 
-    //--------------------------------------------- METODO PAGO --------------------
 
-      $('.payment-method-card').on('click', function () {
-
-        // Quitar y agregar clase active
-        $('.payment-method-card').removeClass('active');
-        $(this).addClass('active');
-
-        // Obtener ID del método
-        let metodoId = $(this).data('id');
-
-        // Guardar ID en input hidden
-        $('#metodopago_id').val(metodoId);
-
-        // Mostrar campo referencia solo para método 1 o 2
-        if (metodoId == 1 || metodoId == 2) {
-            $('#contenedorReferencia').removeClass('d-none');
-        } else {
-            $('#contenedorReferencia').addClass('d-none');
-            $('#referencia_visible').val('');
-            $('#referencia').val('');
-        }
-    });
-
-    // Validación referencia (solo números, 4 a 6 dígitos)
-    $('#referencia_visible').on('input', function () {
-        let valor = $(this).val();
-
-        // Eliminar cualquier carácter que no sea número
-        valor = valor.replace(/\D/g, '');
-
-        // Limitar a 6 caracteres
-        if (valor.length > 6) {
-            valor = valor.substring(0, 6);
-        }
-
-        $(this).val(valor);
-
-        // Validar longitud (4 a 6)
-        if (valor.length >= 4 && valor.length <= 6) {
-            $('#referencia').val(valor);
-        } else {
-            $('#referencia').val('');
-        }
-    });
 
     //----------------------------------------- REGISTRO VENTA AJAX ------------------
 
-    $('#registrar').on("click", function () {
-        activarLoaderBoton('#registrar', "Guardando...");
+    $('#btn-process').on("click", function () {
+        activarLoaderBoton('#btn-process', "Procesando...");
 
         if (carrito.length === 0) {
             muestraMensaje("error", 1000, "Carrito Vacios", "Seleccionar un producto");
             desactivarLoaderBoton('#registrar');
-        } else if (!validarMetodoPago()) {
-            muestraMensaje("error", 1500, "Seleccionar un metodo de pago", "");
-            desactivarLoaderBoton('#registrar');
-        }else {
+        } else if (verificarPagosCompletos()) {
 
-            Swal.fire({
+             Swal.fire({
             title: '¿Deseas Registrar esta Venta?',
             text: "",
             icon: 'question',
@@ -277,21 +230,23 @@ $(document).ready(function() {
             cancelButtonColor: '#d33b3b',
             confirmButtonText: 'Sí, Registrar',
             cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
+            }).then((result) => {
+                if (result.isConfirmed) {
 
-               bloquearPantalla();
-                var datos = new FormData($('#SystemPos')[0]);
-                datos.append('registrar', 'registrar');
-                enviaAjax(datos);
-            
-            }
-            desactivarLoaderBoton('#registrar');
-        });
-      
-            
-            
+                bloquearPantalla();
+                    var datos = new FormData($('#SystemPos')[0]);
+                    datos.append('registrar', 'registrar');
+                    enviaAjax(datos);
+                
+                }
+                desactivarLoaderBoton('#btn-process');
+            });
+    
+        } else {
+            muestraMensaje("error", 1000, "Metodo de Pago Vacio", "Seleccionar un metodo de pago");
+             desactivarLoaderBoton('#btn-process');
         }
+
     });
 
     //---------------------------- FUNCION DESBLOQUEAR PANTALLA -----------------
@@ -405,36 +360,29 @@ function muestraMensaje(icono, tiempo, titulo, mensaje) {
         ocultarLoaderBuscador();
           if (lee.accion == 'registrar') {
             if (lee.respuesta == 1) {
-              muestraMensaje("success", 1500, "Se ha registrado con éxito", "Su registro se ha completado exitosamente");
+
               desactivarLoaderBoton('#registrar');
-              desbloquearPantalla(); 
-              setTimeout(function () {
-                location = '?pagina=registroventa';
-              }, 1500);
+                desbloquearPantalla(); 
+                    resetVenta();
             } else {
-              muestraMensaje("error", 2000, "ERROR", "ERROR");
-              desbloquearPantalla(); 
-              desactivarLoaderBoton('#registrar'); 
+              desbloquearPantalla();   
+                muestraMensaje("error", 3000, "Error", lee.text);
+                    desactivarLoaderBoton('#registrar'); 
             }
 
-          } else if (lee.accion == 'actualizar') { // falta
-            if (lee.respuesta == 1) {
-              muestraMensaje("success", 1000, "Se ha Modificado con éxito", "Su registro se ha Actualizado exitosamente");
-              desactivarLoaderBoton('#actualizar');
-              setTimeout(function () {
-                location = '?pagina=producto';
-              }, 1000);
-            } else {
-              muestraMensaje("error", 2000, "ERROR", "Intente Nuevamente O Mas Tarde");
-              desactivarLoaderBoton('#actualizar');
-            }
           } else if (lee.accion == 'buscarProducto')  {
-                ocultarLoaderBuscador();
-              renderProductos(lee.respuesta);
+                if(lee.respuesta == 1){
+                    muestraMensaje("error", 3000, "Error", lee.text);
+                       ocultarLoaderBuscador();
+                }else{
+                    ocultarLoaderBuscador();
+                    renderProductos(lee.respuesta);
+                }
+              
           }
   
         } catch (e) {
-          alert("Error en JSON " + e.name);
+           muestraMensaje("error", 4000, "Error en JSON ", e.name);
         }
       },
       error: function (request, status, err) {
@@ -526,7 +474,6 @@ $('#inputBuscar').on('input', function () {
 });
 
 
-  
 
 });
 

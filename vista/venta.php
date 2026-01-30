@@ -117,14 +117,19 @@
                 }
 
                 // Agregar productos
-                $ventas[$id_venta]['detalles'][] = [
-                    'nombre' => $dato['nombre_producto'],
-                    'cantidad' => $dato['cantidad'],
-                    'marca' => $dato['nombre_marca'],
-                    'presentacion' => $dato['nombre_presentacion'],
-                    'precio_unitario' => $dato['precio_unitario'],
-                    'maode' => $dato['maode']
-                ];
+                // Agregar productos SIN DUPLICAR
+                $productoKey = $dato['id_producto'];
+
+                if (!isset($ventas[$id_venta]['detalles'][$productoKey])) {
+                    $ventas[$id_venta]['detalles'][$productoKey] = [
+                        'nombre' => $dato['nombre_producto'],
+                        'cantidad' => $dato['cantidad'],
+                        'marca' => $dato['nombre_marca'],
+                        'presentacion' => $dato['nombre_presentacion'],
+                        'precio_unitario' => $dato['precio_unitario'],
+                        'maode' => $dato['maode']
+                    ];
+                }
 
                 // Agregar pagos SIN DUPLICAR
                 if ($dato['id_detallepago']) {
