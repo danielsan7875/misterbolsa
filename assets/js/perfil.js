@@ -228,30 +228,30 @@ function muestraMensaje(icono, tiempo, titulo, mensaje) {
   
           if (lee.accion == 'clave') {
             if (lee.respuesta == 1) {
-              muestraMensaje("success", 1500, "Se ha Actualizado con éxito", "");
+              muestraMensaje("success", 1500, "Se ha Actualizado con éxito", "Clave Cambiada");
                   desactivarLoaderBoton('#clave');
-              setTimeout(function () {
-                location = '?pagina=perfil';
-              }, 2000);
+                    setTimeout(function () {
+                      location = '?pagina=perfil';
+                    }, 2000);
             } else {
-              muestraMensaje("error", 2000, "ERROR", "ERROR");
+              muestraMensaje("error", 4000, "Error", lee.text);
                   desactivarLoaderBoton('#clave');
             }
           } else if (lee.accion == 'actualizar') {
             if (lee.respuesta == 1) {
-              muestraMensaje("success", 1500, "Se ha Modificado con éxito", "Actualizado exitosamente");
+              muestraMensaje("success", 1500, "Se ha Modificado con éxito", "Datos actualizado");
                   desactivarLoaderBoton('#actualizar');
-              setTimeout(function () {
-                location = '?pagina=perfil';
-              }, 2000);
+                    setTimeout(function () {
+                      location = '?pagina=perfil';
+                    }, 2000);
             } else {
-              muestraMensaje("error", 2000, "ERROR", "Intente Nuevamente O Mas Tarde");
+              muestraMensaje("error", 2000, "Error", lee.text);
                   desactivarLoaderBoton('#actualizar');
             }
           } 
   
         } catch (e) {
-          alert("Error en JSON " + e.name);
+            muestraMensaje("error", 2000, "Error en JSON", e.name);
         }
       },
       error: function (request, status, err) {

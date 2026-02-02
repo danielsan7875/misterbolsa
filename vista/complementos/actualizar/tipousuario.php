@@ -100,7 +100,7 @@
 
   <!--|||||||||||||||  Footer y JS  |||||||||||||||||||||||||||-->
   <script src="assets/js/tipousuario.js"></script>
-  <?php require_once 'vista/complementos/footer.php'; ?>  
+  <?php require_once 'vista/complementos/footer2.php'; ?>  
   <!--|||||||||||||||  FIN Footer y JS  |||||||||||||||||||||||||||-->    
 </body>
 </html>

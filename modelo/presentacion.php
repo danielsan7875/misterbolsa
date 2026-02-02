@@ -87,7 +87,7 @@ class Presentacion extends Conexion{
             if ($conex) {
                 $conex->rollBack();
                 $conex = null;
-                return ['respuesta' => 0, 'accion' => 'actualizar', 'text' => $e->getMessage()];
+                return ['respuesta' => 0, 'accion' => 'registrar', 'text' => $e->getMessage()];
             }
             throw $e;
         }

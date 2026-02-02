@@ -142,14 +142,12 @@ class Registroventa extends Conexion{
             throw $e;
         }
     }
-
-    
-  private function ejecutarRegistroVenta($datos) {
-    try {
+//---------------
+    private function ejecutarRegistroVenta($datos) {
+        try {
         $conex = $this->conex;
         $conex->beginTransaction();
 
-        // 1️⃣ Registrar venta
         $sqlVenta = "INSERT INTO venta (fecha, total_dl, total_bs) 
                      VALUES (:fecha, :total_dl, :total_bs)";
         $stmtVenta = $conex->prepare($sqlVenta);
@@ -167,7 +165,6 @@ class Registroventa extends Conexion{
             return ['respuesta' => 0, 'accion' => 'registrar', 'text' => 'Datos incompletos'];
         }
 
-        // 2️⃣ Registrar detalle de venta + actualizar stock
         $sqlDetalle = "INSERT INTO detalle_venta (id_venta, id_producto, cantidad, precio_unitario, maode)
                        VALUES (:id_venta, :id_producto, :cantidad, :precio_unitario, :maode)";
         $stmtDetalle = $conex->prepare($sqlDetalle);
@@ -192,7 +189,6 @@ class Registroventa extends Conexion{
             $stmtStock->execute($paramStock);
         }
 
-        // 3️⃣ Registrar detalle de pagos
         if (!empty($datos['id_metodopago'])) {
             $sqlPago = "INSERT INTO detalle_pago (id_venta, id_metodopago, monto_dolares, monto_bs, referencia)
                         VALUES (:id_venta, :id_metodopago, :monto_dolares, :monto_bs, :referencia)";
@@ -210,7 +206,6 @@ class Registroventa extends Conexion{
             }
         }
 
-        // 4️⃣ Registrar detalle de cierre (hora)
         $sqlCierre = "INSERT INTO detalle_cierre (id_cierre, id_venta, hora)
                       VALUES (:id_cierre, :id_venta, :hora)";
         $stmtCierre = $conex->prepare($sqlCierre);
@@ -234,79 +229,143 @@ class Registroventa extends Conexion{
         return ['respuesta' => 0, 'accion' => 'registrar', 'text' => $e->getMessage()];
     }
 }
-
-
-
-
-  // Metodo para llamar las medidas existentes
-  public function buscarProducto($buscar = '', $limit = 50) {
-
-    $sql = "SELECT pro.*, 
+//-----------
+    public function buscarProducto($buscar = '', $limit = 50) {
+        try{
+            $conex = $this->conex;
+            $conex ->beginTransaction();
+                
+            $sql = "SELECT pro.*, 
                    m.nombre AS nombre_marca, 
                    p.nombre AS nombre_presentacion 
-            FROM producto pro
-            INNER JOIN marca m ON pro.id_marca = m.id_marca
-            INNER JOIN presentacion p ON pro.id_presentacion = p.id_presentacion
-            WHERE pro.estatus = 1";
+                    FROM producto pro
+                    INNER JOIN marca m ON pro.id_marca = m.id_marca
+                    INNER JOIN presentacion p ON pro.id_presentacion = p.id_presentacion
+                    WHERE pro.estatus = 1";
 
-        if (!empty($buscar)) {
-            $sql .= " AND (pro.nombre LIKE :buscar OR m.nombre LIKE :buscar)";
+            if (!empty($buscar)) {
+                $sql .= " AND (pro.nombre LIKE :buscar OR m.nombre LIKE :buscar)";
+            }
+            $sql .= " ORDER BY pro.id_producto DESC LIMIT :limite";
+
+            $stmt = $this->conex->prepare($sql);
+            if (!empty($buscar)) {
+                $stmt->bindValue(':buscar', "%$buscar%", PDO::PARAM_STR);
+            }
+            $stmt->bindValue(':limite', (int)$limit, PDO::PARAM_INT);
+            $stmt->execute();
+            $Datos =  $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $conex->commit();
+            $conex = null;
+            return $Datos;       
+
+        }catch(\PDOException $e){
+            if($conex){
+                $conex -> rollBack();
+                $conex = null;
+            }
+            throw $e;
         }
-
-        $sql .= " ORDER BY pro.id_producto DESC LIMIT :limite";
-
-        $stmt = $this->conex->prepare($sql);
-
-        if (!empty($buscar)) {
-            $stmt->bindValue(':buscar', "%$buscar%", PDO::PARAM_STR);
-        }
-
-        $stmt->bindValue(':limite', (int)$limit, PDO::PARAM_INT);
-
-        $stmt->execute();
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
-
-
-    
+    }
+//----------------
     public function obtenerCierreActivo(){
-        $query = "SELECT * FROM cierre_diario WHERE estatus = 1 LIMIT 1";
-        $consulta = $this->conex->prepare($query);
-        $consulta->execute();
-        return $consulta->fetch(PDO::FETCH_ASSOC);
+        try {
+            $conex = $this->conex;
+            $conex->beginTransaction();
 
+            $query = "SELECT * FROM cierre_diario WHERE estatus = 1 LIMIT 1";
+            $consulta = $this->conex->prepare($query);
+            $consulta->execute();
+            $datos = $consulta->fetch(PDO::FETCH_ASSOC);
+
+            $conex->commit();
+            $conex = null;
+            return $datos;
+
+        } catch (\PDOException $e) {
+            if ($conex) {
+                $conex->rollBack();
+                $conex = null;
+            }
+            throw $e;
+        }
     }
+//---------------------
+     public function obtenerDolar() {
+        try {
+            $conex = $this->conex;
+            $conex->beginTransaction();
 
-    public function obtenerDolar() {
-        $query = "SELECT * FROM dolar WHERE id_dolar = 1";
-        $consulta = $this->conex->prepare($query);
-        $consulta->execute();
-        return $consulta->fetchAll(PDO::FETCH_ASSOC);
-        
+            $query = "SELECT * FROM dolar WHERE id_dolar = 1";
+            $consulta = $this->conex->prepare($query);
+            $consulta->execute();
+            $Datos = $consulta->fetchAll(PDO::FETCH_ASSOC);
 
+            $conex->commit();
+            $conex = null;
+            return $Datos;
+
+        } catch (\PDOException $e) {
+            if ($conex) {
+                $conex->rollBack();
+                $conex = null;
+            }
+            throw $e;
+        }
     }
-
+//-------------------
      public function obtenerMetodopago() {
-        $query = "SELECT * FROM metodopago WHERE estatus =1";
-        $consulta = $this->conex->prepare($query);
-        $consulta->execute();
-        return $consulta->fetchAll(PDO::FETCH_ASSOC);
-    } 
+        try{ 
+            $conex = $this->conex;
+            $conex->beginTransaction();  
+            
+            $query = "SELECT * FROM metodopago WHERE estatus =1";
+            $consulta = $this->conex->prepare($query);
+            $consulta->execute();
+            $datos = $consulta->fetchAll(PDO::FETCH_ASSOC);
 
+            $conex ->commit();
+            $conex = null;
+            return $datos;
+
+        } catch (\PDOException $e){
+            if($conex){
+                $conex -> rollBack();
+                $conex = null;
+            }
+            throw $e;
+        }
+    } 
+//---------------------
     public function obtenerNroVenta() {
-       $query = "SELECT id_venta FROM venta ORDER BY id_venta DESC LIMIT 1";
-        $consulta = $this->conex->prepare($query);
-        $consulta->execute();
-        return $consulta->fetch(PDO::FETCH_ASSOC);
+        try{ 
+            $conex = $this->conex;
+            $conex->beginTransaction();  
+
+            $query = "SELECT id_venta FROM venta ORDER BY id_venta DESC LIMIT 1";
+            $consulta = $this->conex->prepare($query);
+            $consulta->execute();
+            $Datos =  $consulta->fetch(PDO::FETCH_ASSOC);
+        
+            $conex ->commit();
+            $conex =null;
+            return $Datos;
+        } catch (\PDOException $e){
+            if($conex){
+                $conex -> rollBack();
+                $conex = null;
+            }
+            throw $e;
+        }
     } 
-
-
-    
-
+//----------------------
     public function consultarVenta(){
-
-    $registro ="SELECT 
+        try{
+            $conex = $this->conex;
+            $conex->beginTransaction();
+            
+             $registro ="SELECT 
                     v.*, 
                     dv.*, 
                     m.nombre AS nombre_marca, 
@@ -328,19 +387,22 @@ class Registroventa extends Conexion{
                 WHERE v.fecha = CURDATE()
                 ORDER BY v.id_venta DESC";
 
-    $consulta = $this->conex->prepare($registro);
-    $resul = $consulta->execute();
+            $consulta = $this->conex->prepare($registro);
+            $resul = $consulta->execute();
+            $datos = $consulta->fetchAll(PDO::FETCH_ASSOC);
 
-    $datos = $consulta->fetchAll(PDO::FETCH_ASSOC);
-
-    return $resul ? $datos : 0;
-}
-
-
-    
-   
-
+            $conex->commit();
+            $conex = null;
+            return $resul ? $datos : 0;
+            
+        } catch (\PDOException $e){
+            if($conex){
+                $conex ->rollBack();
+                $conex = null;
+            }
+            throw $e;
+        }
     }
-
-
+//---
+}
 ?>        

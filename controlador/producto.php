@@ -48,9 +48,9 @@ $objproducto = new Producto();
             '--', ';', '#', '/*', '*/', '@@', '@', 'CHAR', 'CAST', 'CONVERT',
             'EXEC', 'EXECUTE', 'xp_', 'sp_', 'OR', 'AND'
         ];
-        $inputUpper = strtoupper($input);
         foreach ($blacklist as $prohibida) {
-            if (strpos($inputUpper, $prohibida) !== false) {
+            $pattern = '/\b' . preg_quote($prohibida, '/') . '\b/i'; 
+            if (preg_match($pattern, $input)) {
                 return false;
             }
         }
@@ -152,7 +152,7 @@ if (isset($_POST['ajaxMarca'])) { //------------------------------ BUSCARDOR AJA
             if (!empty($_POST['nombre']) && !empty($_POST['marca']) && !empty($_POST['presentacion']) && !empty($_POST['stock_min']) &&
                 !empty($_POST['precio']) && !empty($_POST['preciomayor']) && !empty($_POST['cantidadmayor']) ){  //V3
 
-                $nombre = $_POST['nombre']; $id_marca = $_POST['marca']; $id_presentacion = $_POST['presentacion'];
+                 $nombre = ucfirst(strtolower($_POST['nombre'])); $id_marca = $_POST['marca']; $id_presentacion = $_POST['presentacion'];
                 $stockMin = $_POST['stock_min']; $precio = $_POST['precio']; $precioMayor = $_POST['preciomayor']; $cantidadMayor = $_POST['cantidadmayor'];
 
                  $campos = [
@@ -284,7 +284,7 @@ if (isset($_POST['ajaxMarca'])) { //------------------------------ BUSCARDOR AJA
             if (!empty($_POST['id_producto']) && !empty($_POST['nombre']) && !empty($_POST['marca']) && !empty($_POST['presentacion']) && !empty($_POST['stock_min']) &&
                 !empty($_POST['precio']) && !empty($_POST['preciomayor']) && !empty($_POST['cantidadmayor']) ){  //V3
 
-                $id_producto = $_POST['id_producto']; $nombre = $_POST['nombre']; $id_marca = $_POST['marca']; $id_presentacion = $_POST['presentacion'];
+                $id_producto = $_POST['id_producto'];  $nombre = ucfirst(strtolower($_POST['nombre'])); $id_marca = $_POST['marca']; $id_presentacion = $_POST['presentacion'];
                 $stockMin = $_POST['stock_min']; $precio = $_POST['precio']; $precioMayor = $_POST['preciomayor']; $cantidadMayor = $_POST['cantidadmayor'];
 
                 $campos = [

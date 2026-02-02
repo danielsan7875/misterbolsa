@@ -48,7 +48,7 @@
               <span class="input-group-text div-icono" id="basic-addon1"><i class="fa-solid fa-address-book" style="color:#FF3C37;"></i></span>
               <input type="text" class="form-control text-dark" name="nombres" id="nombre" value="<?php echo $modificar['nombre']?>"  required> 
             </div> 
-          <span id="textonombre" class="vali-span"></span> <br>
+          <span id="textonombre" class="text-error"></span> <br>
           </div>
       
           <div class="col-sm">
@@ -59,7 +59,7 @@
               <input type="text" class="form-control text-dark" name="apellidos" id="apellido" value="<?php echo $modificar['apellido']?>"  required>  
             </div> 
           
-          <span id="textoapellido" class="vali-span"></span> <br>
+          <span id="textoapellido" class="text-error mt-0"></span> <br>
           </div>
 
           <div class="col-sm">
@@ -86,8 +86,9 @@
             <div class="input-group mb-3">
               <span class="input-group-text div-icono" id="basic-addon1"><i class="fa-solid fa-user" style="color:#FF3C37;"></i></span>
               <input type="text" class="form-control text-dark" name="usuario" id="usuario" value="<?php echo $modificar['usuario']?>" required>  
+              <input type="hidden" name="usuario_actual"  value="<?php echo $modificar['usuario']?>" required>  
             </div> 
-          <span id="textousuario" class="vali-span"></span> <br>
+          <span id="textousuario" class="text-error mt-0"></span> <br>
           </div>
 
           <div class="col-sm">
@@ -96,7 +97,7 @@
               <span class="input-group-text div-icono" id="basic-addon1"><i class="fa-solid fa-lock" style="color:#FF3C37;"></i></span>
               <input type="text" class="form-control text-dark"  name="clave" id="clave" value="<?php echo $modificar['clave']?>"required>    
             </div>
-          <span id="textoclave" class="vali-span"></span> <br>
+          <span id="textoclave" class="text-error mt-0"></span> <br>
           </div>
 
           <div class="col-sm-3">

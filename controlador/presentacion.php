@@ -44,9 +44,9 @@ if (isset($_POST['ver_mas'])) { //  "ver más"
             '--', ';', '#', '/*', '*/', '@@', '@', 'CHAR', 'CAST', 'CONVERT',
             'EXEC', 'EXECUTE', 'xp_', 'sp_', 'OR', 'AND'
         ];
-        $inputUpper = strtoupper($input);
         foreach ($blacklist as $prohibida) {
-            if (strpos($inputUpper, $prohibida) !== false) {
+            $pattern = '/\b' . preg_quote($prohibida, '/') . '\b/i'; 
+            if (preg_match($pattern, $input)) {
                 return false;
             }
         }
@@ -59,7 +59,7 @@ if(isset($_POST['registrar'])){ //---------------------------------- REGISTRAR
         if ($_SESSION["nivel"] == 1) { /* V2 */    
             if(!empty($_POST['nombre'])){
             
-            $nombre = $_POST['nombre'];
+             $nombre = ucfirst(strtolower($_POST['nombre']));
 
                  $campos = [
                     'nombre' => $nombre
@@ -150,7 +150,7 @@ if(isset($_POST['registrar'])){ //---------------------------------- REGISTRAR
         if ($_SESSION["nivel"] == 1) { /* V2 */    
             if(!empty($_POST['id_presentacion']) && !empty($_POST['nombre']) && !empty($_POST['estatus'])){ // V3
 
-            $id_presentacion = $_POST['id_presentacion']; $nombre = $_POST['nombre'];    $estatus = $_POST['estatus'];
+            $id_presentacion = $_POST['id_presentacion'];  $nombre = ucfirst(strtolower($_POST['nombre']));    $estatus = $_POST['estatus'];
             
             $campos = [
                     'id_presentacion' => $id_presentacion,
@@ -208,6 +208,7 @@ if(isset($_POST['registrar'])){ //---------------------------------- REGISTRAR
     }
 //------------   
 } else if(isset($_POST['eliminar'])){ //------------------------------- ELIMINAR
+//---------------
     if (isset($_SESSION['id']) && !empty($_SESSION['id'])) { /* V1 */
         if ($_SESSION["nivel"] == 1) { /* V2 */    
             if(!empty($_POST['eliminar'])){ // V3
@@ -243,15 +244,15 @@ if(isset($_POST['registrar'])){ //---------------------------------- REGISTRAR
                          exit; 
                          
             }else{
-                echo json_encode(['respuesta' => 0, 'accion' => 'registrar', 'text' => 'Datos Vacios']);
+                echo json_encode(['respuesta' => 0, 'accion' => 'eliminar', 'text' => 'Datos Vacios']);
                 exit;
             }
         } else{  /* 2 */ 
-            echo json_encode(['respuesta' => 0, 'accion' => 'registrar', 'text' => 'No Tiene Permiso para realizar esta operacion']);
+            echo json_encode(['respuesta' => 0, 'accion' => 'eliminar', 'text' => 'No Tiene Permiso para realizar esta operacion']);
             exit;
         }      
     } else{ /* V1 */ 
-        echo json_encode(['respuesta' => 0, 'accion' => 'registrar', 'text' => 'Session no encontrada']);
+        echo json_encode(['respuesta' => 0, 'accion' => 'eliminar', 'text' => 'Session no encontrada']);
         exit;
     }
 //------------   

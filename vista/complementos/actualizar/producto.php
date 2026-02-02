@@ -60,9 +60,7 @@
             <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-tag " style="color:#FF3C37;"></i></span>
           <select class="form-select text-dark" aria-label="Default select example"  name="marca" id="marcaselect" required>
           <option value="<?php echo $modificar['id_marca']; ?>"><?php echo $modificar['nombre_marca']." - actual"; ?></option>
-                 <?php foreach($marca as $marca) {?>
-                     <option value="<?php echo $marca['id_marca'];?>"> <?php echo $marca['nombre'];?> </option>
-               <?php } ?>
+              
            </select> 
            </div>
             <span id="textomarca"  class="text-error mt-0"></span> 
@@ -75,9 +73,6 @@
            <select class="form-select text-dark" name="presentacion" id="presenselect" required>
                <option value="<?php echo $modificar['id_presentacion']; ?>"><?php echo $modificar['nombre_presentacion']." - actual"; ?></option>
 
-               <?php foreach($presentacion as $presentacion) {?>
-                     <option value="<?php echo $presentacion['id_presentacion'];?>"> <?php echo $presentacion['nombre'];?> </option>
-               <?php } ?>
             </select> 
            </div>  
            <span id="textopresentacion"  class="text-error mt-0"></span> 
@@ -214,83 +209,67 @@
 }
 
 
-
-
  if (!$('#presenselect').hasClass('select2-hidden-accessible')) {
 
-        $('#presenselect').select2({
-            width: '88%',
-            dropdownParent: $('#exampleModal'),
-            placeholder: 'Seleccione o busque una presentacion',
-            allowClear: true,
+    $('#presenselect').select2({
+        width: '100%',
+        placeholder: 'Seleccione o busque una presentacion',
+        allowClear: true,
 
-            ajax: {
-                delay: 300,
+        ajax: {
+            delay: 300,
 
-                transport: function (params, success, failure) {
+            transport: function (params, success, failure) {
 
-                    let datos = new FormData(document.getElementById('u'));
-                    datos.append('ajaxPresentacion', '1');
+                let datos = new FormData();
+                datos.append('ajaxPresentacion', '1');
+                datos.append('buscarPresentacion', params.data.q ? params.data.q : '');
 
-                    // 🔹 Si no hay búsqueda, traer últimos 20
-                    datos.append('buscarPresentacion', params.data.q ? params.data.q : '');
-
-                    $.ajax({
-                        url: '',
-                        type: 'POST',
-                        data: datos,
-                        contentType: false,
-                        processData: false,
-                        dataType: 'json',
-                        success: success,
-                        error: failure
-                    });
-                },
-
-                processResults: function (data) {
-                    return {
-                        results: data.map(function (e) {
-                            return {
-                                id: e.id_presentacion,
-                                text: e.nombre
-                            };
-                        })
-                    };
-                }
+                $.ajax({
+                    url: '',
+                    type: 'POST',
+                    data: datos,
+                    contentType: false,
+                    processData: false,
+                    dataType: 'json',
+                    success: success,
+                    error: failure
+                });
             },
 
-            language: {
-                inputTooShort: function () {
-                    return 'Escriba para buscar presentacion';
-                },
-                searching: function () {
-                    return 'Buscando presentacion…';
-                },
-                noResults: function () {
-                    return 'No se encontraron presentacion';
-                }
+            processResults: function (data) {
+                return {
+                    results: data.map(function (m) {
+                        return {
+                            id: m.id_presentacion,
+                            text: m.nombre
+                        };
+                    })
+                };
             }
-        });
-         $('#presenselect').on('select2:open', function() {
-            $('input.select2-search__field').attr('placeholder', 'Buscador');
-        });
-        $('#presenselect').on('select2:open', function () {
+        },
 
-        const searchInput = document.querySelector('.select2-search__field');
-
-        if (!searchInput) return;
-
-        searchInput.addEventListener('input', function () {
-
-            // 🔹 Permitir solo letras, números y espacios
-            this.value = this.value.replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]/g, '');
-
-        });
-
+        language: {
+            inputTooShort: function () {
+                return 'Escriba para buscar presentacion';
+            },
+            searching: function () {
+                return 'Buscando presentacion';
+            },
+            noResults: function () {
+                return 'No se encontraron presentacion';
+            }
+        }
     });
-        $('#presenselect').select2('open');
-        $('#presenselect').select2('close');
-    }
+
+    $('#presenselect').on('select2:open', function () {
+        $('input.select2-search__field').attr('placeholder', 'Buscador');
+    });
+
+}
+
+
+
 
 
    });

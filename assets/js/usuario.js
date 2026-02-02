@@ -147,7 +147,7 @@ $(document).ready(function() {
       color: "#00000",
       confirmButtonColor: '#1d994dff',
       cancelButtonColor: '#EF233C',
-      confirmButtonText: ' SI ',
+      confirmButtonText: ' SI; ACTUALIZAR',
       cancelButtonText: 'NO'
     }).then((result) => {
        if (!validarFormulario()) {
@@ -211,39 +211,39 @@ function muestraMensaje(icono, tiempo, titulo, mensaje) {
   
           if (lee.accion == 'registrar') {
             if (lee.respuesta == 1) {
-              muestraMensaje("success", 1000, "Se ha registrado con éxito", "Su registro se ha completado exitosamente");
+              muestraMensaje("success", 1500, "Se ha registrado con éxito", "Usuario agregado");
                   desactivarLoaderBoton('#registrar');
-              setTimeout(function () {
-                location = '?pagina=usuario';
-              }, 1000);
+                    setTimeout(function () {
+                      location = '?pagina=usuario';
+                    }, 2000);
             } else {
-              muestraMensaje("error", 2000, "ERROR", "ERROR");
+              muestraMensaje("error", 4000, "Error", lee.text);
                   desactivarLoaderBoton('#registrar');
             }
           } else if (lee.accion == 'actualizar') {
             if (lee.respuesta == 1) {
-              muestraMensaje("success", 1000, "Se ha Modificado con éxito", "Su registro se ha Actualizado exitosamente");
+              muestraMensaje("success", 1500, "Se ha Modificado con éxito", "Usuario mofidificado");
                   desactivarLoaderBoton('#actualizar');
-              setTimeout(function () {
-                location = '?pagina=usuario';
-              }, 1000);
+                    setTimeout(function () {
+                      location = '?pagina=usuario';
+                    }, 2000);
             } else {
-              muestraMensaje("error", 2000, "ERROR", "Intente Nuevamente O Mas Tarde");
-                  desactivarLoaderBoton('#actualizar');
+               desactivarLoaderBoton('#actualizar');
+                   muestraMensaje("error", 2000, "Error", lee.text);
             }
           } else if (lee.accion == 'eliminar') {
             if (lee.respuesta == 1) {
-              muestraMensaje("success", 1000, "Se ha eliminado con éxito", "Los datos se han borrado correctamente ");
-              setTimeout(function () {
-                location = '?pagina=usuario';
-              }, 1000);
+              muestraMensaje("success", 1500, "Se ha eliminado con éxito", "Usuario Borrado");
+                setTimeout(function () {
+                  location = '?pagina=usuario';
+                }, 2000);
             } else {
-              muestraMensaje("error", 2000, "ERROR", lee.text);
+              muestraMensaje("error", 4000, "Error", lee.text);
             }
           }
   
         } catch (e) {
-          alert("Error en JSON " + e.name);
+           muestraMensaje("error", 4000, "Error en SERVIDOR", e.name);
         }
       },
       error: function (request, status, err) {

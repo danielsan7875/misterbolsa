@@ -51,7 +51,7 @@
           
                 $estatus_classes = array(// para el estido CSS
                   1=> 'badge rounded-pill bg-success ', // Activo
-                  2=>'badge rounded-pill bg-warning', // No activo
+                  2=>'badge rounded-pill bg-warning text-dark', // No activo
                   3=> 'badge rounded-pill bg-danger' // Inactivo
                 );
                 foreach ($registro as $dato){

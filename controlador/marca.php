@@ -44,9 +44,9 @@ $total_registros = $objmarca->contarTotal();
             '--', ';', '#', '/*', '*/', '@@', '@', 'CHAR', 'CAST', 'CONVERT',
             'EXEC', 'EXECUTE', 'xp_', 'sp_', 'OR', 'AND'
         ];
-        $inputUpper = strtoupper($input);
         foreach ($blacklist as $prohibida) {
-            if (strpos($inputUpper, $prohibida) !== false) {
+            $pattern = '/\b' . preg_quote($prohibida, '/') . '\b/i'; 
+            if (preg_match($pattern, $input)) {
                 return false;
             }
         }
@@ -59,7 +59,7 @@ if(isset($_POST['registrar'])){ //----------------------------------------------
         if ($_SESSION["nivel"] == 1) { // V2
             if( !empty($_POST['nombre'])){ // V3
 
-                $nombre = $_POST['nombre'];
+                 $nombre = ucfirst(strtolower($_POST['nombre']));
 
                 $campos = [
                     'nombre' => $nombre
@@ -148,7 +148,7 @@ if(isset($_POST['registrar'])){ //----------------------------------------------
             if ($_SESSION["nivel"] == 1) { /* V2 */    
                 if(!empty($_POST['id_marca']) && !empty($_POST['nombre']) && !empty($_POST['estatus'])){ // V3    
 
-                $id_marca = $_POST['id_marca']; $nombre = $_POST['nombre'];  $estatus = $_POST['estatus'];
+                $id_marca = $_POST['id_marca'];  $nombre = ucfirst(strtolower($_POST['nombre']));  $estatus = $_POST['estatus'];
        
                 $campos = [
                     'id_marca' => $id_marca,

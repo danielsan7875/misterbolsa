@@ -44,22 +44,66 @@ $consulta = $objtasa->obtenerDolar();
 //--------- 
 if(isset($_POST['tasadolar'])){ //----------------------------------- ACTUALIZAR TASA
 //---------  
-    if(!empty($_POST['id_dolar']) && !empty($_POST['precios'])){
-      $precioss = $_POST['precios'];
-     
+      if (isset($_SESSION['id']) && !empty($_SESSION['id'])) { /* V1 */
 
-        if ($precioss === "0.00"){
-           $res = array('respuesta' => 0, 'accion' => 'tasadolar', 'text' => 'Error con la conexion o el valdor es 0.00');
-            echo json_encode($res);
+        if ($_SESSION["nivel"] == 1) { /* V2 */ 
+
+            if(!empty($_POST['id_dolar']) && !empty($_POST['precios'])){
+            
+            $precios = $_POST['precios']; $id_dolar = $_POST['id_dolar'];
+
+                if ($precios === "0.00"){
+                    echo json_encode(['respuesta' => 0, 'accion' => 'tasadolar', 'text' => 'Error con la conexion o el valdor es 0.00']);
+                    exit;
+                }
+
+                $campos = [
+                    'precios' => $precios,
+                    'id_dolar' => $id_dolar
+                ];
+                     /// Sanitización de Entradas
+                    foreach ($campos as $nombree => $valor) {  /* V4 */ 
+                        if (!validarEntradaSQL($valor)) {
+                            echo json_encode(['respuesta' => 0, 'accion' => 'tasadolar', 'text' => "Entrada inválida detectada en el campo: $nombree"]);
+                            exit;
+                        }
+                    }
+
+                    if (!preg_match('/^(?=(?:\D*\d){3,10}\D*$)\d+(?:[.,]\d+)?$/', $precios)) {
+                        echo json_encode(['respuesta' => 0, 'accion' => 'tasadolar', 'text' => "tasa de cambio inválido"]);
+                        exit;
+                    }
+
+                    if (!preg_match('/^[0-9]{1,3}$/', $id_dolar)) {
+                        echo json_encode(['respuesta' => 0, 'accion' => 'tasadolar', 'text' => "tasa inválido"]);
+                        exit;
+                    }
+
+                        $datosTasa = [
+                                'operacion' => 'tasadolar',
+                                    'datos' => [
+                                        'id_dolar' => $id_dolar,
+                                        'precios' => $precios
+                                    ]
+                        ];
+
+                        $resultadoRegistro = $objtasa->procesarTasa(json_encode($datosTasa));
+                        echo json_encode($resultadoRegistro);
+                        exit;
+               
+
+            } else{
+                echo json_encode(['respuesta' => 0, 'accion' => 'tasadolar', 'text' => 'Datos Vacios']);
+                exit;
+            }
+        } else{  /* 2 */ 
+            echo json_encode(['respuesta' => 0, 'accion' => 'tasadolar', 'text' => 'No Tiene Permiso para realizar esta operacion']);
             exit;
-        }
-
-        $objtasa->set_Id_dolar($_POST['id_dolar']); 
-        $objtasa->set_precios($_POST['precios']); 
- 
-        $result = $objtasa->tasadolar();
-        echo json_encode($result);
-    }
+        }      
+    } else{ /* V1 */ 
+        echo json_encode(['respuesta' => 0, 'accion' => 'tasadolar', 'text' => 'Session no encontrada']);
+        exit;
+    } 
   } else {
     require_once 'vista/tasa.php'; // ------------------------VISTA
   }

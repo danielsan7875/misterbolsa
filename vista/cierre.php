@@ -35,7 +35,7 @@
                     <i class="fa-solid fa-circle-play me-2"></i> Comenzar
                     </button>
                     '
-                ; } ?>            
+                ; } ?>  
           </form> 
       </div>
   </div>
@@ -52,12 +52,12 @@
                  <?php if (!$cierre) {
                      echo'
                       <h5 class="text-dark TextOscuro mb-3">
-                        Se encuentra:<strong class="badge rounded-pill bg-secondary text-light">No activo</strong>
+                        Se encuentra: <strong class="badge rounded-pill bg-secondary text-light"> No activo</strong>
                       </h5>
                       '; }else{
                        echo'
                       <h5 id="" class="text-dark TextOscuro mb-3">
-                        Se encuentra:  <strong class="badge rounded-pill bg-success">Activo #'.$cierre['id_cierre'].'</strong>
+                        Se encuentra:  <strong class="badge rounded-pill bg-success"> Activo #'.$cierre['id_cierre'].'</strong>
                       </h5>'
                       ;
                   } ?>
@@ -148,26 +148,32 @@
               <td class="text-center td-oscuro"><?php echo $dato['id_cierre']; ?></td>
               <td class="text-center td-oscuro">
                 <?php 
-                    $fecha = $dato['fecha_creacion'];
-                    $mostrar_fecha1 = (!empty($fecha) && $fecha !== '0000-00-00') ? date("d/m/Y", strtotime($fecha)) : ' - ';
+                   $fecha = $dato['fecha_creacion'];
+
+                   $mostrar_fecha1 = (!empty($fecha) && $fecha !== '0000-00-00' && $fecha !== '0000-00-00 00:00:00') 
+                  ? date("d/m/Y h:i A", strtotime($fecha)) 
+                  : '-';
                 ?>
                 <?php echo $mostrar_fecha1; ?>
               </td>
               <td class="text-center td-oscuro"> 
               <?php 
-                    $fecha = $dato['fecha_cierre'];
-                    $mostrar_fecha = (!empty($fecha) && $fecha !== '0000-00-00') ? date("d/m/Y", strtotime($fecha)) : ' - ';
+                  $fecha1 = $dato['fecha_cierre'];
+
+                   $mostrar_fecha2 = (!empty($fecha1) && $fecha1 !== '0000-00-00' && $fecha1 !== '0000-00-00 00:00:00') 
+                  ? date("d/m/Y h:i A", strtotime($fecha1)) 
+                  : '-';
                 ?>
-                <?php echo $mostrar_fecha; ?>
+                <?php echo $mostrar_fecha2; ?>
               </td>
               <td class="text-center td-oscuro">
-              <p> <span>$. </span><?php echo $dato['total_dia_dl']; ?>  </p> 
+              <p> <span>$. </span><?php echo  number_format($dato['total_dia_dl'], 2, ',', '.'); ?>  </p> 
               </td>
               <td class="text-center td-oscuro">
-                <p class="badge rounded-pill bg-secondary"> <span>Bs. </span> <?php echo $dato['tasa']; ?></p>
+                <p class="badge rounded-pill bg-secondary"> <span>Bs. </span> <?php echo number_format($dato['tasa'], 2, ',', '.'); ?></p>
               </td>
               <td class="text-center td-oscuro">
-                 <p> <span>Bs. </span><?php echo $dato['total_dia_bs']; ?> </p> 
+                 <p> <span>Bs. </span><?php echo number_format($dato['total_dia_bs'], 2, ',', '.'); ?> </p> 
               </td>
               <td class="text-center td-oscuro">
                     <span class="<?= $estatus_classes[$dato['estatus']] ?>">

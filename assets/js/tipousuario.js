@@ -7,7 +7,7 @@ function eliminar(boton){
       color: "#00000",
       confirmButtonColor: '#1d994dff',
       cancelButtonColor: '#EF233C',
-      confirmButtonText: ' SI ',
+      confirmButtonText: ' SI, ELIMINAR ',
       cancelButtonText: 'NO'
     }).then((result) => {
       if (result.isConfirmed) {
@@ -198,11 +198,8 @@ $(document).ready(function() {
     
         tablaBody.append(fila);
     });
-   
-  
 }
 
-  
   function enviaAjax(datos) {
     $.ajax({
       async: true,
@@ -221,38 +218,38 @@ $(document).ready(function() {
   
             if (lee.accion == 'consultar') {
               crearConsulta(lee.datos);
-            }else if (lee.accion == 'incluir') {
+            }else if (lee.accion == 'registrar') {
                 if (lee.respuesta == 1) {
                      $('#selectnivel').prop('selectedIndex', 0); 
                      $('#nombre').val('');  
-                  muestraMensaje("success", 1000, "Se ha registrado con éxito", "Su registro se ha completado exitosamente");
-                    desactivarLoaderBoton('#registrar');
-                  setTimeout(function () {
-                    consulta();
-                  }, 1000);
+                      muestraMensaje("success", 1500, "Se ha registrado con éxito", "Tipo de usuario agregado");
+                        desactivarLoaderBoton('#registrar');
+                          setTimeout(function () {
+                            consulta();
+                          }, 2000);
                 } else {
-                  muestraMensaje("error", 1000, "ERROR", "ERROR");
+                  muestraMensaje("error", 4000, "Error", lee.text);
                     desactivarLoaderBoton('#registrar');
                 }
-              } else if (lee.accion == 'actualizar') {
+            } else if (lee.accion == 'actualizar') {
                 if (lee.respuesta == 1) {
-                  muestraMensaje("success", 1000, "Se ha Modificado con éxito", "Su registro se ha Actualizado exitosamente");
+                  muestraMensaje("success", 1500, "Se ha Modificado con éxito", "Tipo de usuario modificado");
                        desactivarLoaderBoton('#actualizar');
-                  setTimeout(function () {
-                    location = '?pagina=tipousuario';
-                  }, 1000);
+                          setTimeout(function () {
+                            location = '?pagina=tipousuario';
+                          }, 2000);
                 } else {
-                  muestraMensaje("error", 2000, "ERROR", lee.text);
+                  muestraMensaje("error", 4000, "Error", lee.text);
                    desactivarLoaderBoton('#actualizar');
                 }
               } else if (lee.accion == 'eliminar') {
                 if (lee.respuesta == 1) {
-                  muestraMensaje("success", 1000, "Se ha eliminado con éxito", "Los datos se han borrado correctamente");
+                  muestraMensaje("success", 1500, "Se ha eliminado con éxito", "Tipo de usuario Borrado");
                   setTimeout(function () {
                     consulta();
-                  }, 1000);
+                  }, 2000);
                 } else {
-                  muestraMensaje("error", 2000, "ERROR", lee.text);
+                  muestraMensaje("error", 4000, "Error", lee.text);
                 }
               }
   

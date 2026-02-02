@@ -136,13 +136,13 @@ if (isset($_POST['buscarProducto'])) { ///--------------------------------------
                                 exit;
                             }
 
-                            if (!preg_match('/^(?=(?:\D*\d){3,10}\D*$)\d+(?:[.,]\d+)?$/', $total_Dl)) {
-                                echo json_encode(['respuesta' => 0, 'accion' => 'registrar', 'text' => "Precio inválido"]);
+                            if (!preg_match('/^\d+(?:[.,]\d{1,2})?$/', $total_Dl)) {
+                                echo json_encode(['respuesta' => 0, 'accion' => 'registrar', 'text' => "Monto Total DL inválido"]);
                                 exit;
                             }
 
-                            if (!preg_match('/^(?=(?:\D*\d){3,10}\D*$)\d+(?:[.,]\d+)?$/', $total_Bs)) {
-                                echo json_encode(['respuesta' => 0, 'accion' => 'registrar', 'text' => "Precio inválido"]);
+                            if (!preg_match('/^\d+(?:[.,]\d{1,2})?$/', $total_Bs)) {
+                                echo json_encode(['respuesta' => 0, 'accion' => 'registrar', 'text' => "Monto Total Bs inválido"]);
                                 exit;
                             }
 
@@ -183,8 +183,8 @@ if (isset($_POST['buscarProducto'])) { ///--------------------------------------
                                 exit;
                             }
                                 foreach ($precio as $prec) {
-                                    if (!preg_match('/^(?=(?:\D*\d){2,10}\D*$)\d+(?:[.,]\d+)?$/', $prec) || $prec <= 0) {
-                                        echo json_encode(['respuesta' => 0, 'accion' => 'registrar', 'text' => "Precio inválida"]);
+                                    if (!preg_match('/^\d+(?:[.,]\d{1,2})?$/', $prec)|| $prec <= 0) {
+                                        echo json_encode(['respuesta' => 0, 'accion' => 'registrar', 'text' => "Precio venta inválida"]);
                                         exit;
                                     }
                                 }
@@ -216,7 +216,7 @@ if (isset($_POST['buscarProducto'])) { ///--------------------------------------
                                 exit;
                             }
                                 foreach ($monto_dolares as $monto) {
-                                    if (!preg_match('/^(?=(?:\D*\d){3,10}\D*$)\d+(?:[.,]\d+)?$/', $monto) || $monto <= 0) {
+                                    if (!preg_match('/^\d+(?:[.,]\d{1,2})?$/', $monto) || $monto <= 0) {
                                         echo json_encode(['respuesta' => 0, 'accion' => 'registrar', 'text' => "Monto USD inválida"]);
                                         exit;
                                     }
@@ -227,7 +227,7 @@ if (isset($_POST['buscarProducto'])) { ///--------------------------------------
                                 exit;
                             }
                                 foreach ($monto_bs as $bs) {
-                                    if (!preg_match('/^(?=(?:\D*\d){3,10}\D*$)\d+(?:[.,]\d+)?$/', $bs) || $bs <= 0) {
+                                    if (!preg_match('/^\d+(?:[.,]\d{1,2})?$/', $bs) || $bs <= 0) {
                                         echo json_encode(['respuesta' => 0, 'accion' => 'registrar', 'text' => "Monto Bs inválida"]);
                                         exit;
                                     }

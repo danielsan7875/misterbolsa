@@ -1,9 +1,9 @@
 $(document).ready(function(){
-    var hoy = moment().format('YYYY-MM-DD');
-    
+   // Formato YYYY-MM-DD HH:mm:ss (Formato de 24 horas)
+    var hoy = moment().format('YYYY-MM-DD HH:mm:ss');
+
     $('#cierrefecha').val(hoy);
     $('#fechaCierreBd').val(hoy);
-
 
     $('#iniciar').on("click", function () {
     Swal.fire({
@@ -94,40 +94,42 @@ function muestraMensaje(icono, tiempo, titulo, mensaje) {
            
           if (lee.accion == 'iniciar') {
                 if (lee.respuesta == 1) {
-              muestraMensaje("success", 1000, "Se ha registrado con éxito", "Su registro se ha completado exitosamente");
-                desactivarLoaderBoton('#iniciar'); 
-              setTimeout(function () {
-                location = '?pagina=cierre';
-              }, 1000);
-            } else {
-              muestraMensaje("error", 2000, "Error - Ya tienes un cierre activo", "O ha ocurrido en error del Sistema");
-                desactivarLoaderBoton('#iniciar'); 
-            }
+                  muestraMensaje("success", 1500, "Se ha iniciado con éxito", "Ya puede realizar venta");
+                    desactivarLoaderBoton('#iniciar'); 
+                      setTimeout(function () {
+                        location = '?pagina=cierre';
+                      }, 2000);
+                } else {
+                  muestraMensaje("error", 2000, "Error", lee.text);
+                    desactivarLoaderBoton('#iniciar'); 
+                }
           } else if (lee.accion == 'cierre') {
-            if (lee.respuesta == 1) {
-              muestraMensaje("success", 2000, "Se ha eliminado con éxito", "Los datos se han borrado correctamente ");
-              desactivarLoaderBoton('#btn-cerrar-cierre'); 
-              setTimeout(function () {
-                location = '?pagina=cierre';
-              }, 2000);
-            } else {
-              muestraMensaje("error", 2000, "ERROR", "ss");
-               desactivarLoaderBoton('#btn-cerrar-cierre'); 
-            }
+                if (lee.respuesta == 1) {
+                  muestraMensaje("success", 1500, "Se ha Cerrado con éxito", "Registro del cierre guardada");
+                    desactivarLoaderBoton('#btn-cerrar-cierre'); 
+                      setTimeout(function () {
+                        location = '?pagina=cierre';
+                      }, 2000);
+                } else {
+                  muestraMensaje("error", 2000, "Error", lee.text);
+                     desactivarLoaderBoton('#btn-cerrar-cierre'); 
+                } 
           }
   
         } catch (e) {
-          alert("Error en JSON " + e.name);
+          muestraMensaje("error", 2000, "Error en JSON ", e.name);
         }
       },
-      error: function (request, status, err) {
+      error: function (request, status, err) { 
         Swal.close();
         if (status == "timeout") {
           muestraMensaje("error", 2000, "Error", "Servidor ocupado, intente de nuevo");
            desactivarLoaderBoton('#iniciar'); 
+           desactivarLoaderBoton('#btn-cerrar-cierre'); 
         } else {
           muestraMensaje("error", 2000, "Error", "ERROR: <br/>" + request + status + err);
           desactivarLoaderBoton('#iniciar'); 
+          desactivarLoaderBoton('#btn-cerrar-cierre'); 
         }
       },
       complete: function () {

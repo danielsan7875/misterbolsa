@@ -536,7 +536,7 @@ $('#exampleModal').on('shown.bs.modal', function () {
                         data: datos,
                         contentType: false,
                         processData: false,
-                        dataType: 'json',
+                        dataType: 'json', 
                         success: success,
                         error: failure
                     });

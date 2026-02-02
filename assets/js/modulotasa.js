@@ -185,29 +185,29 @@ function muestraMensaje(icono, tiempo, titulo, mensaje) {
   
           if (lee.accion == 'tasadolar') {
             if (lee.respuesta == 1) {
-              muestraMensaje("success", 1000, "Tasa Actualiza", "");
-              desactivarLoaderBoton('#sincronizar'); 
-                desactivarLoaderBoton('#actualizar'); 
-              setTimeout(function () {
-                location = '?pagina=tasa';
-              }, 1000);
+              muestraMensaje("success", 1500, "Tasa Actualiza", "");
+                desactivarLoaderBoton('#sincronizar'); 
+                   desactivarLoaderBoton('#actualizar'); 
+                    setTimeout(function () {
+                      location = '?pagina=tasa';
+                    }, 2000);
             } else {
-              muestraMensaje("error", 2000, "ERROR", lee.text);
-              desactivarLoaderBoton('#sincronizar'); 
-              desactivarLoaderBoton('#actualizar'); 
+              muestraMensaje("error", 2000, "Error", lee.text);
+                desactivarLoaderBoton('#sincronizar'); 
+                  desactivarLoaderBoton('#actualizar'); 
             }
           }
   
-        } catch (e) {
-          alert("Error en JSON " + e.name);
+        } catch (e) { 
+         muestraMensaje("error", 4000, "Error en JSON", e.name);
         }
       },
       error: function (request, status, err) {
         Swal.close();
         if (status == "timeout") {
-          muestraMensaje("error", 2000, "Error", "Servidor ocupado, intente de nuevo");
+          muestraMensaje("error", 4000, "Error", "Servidor ocupado, intente de nuevo");
         } else {
-          muestraMensaje("error", 2000, "Error", "ERROR: <br/>" + request + status + err);
+          muestraMensaje("error", 4000, "Error", "ERROR: <br/>" + request + status + err);
         }
       },
       complete: function () {
