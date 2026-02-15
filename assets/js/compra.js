@@ -348,6 +348,41 @@ function muestraMensaje(icono, tiempo, titulo, mensaje) {
     });
   }
   
+  function descargarPDF(id_compra) {
+
+    let datos = new FormData();
+    datos.append('pdf', id_compra);
+
+    $.ajax({
+        url: '',
+        type: 'POST',
+        data: datos,
+        processData: false,
+        contentType: false,
+        xhrFields: {
+            responseType: 'blob' // 👈 CRÍTICO
+        },
+        success: function (blob) {
+
+            let url = window.URL.createObjectURL(blob);
+            let a = document.createElement('a');
+            a.href = url;
+            a.download = 'compra_' + id_compra + '.pdf';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+
+            // ✅ Notificar éxito
+            muestraMensaje("success", 1500, "PDF descargado", "Documento generado correctamente");
+
+        },
+        error: function () {
+            muestraMensaje("error", 2000, "Error", "No se pudo generar el PDF");
+        }
+    });
+}
+
+
   function enviaAjax(datos) {
     $.ajax({
       async: true,
@@ -404,3 +439,5 @@ function muestraMensaje(icono, tiempo, titulo, mensaje) {
       }
     });
   }
+
+      

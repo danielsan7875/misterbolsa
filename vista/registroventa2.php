@@ -22,7 +22,7 @@
             <div class="col-lg-8 h-100">
                 <div class="products-column">
                     <!-- Barra de Búsqueda -->
-                    <div class="input-group mb-4 sticky-top pt-1" style="z-index: 10;">
+                    <div class="input-group mb-4 sticky-top pt-1 TA6" style="z-index: 10;">
                         <span class="input-group-text bg-white border-end-0 rounded-start-pill ps-3">
                            
                             <i class="fa-solid fa-magnifying-glass text-muted" style="width: 18px;"></i>
@@ -73,14 +73,14 @@
                              <span id="cart-count-badge" class="badge bg-primary rounded-pill ms-2 fs-6">0</span> </h5>
                                                         
 
-                        <button type="button" id="vaciar-carrito" class="btn btn-sm btn-outline-danger border-0">
+                        <button type="button" id="vaciar-carrito" class="btn btn-sm btn-outline-danger border-0 TA10">
                             <i class="fa-solid fa-trash"></i> Vaciar
                         </button>
                     </div>
                   
                     <!-- Lista de Productos Añadidos (Dinámica) -->
            
-                    <div id="lista-carrito" class="cart-items">
+                    <div id="lista-carrito" class="cart-items TA9">
                          
                         <!-- Los productos se inyectan aquí -->
                     </div>
@@ -96,7 +96,7 @@
                             <?php $precio = $dolar[0]['precios'];  ?>
                             <div class="total-row">
                                 <span class="text-muted">Total en Dólares</span>
-                                        <span class="fw-medium text-muted" id="tasade"> Tasa de Cambio: Bs <?= $precio ?></span>
+                                        <span class="fw-medium text-muted TA11" id="tasade"> Tasa de Cambio: Bs <?= $precio ?></span>
 
                                 <strong><span id="total-dolares" class="fw-bold text-dark fs-5 TextOscuro">$0.00</span></strong>
                             </div>
@@ -129,14 +129,14 @@
                         <?php 
                             if (!$cierre) {
                             echo'
-                            <button type="button" class="btn-process shadow-sm d-flex justify-content-between align-items-center" disabled>
+                            <button type="button" class="btn-process shadow-sm d-flex justify-content-between align-items-center TA12" disabled>
                                 <span>Cierre no activo, no puede hacer venta</span>
                                 <i class="fa-solid fa-xmark"></i>
                             </button>
                             ';
                             }else{
                             echo'
-                            <button type="button" class="btn-process shadow-sm d-flex justify-content-between align-items-center" data-bs-toggle="modal" data-bs-target="#ModalPago">
+                            <button type="button" class="btn-process shadow-sm d-flex justify-content-between align-items-center TA12" data-bs-toggle="modal" data-bs-target="#ModalPago">
                                 <span>Continuar Venta</span>
                                 <i class="fa-solid fa-arrow-right"></i>
                             </button>
@@ -156,6 +156,91 @@
 
 
     <?php require_once 'complementos/footerpos.php'; ?>   
+  
+  <script>
+      const driver = window.driver.js.driver;
+          const driverObj = driver({
+              showProgress: true,
+              // Textos en ESPAÑOL
+              nextBtnText: 'Siguiente →',
+              prevBtnText: '← Atrás',
+              doneBtnText: '¡Entendido!',
+              progressText: 'Paso {{current}} de {{total}}',
+              steps: [
+                  { 
+                      // Usamos el punto (.) para referirnos a la clase
+                      element: '.TA1',  popover: { title: 'Informacion Personal', 
+                          description: 'Actualiza tu nombre, apellido y nombre de usuario para que aparezcan correctamente en tus registros, luego si modificaste un datos haz click en Guarda cambios', side: "top" 
+                      } 
+                  },
+                  { 
+                      element: '.TA2', popover: { title: 'cambiar la clave', 
+                          description: 'Actualiza tu nombre, apellido y nombre de usuario para que aparezcan correctamente en tus registros. coloca tu clave actual y posteriormente coloca la contraseña nueva de acceso', side: "top" 
+                      } 
+                  },
+                  { 
+                      // Usamos el punto (.) para referirnos a la clase
+                      element: '.TA3',  popover: { title: 'Informacion Personal', 
+                          description: 'Actualiza tu nombre, apellido y nombre de usuario para que aparezcan correctamente en tus registros, luego si modificaste un datos haz click en Guarda cambios', side: "top" 
+                      } 
+                  },
+                  { 
+                      element: '.TA4', popover: { title: 'cambiar la clave', 
+                          description: 'Actualiza tu nombre, apellido y nombre de usuario para que aparezcan correctamente en tus registros. coloca tu clave actual y posteriormente coloca la contraseña nueva de acceso', side: "top" 
+                      } 
+                  },
+                  { 
+                      // Usamos el punto (.) para referirnos a la clase
+                      element: '.TA5',  popover: { title: 'Informacion Personal', 
+                          description: 'Actualiza tu nombre, apellido y nombre de usuario para que aparezcan correctamente en tus registros, luego si modificaste un datos haz click en Guarda cambios', side: "top" 
+                      } 
+                  },
+                  { 
+                      element: '.TA6', popover: { title: 'cambiar la clave', 
+                          description: 'Actualiza tu nombre, apellido y nombre de usuario para que aparezcan correctamente en tus registros. coloca tu clave actual y posteriormente coloca la contraseña nueva de acceso', side: "top" 
+                      } 
+                  },
+                  { 
+                      // Usamos el punto (.) para referirnos a la clase
+                      element: '.TA7',  popover: { title: 'Informacion Personal', 
+                          description: 'Actualiza tu nombre, apellido y nombre de usuario para que aparezcan correctamente en tus registros, luego si modificaste un datos haz click en Guarda cambios', side: "top" 
+                      } 
+                  },
+                  { 
+                      element: '.TA8', popover: { title: 'cambiar la clave', 
+                          description: 'Actualiza tu nombre, apellido y nombre de usuario para que aparezcan correctamente en tus registros. coloca tu clave actual y posteriormente coloca la contraseña nueva de acceso', side: "top" 
+                      } 
+                  },
+                  { 
+                      // Usamos el punto (.) para referirnos a la clase
+                      element: '.TA9',  popover: { title: 'Informacion Personal', 
+                          description: 'Actualiza tu nombre, apellido y nombre de usuario para que aparezcan correctamente en tus registros, luego si modificaste un datos haz click en Guarda cambios', side: "top" 
+                      } 
+                  },
+                  { 
+                      element: '.TA10', popover: { title: 'cambiar la clave', 
+                          description: 'Actualiza tu nombre, apellido y nombre de usuario para que aparezcan correctamente en tus registros. coloca tu clave actual y posteriormente coloca la contraseña nueva de acceso', side: "top" 
+                      } 
+                  },
+                  { 
+                      // Usamos el punto (.) para referirnos a la clase
+                      element: '.TA11',  popover: { title: 'Informacion Personal', 
+                          description: 'Actualiza tu nombre, apellido y nombre de usuario para que aparezcan correctamente en tus registros, luego si modificaste un datos haz click en Guarda cambios', side: "top" 
+                      } 
+                  },
+                  { 
+                      element: '.TA12', popover: { title: 'cambiar la clave', 
+                          description: 'Actualiza tu nombre, apellido y nombre de usuario para que aparezcan correctamente en tus registros. coloca tu clave actual y posteriormente coloca la contraseña nueva de acceso', side: "top" 
+                      } 
+                  }
+                  
+              ]
+          });
+
+    document.querySelector('#Teayuda').addEventListener('click', () => {
+    driverObj.drive();
+  });  
+  </script>
 
 </body>
 </html>

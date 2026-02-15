@@ -17,14 +17,21 @@
           Tipo de Usuario</h1>
             
         <!-- Button que abre el Modal N1 Registro -->
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+         <div class="d-flex gap-2">
+            <button type="button" class="btn btn-success TA1" data-bs-toggle="modal" data-bs-target="#exampleModal">
             <i class="fas fa-file-medical me-2"></i>
             Registrar
-        </button>
+           </button>
+           
+            <button type="button" class="btn btn-primary" id="Teayuda">
+                  <i class="fa-solid fa-circle-question me-2"></i>
+                  Ayuda
+            </button>
+            </div>
       </div>
   </div>
     
-  <div class="transaction-list shadow-sm border-0 DivOscuro1">
+  <div class="transaction-list shadow-sm border-0 TA2">
       <div class="table-responsive TextOscuro">
         <table class="table table-hover" style="width:100%">
             <thead class="table-color">
@@ -131,6 +138,44 @@
   <script src="assets/js/tipousuario.js"></script>
   <?php require_once 'complementos/footer2.php'; ?>  
   <!--|||||||||||||||  FIN Footer y JS  |||||||||||||||||||||||||||-->    
+  <script>
+      const driver = window.driver.js.driver;
+          const driverObj = driver({
+              showProgress: true,
+              // Textos en ESPAÑOL
+              nextBtnText: 'Siguiente →',
+              prevBtnText: '← Atrás',
+              doneBtnText: '¡Entendido!',
+              progressText: 'Paso {{current}} de {{total}}',
+              steps: [
+                  { 
+                      // Usamos el punto (.) para referirnos a la clase
+                      element: '.TA1',  popover: { title: 'Registrar Tipo usuario', 
+                          description: 'Crea un nuevo nivel de acceso (ejemplo: "Cajero" o "Supervisor") para decidir qué pueden hacer', side: "top" 
+                      } 
+                  },
+                  { 
+                      element: '.TA2', popover: { title: 'Tabla de registro', 
+                          description: 'Lista de los diferentes cargos creados y el nivel de autoridad que cada uno tiene en el sistema', side: "top" 
+                      } 
+                  },
+                  { 
+                    element: '.TA3', popover: { title: 'Modificar', 
+                          description: 'Cambia los datos, como el nombre o su nivel de acceso', side: "top" 
+                    } 
+                  },
+                  { 
+                    element: '.TA4', popover: { title: 'Eliminar', 
+                          description: 'Borra El tipo de usuario de tu lista', side: "top" 
+                    } 
+                  }
+                  
+              ]
+          });
 
+  document.querySelector('#Teayuda').addEventListener('click', () => {
+    driverObj.drive();
+  });  
+  </script>
   </body>
 </html>

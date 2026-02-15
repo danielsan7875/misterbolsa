@@ -60,6 +60,8 @@
 
   <script src="assets/librerias/chart.js/dist/chart.umd.min.js"></script>
 
+  <script src="assets/librerias/driver.js/dist/driver.js.iife.js"></script>
+
   <script>
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('sidebarOverlay');

@@ -35,15 +35,21 @@
     <div class="row mt-4">
         <div class="col-12">
             <div class="card card1 mb-5 DivOscuro2">
-                <div class="card-header card-header1 d-flex align-items-center DivOscuro2">
-                    <i class="bi bi-gear-fill me-2 text-primary"></i> Infomacion Personal
+                <div class="card-header card-header1 d-sm-flex align-items-center justify-content-between DivOscuro2">
+                     Infomacion Personal  
+                    <div class="d-flex gap-2">
+                          <button type="button" class="btn btn-primary" id="Teayuda">
+                                <i class="fa-solid fa-circle-question me-2"></i>
+                                Ayuda
+                            </button>
+                    </div>
                 </div>
                 <div class="card-body p-4">
                     <p class="text-muted small mb-4">Puede cambiar tu información personal aquí.</p>
                     
                     <form action="?pagina=perfil" method="POST" id="forPerfil" autocomplete="off">
                         <!-- Campos: Nombre, Apellido y Usuario -->
-                        <div class="row g-3">
+                        <div class="row g-3 TA1">
                           
                             <div class="col-md-4">
                                 <label class="form-label">Nombre</label>
@@ -76,7 +82,7 @@
 </form>
                     <form action="?pagina=perfil" method="POST" id="forClave" autocomplete="off">
                         <!-- 3. Sección de Cambio de Clave -->
-                        <div class="password-section DivOscuro2">
+                        <div class="password-section DivOscuro2 TA2">
                             <h5 class="fw-bold mb-3"><i class="bi bi-lock-fill me-2 text-primary"></i>Cambiar Contraseña</h5>
                             <div class="row g-3">
                                   
@@ -115,5 +121,34 @@
 </div>
 <?php require_once 'vista/complementos/footer2.php'; ?>
 <script src="assets/js/perfil.js"></script>
+  <script>
+      const driver = window.driver.js.driver;
+          const driverObj = driver({
+              showProgress: true,
+              // Textos en ESPAÑOL
+              nextBtnText: 'Siguiente →',
+              prevBtnText: '← Atrás',
+              doneBtnText: '¡Entendido!',
+              progressText: 'Paso {{current}} de {{total}}',
+              steps: [
+                  { 
+                      // Usamos el punto (.) para referirnos a la clase
+                      element: '.TA1',  popover: { title: 'Informacion Personal', 
+                          description: 'Actualiza tu nombre, apellido y nombre de usuario para que aparezcan correctamente en tus registros, luego si modificaste un datos haz click en Guarda cambios', side: "top" 
+                      } 
+                  },
+                  { 
+                      element: '.TA2', popover: { title: 'cambiar la clave', 
+                          description: 'Actualiza tu nombre, apellido y nombre de usuario para que aparezcan correctamente en tus registros. coloca tu clave actual y posteriormente coloca la contraseña nueva de acceso', side: "top" 
+                      } 
+                  }
+                  
+              ]
+          });
+
+  document.querySelector('#Teayuda').addEventListener('click', () => {
+    driverObj.drive();
+  });  
+  </script>
 </body>
 </html>

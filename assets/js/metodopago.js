@@ -85,11 +85,11 @@ $(document).ready(function() {
     // Botones condicionales según estatus
     var botones = '';
     if (parseInt(dato.estatus) === 1)  {
-      botones = '<button type="button" onclick="desactivar(this)" class="btn btn-warning btn-sm eliminar" value="' + dato.id_metodopago + '">' +
+      botones = '<button type="button" onclick="desactivar(this)" class="btn btn-warning btn-sm eliminar TA2" value="' + dato.id_metodopago + '">' +
                   '<i class="fa-solid fa-triangle-exclamation me-2" title="Desactivar"></i> Desactivar' +
                 '</button>';
     } else if (parseInt(dato.estatus) === 2 || parseInt(dato.estatus) === 3) {
-      botones = '<button type="button" onclick="activar(this)" class="btn btn-success btn-sm activar" value="' + dato.id_metodopago + '">' +
+      botones = '<button type="button" onclick="activar(this)" class="btn btn-success btn-sm activar TA2" value="' + dato.id_metodopago + '">' +
                   '<i class="fa-solid fa-check me-2" title="Activar"></i> Activar' +
                 '</button>';
     }

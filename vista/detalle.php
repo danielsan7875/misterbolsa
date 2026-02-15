@@ -3,66 +3,7 @@
 
 <head>
     <?php require_once 'vista/complementos/head2.php'; ?>
-    <title>Detalle de Producto | Mister Bolsa C.A</title>
-     <style>
-    
-
-    .dashboard-card{
-      border-radius:12px;
-      padding:20px;
-      color:#fff;
-      min-height:120px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      box-shadow:0 4px 12px rgba(0,0,0,.12);
-      transition:.3s ease;
-    }
-
-    .dashboard-card:hover{
-      transform:translateY(-4px);
-      box-shadow:0 10px 20px rgba(0,0,0,.18);
-    }
-
-    .dashboard-card i{
-      font-size:40px;
-      opacity:.9;
-    }
-
-    .dashboard-card .title{
-      font-size:14px;
-      letter-spacing:.5px;
-      text-transform:uppercase;
-      opacity:.9;
-    }
-
-    .dashboard-card .value{
-      font-size:36px;
-      font-weight:700;
-      line-height:1;
-    }
-
-    .bg-blue{
-      background:linear-gradient(135deg,#5fa9ff,#3f7cff);
-    }
-
-    .bg-green{
-      background:linear-gradient(135deg,#35d07f,#1fb56a);
-    }
-
-    .bg-orange{
-      background:linear-gradient(135deg,#ffb44c,#ff8c00);
-    }
-
-    .bg-red{
-      background:linear-gradient(135deg,#ff6a6a,#ff3d3d);
-    }
-
-    #graficaTorta{
-    max-height: 390px !important;
-}
-
-  </style>
+    <title>Finanzas | Mister Bolsa C.A</title>
 </head>
 
 <body>
@@ -76,7 +17,7 @@
             Finanzas</h1>
               
           <!-- Button que abre el Modal N1 Registro -->
-            <button type="button" class="btn btn-primary">
+            <button type="button" class="btn btn-primary" id="Teayuda">
                 <i class="fa-solid fa-circle-question me-2"></i>
                Ayuda
           </button>
@@ -90,7 +31,7 @@
   <div class="row g-4">
 
     <!-- Card 1 -->
-    <div class="col-xl-3 col-md-6">
+    <div class="col-xl-3 col-md-6 TA1">
       <div class="dashboard-card bg-blue">
         <div>
           <div class="title"><strong>Productos</strong></div>
@@ -102,7 +43,7 @@
     </div>
 
     <!-- Card 2 -->
-    <div class="col-xl-3 col-md-6">
+    <div class="col-xl-3 col-md-6 TA2">
       <div class="dashboard-card bg-green">
         <div>
           <div class="title"><strong>Total de Ventas</strong></div>
@@ -114,7 +55,7 @@
     </div>
 
     <!-- Card 3 -->
-    <div class="col-xl-3 col-md-6">
+    <div class="col-xl-3 col-md-6 TA3">
       <div class="dashboard-card bg-orange">
         <div>
           <div class="title"><strong>Producto Bajo Stock</strong></div>
@@ -126,7 +67,7 @@
     </div>
 
     <!-- Card 4 -->
-    <div class="col-xl-3 col-md-6">
+    <div class="col-xl-3 col-md-6 TA4">
       <div class="dashboard-card bg-red">
         <div>
           <div class="title"><strong>Cantidad de Perdidas</strong></div>
@@ -154,7 +95,7 @@
 
     <!-- Tabla -->
     <div class="col-lg-6">
-<div class="transaction-list shadow-sm border-0 DivOscuro1">
+<div class="transaction-list shadow-sm border-0 DivOscuro1 TA5">
 
             <div class="card shadow-sm border-0 mb-4">
   <div class="card-header bg-gradient bg-primary text-white d-flex justify-content-between align-items-center">
@@ -203,7 +144,7 @@
     </div>
 
     <!-- Gráfica -->
-    <div class="col-lg-6">
+    <div class="col-lg-6 TA6">
           <div class="chart-container shadow-sm border-0 DivOscuro1">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                 <h6 class="fw-bold m-0">Top 5 Productos Más Vendidos</h6>
@@ -226,7 +167,7 @@
 
       <!-- FILA 2 -->
       <!-- Gráfico -->
-                    <div class="chart-container shadow-sm border-0 DivOscuro1">
+                    <div class="chart-container shadow-sm border-0 DivOscuro1 TA7">
                         <div class="d-flex justify-content-between align-items-center mb-4">
                               <h6 class="fw-bold m-0">Movimientos del Mes</h6>
                               <div class="tooltip-custom fw-bold text-success" id="totalMes">
@@ -246,7 +187,7 @@
   <div class="row g-4 mb-2">
 
     <!-- Gráfica -->
-    <div class="col-lg-6">
+    <div class="col-lg-6 TA8">
          <div class="chart-container shadow-sm border-0 DivOscuro1">
             
                 <div class="d-flex justify-content-between align-items-center mb-3">
@@ -299,7 +240,7 @@
     </div>
 
     <!-- Tabla -->
-    <div class="col-lg-6">
+    <div class="col-lg-6 TA9">
       <div class="chart-container shadow-sm border-0 DivOscuro1">
           <div class="d-flex justify-content-between align-items-center mb-4">
                 <h6 class="fw-bold m-0">Stock Recomendado para los 10 productos mas vendidos</h6>
@@ -468,6 +409,72 @@ new Chart(document.getElementById('graficaTorta'), {
     }
 });
 </script>
+
+
+<script>
+        const driver = window.driver.js.driver;
+
+        const driverObj = driver({
+            showProgress: true,
+            // Textos en ESPAÑOL
+            nextBtnText: 'Siguiente →',
+            prevBtnText: '← Atrás',
+            doneBtnText: '¡Entendido!',
+            progressText: 'Paso {{current}} de {{total}}',
+            steps: [
+                { 
+                    // Usamos el punto (.) para referirnos a la clase
+                    element: '.TA1',  popover: { title: 'Card - Productos', 
+                        description: 'Total de productos únicos catalogados en tu inventario actual', side: "top" 
+                    } 
+                },
+                { 
+                    element: '.TA2', popover: { title: 'Card - Total de Ventas', 
+                        description: 'Suma acumulada de los ingresos generados por ventas', side: "top" 
+                    } 
+                },
+                { 
+                  element: '.TA3', popover: { title: 'Card - Producto Bajo Stock', 
+                        description: 'Cantidad de productos con existencias críticas que requieren reabastecimiento inmediato', side: "top" 
+                  } 
+                },
+                { 
+                  element: '.TA4', popover: { title: 'Card - Cantidad de Perdidas', 
+                        description: 'Total de productos reportados como  daño o vencimiento entre otros (fuera de ventas).', side: "top" 
+                  } 
+                },
+                { 
+                  element: '.TA5', popover: { title: 'Top 5 Producto mas vendidos', 
+                        description: 'Ranking de los productos favoritos de tus clientes y principales motores de tus ingresos', side: "top" 
+                  } 
+                },
+                { 
+                  element: '.TA6', popover: { title: 'Grafica - Top 5 producto mas vendidos', 
+                        description: 'Comparativa visual del volumen de ventas para identificar rápidamente tus productos estrella.', side: "top" 
+                  } 
+                },
+                { 
+                  element: '.TA7', popover: { title: 'Grafica - Movimientos del Mes', 
+                        description: 'Seguimiento histórico de las ventas acumuladas este mes.', side: "top" 
+                  } 
+                },
+                { 
+                  element: '.TA8', popover: { title: 'Producto con baja venta', 
+                        description: 'Listado de los 10 artículos con menor rotación mensual. Útil para aplicar promociones o descuentos.', side: "top" 
+                  } 
+                },
+                { 
+                  element: '.TA9', popover: { title: 'Stock Recomendado', 
+                        description: 'Cálculo de inventario ideal para tus productos más exitosos, diseñado para evitar quiebres de stock.', side: "top" 
+                  } 
+                }
+            ]
+        });
+
+        document.querySelector('#Teayuda').addEventListener('click', () => {
+            driverObj.drive();
+        });
+    </script>
 
 
 </body>

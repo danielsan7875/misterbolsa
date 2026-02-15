@@ -190,8 +190,8 @@ $(document).ready(function() {
             '<td class="td-oscuro">' + dato.nivel + '</td>' +
             '<td class="td-oscuro">' +
             '<form method="POST" action="?pagina=tipousuario">' +
-            '<button name="modificar" class="btn btn-primary btn-sm modificar me-2" value="' + dato.id_tipo + '"><i class="fas fa-pencil-alt" title="Editar"></i> Modificar </button>' +
-            '<button type="button" onclick="eliminar(this)" class="btn btn-danger btn-sm eliminar" value="' + dato.id_tipo + '"><i class="fas fa-trash-alt" title="Eliminar"> </i> Eliminar </button>' +
+            '<button name="modificar" class="btn btn-primary btn-sm modificar me-2 TA3" value="' + dato.id_tipo + '"><i class="fas fa-pencil-alt" title="Editar"></i> Modificar </button>' +
+            '<button type="button" onclick="eliminar(this)" class="btn btn-danger btn-sm eliminar TA4" value="' + dato.id_tipo + '"><i class="fas fa-trash-alt" title="Eliminar"> </i> Eliminar </button>' +
             '</form>' +
             '</td>' +
             '</tr>';

@@ -19,23 +19,30 @@
         <h1 class="h3 mb-0 TextOscuroTitel"> <i class="fa-solid fa-boxes-stacked  me-2" style="color: #E63946;"></i>
           Producto</h1>
            
+          <div class="d-flex gap-2">
           <!-- Button que abre el Modal N1 Registro -->
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" class="btn btn-success TA1" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 <i class="fas fa-file-medical me-2"></i>
                 Nuevo Producto
             </button>
+
+              <button type="button" class="btn btn-primary" id="Teayuda">
+                  <i class="fa-solid fa-circle-question me-2"></i>
+                  Ayuda
+                </button>
+                   </div>
       </div>
     </div>
 
        
 
           
-      <div class="transaction-list shadow-sm border-0 DivOscuro1">
+      <div class="transaction-list shadow-sm border-0 DivOscuro1 ">
 
             <div class="row align-items-center g-2 my-3 mt-0">
 
               <!-- Columna 1: Alerta (70%) -->
-              <div class="col-12 col-md-8">
+              <div class="col-12 col-md-8 TA2">
                  <?php if (empty($StockMenor)) : ?>
 
                 <!-- ALERTA VERDE SIN BOTÓN -->
@@ -56,10 +63,10 @@
               </div>
 
               <!-- Columna 2: Botón (30%) -->
-             <div class="col-12 col-md-4">
+             <div class="col-12 col-md-4 ">
                   <div class="row g-2"> <div class="col-6">
                           <form action="?pagina=producto" method="POST" class="h-100">
-                              <button type="submit" class="btn btn-primary w-100 h-100" name="pdfcompleto">
+                              <button type="submit" class="btn btn-primary w-100 h-100 TA3" name="pdfcompleto">
                                   Descargar PDF
                               </button>
                           </form>
@@ -79,7 +86,7 @@
 
       </div>
 
-    <div class="transaction-list shadow-sm-0 DivOscuro1">
+    <div class="transaction-list shadow-sm-0 DivOscuro1 TA4">
 
       <div class="table-responsive text-dark TextOscuro" >
 
@@ -123,9 +130,9 @@
                           <div class="d-flex align-items-center">
                               <div class="me-3">
                                  <?php if($dato['estatus'] == 2) {
-                                   echo '<i class="fa-solid fa-boxes-stacked fa-2x" style="color: #707070;"></i>';
+                                   echo '<i class="fa-solid fa-boxes-stacked fa-2x TA9" style="color: #707070;"></i>';
                                  } else{
-                                   echo '<i class="fa-solid fa-boxes-stacked fa-2x" style="color: #E63946;"></i>';
+                                   echo '<i class="fa-solid fa-boxes-stacked fa-2x TA9" style="color: #E63946;"></i>';
                                  }
                                   ?>
                                   
@@ -179,7 +186,7 @@
                               </div>
                             </td>
 
-                            <td class="text-center td-oscuro align-middle">
+                            <td class="text-center td-oscuro align-middle TA5">
                                <?php
                                       if ($dato['stock'] == 0) {
                                         echo '<span class="badge bg-danger fs-6">'.$dato['stock'].'</span>';
@@ -192,7 +199,7 @@
 
                               <td class="text-center td-oscuro align-middle">
                                 <!-- Botón de detalle -->
-                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#detalleModal-<?php echo $dato['id_producto']; ?>">
+                                <button class="btn btn-primary btn-sm TA6" data-bs-toggle="modal" data-bs-target="#detalleModal-<?php echo $dato['id_producto']; ?>">
                                   <i class="fas fa-info-circle me-2"></i> Detalle
                                 </button>
                               </td>
@@ -201,7 +208,7 @@
                                 <td class="td-oscuro align-middle">  <!-- ACCION -->
                                   <form method="POST" action="?pagina=producto">
                                     <div class="dropdown">
-                                      <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                      <button class="btn btn-secondary btn-sm dropdown-toggle TA7" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Opciones
                                       </button>
 
@@ -214,7 +221,7 @@
 
                                         <button type="button" 
                                                 onclick="gestionarEstatus(this)" 
-                                                class="btn <?php echo $claseBtn; ?>" 
+                                                class="btn <?php echo $claseBtn; ?> TA8" 
                                                 value="<?php echo $dato['id_producto']; ?>"
                                                 data-estatus="<?php echo $dato['estatus']; ?>">
                                             <i class="fa-solid <?php echo $icono; ?>"></i>
@@ -523,7 +530,70 @@
   <?php require_once 'complementos/footer2.php'; ?>  
   <!--|||||||||||||||  FIN Footer y JS  |||||||||||||||||||||||||||--> 
   
-  
+  <script>
+    const driver = window.driver.js.driver;
+        const driverObj = driver({
+            showProgress: true,
+            // Textos en ESPAÑOL
+            nextBtnText: 'Siguiente →',
+            prevBtnText: '← Atrás',
+            doneBtnText: '¡Entendido!',
+            progressText: 'Paso {{current}} de {{total}}',
+            steps: [
+                { 
+                    // Usamos el punto (.) para referirnos a la clase
+                    element: '.TA1',  popover: { title: 'Registrar producto', 
+                        description: 'Crea un producto. Se guardará con stock en 0 hasta que registres una compra.', side: "top" 
+                    } 
+                },
+                { 
+                    element: '.TA2', popover: { title: 'Alerta de Stock', 
+                        description: 'Si la alerta es de color verde, indica que todo sus producto tienen suficiente stock disponible, si esta en amarilla significa que un producto tiene un stock bajo o esta en 0, para saber cual es pise el boton "Ver productos" ', side: "top" 
+                    } 
+                },
+                { 
+                  element: '.TA3', popover: { title: 'Descargar PDF todo tu inventario', 
+                        description: 'Guarda una lista de todos tus productos en un archivo listo para imprimir o compartir', side: "top" 
+                  } 
+                },
+                { 
+                  element: '.TA4', popover: { title: 'Tabla de registro', 
+                        description: 'Lista completa de todos tus productos. Aquí puedes ver qué tienes, cuánto cuesta y cuánto te queda.', side: "top" 
+                  } 
+                },
+                { 
+                  element: '.TA5', popover: { title: 'Stock Disponible', 
+                        description: 'Azul: "¡Todo bien! Tienes suficiente cantidad para seguir vendiendo." Amarillo: "¡Atención! Te queda poco stock, considera comprar más pronto." Rojo: "¡Agotado! No tienes unidades disponibles de este producto."', side: "top" 
+                  } 
+                },
+                { 
+                  element: '.TA6', popover: { title: 'Detalles del Producto', 
+                        description: 'Abre la ficha completa para ver toda la información guardada de este producto.', side: "top" 
+                  } 
+                },
+                { 
+                  element: '.TA7', popover: { title: 'Opciones', 
+                        description: 'Haz cambios en la información del producto o elimínalo si ya no lo necesitas', side: "top" 
+                  } 
+                },
+                 { 
+                  element: '.TA8', popover: { title: 'Desactivar/activar producto', 
+                        description: 'Oculta el producto temporalmente para que no aparezca en las ventas, compra y perdidas sin tener que borrarlo, y si lo activas vuelve aparacer en la venta y tambien "compra" y "perdidas"', side: "top" 
+                  } 
+                },
+                { 
+                  element: '.TA9', popover: { title: 'Desactivar/activar producto (2)', 
+                        description: 'Para saber si el producto esta desactivado, si el icono esta en rojo esta ACTIVO, y si esta en gris esta DESACTIVADO', side: "top" 
+                  } 
+                }
+                
+            ]
+        });
+
+document.querySelector('#Teayuda').addEventListener('click', () => {
+  driverObj.drive();
+});  
+</script>
 
 </body>
 </html>

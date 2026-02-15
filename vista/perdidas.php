@@ -17,14 +17,21 @@
             Perdidas</h1>
               
           <!-- Button que abre el Modal N1 Registro -->
-              <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+           <div class="d-flex gap-2"> 
+              <button type="button" class="btn btn-success TA1" data-bs-toggle="modal" data-bs-target="#exampleModal">
               <i class="fas fa-file-medical me-2"></i>
               Registrar Perdida
           </button>
+
+             <button type="button" class="btn btn-primary" id="Teayuda">
+                  <i class="fa-solid fa-circle-question me-2"></i>
+                  Ayuda
+                </button>
+                   </div>
       </div>
       </div>
 
-      <div class="transaction-list shadow-sm border-0 DivOscuro1">
+      <div class="transaction-list shadow-sm border-0 DivOscuro1 TA2">
             <div class="col-12">
               <p class="text-muted"><i class="fa-solid fa-calendar-days me-2"></i>Consulta de Perdidas por Fecha</p>
             </div>
@@ -32,7 +39,7 @@
           <form method="POST"  action="?pagina=perdidas" class="row g-2 align-items-end mt-2">
 
         <!-- Checkbox 15 dias -->
-        <div class="col-12 col-md-2">
+        <div class="col-12 col-md-2 TA3">
             <label class="form-label invisible">Filtro</label>
 
             <input type="checkbox" id="filtro15" name="filtro" value="15" hidden>
@@ -44,7 +51,7 @@
         </div>
 
          <!-- Checkbox MES -->
-        <div class="col-12 col-md-2">
+        <div class="col-12 col-md-2 TA4">
             <label class="form-label invisible">Filtro</label>
 
             <input type="checkbox" id="filtroMes" name="filtro" value="mes" hidden>
@@ -56,19 +63,19 @@
         </div>
 
         <!-- Desde -->
-        <div class="col-12 col-md-3">
+        <div class="col-12 col-md-3 TA5">
             <label class="form-label"><i class="fa-solid fa-calendar-days me-2"></i>Desde</label>
             <input type="date" id="fecha_desde" name="desde" class="form-control">
         </div>
 
         <!-- Hasta -->
-        <div class="col-12 col-md-3">
+        <div class="col-12 col-md-3 TA6">
             <label class="form-label"><i class="fa-solid fa-calendar-days me-2"></i>Hasta</label>
             <input type="date" id="fecha_hasta" name="hasta" class="form-control">
         </div>
 
         <!-- Botón -->
-        <div class="col-12 col-md-2 d-grid ">
+        <div class="col-12 col-md-2 d-grid">
             <button type="submit" name="consultafiltro" value="buscar" class="btn btn-primary" style=" padding: 12px 15px;">
               <i class="fa-solid fa-magnifying-glass me-2"></i>  Buscar
             </button>
@@ -81,7 +88,7 @@
 
     <p class="text-muted">Periodo actual de registros: Últimos 7 días (Hoy y 6 días anteriores)</p>
         
-      <div class="transaction-list shadow-sm border-0 DivOscuro1">
+      <div class="transaction-list shadow-sm border-0 DivOscuro1 TA7">
             <div class="table-responsive text-dark TextOscuro">
       <table id="myTable" class="table table-hover" style="width:100%">
         <thead class="table-color">
@@ -200,7 +207,60 @@
   <?php require_once 'complementos/footer2.php'; ?>  
     <script src="assets/js/ConsultaFecha.js"></script>
   <!--|||||||||||||||  FIN Footer y JS  |||||||||||||||||||||||||||--> 
+ <script>
+    const driver = window.driver.js.driver;
+        const driverObj = driver({
+            showProgress: true,
+            // Textos en ESPAÑOL
+            nextBtnText: 'Siguiente →',
+            prevBtnText: '← Atrás',
+            doneBtnText: '¡Entendido!',
+            progressText: 'Paso {{current}} de {{total}}',
+            steps: [
+                { 
+                    // Usamos el punto (.) para referirnos a la clase
+                    element: '.TA1',  popover: { title: 'Registrar Perdida', 
+                        description: 'Saca del sistema productos que se rompieron, vencieron o que usaste tú mismo.', side: "top" 
+                    } 
+                },
+                { 
+                    element: '.TA2', popover: { title: 'Panel de Consulta por fechas', 
+                        description: 'Filtra tus registros por fechas específicas para localizar transacciones pasadas.', side: "top" 
+                    } 
+                },
+                { 
+                  element: '.TA3', popover: { title: 'Filtro de ultimos 15 dias', 
+                        description: 'Muestra rápidamente la actividad de las últimas dos semanas.', side: "top" 
+                  } 
+                },
+                { 
+                  element: '.TA4', popover: { title: 'Filtro de Mes', 
+                        description: 'Visualiza todos los registros acumulados desde el primer día de este mes.', side: "top" 
+                  } 
+                },
+                { 
+                  element: '.TA5', popover: { title: 'Filtro Rango fecha (inicio)', 
+                        description: 'Elige desde qué día quieres empezar a ver tus registros', side: "top" 
+                  } 
+                },
+                { 
+                  element: '.TA6', popover: { title: 'Filtro Rango fecha (final)', 
+                        description: 'Elige hasta qué día buscar. (Recuerda: puedes consultar periodos de máximo 3 meses)', side: "top" 
+                  } 
+                },
+                { 
+                  element: '.TA7', popover: { title: 'Movimientos de los ultimos 7 Dias', 
+                        description: 'Resumen rápido de los movimientos y transacciones realizados en los últimos 7 días', side: "top" 
+                  } 
+                }
+                
+            ]
+        });
 
+document.querySelector('#Teayuda').addEventListener('click', () => {
+  driverObj.drive();
+});  
+</script>
 
 </body>
 </html>

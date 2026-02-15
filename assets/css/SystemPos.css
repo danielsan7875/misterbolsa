@@ -931,9 +931,65 @@ input:checked + .filter-card .check-box::after {
 
 
 
+
+/*||||||||||||||  MODULO - FINANZA   ||||||||||*/
+
+    .dashboard-card{
+      border-radius:12px;
+      padding:20px;
+      color:#fff;
+      min-height:120px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      box-shadow:0 4px 12px rgba(0,0,0,.12);
+      transition:.3s ease;
+    }
+
+    .dashboard-card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 10px 20px rgba(0,0,0,.18);
+    }
+
+    .dashboard-card i{
+      font-size:40px;
+      opacity:.9;
+    }
+
+    .dashboard-card .title{
+      font-size:14px;
+      letter-spacing:.5px;
+      text-transform:uppercase;
+      opacity:.9;
+    }
+
+    .dashboard-card .value{
+      font-size:26px;
+      font-weight:700;
+      line-height:1;
+    }
+
+    .bg-blue{
+      background:linear-gradient(135deg,#5fa9ff,#3f7cff);
+    }
+
+    .bg-green{
+      background:linear-gradient(135deg,#35d07f,#1fb56a);
+    }
+
+    .bg-orange{
+      background:linear-gradient(135deg,#ffb44c,#ff8c00);
+    }
+
+    .bg-red{
+      background:linear-gradient(135deg,#ff6a6a,#ff3d3d);
+    }
+
+    #graficaTorta{
+    max-height: 390px !important;
+}
+
   /*||||||||||||||||||||||||||||||||||||||||||||||||||||| ESTILOS DEL  SELECT 2 */
-
-
 
    /* CONTENEDOR PRINCIPAL */
 .select2-container--default .select2-selection--single {
@@ -1069,3 +1125,6 @@ input:checked + .filter-card .check-box::after {
     box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25);
 }
 
+.body-color{
+  background-color: var(--neo-content-bg);
+}

@@ -14,18 +14,25 @@
  
   <div class="row">
       <div class="d-sm-flex align-items-center justify-content-between mb-5">
-          <h1 class="h3 mb-0 TextOscuroTitel"> <i class="fa-solid fa-shapes  mr-3" style="color: #E63946;"></i>
+          <h1 class="h3 mb-0 TextOscuroTitel"> <i class="fa-solid fa-shapes me-2" style="color: #E63946;"></i>
           Presentación</h1>
               
           <!-- Button que abre el Modal N1 Registro -->
-          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+           <div class="d-flex gap-2">
+          <button type="button" class="btn btn-success TA1" data-bs-toggle="modal" data-bs-target="#exampleModal">
               <i class="fas fa-file-medical me-2"></i>
                Registrar Presentación
           </button>
+
+           <button type="button" class="btn btn-primary" id="Teayuda">
+                  <i class="fa-solid fa-circle-question me-2"></i>
+                  Ayuda
+            </button>
+            </div>
       </div>
   </div>
     
-  <div class="transaction-list shadow-sm border-0 DivOscuro1">
+  <div class="transaction-list shadow-sm border-0 DivOscuro1 TA2">
 
     <div class="table-responsive TextOscuro">
 
@@ -75,8 +82,8 @@
                 </td>
                 <td class="td-oscuro align-middle"> 
                 <form method="POST" action="?pagina=presentacion"> 
-                    <button name="modificar" class="btn btn-primary btn-sm modificar me-3" value="<?php echo $dato['id_presentacion']?>"><i class="fas fa-pencil-alt" title="Editar"></i> Modificar </button> 
-                    <button type="button" onclick="eliminar(this)" class="btn btn-danger btn-sm eliminar" value="<?php echo $dato['id_presentacion']?>"><i class="fas fa-trash-alt" title="Eliminar"> </i> Eliminar </button> 
+                    <button name="modificar" class="btn btn-primary btn-sm modificar me-2 TA3" value="<?php echo $dato['id_presentacion']?>"><i class="fas fa-pencil-alt" title="Editar"></i> Modificar </button> 
+                    <button type="button" onclick="eliminar(this)" class="btn btn-danger btn-sm eliminar TA4" value="<?php echo $dato['id_presentacion']?>"><i class="fas fa-trash-alt me-2" title="Eliminar"> </i> Eliminar </button> 
                 </form> 
                 </td> 
                 </tr>
@@ -153,6 +160,45 @@
   <script src="assets/js/presentacion.js"></script>
   <?php require_once 'complementos/footer2.php'; ?>  
   <!--|||||||||||||||  FIN Footer y JS  |||||||||||||||||||||||||||--> 
-  
+
+    <script>
+    const driver = window.driver.js.driver;
+        const driverObj = driver({
+            showProgress: true,
+            // Textos en ESPAÑOL
+            nextBtnText: 'Siguiente →',
+            prevBtnText: '← Atrás',
+            doneBtnText: '¡Entendido!',
+            progressText: 'Paso {{current}} de {{total}}',
+            steps: [
+                { 
+                    // Usamos el punto (.) para referirnos a la clase
+                    element: '.TA1',  popover: { title: 'Registrar Presentacion', 
+                        description: 'Añade cómo vendes tus productos: por unidad, kilo, paquete de 10, bolsa de 5kg, etc.', side: "top" 
+                    } 
+                },
+                { 
+                    element: '.TA2', popover: { title: 'Tabla de registro', 
+                        description: 'Lista de todos los formatos y unidades de medida que tienes disponibles en tu negocio.', side: "top" 
+                    } 
+                },
+                { 
+                  element: '.TA3', popover: { title: 'Modificar', 
+                        description: 'Cambia el nombre de la unidad (ejemplo: de Paquete a Caja) si necesitas corregirlo.', side: "top" 
+                  } 
+                },
+                { 
+                  element: '.TA4', popover: { title: 'Eliminar', 
+                        description: 'Borra la presentacion de tu lista', side: "top" 
+                  } 
+                }
+                
+            ]
+        });
+
+document.querySelector('#Teayuda').addEventListener('click', () => {
+  driverObj.drive();
+});  
+</script>
 </body>
 </html>

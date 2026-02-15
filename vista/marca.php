@@ -11,20 +11,28 @@
   <?php require_once 'complementos/nav2.php'; ?>
   <?php require_once 'complementos/sidebar2.php'; ?>
 
-    <div class="row">
-        <div class="d-sm-flex align-items-center justify-content-between mb-5">
-          <h1 class="h3 mb-0 TextOscuroTitel"> <i class="fa-solid fa-tag  mr-3" style="color: #E63946;"></i>
-            Marca</h1>
-              
-          <!-- Button que abre el Modal N1 Registro -->
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+   <div class="row">
+    <div class="d-sm-flex align-items-center justify-content-between mb-5">
+        <h1 class="h3 mb-0 TextOscuroTitel">
+            <i class="fa-solid fa-tag me-2" style="color: #E63946;"></i>
+            Marca
+        </h1>
+
+        <div class="d-flex gap-2"> 
+            <button type="button" class="btn btn-success TA1" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 <i class="fas fa-file-medical me-2"></i>
-               Registrar Marca
-          </button>
+                Registrar Marca
+            </button>
+
+             <button type="button" class="btn btn-primary" id="Teayuda">
+                <i class="fa-solid fa-circle-question me-2"></i>
+                Ayuda
+            </button>
         </div>
     </div>
+  </div>
 
-    <div class="transaction-list shadow-sm border-0 DivOscuro1">
+    <div class="transaction-list shadow-sm border-0 DivOscuro1 TA2">
       <div class="table-responsive TextOcuro">
 
           <table id="myTable"  class="table table-hover" style="width:100%">
@@ -74,8 +82,8 @@
                 </td>
                 <td class="td-oscuro align-middle"> 
                 <form method="POST" action="?pagina=marca"> 
-                    <button name="modificar" class="btn btn-primary btn-sm modificar me-3" value="<?php echo $dato['id_marca']?>"><i class="fas fa-pencil-alt" title="Editar"></i> Modificar </button> 
-                    <button type="button" onclick="eliminar(this)" class="btn btn-danger btn-sm eliminar" value="<?php echo $dato['id_marca']?>"><i class="fas fa-trash-alt" title="Eliminar"> </i> Eliminar </button> 
+                    <button name="modificar" class="btn btn-primary btn-sm modificar me-3 TA3" value="<?php echo $dato['id_marca']?>"><i class="fas fa-pencil-alt" title="Editar"></i> Modificar </button> 
+                    <button type="button" onclick="eliminar(this)" class="btn btn-danger btn-sm eliminar TA4" value="<?php echo $dato['id_marca']?>"><i class="fas fa-trash-alt" title="Eliminar"> </i> Eliminar </button> 
                 </form> 
                 </td> 
                 </tr>
@@ -151,6 +159,44 @@
   <?php require_once 'complementos/footer2.php'; ?>  
   <!--|||||||||||||||  FIN Footer y JS  |||||||||||||||||||||||||||--> 
   
+  <script>
+    const driver = window.driver.js.driver;
+        const driverObj = driver({
+            showProgress: true,
+            // Textos en ESPAÑOL
+            nextBtnText: 'Siguiente →',
+            prevBtnText: '← Atrás',
+            doneBtnText: '¡Entendido!',
+            progressText: 'Paso {{current}} de {{total}}',
+            steps: [
+                { 
+                    // Usamos el punto (.) para referirnos a la clase
+                    element: '.TA1',  popover: { title: 'Registrar Marca', 
+                        description: 'Añade un nuevo nombre de marca (o fabricante) para organizar mejor tus productos', side: "top" 
+                    } 
+                },
+                { 
+                    element: '.TA2', popover: { title: 'Tabla de registro', 
+                        description: 'Lista de todas las marcas que has guardado.', side: "top" 
+                    } 
+                },
+                { 
+                  element: '.TA3', popover: { title: 'Modificar', 
+                        description: 'Cambia el nombre de la marca si te equivocaste al escribirlo o si el fabricante cambió de nombre', side: "top" 
+                  } 
+                },
+                { 
+                  element: '.TA4', popover: { title: 'Eliminar', 
+                        description: 'Borra la marca de tu lista si ya no tienes productos de ese fabricante', side: "top" 
+                  } 
+                }
+                
+            ]
+        });
 
+document.querySelector('#Teayuda').addEventListener('click', () => {
+  driverObj.drive();
+});  
+</script>
 </body>
 </html>

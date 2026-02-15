@@ -25,27 +25,28 @@
     <nav class="top-nav d-flex justify-content-between align-items-center sticky-top DivOscuro2">
         <div class="d-flex align-items-center gap-3">
             <form action="?pagina=registroventa" method="POST">
-                <button type="submit" class="nav-btn active" name="salir" title="Inicio">
+                <button type="submit" class="nav-btn active TA1" name="salir" title="Inicio">
                     <i class="fa-solid fa-reply"></i>
                 </button>
             </form>
-            <button class="nav-btn" title="Historial" data-bs-toggle="modal" data-bs-target="#modalhistorial">
+            <button class="nav-btn TA2" title="Historial" data-bs-toggle="modal" data-bs-target="#modalhistorial">
                 <i class="fa-solid fa-clock-rotate-left"></i>
             </button>
-            <button class="nav-btn" title="Configuración" data-bs-toggle="modal" data-bs-target="#modalconfiguracion">
+            <button class="nav-btn TA3" title="Configuración" data-bs-toggle="modal" data-bs-target="#modalconfiguracion">
               <i class="fa-solid fa-gear"></i>
             </button>
             <?php 
             if (!$cierre) {
-            echo'<button class="nav-btn" title="No Activo el Cierre">
+            echo'<button class="nav-btn TA4" title="No Activo el Cierre">
               <i class="fa-solid fa-xmark text-danger"></i>
             </button>';
             }else{
-           echo'<button class="nav-btn active" title="Cierre Activo">
+           echo'<button class="nav-btn active TA4" title="Cierre Activo">
               <i class="fa-solid fa-check text-success"></i>
             </button>';
             }
             ?>
+            
         </div>
 
         <div class="sale-badge">
@@ -56,7 +57,14 @@
                     <?php endif; ?>
             </div>
 
-        <button class="nav-btn text-danger border-danger-subtle" title="Cerrar Sesión" data-bs-toggle="modal" data-bs-target="#modalcerrar">
-            <i class="fa-solid fa-right-from-bracket"></i>
-        </button>
+            <div class="d-flex gap-2">
+                <button class="nav-btn" title="Ayuda" id="Teayuda">
+                <i class="fa-solid fa-circle-question"></i>
+                </button>
+
+                <button class="nav-btn text-danger border-danger-subtle TA5" title="Cerrar Sesión" data-bs-toggle="modal" data-bs-target="#modalcerrar">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+            </div>
+        
     </nav>

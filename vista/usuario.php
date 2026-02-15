@@ -18,15 +18,22 @@
         Usuario</h1>
            
        <!-- Button que abre el Modal N1 Registro -->
-          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <div class="d-flex gap-2">
+          <button type="button" class="btn btn-success TA1" data-bs-toggle="modal" data-bs-target="#exampleModal">
             <i class="fas fa-file-medical me-2"></i>
             Registrar Usuario
       </button>
+
+      <button type="button" class="btn btn-primary" id="Teayuda">
+                  <i class="fa-solid fa-circle-question me-2"></i>
+                  Ayuda
+            </button>
+            </div>
     </div>
 
   </div>
 
-  <div class="transaction-list shadow-sm border-0 DivOscuro1">
+  <div class="transaction-list shadow-sm border-0 DivOscuro1 TA2">
 
     <div class="table-responsive TextOscuro">
         <table id="myTable" class="table table-m table-hover" style="width:100%">
@@ -86,10 +93,10 @@
               
                           <td class="td-oscuro align-middle">
                               <form action="?pagina=usuario" method="POST" >
-                                <button name="modificar" class="btn btn-primary btn-sm modificar"
-                                value="<?php echo $dato['id_usuario'] ?>"><i class="fas fa-pencil-alt" title="Editar"></i> Editar</button>
+                                <button name="modificar" class="btn btn-primary btn-sm modificar TA3"
+                                value="<?php echo $dato['id_usuario'] ?>"><i class="fas fa-pencil-alt me-1" title="Editar"></i> Modificar</button>
                             
-                                <button type="button" onclick="eliminar(this)" class="btn btn-danger btn-sm eliminar" value="<?php echo $dato['id_usuario'] ?>"> <i class="fas fa-trash-alt" title="Eliminar"> </i> Eliminar </button>
+                                <button type="button" onclick="eliminar(this)" class="btn btn-danger btn-sm eliminar TA4" value="<?php echo $dato['id_usuario'] ?>"> <i class="fas fa-trash-alt" title="Eliminar"> </i> Eliminar </button>
                               </form>
                               
                                 
@@ -215,6 +222,46 @@
   <script src="assets/js/usuario.js"></script>
   <?php require_once 'complementos/footer2.php'; ?>  
   <!--|||||||||||||||  FIN Footer y JS  |||||||||||||||||||||||||||-->
-  
+
+  <script>
+    const driver = window.driver.js.driver;
+        const driverObj = driver({
+            showProgress: true,
+            // Textos en ESPAÑOL
+            nextBtnText: 'Siguiente →',
+            prevBtnText: '← Atrás',
+            doneBtnText: '¡Entendido!',
+            progressText: 'Paso {{current}} de {{total}}',
+            steps: [
+                { 
+                    // Usamos el punto (.) para referirnos a la clase
+                    element: '.TA1',  popover: { title: 'Registrar Usuario', 
+                        description: 'Crea un acceso nuevo para que otra persona pueda entrar al sistema con su propio usuario y clave', side: "top" 
+                    } 
+                },
+                { 
+                    element: '.TA2', popover: { title: 'Tabla de registro', 
+                        description: 'Lista de todas las personas autorizadas para usar el sistema y sus niveles de acceso.', side: "top" 
+                    } 
+                },
+                { 
+                  element: '.TA3', popover: { title: 'Modificar', 
+                        description: 'Cambia los datos de una cuenta, como el nombre de usuario o su contraseña si la olvidó', side: "top" 
+                  } 
+                },
+                { 
+                  element: '.TA4', popover: { title: 'Eliminar', 
+                        description: 'Quita el acceso de forma definitiva a una persona para que ya no pueda entrar más al sistema.', side: "top" 
+                  } 
+                }
+                
+            ]
+        });
+
+document.querySelector('#Teayuda').addEventListener('click', () => {
+  driverObj.drive();
+});  
+</script>
+
 </body>
 </html>

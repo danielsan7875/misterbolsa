@@ -58,7 +58,7 @@
                                     Últimos 7 días: $<?= number_format($TotalSemana['total_semana'], 2) ?>
                             </div>
                         </div>
-                        <div class="position-relative">
+                        <div class="position-relative ">
                             <canvas id="graficaSemana" height="120"></canvas>
                         </div>
                     </div>

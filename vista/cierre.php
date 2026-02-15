@@ -15,7 +15,8 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-5">
        <h1 class="h3 mb-0 TextOscuroTitel"> <i class="fa-solid fa-file-invoice-dollar me-2" style="color: #E63946;"></i>
         Cierre Diario</h1>
-          <form action="?pagina=cierre" method="POST" autocomplete="off" id="form_cierre">   
+        <div class="d-flex gap-2">  
+        <form action="?pagina=cierre" method="POST" autocomplete="off" id="form_cierre">   
           <!-- Button que abre el Modal N1 Registro -->
 
               <input type="hidden" name="fecha" id="cierrefecha" >
@@ -26,17 +27,22 @@
 
                 <?php if (!$cierre) {
                     echo'
-                    <button type="button" class="btn btn-success" name="iniciar" id="iniciar">
+                    <button type="button" class="btn btn-success TA1" name="iniciar" id="iniciar">
                     <i class="fa-solid fa-circle-play me-2"></i> Comenzar
                     </button>
                     '; }else{
                     echo'
-                    <button type="button" class="btn btn-success" name="iniciar"  disabled>
+                    <button type="button" class="btn btn-success TA1" name="iniciar"  disabled>
                     <i class="fa-solid fa-circle-play me-2"></i> Comenzar
                     </button>
                     '
                 ; } ?>  
           </form> 
+           <button type="button" class="btn btn-primary" id="Teayuda">
+                  <i class="fa-solid fa-circle-question me-2"></i>
+                  Ayuda
+            </button>
+            </div>
       </div>
   </div>
     
@@ -44,7 +50,7 @@
        <div class="row justify-content-center g-4 my-3 mt-0">
 
     <!-- CARD 1 -->
-    <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
+    <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center TA2">
         <div class="card text-center DivOscuro2 w-100">
             <div class="card-body" id="card-body-cierre">
                 <h5 class="card-title TextOscuroTitel"><strong>Estatus del Cierre</strong></h5>
@@ -81,7 +87,7 @@
     </div>
 
     <!-- CARD 2 -->
-    <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
+    <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center TA3">
         <div class="card text-center DivOscuro2 w-100">
             <div class="card-body">
                 <h5 class="card-title TextOscuroTitel"><strong>Cantidad de Cierre</strong></h5>
@@ -94,7 +100,7 @@
     </div>
 
     <!-- CARD 3 -->
-    <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
+    <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center TA4">
         <div class="card text-center DivOscuro2 w-100">
             <div class="card-body">
                 <?php $total = $cantidad['total']; ?>
@@ -112,7 +118,7 @@
    </div>
 
 
-<div class="chart-container shadow-sm border-0 DivOscuro1">
+<div class="chart-container shadow-sm border-0 DivOscuro1 TA5">
 
   <div class="table-responsive text-dark TextOscuro">
         <table id="myTable" class="table table-hover" style="width:100%">
@@ -184,7 +190,7 @@
                   </td>
               <td class="text-center td-oscuro">
                <?php  if($dato['estatus'] == 1){  ?>
-                  <button type="button"  class="btn btn-primary btn-sm" disabled> <i class="fa-regular fa-file-pdf me-2"></i>Descargar</button>
+                  <button type="button"  class="btn btn-primary btn-sm TA6" disabled> <i class="fa-regular fa-file-pdf me-2"></i>Descargar</button>
                 <?php  } else {  ?>
                   <form action="?pagina=cierre" method="POST" >
                           <button type="submit"  class="btn btn-primary btn-sm" name="pdf" value="<?php echo  $dato['id_cierre']; ?>"> <i class="fa-regular fa-file-pdf me-2"></i>Descargar</button>
@@ -221,6 +227,54 @@
   <?php require_once 'complementos/footer2.php'; ?>  
   <!--|||||||||||||||  FIN Footer y JS  |||||||||||||||||||||||||||-->
 
- 
+  <script>
+    const driver = window.driver.js.driver;
+        const driverObj = driver({
+            showProgress: true,
+            // Textos en ESPAÑOL
+            nextBtnText: 'Siguiente →',
+            prevBtnText: '← Atrás',
+            doneBtnText: '¡Entendido!',
+            progressText: 'Paso {{current}} de {{total}}',
+            steps: [
+                { 
+                    // Usamos el punto (.) para referirnos a la clase
+                    element: '.TA1',  popover: { title: 'Comenzar cierre', 
+                        description: 'Abre un nuevo turno de trabajo para empezar a registrar ventas y llevar el control del dinero.', side: "top" 
+                    } 
+                },
+                { 
+                    element: '.TA2', popover: { title: 'Estatus del cierre', 
+                        description: 'Te dice si el Cierre está Activo o no. Si está activo, aquí puedes finalizar dando Cerrar Cierre, para posteriormente descargar el reporte', side: "top" 
+                    } 
+                },
+                { 
+                  element: '.TA3', popover: { title: 'Cantidad de cierres', 
+                        description: 'Mira cuántos cierres has hecho hoy. Tienes un límite de 3 por día', side: "top" 
+                  } 
+                },
+                { 
+                  element: '.TA4', popover: { title: 'Cantidad de ventas', 
+                        description: 'Total de ventas realizadas únicamente cuando el cierre se encuentre activo', side: "top" 
+                  } 
+                },
+                { 
+                  element: '.TA5', popover: { title: 'Tabla de registro', 
+                        description: 'Historial de tus cierres anteriores para que revises cuándo y cuánto se entregó en cada jornada', side: "top" 
+                  } 
+                },
+                { 
+                  element: '.TA6', popover: { title: 'Descargar el cierre (PDF)', 
+                        description: 'Genera un reporte detallado del cierre para imprimirlo o guardarlo como comprobante de tus cuentas.', side: "top" 
+                  } 
+                }
+                
+            ]
+        });
+
+document.querySelector('#Teayuda').addEventListener('click', () => {
+  driverObj.drive();
+});  
+</script>
 </body>
 </html>

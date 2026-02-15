@@ -234,7 +234,7 @@
             <div class="modal-body text-center p-4">
 
             
-        <div id="main-app" class="container py-4 py-md-5 divcards">
+        <div id="main-app" class="container py-4 py-md-5 divcards DivOscuro2">
         <div class="row max-width-lg mx-auto">
             
             <!-- Header -->
@@ -244,6 +244,10 @@
                     <p class="text-secondary mb-0">Seleccione el método de pago para finalizar.</p>
                 </div>
                 <div class="px-4 py-2 d-flex align-items-center gap-3">
+                     <button type="button" class="btn btn-primary btn-sm px-4">
+                             <i class="fa-solid fa-circle-question me-2"></i>
+                                Ayuda
+                        </button>
                     
                         <button type="button" class="btn btn-secondary btn-lg px-4" data-bs-dismiss="modal">
                             Cancelar
@@ -253,8 +257,8 @@
             </div>
 
             <!-- Content -->
-            <div class="col-lg-8 mb-4">
-                <div class="card card-custom p-4 p-md-5">
+            <div class="col-lg-8 mb-4 ">
+                <div class="card card-custom p-4 p-md-5 DivOscuro1">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h5 class="fw-bold m-0"><i class="fa-solid fa-credit-card text-primary me-2"></i> Métodos de Pago</h5>
                         <a href="#" class="btn btn-primary" id="btn-add-method">
@@ -315,11 +319,11 @@
     </div>
 
 <!-- Pantalla de Éxito -->
-<div id="success-screen" class="container py-5 text-center divcards">
+<div id="success-screen" class="container py-5 text-center divcards DivOscuro2">
     <div class="row justify-content-center">
         <div class="col-md-5">
       
-            <div class="card card-custom p-5 position-relative overflow-hidden">
+            <div class="card card-custom p-5 position-relative overflow-hidden DivOscuro1">
 
                 <!-- Icono decorativo izquierdo -->
                 <i class="fa-solid fa-check-circle fa-5x text-success position-absolute" 
@@ -381,11 +385,11 @@
             payments.forEach((p) => {
 
                 const row = `
-                <div class="payment-row">
+                <div class="payment-row DivOscuro2">
                     <div class="row g-3 align-items-end">
 
                         <div class="col-md-4">
-                            <label class="form-label-xs">Método</label>
+                            <label class="form-label-xs TitelOscuro">Método</label>
                             <select class="form-select metodo-select w-100" data-id="${p.id}">
                                 <option value="">Seleccione</option>
                                 <?php foreach ($metodo as $m): ?>
@@ -695,3 +699,5 @@ function verificarPagosCompletos() {
     <script src="assets/librerias/bootstrap5/js/bootstrap.bundle.min.js"></script>
 
     <script src="assets/js/SystemVentaPos.js"></script>
+
+    <script src="assets/librerias/driver.js/dist/driver.js.iife.js"></script>

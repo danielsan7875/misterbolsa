@@ -18,11 +18,15 @@
         Metódo Pago</h1>
            
        <!-- Button que abre el Modal N1 Registro -->
+          <button type="button" class="btn btn-primary" id="Teayuda">
+                  <i class="fa-solid fa-circle-question me-2"></i>
+                  Ayuda
+            </button>
       
       </div>
   </div>
   
-  <div class="transaction-list shadow-sm border-0 DivOscuro1">
+  <div class="transaction-list shadow-sm border-0 DivOscuro1 TA1">
     <div class="table-responsive TextOscuro">
 
       <table class="table table-hover" style="width:100%">
@@ -53,6 +57,34 @@
   <?php require_once 'complementos/footer2.php'; ?>  
   <!--|||||||||||||||  FIN Footer y JS  |||||||||||||||||||||||||||--> 
   
+ <script>
+    const driver = window.driver.js.driver;
+        const driverObj = driver({
+            showProgress: true,
+            // Textos en ESPAÑOL
+            nextBtnText: 'Siguiente →',
+            prevBtnText: '← Atrás',
+            doneBtnText: '¡Entendido!',
+            progressText: 'Paso {{current}} de {{total}}',
+            steps: [
+                { 
+                    // Usamos el punto (.) para referirnos a la clase
+                    element: '.TA1',  popover: { title: 'Tabla de registro', 
+                        description: 'Lista de todas las formas en que tus clientes pueden pagarte', side: "top" 
+                    } 
+                },
+                { 
+                    element: '.TA2', popover: { title: 'Desactivar/Activar', 
+                        description: 'Al desactivar, quitas este método de la pantalla de cobro para que no aparezca al vender, y al activarlo vuelve aparacer en la pantalla de cobro', side: "top" 
+                    } 
+                }
+                
+            ]
+        });
 
+document.querySelector('#Teayuda').addEventListener('click', () => {
+  driverObj.drive();
+});  
+</script>
 </body>
 </html>

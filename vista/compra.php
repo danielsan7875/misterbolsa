@@ -17,15 +17,21 @@
             <h1 class="h3 mb-0 TextOscuroTitel"> <i class="fa-solid fa-receipt me-2" style="color: #E63946;"></i>
               Compra</h1>
                 
-            <!-- Button que abre el Modal N1 Registro -->
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              <div class="d-flex gap-2"> 
+                <button type="button" class="btn btn-success TA1" data-bs-toggle="modal" data-bs-target="#exampleModal">
                   <i class="fas fa-file-medical me-2"></i>
                   Registrar Compra
-            </button>
+                </button>
+
+                <button type="button" class="btn btn-primary" id="Teayuda">
+                  <i class="fa-solid fa-circle-question me-2"></i>
+                  Ayuda
+                </button>
+              </div>
           </div>
       </div>
 
-          <div class="transaction-list shadow-sm border-0 DivOscuro1">
+          <div class="transaction-list shadow-sm border-0 DivOscuro1 TA2">
             <div class="col-12">
               <p class="text-muted"><i class="fa-solid fa-calendar-days me-2"></i>Consulta de Compras por Fecha</p>
             </div>
@@ -33,7 +39,7 @@
           <form method="POST"  action="?pagina=compra" class="row g-2 align-items-end mt-2">
 
         <!-- Checkbox 15 dias -->
-        <div class="col-12 col-md-2">
+        <div class="col-12 col-md-2 TA6">
             <label class="form-label invisible">Filtro</label>
 
             <input type="checkbox" id="filtro15" name="filtro" value="15" hidden>
@@ -45,7 +51,7 @@
         </div>
 
          <!-- Checkbox MES -->
-        <div class="col-12 col-md-2">
+        <div class="col-12 col-md-2 TA7">
             <label class="form-label invisible">Filtro</label>
 
             <input type="checkbox" id="filtroMes" name="filtro" value="mes" hidden>
@@ -57,13 +63,13 @@
         </div>
 
         <!-- Desde -->
-        <div class="col-12 col-md-3">
+        <div class="col-12 col-md-3 TA8">
             <label class="form-label"><i class="fa-solid fa-calendar-days me-2"></i>Desde</label>
             <input type="date" id="fecha_desde" name="desde" class="form-control">
         </div>
 
         <!-- Hasta -->
-        <div class="col-12 col-md-3">
+        <div class="col-12 col-md-3 TA9">
             <label class="form-label"><i class="fa-solid fa-calendar-days me-2"></i>Hasta</label>
             <input type="date" id="fecha_hasta" name="hasta" class="form-control">
         </div>
@@ -84,7 +90,7 @@
 
       <div class="transaction-list shadow-sm border-0 DivOscuro1">
 
-          <div class="table-responsive text-dark TextOscuro">
+          <div class="table-responsive text-dark TextOscuro TA3">
             <table id="myTable" class="table table-hover" style="width:100%">
                 <thead class="table-color">
                   <tr>
@@ -152,7 +158,7 @@
                               <?php endforeach; ?>
                           </ul>
                           <?php if (count($detalles) > 2): ?>
-                            <button type="button" class="btn badge bg-primary mt-2" data-bs-toggle="modal" data-bs-target="#modal-<?php echo $id_compra; ?>">
+                            <button type="button" class="btn badge bg-primary mt-2 TA4" data-bs-toggle="modal" data-bs-target="#modal-<?php echo $id_compra; ?>">
                               <i class="fa-solid fa-eye me-2"></i> Ver más
                             </button>
                           <?php endif; ?>
@@ -169,7 +175,7 @@
                       <?php if ($tipo_usuario == 1): ?>
                       <td class="text-center td-oscuro">
                           <form action="?pagina=compra" method="POST">
-                              <button type="summit" class="btn btn-primary btn-sm" name="pdf" value="<?php echo $id_compra; ?>"> <i class="fa-regular fa-file-pdf me-2"></i>
+                              <button type="summit" class="btn btn-primary btn-sm TA5" name="pdf" value="<?php echo $id_compra; ?>"> <i class="fa-regular fa-file-pdf me-2"></i>
                                 Descargar
                               </button>
                           </form>
@@ -311,7 +317,70 @@
   <?php require_once 'complementos/footer2.php'; ?>  
   <!--|||||||||||||||  FIN Footer y JS  |||||||||||||||||||||||||||-->
  
+<script>
+    const driver = window.driver.js.driver;
+        const driverObj = driver({
+            showProgress: true,
+            // Textos en ESPAÑOL
+            nextBtnText: 'Siguiente →',
+            prevBtnText: '← Atrás',
+            doneBtnText: '¡Entendido!',
+            progressText: 'Paso {{current}} de {{total}}',
+            steps: [
+                { 
+                    // Usamos el punto (.) para referirnos a la clase
+                    element: '.TA1',  popover: { title: 'Registrar Compra', 
+                        description: 'Surtir mi inventario con productos nuevos', side: "top" 
+                    } 
+                },
+                { 
+                    element: '.TA2', popover: { title: 'Panel de Consulta por fechas', 
+                        description: 'Filtra tus registros por fechas específicas para localizar transacciones pasadas.', side: "top" 
+                    } 
+                },
+                { 
+                  element: '.TA6', popover: { title: 'Filtro de ultimos 15 dias', 
+                        description: 'Muestra rápidamente la actividad de las últimas dos semanas.', side: "top" 
+                  } 
+                },
+                { 
+                  element: '.TA7', popover: { title: 'Filtro de Mes', 
+                        description: 'Visualiza todos los registros acumulados desde el primer día de este mes.', side: "top" 
+                  } 
+                },
+                { 
+                  element: '.TA8', popover: { title: 'Filtro Rango fecha (inicio)', 
+                        description: 'Elige desde qué día quieres empezar a ver tus registros', side: "top" 
+                  } 
+                },
+                { 
+                  element: '.TA9', popover: { title: 'Filtro Rango fecha (final)', 
+                        description: 'Elige hasta qué día buscar. (Recuerda: puedes consultar periodos de máximo 3 meses)', side: "top" 
+                  } 
+                },
+                { 
+                  element: '.TA3', popover: { title: 'Movimientos de los ultimos 7 Dias', 
+                        description: 'Resumen rápido de los movimientos y transacciones realizados en los últimos 7 días', side: "top" 
+                  } 
+                },
+                { 
+                  element: '.TA4', popover: { title: 'Ver Más', 
+                        description: 'Consulta el desglose detallado de los productos incluidos en este registro', side: "top" 
+                  } 
+                },
+                { 
+                  element: '.TA5', popover: { title: 'Generar PDF', 
+                        description: 'Genera un comprobante oficial de la compra en formato PDF para tus archivos.', side: "top" 
+                  } 
+                }
+                
+            ]
+        });
 
+document.querySelector('#Teayuda').addEventListener('click', () => {
+  driverObj.drive();
+});  
+</script>
 
 
  

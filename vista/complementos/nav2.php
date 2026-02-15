@@ -90,13 +90,28 @@
 
 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-        <div class="offcanvas-header">
-            <h5 id="offcanvasRightLabel">Ayuda</h5>
+        <div class="offcanvas-header DivOscuro1">
+            <h5 id="offcanvasRightLabel">Ayuda - Preguntas Frecuentes</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-        <div class="offcanvas-body">
-            <a href="vista/complementos/manueldeusuario.pdf" target="_black">Manual de usuario</a>
-            <input type="text" class="form-control w-100">
+        <div class="offcanvas-body DivOscuro1 body-color">
+            <a class="btn btn-secondary w-100 mb-2" href="vista/complementos/manueldeusuario.pdf" target="_black">Manual de usuario</a>
+            
+            <div class="input-group mb-3 w-100">
+              <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass" style="color:#FF3C37;"></i></span>
+              <input type="text" class="form-control" placeholder="Buscardor de preguntas">
+            </div>
+            <br>
+                <div id="DivBuscardor">
+
+                <div class="transaction-list shadow-sm border-0 DivOscuro2">
+                    <h1> gas</h1>
+                </div>
+
+
+                </div> 
+             
+            
         </div>
     </div>
 

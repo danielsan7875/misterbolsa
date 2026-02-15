@@ -546,7 +546,7 @@ function renderProductos(productos) {
     productos.forEach(p => {
 
         html += `
-        <div class="col producto-item">
+        <div class="col producto-item TA7">
             <div class="product-card DivOscuro2">
                 <div class="product-img">
                     <i class="fa-solid fa-boxes-stacked TextOscuroTitel2" style="font-size: 28px;"></i>
@@ -575,7 +575,7 @@ function renderProductos(productos) {
 
                         ${p.precio_mayor > 0 ? `<small class="text-secundary">Mayor: $${parseFloat(p.precio_mayor).toFixed(2)}</small>` : ''}
 
-                        <button class="btn btn-sm btn-outline-primary p-2 btn-agregar"
+                        <button class="btn btn-sm btn-outline-primary p-2 btn-agregar TA8"
                             data-id="${p.id_producto}"
                             data-nombre="${p.nombre}"
                             data-precio-detal="${p.precio_unitario}"

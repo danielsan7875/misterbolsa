@@ -17,6 +17,10 @@
         <h1 class="h3 mb-0 TextOscuroTitel"> <i class="fa-solid fa-money-bill-trend-up me-2" style="color: #E63946;"></i>
           Configuracion del Tasa del Dolar</h1>
         
+            <button type="button" class="btn btn-primary" id="Teayuda">
+                  <i class="fa-solid fa-circle-question me-2"></i>
+                  Ayuda
+            </button>
     </div>
   </div>
   
@@ -26,7 +30,7 @@
   <div class="conteiner">
     <div class="row">
       <div class="col">
-            <div class="card DivOscuro2">
+            <div class="card DivOscuro2 TA1">
               <div class="card-header text-dark TextOscuro">
                 <i class="fa-solid fa-floppy-disk me-2"></i> Tasa del Dolar BCV - Guardada
               </div>
@@ -39,7 +43,7 @@
                     puedes modificarla manualmente en cualquier momento según tu preferencia o la tasa vigente.
                 </p>
 
-                <form action="?pagina=venta" id="dolarform" autocomplete="off">
+                <form action="?pagina=venta" class="TA2" id="dolarform" autocomplete="off">
 
                   <label class="form-label text-dark TextOscuro"> Modificarla manualmente la tasa del $ a Bs</label>
                   <div class="input-group mb-3">
@@ -58,7 +62,7 @@
       </div>
 
       <div class="col">
-        <div class="card DivOscuro2">
+        <div class="card DivOscuro2 TA3">
           <div class="card-header text-dark TextOscuro">
            <i class="fa-solid fa-wifi me-2"></i> Tasa del Dolar BCV - Internet
           </div>
@@ -72,7 +76,7 @@
          <form action="?pagina=tasa" method="POST" autocomplete="off" id="formdolar">
           <input type="hidden" name="id_dolar" value="1">
           <input type="hidden" name="precios" id="preciobcv">
-           <button  class="btn btn-primary" id="sincronizar" type="button"> <i class="fa-solid fa-rotate me-2"></i> Sincronizar y actualizar</button>
+           <button  class="btn btn-primary TA4" id="sincronizar" type="button"> <i class="fa-solid fa-rotate me-2"></i> Sincronizar y actualizar</button>
         </form>
           </div>
         </div>
@@ -90,6 +94,45 @@
   <!--|||||||||||||||  Footer y JS  |||||||||||||||||||||||||||-->
   <script src="assets/js/modulotasa.js"></script>
   <?php require_once 'vista/complementos/footer2.php'; ?>  
- 
+  <script>
+    const driver = window.driver.js.driver;
+        const driverObj = driver({
+            showProgress: true,
+            // Textos en ESPAÑOL
+            nextBtnText: 'Siguiente →',
+            prevBtnText: '← Atrás',
+            doneBtnText: '¡Entendido!',
+            progressText: 'Paso {{current}} de {{total}}',
+            steps: [
+                { 
+                    // Usamos el punto (.) para referirnos a la clase
+                    element: '.TA1',  popover: { title: 'Tasa de cambio que usa el sistema', 
+                        description: 'Es el valor del dólar que tu sistema está usando ahora mismo para calcular todos los precios en bolívares.', side: "top" 
+                    } 
+                },
+                { 
+                    element: '.TA2', popover: { title: 'Modificacion Manual de la tasa de cambio', 
+                        description: 'Cambia el valor de la tasa a tu gusto y guárdalo. Se aplicará de inmediato en todo tu sistema.', side: "top" 
+                    } 
+                },
+                { 
+                  element: '.TA3', popover: { title: 'Tasa de cambio via internet', 
+                        description: 'Precio actual del dólar en tiempo real según la web. Úsalo solo como referencia para comparar.', side: "top" 
+                  } 
+                },
+                { 
+                  element: '.TA4', popover: { title: 'Sincronizar y actualizar la tasa de cambio', 
+                        description: 'Toma automáticamente el valor de internet y actualiza tu sistema con un solo clic. ¡Rápido y sin errores!', side: "top" 
+                  } 
+                }
+                
+            ]
+        });
+
+document.querySelector('#Teayuda').addEventListener('click', () => {
+  driverObj.drive();
+});  
+</script>
+
 </body>
 </html>
