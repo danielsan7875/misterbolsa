@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-09-2025 a las 17:01:28
--- Versión del servidor: 10.4.18-MariaDB
--- Versión de PHP: 8.0.3
+-- Tiempo de generación: 02-02-2026 a las 03:59:35
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,21 +29,19 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `cierre_diario` (
   `id_cierre` int(11) NOT NULL,
-  `fecha_creacion` date NOT NULL,
-  `fecha_cierre` date NOT NULL,
-  `tasa` varchar(15) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `total_dia_bs` varchar(15) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `total_dia_dl` varchar(15) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `total_efectivo_dl` varchar(15) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `total_efectivo_bs` varchar(15) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `total_pagomovil_dl` varchar(15) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `total_pagomovil_bs` varchar(15) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `total_punto_dl` varchar(15) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `total_punto_bs` varchar(15) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `total_divisas_dl` varchar(15) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `total_divisas_bs` varchar(15) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `total_dia_des_dl` varchar(15) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `total_dia_des_bs` varchar(15) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `fecha_creacion` datetime NOT NULL,
+  `fecha_cierre` datetime NOT NULL,
+  `tasa` decimal(12,2) NOT NULL,
+  `total_dia_bs` decimal(12,2) NOT NULL,
+  `total_dia_dl` decimal(12,2) NOT NULL,
+  `total_efectivo_dl` decimal(12,2) NOT NULL,
+  `total_efectivo_bs` decimal(12,2) NOT NULL,
+  `total_pagomovil_dl` decimal(12,2) NOT NULL,
+  `total_pagomovil_bs` decimal(12,2) NOT NULL,
+  `total_punto_dl` decimal(12,2) NOT NULL,
+  `total_punto_bs` decimal(12,2) NOT NULL,
+  `total_divisas_dl` decimal(12,2) NOT NULL,
+  `total_divisas_bs` decimal(12,2) NOT NULL,
   `estatus` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
@@ -54,8 +52,8 @@ CREATE TABLE `cierre_diario` (
 --
 
 CREATE TABLE `compra` (
-  `id_compra` int(100) NOT NULL,
-  `fecha` date NOT NULL
+  `id_compra` int(11) NOT NULL,
+  `fecha` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -81,7 +79,7 @@ CREATE TABLE `detalle_compra` (
   `id_detalle` int(11) NOT NULL,
   `id_compra` int(11) NOT NULL,
   `id_producto` int(11) NOT NULL,
-  `cantidad` int(11) NOT NULL
+  `cantidad` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -94,10 +92,9 @@ CREATE TABLE `detalle_pago` (
   `id_detallepago` int(11) NOT NULL,
   `id_venta` int(11) NOT NULL,
   `id_metodopago` int(11) NOT NULL,
-  `monto_dolares` varchar(15) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `monto_bs` varchar(15) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `descuento_dl` varchar(15) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `descuento_bs` varchar(15) COLLATE utf8mb4_spanish2_ci NOT NULL
+  `monto_dolares` decimal(12,2) NOT NULL,
+  `monto_bs` decimal(12,2) NOT NULL,
+  `referencia` int(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -107,12 +104,12 @@ CREATE TABLE `detalle_pago` (
 --
 
 CREATE TABLE `detalle_venta` (
-  `id_detalle` int(100) NOT NULL,
-  `id_venta` int(100) NOT NULL,
-  `id_producto` int(100) NOT NULL,
-  `cantidad` int(100) NOT NULL,
-  `precio_unitario` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
-  `maode` varchar(50) COLLATE utf8_spanish2_ci NOT NULL
+  `id_detalle` int(14) NOT NULL,
+  `id_venta` int(11) NOT NULL,
+  `id_producto` int(11) NOT NULL,
+  `cantidad` int(4) NOT NULL,
+  `precio_unitario` decimal(12,2) NOT NULL,
+  `maode` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -123,7 +120,7 @@ CREATE TABLE `detalle_venta` (
 
 CREATE TABLE `dolar` (
   `id_dolar` int(1) NOT NULL,
-  `precios` varchar(100) COLLATE utf8_spanish2_ci NOT NULL
+  `precios` decimal(12,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
@@ -131,7 +128,7 @@ CREATE TABLE `dolar` (
 --
 
 INSERT INTO `dolar` (`id_dolar`, `precios`) VALUES
-(1, '152.82');
+(1, 370.25);
 
 -- --------------------------------------------------------
 
@@ -140,9 +137,9 @@ INSERT INTO `dolar` (`id_dolar`, `precios`) VALUES
 --
 
 CREATE TABLE `marca` (
-  `id_marca` int(100) NOT NULL,
-  `nombre` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
-  `estatus` int(100) NOT NULL
+  `id_marca` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `estatus` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
@@ -150,7 +147,7 @@ CREATE TABLE `marca` (
 --
 
 INSERT INTO `marca` (`id_marca`, `nombre`, `estatus`) VALUES
-(1, 'Sin marca', 1);
+(1, 'Sin Marca', 1);
 
 -- --------------------------------------------------------
 
@@ -159,8 +156,8 @@ INSERT INTO `marca` (`id_marca`, `nombre`, `estatus`) VALUES
 --
 
 CREATE TABLE `metodopago` (
-  `id_metodopago` int(11) NOT NULL,
-  `nombre` varchar(50) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `id_metodopago` int(2) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
   `estatus` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
@@ -181,12 +178,12 @@ INSERT INTO `metodopago` (`id_metodopago`, `nombre`, `estatus`) VALUES
 --
 
 CREATE TABLE `perdida` (
-  `id_perdida` int(100) NOT NULL,
-  `fecha` date NOT NULL,
-  `id_producto` int(100) NOT NULL,
-  `cantidad` int(100) NOT NULL,
-  `precio` varchar(15) COLLATE utf8_spanish2_ci NOT NULL,
-  `nota` varchar(200) COLLATE utf8_spanish2_ci NOT NULL
+  `id_perdida` int(11) NOT NULL,
+  `fecha` datetime NOT NULL,
+  `id_producto` int(11) NOT NULL,
+  `cantidad` int(4) NOT NULL,
+  `precio` decimal(12,2) NOT NULL,
+  `nota` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -196,9 +193,9 @@ CREATE TABLE `perdida` (
 --
 
 CREATE TABLE `presentacion` (
-  `id_presentacion` int(100) NOT NULL,
-  `nombre` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
-  `estatus` int(100) NOT NULL
+  `id_presentacion` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `estatus` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
@@ -206,10 +203,10 @@ CREATE TABLE `presentacion` (
 --
 
 INSERT INTO `presentacion` (`id_presentacion`, `nombre`, `estatus`) VALUES
-(1, 'Unidad', 1),
-(2, 'Paquete de 100 unidades', 1),
-(3, 'Paquete de 50 unidad', 1),
-(4, 'Paquete de 25 unidades', 1);
+(1, 'Unidad u/d', 1),
+(2, 'Paq. 25 Unidades', 1),
+(3, 'Paq. 12 Unidades', 1),
+(4, 'Paq. 50 Unidades', 1);
 
 -- --------------------------------------------------------
 
@@ -218,16 +215,16 @@ INSERT INTO `presentacion` (`id_presentacion`, `nombre`, `estatus`) VALUES
 --
 
 CREATE TABLE `producto` (
-  `id_producto` int(100) NOT NULL,
-  `nombre` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
-  `id_marca` int(100) NOT NULL,
-  `id_presentacion` int(100) NOT NULL,
-  `stock` int(100) NOT NULL,
-  `stock_minimo` int(100) NOT NULL,
-  `precio_unitario` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
-  `precio_mayor` varchar(7) COLLATE utf8_spanish2_ci NOT NULL,
-  `cantidad_mayor` int(50) NOT NULL,
-  `estatus` int(100) NOT NULL
+  `id_producto` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `id_marca` int(11) NOT NULL,
+  `id_presentacion` int(11) NOT NULL,
+  `stock` int(6) NOT NULL,
+  `stock_minimo` int(4) NOT NULL,
+  `precio_unitario` decimal(12,2) NOT NULL,
+  `precio_mayor` decimal(12,2) NOT NULL,
+  `cantidad_mayor` int(4) NOT NULL,
+  `estatus` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -237,10 +234,10 @@ CREATE TABLE `producto` (
 --
 
 CREATE TABLE `tipo_usuario` (
-  `id_tipo` int(100) NOT NULL,
-  `nombre` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
-  `nivel` int(100) NOT NULL,
-  `estatus` int(100) NOT NULL
+  `id_tipo` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `nivel` int(1) NOT NULL,
+  `estatus` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
@@ -248,9 +245,10 @@ CREATE TABLE `tipo_usuario` (
 --
 
 INSERT INTO `tipo_usuario` (`id_tipo`, `nombre`, `nivel`, `estatus`) VALUES
-(1, 'Administrador', 1, 1),
-(2, 'Cajero', 3, 1),
-(3, 'Supervisora', 2, 1);
+(1, 'Desarrollador', 1, 1),
+(2, 'Administrador', 1, 1),
+(3, 'Supervisor', 2, 1),
+(4, 'Cajero', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -259,13 +257,13 @@ INSERT INTO `tipo_usuario` (`id_tipo`, `nombre`, `nivel`, `estatus`) VALUES
 --
 
 CREATE TABLE `usuario` (
-  `id_usuario` int(100) NOT NULL,
-  `nombre` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
-  `apellido` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
-  `usuario` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
-  `clave` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
-  `estatus` int(10) NOT NULL,
-  `id_tipo` int(100) NOT NULL
+  `id_usuario` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `apellido` varchar(100) NOT NULL,
+  `usuario` varchar(16) NOT NULL,
+  `clave` varchar(16) NOT NULL,
+  `estatus` int(1) NOT NULL,
+  `id_tipo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
@@ -273,7 +271,10 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id_usuario`, `nombre`, `apellido`, `usuario`, `clave`, `estatus`, `id_tipo`) VALUES
-(1, 'Jefe', 'Misterbolsaca', 'admin2025', 'lara1234', 1, 1);
+(1, 'Daniel', 'DEV', 'danieldev7875', 'lara0541', 1, 1),
+(2, 'Jefe', 'MisterBolsa', 'misterbolsa1', 'bolsa1234', 1, 2),
+(3, 'Jorge', 'MisterBolsa', 'misterbolsa2', 'bolsa1234', 1, 3),
+(4, 'Marleni', 'MisterBolsa', 'misterbolsa3', 'bolsa1234', 1, 4);
 
 -- --------------------------------------------------------
 
@@ -282,12 +283,10 @@ INSERT INTO `usuario` (`id_usuario`, `nombre`, `apellido`, `usuario`, `clave`, `
 --
 
 CREATE TABLE `venta` (
-  `id_venta` int(100) NOT NULL,
+  `id_venta` int(11) NOT NULL,
   `fecha` date NOT NULL,
-  `total_dl` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
-  `total_bs` varchar(15) COLLATE utf8_spanish2_ci NOT NULL,
-  `descuento_dl` varchar(15) COLLATE utf8_spanish2_ci NOT NULL,
-  `descuento_bs` varchar(15) COLLATE utf8_spanish2_ci NOT NULL
+  `total_dl` decimal(12,2) NOT NULL,
+  `total_bs` decimal(12,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
@@ -406,79 +405,80 @@ ALTER TABLE `cierre_diario`
 -- AUTO_INCREMENT de la tabla `compra`
 --
 ALTER TABLE `compra`
-  MODIFY `id_compra` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_compra` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_cierre`
 --
 ALTER TABLE `detalle_cierre`
-  MODIFY `id_detalle_cierre` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_detalle_cierre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_compra`
 --
 ALTER TABLE `detalle_compra`
-  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_pago`
 --
 ALTER TABLE `detalle_pago`
-  MODIFY `id_detallepago` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_detallepago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_venta`
 --
 ALTER TABLE `detalle_venta`
-  MODIFY `id_detalle` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_detalle` int(14) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
 
 --
 -- AUTO_INCREMENT de la tabla `marca`
 --
 ALTER TABLE `marca`
-  MODIFY `id_marca` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_marca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `metodopago`
 --
 ALTER TABLE `metodopago`
-  MODIFY `id_metodopago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_metodopago` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `perdida`
 --
 ALTER TABLE `perdida`
-  MODIFY `id_perdida` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_perdida` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `presentacion`
 --
 ALTER TABLE `presentacion`
-  MODIFY `id_presentacion` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_presentacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `id_producto` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_usuario`
 --
 ALTER TABLE `tipo_usuario`
-  MODIFY `id_tipo` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_tipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `venta`
 --
 ALTER TABLE `venta`
-  MODIFY `id_venta` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
 
 --
 -- Restricciones para tablas volcadas

@@ -31,7 +31,7 @@ $tipos = $objusuario->obtenerTipo();
         // Si es array → validar cada elemento
         if (is_array($input)) {
             foreach ($input as $valor) {
-                if (!validarEntradaSQL($valor)) {
+                if (!validarEntradaSQL($valor)) { 
                     return false;
                 }
             }
