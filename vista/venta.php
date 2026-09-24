@@ -227,9 +227,26 @@
 
                   <?php if ($tipo_usuario == 1): ?>
                   <td class="td-oscuro align-middle">
-                      <form action="?pagina=venta" method="POST" >
-                          <button type="submit"  class="btn btn-primary btn-sm TA9" name="pdf" value="<?php echo $id_venta; ?>"> <i class="fa-regular fa-file-pdf me-2"></i>Descargar</button>
-                      </form>
+                     <div class="d-flex gap-2">
+                        <!-- Botón para descargar el PDF generado con Dompdf -->
+                        <form action="?pagina=venta" method="POST" target="_blank">
+                            <button type="submit" class="btn btn-primary btn-sm TA9" name="pdf" value="<?php echo $id_venta; ?>">
+                                <i class="fa-regular fa-file-pdf me-2"></i>Descargar
+                            </button>
+                        </form>
+
+                        <!-- Botón para Imprimir -->
+                          <button type="button" class="btn btn-primary btn-sm TA9" 
+                                  onclick='imprimirVentaDirecta(<?php echo json_encode([
+                                      "id" => $id_venta,
+                                      "fecha" => date("d/m/Y", strtotime($info["fecha"])),
+                                      "total_dl" => number_format($info["total"], 2, ",", "."),
+                                      "total_bs" => number_format($info["totalBs"], 2, ",", "."),
+                                      "detalles" => array_values($info["detalles"])
+                                  ]); ?>)'>
+                              <i class="fa-solid fa-print me-2"></i>Imprimir
+                          </button>
+                        </div>
                   </td>
                   <?php endif; ?>
               </tr>
@@ -326,15 +343,77 @@
     <?php endforeach; ?>
 
 
+<!-- CONTENEDOR IMPRESIÓN DE TICKET -->
+<div id="ticket-impresion" class="d-none d-print-block">
+    <div class="ticket-header text-center">
+          <div class="ticket-linea"></div>
+        <h4 style="margin: 0; font-size: 14px; font-weight: bold;">Mister Bolsa C.A.</h4>
+        <small>RIF: J-12345678-0</small>
+          <div class="ticket-linea"></div>
+        <div><strong>RECIBO DE VENTA #<span id="t-id"></span></strong></div>
+        <div>Fecha: <span id="t-fecha"></span></div>
+    </div>
 
+      <div class="ticket-linea"></div>
+
+    <div id="t-productos"></div>
+
+      <div class="ticket-linea"></div>
+
+    <div class="text-end">
+        <div style="font-weight: bold; font-size: 13px;">
+            Total venta: $ <span id="t-total-dl"></span>
+        </div>
+        <div style="font-size: 11px;">
+            Bs. <span id="t-total-bs"></span>
+        </div>
+    </div>
+
+      <div class="ticket-linea"></div>
+
+    <div class="text-center" style="font-weight: bold; margin-top: 5px;">
+        Gracias por tu compra
+    </div>
+</div>
   
   <!--|||||||||||||||  Footer y JS  |||||||||||||||||||||||||||-->
   <script src="assets/js/venta.js"></script>
     <script src="assets/js/moment.js"></script>
   <?php require_once 'complementos/footer2.php'; ?>  
   <script src="assets/js/ConsultaFecha.js"></script>
+  
   <!--|||||||||||||||  FIN Footer y JS  |||||||||||||||||||||||||||-->
   <script>
+
+  function imprimirVentaDirecta(venta) {
+    document.getElementById('t-id').innerText = venta.id;
+    document.getElementById('t-fecha').innerText = venta.fecha;
+    document.getElementById('t-total-dl').innerText = venta.total_dl;
+    document.getElementById('t-total-bs').innerText = venta.total_bs;
+
+    let contenedorProductos = document.getElementById('t-productos');
+    contenedorProductos.innerHTML = ''; 
+
+    venta.detalles.forEach(function(item) {
+        let subtotal = (parseFloat(item.cantidad) * parseFloat(item.precio_unitario)).toFixed(2).replace('.', ',');
+        let precioUni = parseFloat(item.precio_unitario).toFixed(2).replace('.', ',');
+
+        let htmlItem = `
+            <div class="ticket-item">
+                <div class="ticket-item-nombre">${item.nombre} ${item.marca} ${item.presentacion}</div>
+                <div class="ticket-item-calc">
+                    <span>${item.cantidad} x ${precioUni}</span>
+                    <span>SubTotal: $${subtotal}</span>
+                </div>
+            </div>
+        `;
+        contenedorProductos.innerHTML += htmlItem;
+    });
+    window.print();
+}
+
+
+
     const driver = window.driver.js.driver;
         const driverObj = driver({
             showProgress: true,
